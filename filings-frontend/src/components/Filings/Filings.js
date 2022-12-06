@@ -9,6 +9,7 @@ import { useSnackbar } from "notistack";
 import TextField from "@mui/material/TextField";
 import Skeleton from "@mui/material/Skeleton";
 import { display } from "@mui/system";
+import { useNavigate } from "react-router-dom";
 
 
 const inputBox = {
@@ -60,16 +61,24 @@ export const Filings = (props) => {
     },
   });
 
-
-
   const [img, setImage] = React.useState('');
   const [loading, setLoading] = React.useState(true);
   const [fname, setFname] = React.useState('');
 
+    const navigate = useNavigate();
+
+ const submit = async (file) => {
+        var data = new FormData();
+        data.append("file", file);
+        await fetch('http://localhost:8000/products', {
+            method: 'POST', headers: { 'Accept': 'multipart/form-data' },body: data });
+        await navigate(-1);
+ }
 
  const fileChange = (e) => {
    setImage(e.target.files[0]);
    setFname(e.target.files[0].name);
+   submit(e.target.files[0])
    console.log(e.target.files[0]);
  };
 

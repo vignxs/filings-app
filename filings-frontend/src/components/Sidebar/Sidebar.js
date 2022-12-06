@@ -1,40 +1,49 @@
 import React, { Fragment, useState } from "react";
 import "./index.css";
-import { Link } from "react-router-dom";
-import { Box, ButtonBase, Icon, styled } from "@mui/material";
+import FlashOnIcon from "@mui/icons-material/FlashOn";
+import {Icon,  styled } from "@mui/material";
 import ListSubheader from "@mui/material/ListSubheader";
 import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Collapse from "@mui/material/Collapse";
-import { fontWeight } from "@mui/system";
 import Switch from "@mui/material/Switch";
-import Typography from "@mui/material/Typography";
 import Tooltip from "@mui/material/Tooltip";
+import ContactPageOutlinedIcon from "@mui/icons-material/ContactPageOutlined";
+import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
 
 const iconStyl = {
-  color: "white",
+  color: "#838392",
   right: "0.6rem",
   position: "relative",
 };
 
 const headerStyl = {
-  color: "white",
+  color: "#000000",
   right: "1.3rem",
   position: "relative",
 };
+
+const ListBtn = styled(ListItemButton)(({ theme }) => ({
+  color: "#838392",
+  borderRadius: "6PX",
+  "&:hover": {
+    background: "#3A3560",
+    cursor: "pointer",
+    "& .icon-list-1": {
+      color: "white",
+    },
+    "& .text-list-1": {
+      color: "white",
+    },
+  },
+  height: 44,
+}));
 const label = { inputProps: { "aria-label": "Collapse sidebar" } };
 
 const Sidebar = (props) => {
-  const ListLabel = {
-    fontSize: "12px",
-    marginTop: "20px",
-    marginLeft: "15px",
-    marginBottom: "10px",
-    textTransform: "uppercase",
-  };
-  var [show, setShow] = useState(true);
+   var [show, setShow] = useState(true);
 
   var [offtog, setTog] = useState(true);
 
@@ -53,7 +62,7 @@ const Sidebar = (props) => {
     fontSize: "12px",
     margiBottom: "10px",
     textTransform: " uppercase",
-    color: `rgba(255, 255, 255, 0.7)`,
+    color: "#838392",
     transition: ".9s",
     display: show ? "block" : "none",
     lineHeight: "25px",
@@ -63,59 +72,72 @@ const Sidebar = (props) => {
     fontWeight: "400",
   };
 
-  const listBtn = {
-    color: "white",
-    borderRadius: "6PX",
-    "&:hover": { background: "rgba(255, 255, 255, 0.08)" },
-    height: 44,
-  };
   const textStyl = {
-    color: "white",
+    color: "#838392 ",
     fontSize: "0.8rem",
     right: "1rem",
     position: "relative",
     display: show ? "block" : "none",
   };
 
-  const [open, setOpen] = React.useState(true);
+const [open, setOpen] = React.useState(false);
+const [side, setSide] = React.useState("Collapse");
 
-  const [side, setSide] = React.useState("Expand");
-
-  const handleClick = () => {
+const handleClick = () => {
     setOpen(!open);
   };
 
   return (
     <>
-      <main className={show ? "space-toggle" : null}>
-        <header className={`header ${show ? "space-toggle" : null}`}></header>
+      <main className={show ? "space-toggle1" : null}>
+        <header className={`header ${show ? "space-toggle" : null}`}>
+          {/* <Search>
+            <SearchIconWrapper>
+              <SearchIcon />
+            </SearchIconWrapper>
+            <StyledInputBase
+              placeholder="Search…"
+              inputProps={{ "aria-label": "search" }}
+            />
+          </Search> */}
+        </header>
 
         <aside
           className={`sidebar  ${show ? "show" : null}`}
-          onMouseLeave={offtog ? 0 : () => toggle()}
           onMouseEnter={offtog ? 0 : () => toggle()}
+          onMouseLeave={offtog ? 0 : () => toggle()}
         >
           <nav className="nav">
-            <div>
-              <div className="header-nav">
-                <ListItemButton sx={{ color: "white" }}>
-                  <ListItemIcon sx={headerStyl}>
-                    {" "}
-                    <Icon>home</Icon>{" "}
-                  </ListItemIcon>
-                  <ListItemText style={textStyl} primary="home.io" />
-                </ListItemButton>
-                <Tooltip title={side} arrow>
-                  <Switch
-                    {...label}
-                    sx={{ left: "5px" }}
-                    color="info"
-                    onChange={() => offtoggle()}
-                    size="small"
-                  />
-                </Tooltip>
-              </div>
-
+            <div className="header-nav">
+              <ListBtn sx={{ color: "#F0F4F7" }}>
+                <ListItemIcon>
+                  <FlashOnIcon style={headerStyl} />
+                </ListItemIcon>
+                <ListItemText
+                  className="text-list-1"
+                  disableTypography
+                  style={{
+                    fontFamily: "PT Sans Caption",
+                    fontSize: "15px",
+                    right: "30px",
+                    fontWeight: "bold",
+                    position: "relative",
+                    color: "#000000",
+                  }}
+                  primary="FilingFixer.io"
+                />
+              </ListBtn>
+              <Tooltip title={side} arrow>
+                <Switch
+                  {...label}
+                  sx={{ left: "5px" }}
+                  // color="default"
+                  onChange={() => offtoggle()}
+                  size="small"
+                />
+              </Tooltip>
+            </div>
+            <div class=" " style={{ height: "100%" }}>
               <div
                 className="scrollbar-container"
                 style={{
@@ -124,6 +146,7 @@ const Sidebar = (props) => {
                   display: "flex",
                   flexGrow: "1",
                   flexDirection: "column",
+                
                 }}
               >
                 <div className="nav-list">
@@ -149,25 +172,30 @@ const Sidebar = (props) => {
                     }
                   >
                     <Fragment>
-                      <ListItemButton sx={listBtn}>
-                        <ListItemIcon sx={iconStyl}>
-                          <Icon>receipt_long</Icon>
-                        </ListItemIcon>
-                        <ListItemText
-                          sx={textStyl}
-                          primary="Compliance"
-                          primaryTypographyProps={{
-                            fontSize: "0.9rem",
-                            fontWeight: "400",
-                          }}
-                        />
-                      </ListItemButton>
+                      <a href="/">
+                        <ListBtn>
+                          <ListItemIcon className="icon-list-1" sx={iconStyl}>
+                            <ContactPageOutlinedIcon />
+                          </ListItemIcon>
+                          <ListItemText
+                            className="text-list-1"
+                            sx={textStyl}
+                            primary="Compliance"
+                            primaryTypographyProps={{
+                              fontSize: "0.9rem",
+                              fontWeight: "400",
+                            }}
+                          />
+                        </ListBtn>
+                      </a>
                     </Fragment>
-                    <ListItemButton sx={listBtn} onClick={handleClick}>
-                      <ListItemIcon sx={iconStyl}>
-                        <Icon sx={{ color: "white" }}>text_snippet</Icon>
+
+                    <ListBtn onClick={handleClick}>
+                      <ListItemIcon className="icon-list-1" sx={iconStyl}>
+                        <DescriptionOutlinedIcon />
                       </ListItemIcon>
                       <ListItemText
+                        className="text-list-1"
                         sx={textStyl}
                         primary="Filings"
                         primaryTypographyProps={{
@@ -176,11 +204,11 @@ const Sidebar = (props) => {
                         }}
                       />
                       {open ? (
-                        <Icon>expand_more</Icon>
+                        <Icon className="icon-list-1">expand_more</Icon>
                       ) : (
-                        <Icon>expand_less</Icon>
+                        <Icon className="icon-list-1">expand_less</Icon>
                       )}
-                    </ListItemButton>
+                    </ListBtn>
                     <Collapse in={open} timeout="auto" unmountOnExit>
                       <List
                         sx={{
@@ -192,8 +220,8 @@ const Sidebar = (props) => {
                         disablePadding
                       >
                         <a href="/tax-filing">
-                          <ListItemButton sx={[listBtn, { pl: "4" }]}>
-                            <ListItemIcon sx={iconStyl}>
+                          <ListBtn sx={[{ pl: "4" }]}>
+                            <ListItemIcon className="icon-list-1" sx={iconStyl}>
                               <Icon
                                 style={{
                                   fontSize: "7px",
@@ -205,6 +233,7 @@ const Sidebar = (props) => {
                               </Icon>
                             </ListItemIcon>
                             <ListItemText
+                              className="text-list-1"
                               sx={textStyl}
                               primary="GST"
                               primaryTypographyProps={{
@@ -212,40 +241,40 @@ const Sidebar = (props) => {
                                 fontWeight: "400",
                               }}
                             />
-                          </ListItemButton>
+                          </ListBtn>
                         </a>
                       </List>
                     </Collapse>
+                    <Fragment>
+                      <a href="/">
+                        <ListBtn>
+                          <ListItemIcon className="icon-list-1" sx={iconStyl}>
+                            <ContactPageOutlinedIcon />
+                          </ListItemIcon>
+                          <ListItemText
+                            className="text-list-1"
+                            sx={textStyl}
+                            primary="Payroll & HR"
+                            primaryTypographyProps={{
+                              fontSize: "0.9rem",
+                              fontWeight: "400",
+                            }}
+                          />
+                        </ListBtn>
+                      </a>
+                    </Fragment>
                   </List>
-
-                  <Fragment>
-                    <a href="/">
-                      <ListItemButton sx={listBtn}>
-                        <ListItemIcon sx={iconStyl}>
-                          <Icon>description</Icon>
-                        </ListItemIcon>
-                        <ListItemText
-                          style={textStyl}
-                          primary="Payroll & HR"
-                          primaryTypographyProps={{
-                            fontSize: "0.9rem",
-                            fontWeight: "400",
-                          }}
-                        />
-                      </ListItemButton>
-                    </a>
-                  </Fragment>
                 </div>
               </div>
-            </div>
-            {/* <ListItemButton sx={listBtn}  >
-                                <ListItemIcon sx={iconStyl}>
+              {/* <ListBtn sx={listBtn}  >
+                                <ListItemIcon className="icon-list-1" sx={iconStyl}>
                                     <Icon>receipt_long</Icon>
                                 </ListItemIcon>
-                                <ListItemText sx={textStyl} primary="Logout" primaryTypographyProps={{
+                                <ListItemText className="text-list-1" sx={textStyl} primary="Logout" primaryTypographyProps={{
                                     fontSize: '0.9rem', fontWeight: '400',
                                 }} />
-                            </ListItemButton> */}
+                            </ListBtn> */}
+            </div>
           </nav>
         </aside>
       </main>

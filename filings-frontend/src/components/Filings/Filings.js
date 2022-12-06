@@ -67,19 +67,21 @@ export const Filings = (props) => {
 
     const navigate = useNavigate();
 
- const submit = async (file) => {
+ const submit = async (e) => {
+        e.preventDefault();
         var data = new FormData();
-        data.append("file", file);
-        await fetch('http://localhost:8000/products', {
-            method: 'POST', headers: { 'Accept': 'multipart/form-data' },body: data });
-        await navigate(-1);
+        data.append("file", e.target.files[0] );
+        await fetch('http://localhost:8000/uploadfile', {
+            method: 'POST', headers: { 'Accept': 'multipart/form-data' }, body: data });
  }
 
  const fileChange = (e) => {
    setImage(e.target.files[0]);
-   setFname(e.target.files[0].name);
-   submit(e.target.files[0])
    console.log(e.target.files[0]);
+   setFname(e.target.files[0].name);
+   if (e.target.files[0]) {
+   submit(e);
+   }
  };
 
 

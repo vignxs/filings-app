@@ -14,28 +14,28 @@ import ContactPageOutlinedIcon from "@mui/icons-material/ContactPageOutlined";
 import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
 
 const iconStyl = {
-  color: "#838392",
+  color: "white",
   right: "0.6rem",
   position: "relative",
 };
 
 const headerStyl = {
-  color: "#000000",
+  color: "white",
   right: "1.3rem",
   position: "relative",
 };
 
 const ListBtn = styled(ListItemButton)(({ theme }) => ({
-  color: "#838392",
+  color: "white",
   borderRadius: "6PX",
   "&:hover": {
-    background: "#3A3560",
+    background: "#F0F4F7",
     cursor: "pointer",
     "& .icon-list-1": {
-      color: "white",
+      color: "black",
     },
     "& .text-list-1": {
-      color: "white",
+      color: "black",
     },
   },
   height: 44,
@@ -62,18 +62,18 @@ const Sidebar = (props) => {
     fontSize: "12px",
     margiBottom: "10px",
     textTransform: " uppercase",
-    color: "#838392",
+    color: "white",
     transition: ".9s",
     display: show ? "block" : "none",
-    lineHeight: "25px",
+    lineHeight: "35px",
     position: "relative",
     right: "5px",
     backgroundColor: "inherit",
-    fontWeight: "400",
+    fontWeight: "500",
   };
 
   const textStyl = {
-    color: "#838392 ",
+    color: "white",
     fontSize: "0.8rem",
     right: "1rem",
     position: "relative",
@@ -109,7 +109,16 @@ const handleClick = () => {
         >
           <nav className="nav">
             <div className="header-nav">
-              <ListBtn sx={{ color: "#F0F4F7" }}>
+              <ListBtn sx={{ color: "#F0F4F7",  "&:hover": {
+                      background: "#F0F4F7",
+                      cursor: "pointer",
+                      "& .icon-list-1": {
+                        color: "black",
+                      },
+                      "& .text-list-1": {
+                        color: "black",
+                      },
+                    },}}>
                 <ListItemIcon>
                   <FlashOnIcon style={headerStyl} />
                 </ListItemIcon>
@@ -122,8 +131,8 @@ const handleClick = () => {
                     right: "30px",
                     fontWeight: "bold",
                     position: "relative",
-                    color: "#000000",
-                  }}
+                    color: "white",
+                                     }}
                   primary="FilingFixer.io"
                 />
               </ListBtn>
@@ -146,7 +155,6 @@ const handleClick = () => {
                   display: "flex",
                   flexGrow: "1",
                   flexDirection: "column",
-                
                 }}
               >
                 <div className="nav-list">
@@ -172,7 +180,7 @@ const handleClick = () => {
                     }
                   >
                     <Fragment>
-                      <a href="/">
+                      <a href="/compliance">
                         <ListBtn>
                           <ListItemIcon className="icon-list-1" sx={iconStyl}>
                             <ContactPageOutlinedIcon />
@@ -181,6 +189,24 @@ const handleClick = () => {
                             className="text-list-1"
                             sx={textStyl}
                             primary="Compliance"
+                            primaryTypographyProps={{
+                              fontSize: "0.9rem",
+                              fontWeight: "400",
+                            }}
+                          />
+                        </ListBtn>
+                      </a>
+                    </Fragment>
+                    <Fragment>
+                      <a href="/enq-form">
+                        <ListBtn>
+                          <ListItemIcon className="icon-list-1" sx={iconStyl}>
+                            <ContactPageOutlinedIcon />
+                          </ListItemIcon>
+                          <ListItemText
+                            className="text-list-1"
+                            sx={textStyl}
+                            primary="Enquiry Form"
                             primaryTypographyProps={{
                               fontSize: "0.9rem",
                               fontWeight: "400",
@@ -246,7 +272,7 @@ const handleClick = () => {
                       </List>
                     </Collapse>
                     <Fragment>
-                      <a href="/">
+                      <a href="/payroll-hr">
                         <ListBtn>
                           <ListItemIcon className="icon-list-1" sx={iconStyl}>
                             <ContactPageOutlinedIcon />

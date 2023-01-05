@@ -9,228 +9,77 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import InputLabel from "@mui/material/InputLabel";
 import Divider from "@mui/material/Divider";
+import { useNavigate } from "react-router-dom";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 
 export const PersonalInfo = (props) => {
+  const navigate = useNavigate();
   const [userinfo, setInfo] = React.useState({});
+  const [newGstinfo, setnewGstInfo] = React.useState({});
+  const [Gstinfo, setGstInfo] = React.useState({});
+  const [Paninfo, setPanInfo] = React.useState({});
+  const [Taxinfo, setTaxInfo] = React.useState({});
   const periods = ["Monthly", "Quaterly", "Yearly"];
   const quaters = ['Q1', 'Q2', 'Q3', 'Q4']
 
- 
-   const handleChangeInfo = (e) => {
-    const {name,value}=e.target;
-     setInfo((prevalues)=>{
-       return { ...prevalues ,
-      [name]:value
-    };
+ const handleChangeInfo = (e, service) => {
+   const { name, value } = e.target;
+    if (service === 'user') {
+      setInfo((prevalues) => {
+        return { ...prevalues, [name]: value };
       });
-     console.log(userinfo)
-   };
+    }
+    if (service === "gst") {
+       setGstInfo((prevalues) => {
+         return { ...prevalues, [name]: value };
+       });
+    } 
+    if (service === "newgst") {
+       setnewGstInfo((prevalues) => {
+         return { ...prevalues, [name]: value };
+       });
+    } 
+    if (service === "pan") {
+       setPanInfo((prevalues) => {
+         return { ...prevalues, [name]: value };
+       });
+    } 
+    if (service === "tax") {
+       setTaxInfo((prevalues) => {
+         return { ...prevalues, [name]: value };
+       });
+    } 
+ };
 
-   const userdatapost = ()=>{
 
-   }
+const userInfoPost = async (e) => {
+  // e.preventDefault();
+  if (userinfo.enquiredfor === "GST") {
+       setInfo({'serviceInfo' : Gstinfo});
+    } 
+    if (userinfo.enquiredfor === "GST Registration") {
+    console.log("submit");
 
+             setInfo({ serviceInfo: newGstinfo });
 
+    } 
+    if (userinfo.enquiredfor === "PAN Registration") {
+             setInfo({ serviceInfo: Paninfo });
 
+    } 
+    if (userinfo.enquiredfor === "TAX Registration") {
+             setInfo({ serviceInfo: Taxinfo });
 
-function Newgst(params) {
-  return (
-    <>
-      <Grid>
-        <TextField
-          label="Company name"
-          size="small"
-          color="green"
-          name="company_name"
-          value={userinfo.company_name}
-          onChange={handleChangeInfo}
-          type="text"
-        />
-        <TextField
-          label="Company address"
-          multiline
-          size="small"
-          name="company_address"
-          value={userinfo.company_address}
-          onChange={handleChangeInfo}
-          color="green"
-          type="text"
-        />
-      </Grid>
-      <Grid>
-        <TextField
-          label="City"
-          name="company_city"
-          value={"" || userinfo.company_city}
-          // onChange={(e) => setInfo({ ...userinfo, company_city: e.target.value})}
-          onChange={handleChangeInfo}
-          size="small"
-          color="green"
-          type="text"
-        />
-        <TextField
-          label="Pincode"
-          name="company_pincode"
-          value={userinfo.company_pincode}
-          onChange={handleChangeInfo}
-          size="small"
-          color="green"
-          type="tel"
-        />
-      </Grid>
-      <Grid>
-        <TextField
-          label="Email"
-          name="company_email"
-          value={userinfo.company_email}
-          onChange={handleChangeInfo}
-          size="small"
-          color="green"
-          type="email"
-        />
-        <TextField
-          label="Employer Pan"
-          name="employer_pan"
-          value={userinfo.employer_pan}
-          onChange={handleChangeInfo}
-          size="small"
-          color="green"
-          type="email"
-        />
-      </Grid>
-    </>
-  );
-}
-function NewPan(params) {
-  return (
-    <>
-      <Grid>
-        <TextField
-          label="Aadhar Number"
-          size="small"
-          color="green"
-          name="aadhar"
-          value={userinfo.aadhar}
-          onChange={handleChangeInfo}
-          type="text"
-        />
-      </Grid>
-    </>
-  );
-}
+    }
+    console.log(userinfo);
+  // await fetch("http://localhost:8000/products", {
+  //   method: "POST",
+  //   headers: { Accept: "multipart/form-data" },
+  //   body: data,
+  // });
 
- function Tax(params) {
-return (
-  <>
-    <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <Grid>
-        <DatePicker
-          orientation="landscape"
-          width="inherit"
-          openTo="year"
-          label="Assessment year"
-          views={["year"]}
-          value={userinfo.assessmentyear}
-          onChange={(e) => setInfo({ ...userinfo, assessmentyear: e })}
-          renderInput={(params) => (
-            <TextField size="small" {...params} helperText={null} fullWidth />
-          )}
-        />
-        <TextField
-          size="small"
-          label="Pan"
-          name="pan"
-          value={userinfo.pan}
-          onChange={handleChangeInfo}
-          type="text"
-          id="outlined-textarea"
-        />
-      </Grid>
-    </LocalizationProvider>
-  </>
-);
- }
-
-  function GST(params) {
-    return (
-      <>
-        <Grid>
-          <FormControl sx={{ m: 2, minWidth: "30ch" }} size="small">
-            <InputLabel id="demo-1simple-select-label">GST time</InputLabel>
-            <Select
-              label="GST time"
-              labelId="demo-1simple-select-label"
-              id="demo-simple-select"
-              value={userinfo.gst_time}
-              name="gst_time"
-              onChange={handleChangeInfo}
-            >
-              {periods.map((val) => (
-                <MenuItem value={val}>{val}</MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            {userinfo.gst_time === "Yearly" ? (
-              <DatePicker
-                orientation="landscape"
-                openTo="year"
-                views={["year"]}
-                value={userinfo.period}
-                label="Period"
-                onChange={(e) => setInfo({ ...userinfo, period: e })}
-                renderInput={(params) => (
-                  <TextField
-                    size="small"
-                    {...params}
-                    helperText={null}
-                    fullWidth
-                  />
-                )}
-              />
-            ) : userinfo.gst_time === "Monthly" ? (
-              <DatePicker
-                orientation="landscape"
-                width="inherit"
-                openTo="month"
-                label="Period"
-                views={["year", "month"]}
-                value={userinfo.period}
-                onChange={(e) => setInfo({ ...userinfo, period: e })}
-                renderInput={(params) => (
-                  <TextField
-                    size="small"
-                    {...params}
-                    helperText={null}
-                    fullWidth
-                  />
-                )}
-              />
-            ) : userinfo.gst_time === "Quaterly" ? (
-              <FormControl sx={{ m: 2, minWidth: "30ch" }} size="small">
-                <InputLabel id="demo-simple-select-label">Period</InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  value={userinfo.period || "Q1"}
-                  label="Period"
-                  name="period"
-                  onChange={handleChangeInfo}
-                >
-                  {quaters.map((val) => (
-                    <MenuItem value={val}>{val}</MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            ) : (
-              false
-            )}
-          </LocalizationProvider>
-        </Grid>
-      </>
-    );
-  }
+  // await navigate(-1);
+};
 
   const services = [
     "GST",
@@ -269,13 +118,13 @@ return (
           type="text"
           name="fst_name"
           value={userinfo.fst_name}
-          onChange={handleChangeInfo}
+          onChange={(e) => handleChangeInfo(e, "user")}
         />
         <TextField
           label="Last name"
           name="lst_name"
           value={userinfo.lst_name}
-          onChange={handleChangeInfo}
+          onChange={(e) => handleChangeInfo(e, "user")}
           size="small"
           color="green"
           type="text"
@@ -286,7 +135,7 @@ return (
           label="Mobile"
           name="mobile"
           value={userinfo.mobile}
-          onChange={handleChangeInfo}
+          onChange={(e) => handleChangeInfo(e, "user")}
           size="small"
           color="green"
           type="text"
@@ -296,7 +145,7 @@ return (
           multiline
           name="address"
           value={userinfo.address}
-          onChange={handleChangeInfo}
+          onChange={(e) => handleChangeInfo(e, "user")}
           size="small"
           color="green"
           type="text"
@@ -308,7 +157,7 @@ return (
           size="small"
           name="city"
           value={userinfo.city}
-          onChange={handleChangeInfo}
+          onChange={(e) => handleChangeInfo(e, "user")}
           color="green"
           type="text"
         />
@@ -317,7 +166,7 @@ return (
           size="small"
           name="pincode"
           value={userinfo.pincode}
-          onChange={handleChangeInfo}
+          onChange={(e) => handleChangeInfo(e, "user")}
           color="green"
           type="tel"
         />
@@ -328,7 +177,7 @@ return (
           size="small"
           name="email"
           value={userinfo.email}
-          onChange={handleChangeInfo}
+          onChange={(e) => handleChangeInfo(e, "user")}
           color="green"
           type="email"
         />
@@ -342,7 +191,7 @@ return (
             value={userinfo.enquiredfor || ""}
             name="enquiredfor"
             required
-            onChange={handleChangeInfo}
+            onChange={(e) => handleChangeInfo(e, "user")}
           >
             {services.map((val) => (
               <MenuItem value={val}>{val}</MenuItem>
@@ -353,17 +202,196 @@ return (
       <Divider variant="middle" sx={{ m: 2, width: "40%" }} />
 
       {userinfo.enquiredfor === "GST" ? (
-        <GST />
+        <Grid>
+          <FormControl sx={{ m: 2, minWidth: "30ch" }} size="small">
+            <InputLabel id="demo-1simple-select-label">GST time</InputLabel>
+            <Select
+              label="GST time"
+              labelId="demo-1simple-select-label"
+              id="demo-simple-select"
+              value={Gstinfo.gst_time}
+              name="gst_time"
+              onChange={(e) => handleChangeInfo(e, "gst")}
+            >
+              {periods.map((val) => (
+                <MenuItem value={val}>{val}</MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            {Gstinfo.gst_time === "Yearly" ? (
+              <DatePicker
+                orientation="landscape"
+                openTo="year"
+                views={["year"]}
+                value={Gstinfo.period}
+                label="Period"
+                onChange={(e) => setGstInfo({ ...Gstinfo, period: e })}
+                renderInput={(params) => (
+                  <TextField
+                    size="small"
+                    {...params}
+                    helperText={null}
+                    fullWidth
+                  />
+                )}
+              />
+            ) : Gstinfo.gst_time === "Monthly" ? (
+              <DatePicker
+                orientation="landscape"
+                width="inherit"
+                openTo="month"
+                label="Period"
+                views={["year", "month"]}
+                value={userinfo.period}
+                onChange={(e) => setInfo({ ...Gstinfo, period: e })}
+                renderInput={(params) => (
+                  <TextField
+                    size="small"
+                    {...params}
+                    helperText={null}
+                    fullWidth
+                  />
+                )}
+              />
+            ) : Gstinfo.gst_time === "Quaterly" ? (
+              <FormControl sx={{ m: 2, minWidth: "30ch" }} size="small">
+                <InputLabel id="demo-simple-select-label">Period</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={Gstinfo.period || "Q1"}
+                  label="Period"
+                  name="period"
+                  onChange={(e) => handleChangeInfo(e, "gst")}
+                >
+                  {quaters.map((val) => (
+                    <MenuItem value={val}>{val}</MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            ) : (
+              false
+            )}
+          </LocalizationProvider>
+        </Grid>
       ) : userinfo.enquiredfor === "GST Registration" ? (
-        <Newgst />
+        <>
+          <Grid>
+            <TextField
+              label="Company name"
+              size="small"
+              color="green"
+              name="company_name"
+              value={newGstinfo.company_name}
+              onChange={(e) => handleChangeInfo(e, "newgst")}
+              type="text"
+            />
+            <TextField
+              label="Company address"
+              multiline
+              size="small"
+              name="company_address"
+              value={newGstinfo.company_address}
+              onChange={(e) => handleChangeInfo(e, "newgst")}
+              color="green"
+              type="text"
+            />
+          </Grid>
+          <Grid>
+            <TextField
+              label="City"
+              name="company_city"
+              value={"" || userinfo.company_city}
+              // onChange={(e) => setInfo({ ...userinfo, company_city: e.target.value})}
+              onChange={(e) => handleChangeInfo(e, "newgst")}
+              size="small"
+              color="green"
+              type="text"
+            />
+            <TextField
+              label="Pincode"
+              name="company_pincode"
+              value={userinfo.company_pincode}
+              onChange={(e) => handleChangeInfo(e, "newgst")}
+              size="small"
+              color="green"
+              type="tel"
+            />
+          </Grid>
+          <Grid>
+            <TextField
+              label="Email"
+              name="company_email"
+              value={newGstinfo.company_email}
+              onChange={(e) => handleChangeInfo(e, "newgst")}
+              size="small"
+              color="green"
+              type="email"
+            />
+            <TextField
+              label="Employer Pan"
+              name="employer_pan"
+              value={newGstinfo.employer_pan}
+              onChange={(e) => handleChangeInfo(e, "newgst")}
+              size="small"
+              color="green"
+              type="email"
+            />
+          </Grid>
+        </>
       ) : userinfo.enquiredfor === "PAN Registration" ? (
-        <NewPan />
+        <Grid>
+          <TextField
+            label="Aadhar Number"
+            size="small"
+            color="green"
+            name="aadhar"
+            value={Paninfo.aadhar}
+            onChange={(e) => handleChangeInfo(e, "pan")}
+            type="text"
+          />
+        </Grid>
       ) : userinfo.enquiredfor === "TAX Registration" ? (
-        <Tax />
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <Grid>
+            <DatePicker
+              orientation="landscape"
+              width="inherit"
+              openTo="year"
+              label="Assessment year"
+              views={["year"]}
+              value={Taxinfo.assessmentyear}
+              onChange={(e) => setInfo({ ...Taxinfo, assessmentyear: e })}
+              renderInput={(params) => (
+                <TextField
+                  size="small"
+                  {...params}
+                  helperText={null}
+                  fullWidth
+                />
+              )}
+            />
+            <TextField
+              size="small"
+              label="Pan"
+              name="pan"
+              value={Taxinfo.pan}
+              onChange={(e) => handleChangeInfo(e, "tax")}
+              type="text"
+              id="outlined-textarea"
+            />
+          </Grid>
+        </LocalizationProvider>
       ) : (
         false
       )}
-      <Button sx={{ m: 2 }} variant="contained" onSubmit={userdatapost()} color="success">
+      <Button
+        sx={{ m: 2 }}
+        variant="contained"
+        onClick={userInfoPost}
+        color="success"
+      >
         Submit
       </Button>
     </Grid>

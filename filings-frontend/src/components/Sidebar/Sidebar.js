@@ -10,6 +10,14 @@ import ListItemText from "@mui/material/ListItemText";
 import Collapse from "@mui/material/Collapse";
 import Switch from "@mui/material/Switch";
 import Tooltip from "@mui/material/Tooltip";
+import Box from "@mui/material/Box";
+import {  alpha } from "@mui/material/styles";
+import IconButton from "@mui/material/IconButton";
+import InputBase from "@mui/material/InputBase";
+import Badge from "@mui/material/Badge";
+import SearchIcon from "@mui/icons-material/Search";
+import MailIcon from "@mui/icons-material/Mail";
+import MoreIcon from "@mui/icons-material/MoreVert";
 import ContactPageOutlinedIcon from "@mui/icons-material/ContactPageOutlined";
 import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
 
@@ -86,12 +94,51 @@ const [side, setSide] = React.useState("Collapse");
 const handleClick = () => {
     setOpen(!open);
   };
+  const Search = styled("div")(({ theme }) => ({
+    position: "relative",
+    borderRadius: "16px",
+    backgroundColor: alpha(theme.palette.common.white, 0.85),
+    "&:hover": {
+      backgroundColor: "#F0F4F7",
+    },
+    marginRight: theme.spacing(2),
+    marginLeft: 0,
+    width: "100%",
+    [theme.breakpoints.up("sm")]: {
+      marginLeft: theme.spacing(40),
+      width: "auto",
+    },
+  }));
+
+  const SearchIconWrapper = styled("div")(({ theme }) => ({
+    padding: theme.spacing(0, 2),
+    height: "100%",
+    position: "absolute",
+    pointerEvents: "none",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  }));
+
+  const StyledInputBase = styled(InputBase)(({ theme }) => ({
+    color: "inherit",
+    "& .MuiInputBase-input": {
+      padding: theme.spacing(1, 1, 1, 0),
+      // vertical padding + font size from searchIcon
+      paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+      transition: theme.transitions.create("width"),
+      width: "100%",
+      [theme.breakpoints.up("md")]: {
+        width: "60ch",
+      },
+    },
+  }));
 
   return (
     <>
       <main className={show ? "space-toggle1" : null}>
         <header className={`header ${show ? "space-toggle" : null}`}>
-          {/* <Search>
+          <Search>
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
@@ -99,7 +146,31 @@ const handleClick = () => {
               placeholder="Search…"
               inputProps={{ "aria-label": "search" }}
             />
-          </Search> */}
+          </Search>
+          <Box sx={{ flexGrow: 1 }} />
+          <Box sx={{ display: { xs: "none", md: "flex" } }}>
+            <IconButton
+              size="large"
+              aria-label="show 4 new mails"
+              color="inherit"
+            >
+              <Badge badgeContent={4} color="error">
+                <MailIcon color= "success" />
+              </Badge>
+            </IconButton>
+          </Box>
+          <Box sx={{ display: { xs: "flex", md: "none" } }}>
+            <IconButton
+              size="large"
+              aria-label="show more"
+              // aria-controls={mobileMenuId}
+              aria-haspopup="true"
+              // onClick={handleMobileMenuOpen}
+              color="inherit"
+            >
+              <MoreIcon />
+            </IconButton>
+          </Box>
         </header>
 
         <aside
@@ -109,16 +180,21 @@ const handleClick = () => {
         >
           <nav className="nav">
             <div className="header-nav">
-              <ListBtn sx={{ color: "#F0F4F7",  "&:hover": {
-                      background: "#F0F4F7",
-                      cursor: "pointer",
-                      "& .icon-list-1": {
-                        color: "black",
-                      },
-                      "& .text-list-1": {
-                        color: "black",
-                      },
-                    },}}>
+              <ListBtn
+                sx={{
+                  color: "#F0F4F7",
+                  "&:hover": {
+                    background: "#F0F4F7",
+                    cursor: "pointer",
+                    "& .icon-list-1": {
+                      color: "black",
+                    },
+                    "& .text-list-1": {
+                      color: "black",
+                    },
+                  },
+                }}
+              >
                 <ListItemIcon>
                   <FlashOnIcon style={headerStyl} />
                 </ListItemIcon>
@@ -132,7 +208,7 @@ const handleClick = () => {
                     fontWeight: "bold",
                     position: "relative",
                     color: "white",
-                                     }}
+                  }}
                   primary="FilingFixer.io"
                 />
               </ListBtn>

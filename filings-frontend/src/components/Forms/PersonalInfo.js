@@ -8,6 +8,11 @@ import Button from "@mui/material/Button";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import InputLabel from "@mui/material/InputLabel";
+import {
+  FormControlLabel,
+  Radio,
+  RadioGroup,
+} from "@mui/material";
 import Divider from "@mui/material/Divider";
 import { useNavigate } from "react-router-dom";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -203,21 +208,34 @@ const userInfoPost = async (e) => {
 
       {userinfo.enquiredfor === "GST" ? (
         <Grid>
-          <FormControl sx={{ m: 2, minWidth: "30ch" }} size="small">
-            <InputLabel id="demo-1simple-select-label">GST time</InputLabel>
-            <Select
-              label="GST time"
-              labelId="demo-1simple-select-label"
-              id="demo-simple-select"
-              value={Gstinfo.gst_time}
-              name="gst_time"
-              onChange={(e) => handleChangeInfo(e, "gst")}
-            >
-              {periods.map((val) => (
-                <MenuItem value={val}>{val}</MenuItem>
-              ))}
-            </Select>
-          </FormControl>
+          <RadioGroup
+            row
+            name="gst_time"
+            sx={{ mb: 2 }}
+            value={Gstinfo.gst_time || ""}
+            onChange={(e) => handleChangeInfo(e, "gst")}
+          >
+            <FormControlLabel
+              value="Monthly"
+              label="Monthly"
+              labelPlacement="end"
+              control={<Radio color="green" />}
+            />
+
+            <FormControlLabel
+              value="Quaterly"
+              label="Quaterly"
+              labelPlacement="end"
+              control={<Radio color="green" />}
+            />
+
+            <FormControlLabel
+              value="Yearly"
+              label="Yearly"
+              labelPlacement="end"
+              control={<Radio color="green" />}
+            />
+          </RadioGroup>
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             {Gstinfo.gst_time === "Yearly" ? (
               <DatePicker
@@ -311,7 +329,10 @@ const userInfoPost = async (e) => {
             />
             <TextField
               label="Pincode"
+              error
+              helperText="please enter only numbers"
               name="company_pincode"
+              inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
               value={userinfo.company_pincode}
               onChange={(e) => handleChangeInfo(e, "newgst")}
               size="small"

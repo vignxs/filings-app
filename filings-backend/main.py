@@ -25,7 +25,7 @@ app.add_middleware(
     allow_methods=['*'],
     allow_headers=['*']
 )
-cloudinary.config(**conf['cloudinary_config'])
+# cloudinary.config(**conf['cloudinary_config'])
 
 
 
@@ -44,7 +44,7 @@ async def create_upload_file(file: UploadFile = File(...)):
             json_data = json.dumps(dictionary)
         except Exception as e:
             print(e)
-        resp = cloudinary.uploader.upload(file.file)
+        # resp = cloudinary.uploader.upload(file.file)
 
         return json_data
 

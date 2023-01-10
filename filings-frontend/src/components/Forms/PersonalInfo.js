@@ -95,12 +95,13 @@ const userInfoPost =  (e) => {
 
     }
     console.log(userinfo);
-   fetch("http://localhost:8000/enqform", {
+   fetch("https://filings.deta.dev/enqform", {
      method: "POST",
      headers: { "Content-Type": "application/json" },
      body: JSON.stringify({
-      userinfo
-   })});
+       userinfo,
+     }),
+   });
 
     Object.keys(userinfo).forEach((key) => delete userinfo[key]);
   };

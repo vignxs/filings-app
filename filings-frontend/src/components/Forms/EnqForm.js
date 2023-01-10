@@ -17,12 +17,17 @@ export const EnqForm = (props) => {
       backgroundColor: "white",
       width: "30ch",
     },
-    '& .MuiInputBase-input': {
-    backgroundColor: 'white',
-   },
-    '& .MuiAutocomplete-popupIndicator' :{
-    display: 'none !important'
-},
+    "& .MuiInputBase-input": {
+      backgroundColor: "white",
+    },
+    "& .MuiAutocomplete-popupIndicator": {
+      display: "none !important",
+    },
+    "&  .MuiFormHelperText-root.Mui-error": {
+      background: "#F0F4F7",
+      margin: 0,
+      paddingLeft: 10,
+    },
     marginLeft: "70px",
     boxShadow: `rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px`,
     bgcolor: "#F0F4F7",

@@ -50,12 +50,20 @@ async def create_upload_file(file: UploadFile = File(...)):
 
 @app.post("/enqform")
 async def enq_data( request: Request):
-    body = await request.json()
-    body['enq_id'] = secrets.token_hex(10)
-    data= models.IGS_ENQ_DATA(**body)
+    body1 = await request.json()
+    body= body1['userinfo']
+    print(body)
+    enq_id = secrets.token_hex(10)
+    
+    data= models.IGS_ENQ_DATA(enq_id=enq_id , fst_name = body['fst_name'], lst_name = body['lst_name'], mobile_no = str(body["mobile"]), email = body["email"] , status = "In-Progress" , pincode = str(body["pincode"]), enq_for = body["enquiredfor"])
     db.add(data)
+    db.flush()
+    srv  = models.IGS_ENQ_GST(enq_id , gst_time = body['serviceInfo']['gst_time'], period = body['serviceInfo']['period'].values()[0])
+    db.add(srv)
+    db.flush()
     db.commit()
 
+# {'userinfo': {'serviceInfo': {'period': {'month': '2023-05-01T04:00:00.000Z'}, 'gst_time': 'Monthly'}, 'fst_name': 'Vignesh', 'lst_name': 'Sivakumar', 'mobile': '7639290579', 'address': 'VDVAC', 'city': 'porayar', 'pincode': '609407', 'email': 'vignxs@gmail.com'639290579', 'address': 'VDVAC', 'city': 'porayar', 'pincode': '6639290579', 'address': 'VDVAC', 'city': 'porayar', 'pincode': '609407', 'email': 'vignxs@gmail.com', 'enquiredfor': 'GST'}}
 @app.post("/enqGST")
 async def enq_data( request: Request):
     body = await request.json()

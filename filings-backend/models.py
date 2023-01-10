@@ -16,7 +16,11 @@ class IGS_ENQ_DATA(Base):
     fst_name = Column(String)
     lst_name = Column(String)
     cldnry_img_url = Column(String)
+    mobile_no = Column(Integer())
+    email = Column(String)
     status = Column(String)
+    pincode = Column(Integer())
+    enq_for = Column(String)
 
 class IGS_ENQ_GST(Base):
     __tablename__ = "IGS_ENQ_GST"

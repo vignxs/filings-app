@@ -55,10 +55,10 @@ async def enq_data( request: Request):
     print(body)
     enq_id = secrets.token_hex(10)
     
-    data= models.IGS_ENQ_DATA(enq_id=enq_id , fst_name = body['fst_name'], lst_name = body['lst_name'], mobile_no = str(body["mobile"]), email = body["email"] , status = "In-Progress" , pincode = str(body["pincode"]), enq_for = body["enquiredfor"])
+    data= models.IGS_ENQ_DATA(enq_id=enq_id , fst_name = body['fst_name'], lst_name = body['lst_name'], mobile_no = int(body["mobile"]), email = body["email"] , status = "In-Progress" , pincode = int(body["pincode"]), enq_for = body["enquiredfor"])
     db.add(data)
     db.flush()
-    srv  = models.IGS_ENQ_GST(enq_id , gst_time = body['serviceInfo']['gst_time'], period = body['serviceInfo']['period'].values()[0])
+    srv  = models.IGS_ENQ_GST(enq_id=enq_id , gst_time = body['serviceInfo']['gst_time'], period = list(body['serviceInfo']['period'].values())[0])
     db.add(srv)
     db.flush()
     db.commit()

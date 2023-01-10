@@ -1,4 +1,4 @@
-from sqlalchemy import  Column, ForeignKey, Integer, String, TIMESTAMP
+from sqlalchemy import  Column, ForeignKey, Integer, String, TIMESTAMP, BigInteger
 from database import Base
 
 class IGS_FILINGS_SERVICES(Base):
@@ -16,10 +16,10 @@ class IGS_ENQ_DATA(Base):
     fst_name = Column(String)
     lst_name = Column(String)
     cldnry_img_url = Column(String)
-    mobile_no = Column(Integer())
+    mobile_no = Column(BigInteger)
     email = Column(String)
     status = Column(String)
-    pincode = Column(Integer())
+    pincode = Column(BigInteger)
     enq_for = Column(String)
 
 class IGS_ENQ_GST(Base):
@@ -28,7 +28,7 @@ class IGS_ENQ_GST(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     enq_id = Column(String, ForeignKey("IGS_ENQ_DATA.enq_id"))
-    gst_time = Column(TIMESTAMP)
+    gst_time = Column(String)
     period = Column(String)
     cldnry_img_url = Column(String)
 

@@ -1,4 +1,3 @@
-import Sidebar from "../Sidebar/Sidebar";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined";
@@ -15,8 +14,8 @@ import { Skeleton } from "@mui/material";
 const inputBox = {
   "& .MuiTextField-root": { m: 2, width: "20ch" },
   marginLeft: "20px",
-  boxShadow: `rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px`,
-  bgcolor: "#D2DFFF",
+  // boxShadow: `rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px`,
+  bgcolor: "#EFEBCE",
   top: "6rem",
   width: "700px",
   height: "500px",
@@ -153,7 +152,6 @@ const handleChange = (event) => {
 };
 
   return (
-    <Sidebar>
       <div style={{ display: "flex", position: "absolute", zIndex: "-1" }}>
         <CssBaseline />
 
@@ -235,6 +233,5 @@ const handleChange = (event) => {
           </ThemeProvider>
         </Box>
       </div>
-    </Sidebar>
   );
 };

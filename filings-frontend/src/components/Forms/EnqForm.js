@@ -7,6 +7,7 @@ import { PersonalInfo } from "./PersonalInfo";
 import Sidebar from "../Sidebar/Sidebar";
 
 
+
 export const EnqForm = (props) => {
   
  
@@ -14,23 +15,23 @@ export const EnqForm = (props) => {
   const inputBox = {
     "& .MuiTextField-root": {
       m: 2,
-      backgroundColor: "white",
+      backgroundColor: "#fbfbfb",
       width: "30ch",
     },
     "& .MuiInputBase-input": {
-      backgroundColor: "white",
+      backgroundColor: "#fbfbfb",
     },
     "& .MuiAutocomplete-popupIndicator": {
       display: "none !important",
     },
     "&  .MuiFormHelperText-root.Mui-error": {
-      background: "#F0F4F7",
+      background: "white",
       margin: 0,
       paddingLeft: 10,
     },
     marginLeft: "70px",
-    boxShadow: `rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px`,
-    bgcolor: "#F0F4F7",
+    // boxShadow: `rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px`,
+    bgcolor: "white",
     left: "-170px",
     top: "3rem",
     width: "1300px",
@@ -50,7 +51,6 @@ export const EnqForm = (props) => {
       });
 
     return (
-      <Sidebar>
         <Container>
           <FormControl>
             <h1
@@ -70,7 +70,6 @@ export const EnqForm = (props) => {
             </Box>
           </FormControl>
         </Container>
-      </Sidebar>
     );
   };
 

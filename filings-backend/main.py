@@ -1,7 +1,7 @@
 import json
 from typing import Union
 import cloudinary
-from PyPDF2 import PdfFileReader
+from PyPDF2 import PdfReader 
 from cloudinary import uploader
 from fastapi import FastAPI, File, UploadFile, Request
 from fastapi.middleware.cors import CORSMiddleware
@@ -21,7 +21,7 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=['http://localhost:3000'],
+    allow_origins=['http://localhost:3000', "https://filings-app.vercel.app/"],
     allow_methods=['*'],
     allow_headers=['*']
 )
@@ -38,7 +38,7 @@ async def create_upload_file(file: UploadFile = File(...)):
         print('1111')
         file.file.seek(0)
         try:
-            pdf_reader = PdfFileReader(file.file)
+            pdf_reader = PdfReader(file.file)
             print(pdf_reader)
             dictionary = pdf_reader.getFormTextFields()
             json_data = json.dumps(dictionary)

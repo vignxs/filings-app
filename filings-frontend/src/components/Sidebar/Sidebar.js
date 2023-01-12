@@ -155,7 +155,7 @@ const handleClick = () => {
               color="inherit"
             >
               <Badge badgeContent={4} color="error">
-                <MailIcon color= "success" />
+                <MailIcon color="success" />
               </Badge>
             </IconButton>
           </Box>
@@ -265,6 +265,24 @@ const handleClick = () => {
                             className="text-list-1"
                             sx={textStyl}
                             primary="Compliance"
+                            primaryTypographyProps={{
+                              fontSize: "0.9rem",
+                              fontWeight: "400",
+                            }}
+                          />
+                        </ListBtn>
+                      </a>
+                    </Fragment>
+                    <Fragment>
+                      <a href="/enq-admin">
+                        <ListBtn>
+                          <ListItemIcon className="icon-list-1" sx={iconStyl}>
+                            <ContactPageOutlinedIcon />
+                          </ListItemIcon>
+                          <ListItemText
+                            className="text-list-1"
+                            sx={textStyl}
+                            primary="Enquiry Admin"
                             primaryTypographyProps={{
                               fontSize: "0.9rem",
                               fontWeight: "400",

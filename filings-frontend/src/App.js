@@ -3,18 +3,34 @@ import { Filings } from "./components/Filings/Taxfilings";
 import { Compliance } from "./components/Filings/Compliance";
 import { PayrollHR} from "./components/Filings/PayrollHR";
 import {EnqForm}  from "./components/Forms/EnqForm";
+import { EnqAdmin } from "./components/Admin/Admin";
+import HeaderBar from "./components/Sidebar/headerBar";
+import { SignInComponent } from "./components/Auth/Login";
+import { RequireAuth } from "react-auth-kit";
 
 function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        {/* <Route path="/" element={Home} /> */}
-        <Route path="/tax-filing" element={<Filings />} />
-        <Route path="/compliance" element={<Compliance />} />
-        <Route path="/payroll-hr" element={<PayrollHR />} />
-        <Route path="/enq-form" element={<EnqForm />} />
-        <Route path="/" element={<Filings />} />
-      </Routes>
+      <HeaderBar>
+        <Routes>
+          {/* <Route path="/" element={Home} /> */}
+          <Route path="/tax-filing" element={<Filings />} />
+          <Route path="/compliance" element={<Compliance />} />
+          <Route path="/payroll-hr" element={<PayrollHR />} />
+          <Route path="/enq-form" element={<EnqForm />} />
+          <Route path="/enq-admin" element={<EnqAdmin />} />
+          <Route path="/login" element={<SignInComponent />} />
+          <Route
+            path="/"
+            element={
+              <RequireAuth loginPath='/login'>
+                {" "}
+                <Filings />{" "}
+              </RequireAuth>
+            }
+          />
+        </Routes>
+      </HeaderBar>
     </BrowserRouter>
   );
 }

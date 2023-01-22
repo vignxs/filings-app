@@ -1,4 +1,3 @@
-import Sidebar from "../Sidebar/Sidebar";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined";
@@ -8,28 +7,35 @@ import * as React from "react";
 import { useSnackbar } from "notistack";
 import TextField from "@mui/material/TextField";
 import { useNavigate } from "react-router-dom";
+import Container from "@mui/material/Container";
 import { Skeleton } from "@mui/material";
 
 
 
 const inputBox = {
+  margin: "0 auto",
+  width: "50%",
+  left:"450px",
   "& .MuiTextField-root": { m: 2, width: "20ch" },
   marginLeft: "20px",
-  boxShadow: `rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px`,
-  bgcolor: "#D2DFFF",
-  top: "6rem",
-  width: "700px",
+  // boxShadow: `rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px`,
+  // bgcolor: "#EFEBCE",
+  top: "7rem",
+  // width: "700px",
   height: "500px",
   position: "absolute",
   borderRadius: "6px",
 };
 
 const uploadBox = {
+  margin: "0 auto",
+  width: "50%",
+  // left: "250px",
   bgcolor: "#BBC7C8",
   boxShadow: `rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px`,
   top: "18rem",
   position: "relative",
-  right: "-38rem",
+  // right: "-38rem",
   width: "300px",
   height: "150px",
   borderRadius: "6px",
@@ -153,88 +159,95 @@ const handleChange = (event) => {
 };
 
   return (
-    <Sidebar>
-      <div style={{ display: "flex", position: "absolute", zIndex: "-1" }}>
-        <CssBaseline />
+    <Container>
+      <CssBaseline />
 
-        <h1 style={{ position: "relative", top: "20px", bottom: "20px" }}>
-          Tax Registration
-        </h1>
-        <Box component="form" sx={inputBox} noValidate autoComplete="off">
-          <div
-            style={{
-              alignItems: "center",
-              paddingTop: "45px",
-              paddingLeft: "13px",
-              paddingBottom: "45px",
+      <h1
+        style={{
+          position: "relative",
+          top: "20px",
+          bottom: "20px",
+          left: "-100px",
+        }}
+      >
+        Tax Registration
+      </h1>
+      <Box component="form" sx={inputBox} noValidate autoComplete="off">
+        <div
+          style={
+            {
+              //   alignItems: "center",
+              //   paddingTop: "45px",
+              //   paddingLeft: "13px",
+              //   paddingBottom: "45px",
+            }
+          }
+        >
+          <TextField
+            label="First name"
+            size="small"
+            type="text"
+            value={first.Fname || ""}
+            onChange={(e) => {
+              setFirst({ ...first, Fname: e.target.value });
             }}
-          >
-            <TextField
-              label="First name"
-              size="small"
-              type="text"
-              value={first.Fname || ""}
-              onChange={(e) => {
-                setFirst({ ...first, Fname: e.target.value });
-              }}
-            />
-            <TextField
-              size="small"
-              label="Last name"
-              type="text"
-              value={first.Lname || ""}
-            />
-            <TextField
-              label="House No"
-              size="small"
-              type="number"
-              value={first.Hno || ""}
-            />
-            <TextField
-              label="Address"
-              size="small"
-              type="text"
-              value={first.addres || ""}
-            />
-            <TextField
-              label="Post Code"
-              type="text"
-              size="small"
-              value={first.pincode || ""}
-            />
-            <TextField
-              label="Country"
-              size="small"
-              type="text"
-              value={first.country || ""}
-            />
-            <TextField
-              label="City"
-              type="text"
-              size="small"
-              value={first.city || ""}
-            />
-            <TextField
-              label="Favorite Color"
-              size="small"
-              type="text"
-              value={first.favClr || ""}
-            />
-            <TextField
-              label="Driving Licence"
-              size="small"
-              type="text"
-              value={first.drivinglicence || ""}
-            />
-          </div>
-        </Box>
-        <Box sx={uploadBox}>
-          <ThemeProvider theme={theme}>
-            <h4 style={textStyl}> {fname} </h4>
-            <MyApp />
-          </ThemeProvider>
-        </Box>
-      </div>
-    </Sidebar>
+          />
+          <TextField
+            size="small"
+            label="Last name"
+            type="text"
+            value={first.Lname || ""}
+          />
+          <TextField
+            label="House No"
+            size="small"
+            type="number"
+            value={first.Hno || ""}
+          />
+          <TextField
+            label="Address"
+            size="small"
+            type="text"
+            value={first.addres || ""}
+          />
+          <TextField
+            label="Post Code"
+            type="text"
+            size="small"
+            value={first.pincode || ""}
+          />
+          <TextField
+            label="Country"
+            size="small"
+            type="text"
+            value={first.country || ""}
+          />
+          <TextField
+            label="City"
+            type="text"
+            size="small"
+            value={first.city || ""}
+          />
+          <TextField
+            label="Favorite Color"
+            size="small"
+            type="text"
+            value={first.favClr || ""}
+          />
+          <TextField
+            label="Driving Licence"
+            size="small"
+            type="text"
+            value={first.drivinglicence || ""}
+          />
+        </div>
+      </Box>
+      <Box sx={uploadBox}>
+        <ThemeProvider theme={theme}>
+          <h4 style={textStyl}> {fname} </h4>
+          <MyApp />
+        </ThemeProvider>
+      </Box>
+    </Container>
   );
 };

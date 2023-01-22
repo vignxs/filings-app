@@ -5,6 +5,7 @@ import { ThemeProvider } from "@mui/material/styles";
 import { createTheme } from "@mui/material/styles";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
+import Container from "@mui/material/Container";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { CacheProvider } from "@emotion/react";
@@ -68,37 +69,38 @@ export const EnqAdmin = (props) => {
   ];
 
   return (
-      <>
-        <h1
-          style={{
-            position: "relative",
-            top: "20px",
-            bottom: "20px",
-            //   left: "-100px",
-          }}
-        >
-          Admin Panel
-        </h1>
-        <CacheProvider value={muiCache}>
-          <ThemeProvider theme={createTheme()}>
-            <div
-              style={{
-                top: "30px",
-                width: "1300px",
-                left: "55px",
-                position: "relative",
-              }}
-            >
-              <MUIDataTable
-                title={"ACME Employee list"}
-                data={data}
-                columns={columns}
-                options={options}
-              />
-            </div>
-          </ThemeProvider>
-        </CacheProvider>
-      </>
+    <Container>
+      <h1
+        style={{
+          position: "relative",
+          top: "20px",
+          bottom: "20px",
+            left: "-100px",
+        }}
+      >
+        Admin Panel
+      </h1>
+      <CacheProvider value={muiCache}>
+        <ThemeProvider theme={createTheme()}>
+          <div
+            style={{
+
+              top: "50px",
+              width: "1200px",
+              left: "-30px",
+              position: "relative",
+            }}
+          >
+            <MUIDataTable
+              title={"ACME Employee list"}
+              data={data}
+              columns={columns}
+              options={options}
+            />
+          </div>
+        </ThemeProvider>
+      </CacheProvider>
+    </Container>
   );
 };
 

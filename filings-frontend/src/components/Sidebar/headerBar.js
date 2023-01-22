@@ -1,7 +1,10 @@
-import * as React from "react";
+import React from "react";
+import { useSignOut } from "react-auth-kit";
 import { styled, useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import MuiDrawer from "@mui/material/Drawer";
+import Button from "@mui/material/Button";
+import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
 import MuiAppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import List from "@mui/material/List";
@@ -9,7 +12,12 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
+import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
+import Menu from "@mui/material/Menu";
+import Avatar from "@mui/material/Avatar";
+import Tooltip from "@mui/material/Tooltip";
+import MenuItem from "@mui/material/MenuItem";
+import AdbIcon from "@mui/icons-material/Adb";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import ListItem from "@mui/material/ListItem";
@@ -18,46 +26,51 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import { Link } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import RequestPageIcon from "@mui/icons-material/RequestPage";
-import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
-import ListAltIcon from "@mui/icons-material/ListAlt";
-import ContactPageOutlinedIcon from "@mui/icons-material/ContactPageOutlined";
-import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
+import RequestPageRoundedIcon from "@mui/icons-material/RequestPageRounded";
+import AdminPanelSettingsRoundedIcon from "@mui/icons-material/AdminPanelSettingsRounded";
+import ListAltRoundedIcon from "@mui/icons-material/ListAltRounded";
+import ContactPageRoundedIcon from "@mui/icons-material/ContactPageRounded";
+import DescriptionRoundedIcon from "@mui/icons-material/DescriptionRounded";
+import  UserProfile  from "../Utils/Profile";
+import { Container } from "@mui/system";
+import Cookies from "js-cookie";
+import { useAuthUser } from "react-auth-kit";
+import { makeStyles } from "@material-ui/core/styles";
 
 
 
+const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 
 const admin_nav = [
- {
-    icon: <ListAltIcon />,
+  {
+    icon: <ListAltRoundedIcon />,
     path: "/enq-form",
     name: "Enquiry Form",
   },
-   {
-    icon: <AdminPanelSettingsIcon />,
+  {
+    icon: <AdminPanelSettingsRoundedIcon />,
     path: "/enq-admin",
     name: "Enquiry Admin",
-  }
-]
+  },
+];
 const data = [
   {
-    icon: <RequestPageIcon />,
+    icon: <RequestPageRoundedIcon />,
     path: "/tax-filing",
     name: "Tax Filing",
   },
   {
-    icon: <DescriptionOutlinedIcon />,
+    icon: <DescriptionRoundedIcon />,
     path: "/compliance",
     name: "Compliance",
   },
   {
-    icon: <ContactPageOutlinedIcon />,
+    icon: <ContactPageRoundedIcon />,
     path: "/payroll-hr",
-    name: "Payroll&Roll",
+    name: "Payroll & HR",
   },
 ];
-
 
   const drawerWidth = 240;
 
@@ -95,15 +108,18 @@ const data = [
     shouldForwardProp: (prop) => prop !== "open",
   })(({ theme, open }) => ({
     zIndex: theme.zIndex.drawer + 1,
+    boxShadow: `rgb(0 0 0 / 6%) 0px 5px 5px -3px, rgb(0 0 0 / 4%) 0px 8px 10px 1px, rgb(0 0 0 / 4%) 0px 3px 14px 2px`,
     transition: theme.transitions.create(["width", "margin"], {
-      easing: theme.transitions.easing.sharp,
+      easing: theme.transitions.easing.easeInOut,
       duration: theme.transitions.duration.leavingScreen,
     }),
     ...(open && {
       marginLeft: drawerWidth,
       width: `calc(100% - ${drawerWidth}px)`,
+      boxShadow: `rgb(0 0 0 / 6%) 0px 5px 5px -3px, rgb(0 0 0 / 4%) 0px 8px 10px 1px, rgb(0 0 0 / 4%) 0px 3px 14px 2px`,
+
       transition: theme.transitions.create(["width", "margin"], {
-        easing: theme.transitions.easing.sharp ,
+        easing: theme.transitions.easing.easeInOut,
         duration: theme.transitions.duration.enteringScreen,
       }),
     }),
@@ -112,6 +128,7 @@ const data = [
   const Drawer = styled(MuiDrawer, {
     shouldForwardProp: (prop) => prop !== "open",
   })(({ theme, open }) => ({
+    // boxShadow: "rgb(0 0 0 / 6%) 0px 5px 5px -3px, rgb(0 0 0 / 4%) 0px 8px 10px 1px, rgb(0 0 0 / 4%) 0px 3px 14px 2px", 
     width: drawerWidth,
     flexShrink: 0,
     whiteSpace: "nowrap",
@@ -127,13 +144,20 @@ const data = [
   }));
 
   export default function HeaderBar(props) {
+
     const theme = createTheme({
       palette: {
         primary: {
-          main: "#2FA0A4",
+          main: "#004643",
         },
         green: {
-          main: "#2FA0A4",
+          main: "#004643",
+        },
+        background: {
+          main: "#FFFFFE",
+        },
+        teritiary: {
+          main: "#ef4565",
         },
       },
     });
@@ -148,57 +172,200 @@ const data = [
       setOpen(false);
     };
 
+  const signOut = useSignOut();
+
+  const handleClick = () => {
+      signOut();
+      // Perform logout logic here
+      console.log("Logging out...");
+    };
+
+
     return (
       <ThemeProvider theme={theme}>
-      <Box sx={{ display: "flex" }}>
-        <CssBaseline />
-        <AppBar position="fixed" color="green" open={open}>
-          <Toolbar>
-            <IconButton
-              color="inherit"
-              aria-label="open drawer"
-              onClick={handleDrawerOpen}
-              edge="start"
-              sx={{
-                marginRight: 5,
-                ...(open && { display: "none" }),
-              }}
-            >
-              <MenuIcon />
-            </IconButton>
-            <Typography variant="h6" noWrap component="div">
-              Intellecto Global Services
-            </Typography>
-          </Toolbar>
-        </AppBar>
-        <Drawer variant="permanent" open={open}>
-          <DrawerHeader>
-            <IconButton onClick={handleDrawerClose}>
-              {theme.direction === "rtl" ? (
-                <ChevronRightIcon />
-              ) : (
-                <ChevronLeftIcon />
-              )}
-            </IconButton>
-          </DrawerHeader>
-          <Divider />
-          <List>
-            {admin_nav.map((text, idx) => (
-              <ListItem
-                component={Link}
-                to={text.path}
-                key={idx}
-                disablePadding
-                sx={{ display: "block" }}
+        <Box sx={{ display: "flex", flexGrow: 1 }}>
+          <CssBaseline />
+          <AppBar position="fixed" color="background" open={open}>
+            <Toolbar>
+              <IconButton
+                aria-label="open drawer"
+                onClick={handleDrawerOpen}
+                edge="start"
+                sx={{
+                  marginRight: 5,
+                  ...(open && { display: "none" }),
+                }}
               >
-                <ListItemButton
+                <MenuRoundedIcon color="teritiary" />
+              </IconButton>
+              <Typography
+                variant="h6"
+                color={"#094067"}
+                sx={{
+                  fontWeight: "bold",
+                  flexGrow: 1,
+                  fontFamily: "PT Sans Caption",
+                }}
+                noWrap
+                component="div"
+              >
+                Intellecto Global Services
+              </Typography>
+
+              <Button
+              size="small"
+                sx={{
+                  p: 1,
+                  m: 1,
+                  // left: "1150px",
+                  background: "#094067",
+                  color: "#FFFFFE",
+                  fontWeight: "600",
+                  letterSpacing:'1px'
+                }}
+              >
+                {"  "}
+                {Cookies.get("_auth_state").replace(/['"]+/g, "")}
+                {"   "}
+              </Button>
+            </Toolbar>
+          </AppBar>
+          <Drawer
+            variant="permanent"
+            PaperProps={{
+              sx: {
+                // backgroundColor: "black",
+              },
+            }}
+            sx={{
+              "& .MuiDrawer-paper": {
+                backgroundColor: "#FFFFFE",
+              },
+            }}
+            open={open}
+          >
+            <DrawerHeader>
+              <IconButton onClick={handleDrawerClose}>
+                {theme.direction === "rtl" ? (
+                  <ChevronRightIcon color="teritiary" />
+                ) : (
+                  <ChevronLeftIcon color="teritiary" />
+                )}
+              </IconButton>
+            </DrawerHeader>
+            <Divider />
+            <List>
+              {admin_nav.map((text, idx) => (
+                <ListItem
                   component={Link}
                   to={text.path}
                   key={idx}
+                  disablePadding
+                  sx={{ display: "block" }}
+                >
+                  <ListItemButton
+                    component={Link}
+                    to={text.path}
+                    key={idx}
+                    sx={{
+                      borderRadius: "6px",
+
+                      "&:hover": {
+                        background: "#90b4ce",
+                        "& .icon-list-1": {
+                          color: "#FFFFFE",
+                        },
+                        "& .text-list-1": {
+                          color: "#FFFFFE",
+                        },
+                      },
+                      minHeight: 48,
+                      justifyContent: open ? "initial" : "center",
+                      px: 2.5,
+                    }}
+                  >
+                    <ListItemIcon
+                      className="icon-list-1"
+                      sx={{
+                        color: "#094067",
+                        minWidth: 0,
+                        mr: open ? 3 : "auto",
+                        justifyContent: "center",
+                      }}
+                    >
+                      {text.icon}
+                    </ListItemIcon>
+                    <ListItemText
+                      className="text-list-1"
+                      primary={text.name}
+                      sx={{ color: "#094067", opacity: open ? 1 : 0 }}
+                    />
+                  </ListItemButton>
+                </ListItem>
+              ))}
+            </List>
+            <Divider />
+            <List>
+              {data.map((text, index) => (
+                <ListItem key={index} disablePadding sx={{ display: "block" }}>
+                  <ListItemButton
+                    component={Link}
+                    to={text.path}
+                    key={index}
+                    sx={{
+                      borderRadius: "6px",
+                      "&:hover": {
+                        background: "#90b4ce",
+                        "& .icon-list-1": {
+                          color: "#FFFFFE",
+                        },
+                        "& .text-list-1": {
+                          color: "#FFFFFE",
+                        },
+                      },
+                      minHeight: 48,
+                      justifyContent: open ? "initial" : "center",
+                      px: 2.5,
+                    }}
+                  >
+                    <ListItemIcon
+                      className="icon-list-1"
+                      sx={{
+                        color: "#094067",
+                        minWidth: 0,
+                        mr: open ? 3 : "auto",
+                        justifyContent: "center",
+                      }}
+                    >
+                      {text.icon}
+                    </ListItemIcon>
+                    <ListItemText
+                      className="text-list-1"
+                      primary={text.name}
+                      sx={{ color: "#094067", opacity: open ? 1 : 0 }}
+                    />
+                  </ListItemButton>
+                </ListItem>
+              ))}
+            </List>
+            <List style={{ marginTop: `auto` }}>
+              <Divider />
+
+              <ListItem key={1} disablePadding sx={{ display: "block" }}>
+                <ListItemButton
+                  onClick={handleClick}
+                  component={Link}
+                  to={"/login"}
                   sx={{
                     borderRadius: "6px",
                     "&:hover": {
-                      background: "wheat",
+                      background: "#90b4ce",
+                      "& .icon-list-1": {
+                        color: "#FFFFFE",
+                      },
+                      "& .text-list-1": {
+                        color: "#FFFFFE",
+                      },
                     },
                     minHeight: 48,
                     justifyContent: open ? "initial" : "center",
@@ -206,59 +373,29 @@ const data = [
                   }}
                 >
                   <ListItemIcon
+                    className="icon-list-1"
                     sx={{
+                      color: "#094067",
                       minWidth: 0,
                       mr: open ? 3 : "auto",
                       justifyContent: "center",
                     }}
                   >
-                    {text.icon}
+                    <LogoutRoundedIcon />
                   </ListItemIcon>
                   <ListItemText
-                    primary={text.name}
-                    sx={{ opacity: open ? 1 : 0 }}
+                    className="text-list-1"
+                    primary={"Logout"}
+                    sx={{ color: "#094067", opacity: open ? 1 : 0 }}
                   />
                 </ListItemButton>
               </ListItem>
-            ))}
-          </List>
-          <Divider />
-          <List>
-            {data.map((text, index) => (
-              <ListItem key={index} disablePadding sx={{ display: "block" }}>
-                <ListItemButton
-                  component={Link}
-                  to={text.path}
-                  key={index}
-                  sx={{
-                    minHeight: 48,
-                    justifyContent: open ? "initial" : "center",
-                    px: 2.5,
-                  }}
-                >
-                  <ListItemIcon
-                    sx={{
-                      minWidth: 0,
-                      mr: open ? 3 : "auto",
-                      justifyContent: "center",
-                    }}
-                  >
-                    {text.icon}
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={text.name}
-                    sx={{ opacity: open ? 1 : 0 }}
-                  />
-                </ListItemButton>
-              </ListItem>
-            ))}
-          </List>
-        </Drawer>
-        <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-          <DrawerHeader />
-          {props.children}
+            </List>
+          </Drawer>
+          <Box color={"#d8eefe"} component="main" sx={{ flexGrow: 1, p: 4 }}>
+            {props.children}
+          </Box>
         </Box>
-      </Box>
       </ThemeProvider>
     );
   };

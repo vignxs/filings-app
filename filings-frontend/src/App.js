@@ -5,6 +5,8 @@ import { PayrollHR} from "./components/Filings/PayrollHR";
 import {EnqForm}  from "./components/Forms/EnqForm";
 import { EnqAdmin } from "./components/Admin/Admin";
 import HeaderBar from "./components/Sidebar/headerBar";
+import { SignInComponent } from "./components/Auth/Login";
+import { RequireAuth } from "react-auth-kit";
 
 function App() {
   return (
@@ -17,9 +19,16 @@ function App() {
           <Route path="/payroll-hr" element={<PayrollHR />} />
           <Route path="/enq-form" element={<EnqForm />} />
           <Route path="/enq-admin" element={<EnqAdmin />} />
-          <Route path="/enq-admin" element={<EnqAdmin />} />
-
-          <Route path="/" element={<Filings />} />
+          <Route path="/login" element={<SignInComponent />} />
+          <Route
+            path="/"
+            element={
+              <RequireAuth loginPath='/login'>
+                {" "}
+                <Filings />{" "}
+              </RequireAuth>
+            }
+          />
         </Routes>
       </HeaderBar>
     </BrowserRouter>

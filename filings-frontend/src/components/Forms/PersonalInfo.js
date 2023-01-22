@@ -126,12 +126,12 @@ const userInfoPost =  (e) => {
             lineHeight: "35px",
             fontWeight: "600",
           },
-          marginTop: "20px",
+          marginTop: "40px",
           marginLeft: "40px",
           // display: "flex",
           flexDirection: "column",
           position: "relative",
-          left: "-370px",
+          left: "-185px",
         }}
         container
         direction="row"

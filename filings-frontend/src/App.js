@@ -23,10 +23,10 @@ function App() {
           <Route
             path="/"
             element={
-              <RequireAuth loginPath='/login'>
-                {" "}
-                <Filings />{" "}
-              </RequireAuth>
+              // <RequireAuth loginPath='/login'>
+                
+                <Filings />
+              // </RequireAuth>
             }
           />
         </Routes>

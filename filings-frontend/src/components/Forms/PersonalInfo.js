@@ -4,6 +4,8 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import {  Grid } from "@mui/material";
 import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import InputLabel from "@mui/material/InputLabel";
@@ -11,6 +13,7 @@ import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
 import { useForm } from "react-hook-form";
 import { useSnackbar } from "notistack";
 import dayjs from "dayjs";
+import Stack from "@mui/material/Stack";
 
 import {
   FormControlLabel,
@@ -20,21 +23,17 @@ import {
   TextField
 } from "@mui/material";
 import Divider from "@mui/material/Divider";
-import { useNavigate } from "react-router-dom";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { color } from "@mui/system";
 
 export const PersonalInfo = (props) => {
-  const { register, handleSubmit, errors } = useForm();
-  const [userinfo, setInfo] = React.useState({});
-  const [newGstinfo, setnewGstInfo] = React.useState({});
-  const [Gstinfo, setGstInfo] = React.useState({ period: new Date(), });
+  const [userinfo, setInfo] = React.useState({first_name : "vignesh", last_name:"siva", mobile:"7639290579" , email:"vignxs@gmail.com", address:"15/10 , mela thoopu street", city:"PYR", pincode:"609307" });
+  const [newGstinfo, setnewGstInfo] = React.useState({company_name:"IGS" , company_address:"medavakkam koot road" , company_city:"chennai", company_pincode:"600021", company_email:"igs@gamil.com"});
+  const [Gstinfo, setGstInfo] = React.useState({ gst_time: "" , period: {} });
   const [Paninfo, setPanInfo] = React.useState({});
   const [Taxinfo, setTaxInfo] = React.useState({});
-  const [error, seterror] = React.useState(false);
 
 
-  const quaters = ['Q1', 'Q2', 'Q3', 'Q4']
+const quaters = ['Q1', 'Q2', 'Q3', 'Q4']
 
  const handleChangeInfo = (e, service) => {
    const { name, value } = e.target;
@@ -75,27 +74,22 @@ const handleClickVariant = (variant) => () => {
 const userInfoPost =  (e) => {
   handleClickVariant("success");
   e.preventDefault();
-    console.log("submit");
 
-  if (userinfo.enquiredfor === "GST") {
-       setInfo({'serviceInfo' : Gstinfo});
+  if (userinfo.enquired_for === "GST") {
+       userinfo['serviceInfo'] = Gstinfo
     } 
-    if (userinfo.enquiredfor === "GST Registration") {
-    console.log("submit");
-
-             setInfo({ serviceInfo: newGstinfo });
-
+    else if (userinfo.enquired_for === "GST Registration") {
+                   userinfo["serviceInfo"] = newGstinfo;
     } 
-    if (userinfo.enquiredfor === "PAN Registration") {
-             setInfo({ serviceInfo: Paninfo });
-
+    else if (userinfo.enquired_for === "PAN Registration") {
+                    userinfo["serviceInfo"] = Paninfo;
     } 
-    if (userinfo.enquiredfor === "TAX Registration") {
-             setInfo({ serviceInfo: Taxinfo });
-
+    else if (userinfo.enquired_for === "TAX Registration") {
+                   userinfo["serviceInfo"] = Taxinfo;
     }
     console.log(userinfo);
-   fetch("https://filings.deta.dev/enqform", {
+  
+   fetch("http://localhost:8000/enqform", {
      method: "POST",
      headers: { "Content-Type": "application/json" },
      body: JSON.stringify({
@@ -103,7 +97,9 @@ const userInfoPost =  (e) => {
      }),
    });
 
-    Object.keys(userinfo).forEach((key) => delete userinfo[key]);
+    // Object.keys(userinfo).forEach((key) => delete userinfo[key]);
+    // Object.keys(userinfo.serviceInfo).forEach((key) => delete userinfo.serviceInfo[key]);
+
   };
 
   const services = [
@@ -121,23 +117,19 @@ const userInfoPost =  (e) => {
     >
       <Grid
         style={{
+          paddingTop: "10px",
           "& .MuiTypographyH6": {
             fontSize: "12px",
             lineHeight: "35px",
             fontWeight: "600",
           },
-          marginTop: "40px",
-          marginLeft: "40px",
-          // display: "flex",
           flexDirection: "column",
           position: "relative",
-          left: "-185px",
         }}
         container
         direction="row"
         justify="center"
-        alignItems="center"
-        spacing={2}
+        alignItems="inherit"
       >
         <Grid style={{ display: "flex" }}>
           <TextValidator
@@ -145,24 +137,20 @@ const userInfoPost =  (e) => {
             size="small"
             color="green"
             type="text"
-            name="fst_name"
+            name="first_name"
             required={true}
-            value={userinfo.fst_name || ""}
-            onChange={(e) =>
-              handleChangeInfo(e, "user", seterror(!e.target.value))
-            }
+            value={userinfo.first_name}
+            onChange={(e) => handleChangeInfo(e, "user")}
           />
           <TextValidator
             label="Last name"
             size="small"
             color="green"
             type="text"
-            name="lst_name"
+            name="last_name"
             required={true}
-            value={userinfo.lst_name || ""}
-            onChange={(e) =>
-              handleChangeInfo(e, "user", seterror(!e.target.value))
-            }
+            value={userinfo.last_name}
+            onChange={(e) => handleChangeInfo(e, "user")}
           />
         </Grid>
         <Grid style={{ display: "flex" }}>
@@ -171,7 +159,7 @@ const userInfoPost =  (e) => {
             name="mobile"
             validators={["isNumber"]}
             errorMessages={["Please enter 10 digit Mobile number"]}
-            value={userinfo.mobile || ""}
+            value={userinfo.mobile}
             required={true}
             onChange={(e) => handleChangeInfo(e, "user")}
             size="small"
@@ -179,23 +167,34 @@ const userInfoPost =  (e) => {
             type="text"
           />
           <TextValidator
-            label="Address"
-            multiline
-            name="address"
-            value={userinfo.address || ""}
+            label="Email"
             onChange={(e) => handleChangeInfo(e, "user")}
+            name="email"
             size="small"
-            required={true}
             color="green"
-            type="text"
+            // required={true}
+            value={userinfo.email}
+            validators={["isEmail"]}
+            errorMessages={["email is not valid"]}
           />
         </Grid>
         <Grid style={{ display: "flex" }}>
           <TextValidator
+            label="Address"
+            multiline
+            name="address"
+            value={userinfo.address}
+            onChange={(e) => handleChangeInfo(e, "user")}
+            size="small"
+            required={true}
+            color="green"
+            type="text"
+          />
+          <TextValidator
             label="City"
             size="small"
             name="city"
-            value={userinfo.city || ""}
+            value={userinfo.city}
             onChange={(e) => handleChangeInfo(e, "user")}
             color="green"
             // required={true}
@@ -205,7 +204,7 @@ const userInfoPost =  (e) => {
             label="Pincode"
             size="small"
             name="pincode"
-            value={userinfo.pincode || ""}
+            value={userinfo.pincode}
             onChange={(e) => handleChangeInfo(e, "user")}
             color="green"
             validators={["isNumber", "matchRegexp:^[1-9][0-9]{5}$"]}
@@ -218,16 +217,6 @@ const userInfoPost =  (e) => {
           />
         </Grid>
         <Grid style={{ display: "flex" }}>
-          <TextValidator
-            label="Email"
-            onChange={(e) => handleChangeInfo(e, "user")}
-            name="email"
-            size="small"
-            // required={true}
-            value={userinfo.email || ""}
-            validators={["isEmail"]}
-            errorMessages={["email is not valid"]}
-          />
           <FormControl sx={{ m: 2, minWidth: "30ch" }} size="small">
             <InputLabel id="demo-simple-select-label">Enquired for*</InputLabel>
             <Select
@@ -235,8 +224,8 @@ const userInfoPost =  (e) => {
               id="demo-simple-label"
               label="Enquired for*"
               color="green"
-              value={userinfo.enquiredfor || ""}
-              name="enquiredfor"
+              value={userinfo.enquired_for || ""}
+              name="enquired_for"
               required={true}
               onChange={(e) => handleChangeInfo(e, "user")}
             >
@@ -248,14 +237,14 @@ const userInfoPost =  (e) => {
         </Grid>
         <Divider variant="middle" sx={{ m: 2, width: "40%" }} />
 
-        {userinfo.enquiredfor === "GST" ? (
+        {userinfo.enquired_for === "GST" ? (
           <Grid>
             <RadioGroup
               row
               name="gst_time"
               required={true}
-              sx={{ mb: 2 }}
-              value={Gstinfo.gst_time}
+              sx={{ mb: 2, p: 0, left: "20px", position: "relative" }}
+              value={Gstinfo.gst_time || ""}
               onChange={(e) => handleChangeInfo(e, "gst")}
             >
               <FormControlLabel
@@ -305,7 +294,7 @@ const userInfoPost =  (e) => {
                   openTo="month"
                   label="Period"
                   views={["year", "month"]}
-                  value={Gstinfo.period.month || ""}
+                  value={Gstinfo.period.month}
                   onChange={(e) =>
                     setGstInfo({ ...Gstinfo, period: { month: e } })
                   }
@@ -324,7 +313,7 @@ const userInfoPost =  (e) => {
                   <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
-                    value={Gstinfo.period.quater}
+                    value={Gstinfo.period.quater || "Q1"}
                     label="Period"
                     name="period"
                     onChange={(e) => {
@@ -344,7 +333,7 @@ const userInfoPost =  (e) => {
               )}
             </LocalizationProvider>
           </Grid>
-        ) : userinfo.enquiredfor === "GST Registration" ? (
+        ) : userinfo.enquired_for === "GST Registration" ? (
           <>
             <Grid style={{ display: "flex" }}>
               <TextValidator
@@ -357,6 +346,8 @@ const userInfoPost =  (e) => {
                 onChange={(e) => handleChangeInfo(e, "newgst")}
                 type="text"
               />
+            </Grid>
+            <Grid style={{ display: "flex" }}>
               <TextValidator
                 label="Company address"
                 multiline
@@ -367,12 +358,10 @@ const userInfoPost =  (e) => {
                 color="green"
                 type="text"
               />
-            </Grid>
-            <Grid style={{ display: "flex" }}>
               <TextValidator
                 label="City"
                 name="company_city"
-                value={"" || userinfo.company_city}
+                value={"" || newGstinfo.company_city}
                 onChange={(e) => handleChangeInfo(e, "newgst")}
                 size="small"
                 color="green"
@@ -381,8 +370,7 @@ const userInfoPost =  (e) => {
               <TextValidator
                 label="Pincode"
                 name="company_pincode"
-                inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
-                value={userinfo.company_pincode}
+                value={newGstinfo.company_pincode}
                 onChange={(e) => handleChangeInfo(e, "newgst")}
                 size="small"
                 color="green"
@@ -409,11 +397,11 @@ const userInfoPost =  (e) => {
                 size="small"
                 required={true}
                 color="green"
-                type="email"
+                type="tel"
               />
             </Grid>
           </>
-        ) : userinfo.enquiredfor === "PAN Registration" ? (
+        ) : userinfo.enquired_for === "PAN Registration" ? (
           <Grid
             style={{
               display: "flex",
@@ -432,7 +420,7 @@ const userInfoPost =  (e) => {
               type="text"
             />
           </Grid>
-        ) : userinfo.enquiredfor === "TAX Registration" ? (
+        ) : userinfo.enquired_for === "TAX Registration" ? (
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <Grid style={{ display: "flex" }}>
               <DatePicker
@@ -441,12 +429,13 @@ const userInfoPost =  (e) => {
                 openTo="year"
                 label="Assessment year"
                 views={["year"]}
-                value={Taxinfo.assessmentyear}
-                onChange={(e) => setInfo({ ...Taxinfo, assessmentyear: e })}
+                value={Taxinfo.assessment_year || Date}
+                onChange={(e) => setTaxInfo({ ...Taxinfo, assessment_year: e })}
                 renderInput={(params) => (
                   <TextValidator
                     required={true}
                     size="small"
+                    color="green"
                     {...params}
                     helperText={null}
                     fullWidth
@@ -458,6 +447,7 @@ const userInfoPost =  (e) => {
                 size="small"
                 label="Pan"
                 required={true}
+                color="green"
                 name="pan"
                 validators={["matchRegexp:^[A-Za-z]{5}[0-9]{4}[A-Za-z]{1}$"]}
                 errorMessages={["Please valid Pan number "]}
@@ -471,10 +461,35 @@ const userInfoPost =  (e) => {
         ) : (
           false
         )}
-        <Button sx={{ m: 2 }} variant="contained" color="success" type="submit">
-          Submit
-        </Button>
       </Grid>
+      <div style={{ marginTop: `auto` }}>
+        <Divider/>
+        <Stack spacing={2} direction="row">
+          <Button
+            sx={{ m: 2, width: "100px", color: "#FFFFFE" }}
+            variant="contained"
+            color="green"
+            type="submit"
+          >
+            Submit
+          </Button>
+          <Button
+            sx={{
+              m: 2,
+              width: "100px",
+              height: "38px",
+              top: "17px",
+              color: "#094067",
+            }}
+            variant="outlined"
+            color="green"
+            type="reset"
+          >
+            Clear
+          </Button>
+        </Stack>
+      </div>
+      
     </ValidatorForm>
   );
 };

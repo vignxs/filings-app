@@ -31,15 +31,8 @@ import AdminPanelSettingsRoundedIcon from "@mui/icons-material/AdminPanelSetting
 import ListAltRoundedIcon from "@mui/icons-material/ListAltRounded";
 import ContactPageRoundedIcon from "@mui/icons-material/ContactPageRounded";
 import DescriptionRoundedIcon from "@mui/icons-material/DescriptionRounded";
-import  UserProfile  from "../Utils/Profile";
-import { Container } from "@mui/system";
 import Cookies from "js-cookie";
-import { useAuthUser } from "react-auth-kit";
-import { makeStyles } from "@material-ui/core/styles";
 
-
-
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 
 const admin_nav = [
@@ -159,6 +152,9 @@ const data = [
         teritiary: {
           main: "#ef4565",
         },
+        bg: {
+          main: "#d8eefe",
+        },
       },
     });
     // const theme = useTheme();
@@ -213,7 +209,7 @@ const data = [
               </Typography>
 
               <Button
-              size="small"
+                size="small"
                 sx={{
                   p: 1,
                   m: 1,
@@ -221,12 +217,12 @@ const data = [
                   background: "#094067",
                   color: "#FFFFFE",
                   fontWeight: "600",
-                  letterSpacing:'1px'
+                  letterSpacing: "1px",
                 }}
               >
-                {"  "}
-                {Cookies.get("_auth_state").replace(/['"]+/g, "")}
-                {"   "}
+                {Cookies.get("_auth_state")
+                  ? Cookies.get("_auth_state").replace(/['"]+/g, "")
+                  : "vignxs"}
               </Button>
             </Toolbar>
           </AppBar>
@@ -392,7 +388,7 @@ const data = [
               </ListItem>
             </List>
           </Drawer>
-          <Box color={"#d8eefe"} component="main" sx={{ flexGrow: 1, p: 4 }}>
+          <Box component="main" sx={{ flexGrow: 1, p: 4, bgcolor: "#d8eefe" }}>
             {props.children}
           </Box>
         </Box>

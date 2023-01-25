@@ -34,18 +34,6 @@ users = []
 
 @app.post('/register', status_code=201)
 async def register(request: Request):
-    """_summary_
-
-    Args:
-        request (Request): _description_
-        Data from the client and it should contain email and pass word
-
-    Raises:
-        HTTPException: _description_
-
-    Returns:
-        _type_: _description_
-    """
     data = await request.json()
     print(data)
     name_exists = db.query(User).filter(User.user_name == data['user_name']).first() is not None
@@ -104,17 +92,27 @@ async def create_upload_file(file: UploadFile = File(...)):
 @app.post("/enqform")
 async def enq_data( request: Request):
     body1 = await request.json()
+    print(body1)
     body= body1['userinfo']
-    print(body)
+    # try:
     enq_id = secrets.token_hex(10)
-    
-    data= models.IGS_ENQ_DATA(enq_id=enq_id , fst_name = body['fst_name'], lst_name = body['lst_name'], mobile_no = int(body["mobile"]), email = body["email"] , status = "In-Progress" , pincode = int(body["pincode"]), enq_for = body["enquiredfor"])
+    body['serviceInfo']['enq_id'] = enq_id
+    data= models.IGS_ENQ_DATA(enq_id=enq_id , first_name = body['first_name'], last_name = body['last_name'], mobile = int(body["mobile"]), email = body["email"] , address=body['address'] , city=body['city'] , status = "In-Progress" , pincode = int(body["pincode"]), enquired_for = body["enquired_for"])
     db.add(data)
     db.flush()
-    srv  = models.IGS_ENQ_GST(enq_id=enq_id , gst_time = body['serviceInfo']['gst_time'], period = list(body['serviceInfo']['period'].values())[0])
+    if body['enquired_for'] == "GST":
+        srv  = models.IGS_ENQ_GST   (enq_id=body['serviceInfo']['enq_id'] , gst_time = body['serviceInfo']['gst_time'], period = list(body['serviceInfo']['period'].values())[0])
+    elif body['enquired_for'] == "GST Registration":
+        srv  = models.IGS_ENQ_GST_RGST(**body['serviceInfo'])
+    elif body['enquired_for'] == "PAN Registration":
+        srv  = models.IGS_ENQ_PAN_RGST(**body['serviceInfo'])
+    elif body['enquired_for'] == "TAX Registration":
+        srv  = models.IGS_ENQ_TAX(**body['serviceInfo'])
     db.add(srv)
     db.flush()
-    db.commit()
+    db.commit() 
+    # except Exception as e:
+    #     print(e)
 
 # {'userinfo': {'serviceInfo': {'period': {'month': '2023-05-01T04:00:00.000Z'}, 'gst_time': 'Monthly'}, 'fst_name': 'Vignesh', 'lst_name': 'Sivakumar', 'mobile': '7639290579', 'address': 'VDVAC', 'city': 'porayar', 'pincode': '609407', 'email': 'vignxs@gmail.com'639290579', 'address': 'VDVAC', 'city': 'porayar', 'pincode': '6639290579', 'address': 'VDVAC', 'city': 'porayar', 'pincode': '609407', 'email': 'vignxs@gmail.com', 'enquiredfor': 'GST'}}
 

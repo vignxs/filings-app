@@ -65,7 +65,7 @@ const data = [
   },
 ];
 
-  const drawerWidth = 240;
+  const drawerWidth = 220;
 
   const openedMixin = (theme) => ({
     width: drawerWidth,
@@ -147,13 +147,13 @@ const data = [
           main: "#004643",
         },
         background: {
-          main: "#FFFFFE",
+          main: "#d8eefe",
         },
         teritiary: {
           main: "#ef4565",
         },
         bg: {
-          main: "#d8eefe",
+          main: "#FFFFFE",
         },
       },
     });
@@ -235,7 +235,7 @@ const data = [
             }}
             sx={{
               "& .MuiDrawer-paper": {
-                backgroundColor: "#FFFFFE",
+                backgroundColor: "#d8eefe",
               },
             }}
             open={open}
@@ -388,7 +388,16 @@ const data = [
               </ListItem>
             </List>
           </Drawer>
-          <Box component="main" sx={{ flexGrow: 1, p: 4, bgcolor: "#d8eefe" }}>
+          <Box
+            component="main"
+            sx={{
+              flexGrow: 1,
+              p: 4,
+              bgcolor: "#FFFFFE",
+              width: "100vw",
+              minHeight: "100vw",
+            }}
+          >
             {props.children}
           </Box>
         </Box>

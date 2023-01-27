@@ -11,6 +11,7 @@ import models
 from database import SessionLocal as db
 from database import engine
 import secrets
+from sqlalchemy import  select
 from auth import AuthHandler 
 from models import User   
 db  = db()
@@ -116,4 +117,12 @@ async def enq_data( request: Request):
 
 # {'userinfo': {'serviceInfo': {'period': {'month': '2023-05-01T04:00:00.000Z'}, 'gst_time': 'Monthly'}, 'fst_name': 'Vignesh', 'lst_name': 'Sivakumar', 'mobile': '7639290579', 'address': 'VDVAC', 'city': 'porayar', 'pincode': '609407', 'email': 'vignxs@gmail.com'639290579', 'address': 'VDVAC', 'city': 'porayar', 'pincode': '6639290579', 'address': 'VDVAC', 'city': 'porayar', 'pincode': '609407', 'email': 'vignxs@gmail.com', 'enquiredfor': 'GST'}}
 
+
+#Admin table
+
+@app.get("/enq-data")
+def enquiry_data():
+    data = db.query(models.IGS_ENQ_DATA.enq_id,models.IGS_ENQ_DATA.first_name, models.IGS_ENQ_DATA.enquired_for,models.IGS_ENQ_DATA.email, models.IGS_ENQ_DATA.status ).all()
+    columns = models.IGS_ENQ_DATA.__table__.columns.keys()
+    return data 
     

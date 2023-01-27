@@ -7,7 +7,6 @@ import Button from "@material-ui/core/Button";
 import FormControl from "@material-ui/core/FormControl";
 import Box from "@material-ui/core/Box";
 import { useSignIn } from "react-auth-kit";
-
 const useStyles = makeStyles((theme) => ({
   card: {
     width: "30%",

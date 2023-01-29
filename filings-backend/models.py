@@ -1,4 +1,5 @@
-from sqlalchemy import  Column, ForeignKey, Integer, String, BigInteger, BOOLEAN
+from sqlalchemy import  Column, ForeignKey, Integer, String, BigInteger, BOOLEAN 
+from sqlalchemy.orm import relationship
 from database import Base
 # import bcrypt
 
@@ -20,11 +21,19 @@ class IGS_FILINGS_SERVICES(Base):
 
 	service_id = Column(Integer, primary_key=True, index=True)
 	service_name = Column(String)
-	
+class IGS_ENQ_GST(Base):
+	__tablename__ = "IGS_ENQ_GST"
+	__table_args__ = {'extend_existing': True} 
+
+	id = Column(Integer, primary_key=True, autoincrement = True, index=True)
+	enq_id = Column(String, ForeignKey("IGS_ENQ_DATA.enq_id", ondelete='CASCADE') )
+	gst_time = Column(String)
+	period = Column(String)	
 class IGS_ENQ_DATA(Base):
 	__tablename__ = "IGS_ENQ_DATA"
 	__table_args__ = {'extend_existing': True} 
 
+	# child = relationship(IGS_ENQ_GST, backref="parent", passive_deletes=True)
 	enq_id = Column(String, primary_key=True, index=True)
 	first_name = Column(String)
 	last_name = Column(String)
@@ -37,14 +46,7 @@ class IGS_ENQ_DATA(Base):
 	status = Column(String)
  
 
-class IGS_ENQ_GST(Base):
-	__tablename__ = "IGS_ENQ_GST"
-	__table_args__ = {'extend_existing': True} 
 
-	id = Column(Integer, primary_key=True, autoincrement = True, index=True)
-	enq_id = Column(String, ForeignKey("IGS_ENQ_DATA.enq_id"))
-	gst_time = Column(String)
-	period = Column(String)
 
 class IGS_ENQ_TAX(Base):
 	__tablename__ ="IGS_ENQ_TAX"

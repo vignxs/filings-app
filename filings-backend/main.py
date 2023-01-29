@@ -11,9 +11,9 @@ import models
 from database import SessionLocal as db
 from database import engine
 import secrets
-from sqlalchemy import  select
+from sqlalchemy import  select, update, delete
 from auth import AuthHandler 
-from models import User   
+from models import User , IGS_ENQ_DATA, IGS_ENQ_GST_RGST, IGS_ENQ_PAN_RGST, IGS_ENQ_GST, IGS_ENQ_TAX, IGS_FILINGS_SERVICES  
 db  = db()
 
 conf = yaml.safe_load(Path('config.yaml').read_text())
@@ -98,31 +98,40 @@ async def enq_data( request: Request):
     # try:
     enq_id = secrets.token_hex(10)
     body['serviceInfo']['enq_id'] = enq_id
-    data= models.IGS_ENQ_DATA(enq_id=enq_id , first_name = body['first_name'], last_name = body['last_name'], mobile = int(body["mobile"]), email = body["email"] , address=body['address'] , city=body['city'] , status = "In-Progress" , pincode = int(body["pincode"]), enquired_for = body["enquired_for"])
+    data= IGS_ENQ_DATA(enq_id=enq_id , first_name = body['first_name'], last_name = body['last_name'], mobile = int(body["mobile"]), email = body["email"] , address=body['address'] , city=body['city'] , status = "Created" , pincode = int(body["pincode"]), enquired_for = body["enquired_for"])
     db.add(data)
     db.flush()
     if body['enquired_for'] == "GST":
-        srv  = models.IGS_ENQ_GST   (enq_id=body['serviceInfo']['enq_id'] , gst_time = body['serviceInfo']['gst_time'], period = list(body['serviceInfo']['period'].values())[0])
+        srv  = IGS_ENQ_GST   (enq_id=body['serviceInfo']['enq_id'] , gst_time = body['serviceInfo']['gst_time'], period = list(body['serviceInfo']['period'].values())[0])
     elif body['enquired_for'] == "GST Registration":
-        srv  = models.IGS_ENQ_GST_RGST(**body['serviceInfo'])
+        srv  = IGS_ENQ_GST_RGST(**body['serviceInfo'])
     elif body['enquired_for'] == "PAN Registration":
-        srv  = models.IGS_ENQ_PAN_RGST(**body['serviceInfo'])
+        srv  = IGS_ENQ_PAN_RGST(**body['serviceInfo'])
     elif body['enquired_for'] == "TAX Registration":
-        srv  = models.IGS_ENQ_TAX(**body['serviceInfo'])
+        srv  = IGS_ENQ_TAX(**body['serviceInfo'])
     db.add(srv)
     db.flush()
     db.commit() 
-    # except Exception as e:
-    #     print(e)
-
-# {'userinfo': {'serviceInfo': {'period': {'month': '2023-05-01T04:00:00.000Z'}, 'gst_time': 'Monthly'}, 'fst_name': 'Vignesh', 'lst_name': 'Sivakumar', 'mobile': '7639290579', 'address': 'VDVAC', 'city': 'porayar', 'pincode': '609407', 'email': 'vignxs@gmail.com'639290579', 'address': 'VDVAC', 'city': 'porayar', 'pincode': '6639290579', 'address': 'VDVAC', 'city': 'porayar', 'pincode': '609407', 'email': 'vignxs@gmail.com', 'enquiredfor': 'GST'}}
-
-
-#Admin table
-
+   
+#Admin table 
 @app.get("/enq-data")
 def enquiry_data():
-    data = db.query(models.IGS_ENQ_DATA.enq_id,models.IGS_ENQ_DATA.first_name, models.IGS_ENQ_DATA.enquired_for,models.IGS_ENQ_DATA.email, models.IGS_ENQ_DATA.status ).all()
-    columns = models.IGS_ENQ_DATA.__table__.columns.keys()
+    data = db.query(IGS_ENQ_DATA.enq_id,IGS_ENQ_DATA.first_name, IGS_ENQ_DATA.enquired_for,IGS_ENQ_DATA.email, IGS_ENQ_DATA.status ).all()
+    columns = IGS_ENQ_DATA.__table__.columns.keys()
     return data 
+
+@app.put("/enq-data-update")
+async def enquiry_data_update(request:Request):
+    body = await request.json()
+    stmt = update(IGS_ENQ_DATA).where(IGS_ENQ_DATA.enq_id == body["data"]["enq_id"]).values(**body["data"])
+    db.execute(stmt)
+    db.commit()
+    
+@app.delete("/enq-data-delete")
+async def enquiry_data_delete(request:Request):
+    body = await request.json()
+    stmt = delete(IGS_ENQ_DATA).where(IGS_ENQ_DATA.enq_id == body["data"]["enq_id"])
+    db.execute(stmt)
+    db.commit()
+    return body["data"]["enq_id"]
     

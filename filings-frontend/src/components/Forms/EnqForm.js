@@ -133,11 +133,11 @@ export const EnqForm = (props) => {
     margin: "0 auto",
     width: "100%",
     "& .MuiTextField-root": {
-      m: 2,
+      m: 1.5,
       // borderRadius:'15px',
       backgroundColor: "#fffffe",
       borderRadius: "10px",
-      width: "30ch",
+      width: "23ch",
     },
     "& .MuiInputBase-input": {
       borderRadius: "10px",
@@ -308,7 +308,7 @@ export const EnqForm = (props) => {
                   />
                 </Grid>
                 <Grid style={{ display: "flex" }}>
-                  <FormControl sx={{ m: 2, minWidth: "30ch" }} size="small">
+                  <FormControl sx={{ m: 1.5, minWidth: "23ch" }} size="small">
                     <InputLabel color="green" id="demo-simple-select-label">
                       Enquired for*
                     </InputLabel>
@@ -404,7 +404,7 @@ export const EnqForm = (props) => {
                         />
                       ) : Gstinfo.gst_time === "Quaterly" ? (
                         <FormControl
-                          sx={{ m: 2, minWidth: "30ch" }}
+                          sx={{ m: 1.5, minWidth: "23ch" }}
                           size="small"
                         >
                           <InputLabel id="demo-simple-select-label">

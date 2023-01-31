@@ -6,6 +6,7 @@ import {EnqForm}  from "./components/Forms/EnqForm";
 import { EnqAdmin } from "./components/Admin/Admin";
 import HeaderBar from "./components/Sidebar/headerBar";
 import { SignInComponent } from "./components/Auth/Login";
+import { SignUpComponent } from "./components/Auth/Register";
 import { RequireAuth } from "react-auth-kit";
 
 function App() {
@@ -20,12 +21,13 @@ function App() {
           <Route path="/enq-form" element={<EnqForm />} />
           <Route path="/enq-admin" element={<EnqAdmin />} />
           <Route path="/login" element={<SignInComponent />} />
+          <Route path="/register" element={<SignUpComponent />} />
           <Route
             path="/"
             element={
               // <RequireAuth loginPath='/login'>
-                
-                <Filings />
+
+              <EnqAdmin />
               // </RequireAuth>
             }
           />

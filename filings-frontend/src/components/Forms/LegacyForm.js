@@ -9,7 +9,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import React from "react";
 import Container from "@mui/material/Container";
 import FormControl from "@mui/material/FormControl";
-import { PersonalInfo } from "./PersonalInfo";
+// import { PersonalInfo } from "./PersonalInfo";
 import QontoConnector from "../Utils/StepperUtils";
 import Sidebar from "../Sidebar/Sidebar";
 
@@ -26,22 +26,7 @@ export const EnqForm = (props) => {
     color: "#000000",
   };
 
-  const inputBox = {
-    "& .MuiTextField-root": {
-      m: 4,
-      width: "20ch",
-      bottom: "22px",
-      right: "50px",
-    },
-    marginLeft: "70px",
-    boxShadow: `rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px`,
-    bgcolor: "#F0F4F7",
-    top: "5rem",
-    width: "1000px",
-    height: "700px",
-    position: "absolute",
-    borderRadius: "6px",
-  };
+
 
   //   const QontoStepIconRoot = styled('div')<{ ownerState: { active ?: boolean } }>(
   //   ({ theme, ownerState }) => ({
@@ -80,7 +65,8 @@ export const EnqForm = (props) => {
   function getStepContent(stepIndex) {
     switch (stepIndex) {
       case 0:
-        return <PersonalInfo />;
+                return `Integer euismod dapibus sapien, a interdum augue blandit eget. Donec pellentesque, sapien iaculis dignissim sagittis, risus nulla auctor eros, sed suscipit eros mauris id lorem. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer porttitor mauris egestas consequat molestie. Nam egestas iaculis malesuada. Praesent sagittis venenatis finibus. Praesent porttitor ipsum et sapien cursus, eu mattis augue ornare.`;
+
 
       case 1:
         return `Integer euismod dapibus sapien, a interdum augue blandit eget. Donec pellentesque, sapien iaculis dignissim sagittis, risus nulla auctor eros, sed suscipit eros mauris id lorem. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer porttitor mauris egestas consequat molestie. Nam egestas iaculis malesuada. Praesent sagittis venenatis finibus. Praesent porttitor ipsum et sapien cursus, eu mattis augue ornare.`;
@@ -100,11 +86,8 @@ export const EnqForm = (props) => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
 
   const handleReset = () => setActiveStep(0);
-  const [age, setAge] = React.useState("");
 
-  const handleChange = (event) => {
-    setAge(event.target.value);
-  };
+
   const theme = createTheme({
     palette: {
       primary: {
@@ -117,10 +100,7 @@ export const EnqForm = (props) => {
   });
 
   return (
-    <Sidebar>
-      <Container>
         <FormControl>
-          <Box sx={inputBox}>
             <ThemeProvider theme={theme}>
               <Typography style={Pstyl}>Enquiry Form </Typography>
               <Stepper
@@ -183,10 +163,7 @@ export const EnqForm = (props) => {
                 )}
               </Box>
             </ThemeProvider>
-          </Box>
-        </FormControl>
-      </Container>
-    </Sidebar>
+          </FormControl>
   );
 };
 

@@ -7,7 +7,7 @@ import Button from "@material-ui/core/Button";
 import FormControl from "@material-ui/core/FormControl";
 import Box from "@material-ui/core/Box";
 import { useSignIn } from "react-auth-kit";
-import { json, NavLink , useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { Typography } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
@@ -28,12 +28,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export  function SignInComponent() {
+export function SignUpComponent() {
   const classes = useStyles();
   const signIn = useSignIn();
   const [values, setValues] = React.useState({
     email: "",
-    user_name:"",
+    user_name: "",
     password: "",
   });
   const navigate = useNavigate();
@@ -44,27 +44,18 @@ export  function SignInComponent() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-   
-    const res =  await fetch("http://127.0.0.1:8000/login", {
+
+    const res = await fetch("http://127.0.0.1:8000/register", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(values)
+      body: JSON.stringify(values),
     });
     const post_resp = await res.json();
     if (post_resp) {
       console.log(post_resp);
-      signIn({
-        token: post_resp.token,
-        expiresIn: 3600,
-        tokenType: "Bearer",
-        authState: {user:values.user_name},
-        // refreshToken: res.data.refreshToken, // Only if you are using refreshToken feature
-        // refreshTokenExpireIn: res.data.refreshTokenExpireIn, // Only if you are using refreshToken feature
-      });
-    localStorage.setItem("user", JSON.stringify(values.user_name));
-    navigate(-1);
+      
+      navigate(-1);
     }
-    
   };
 
   return (
@@ -125,15 +116,17 @@ export  function SignInComponent() {
               />
             </Box>
             <Button type="submit" variant="contained" color="primary">
-              Login
+              Register
             </Button>
           </FormControl>
         </form>
-        <div style={{ margin: "20px", display: "flex", justifyContent: "center" }}>
+        <div
+          style={{ margin: "20px", display: "flex", justifyContent: "center" }}
+        >
           <Typography>
-            Don't have an account?
-            <NavLink to="/register" style={{ color: "primary", marginLeft: 5 }}>
-              Register
+            Already have an account?
+            <NavLink to="/login" style={{ color: "primary", marginLeft: 5 }}>
+              LogIn
             </NavLink>
           </Typography>
         </div>

@@ -11,12 +11,12 @@ const QontoConnector = styled(StepConnector)(({ theme }) => ({
   },
   [`&.${stepConnectorClasses.active}`]: {
     [`& .${stepConnectorClasses.line}`]: {
-      borderColor: "#3A3560",
+      borderColor: "#094067",
     },
   },
   [`&.${stepConnectorClasses.completed}`]: {
     [`& .${stepConnectorClasses.line}`]: {
-      borderColor: "#3A3560",
+      borderColor: "#094067",
     },
   },
   [`& .${stepConnectorClasses.line}`]: {

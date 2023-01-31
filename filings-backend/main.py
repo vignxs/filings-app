@@ -46,7 +46,7 @@ async def register(request: Request):
         raise HTTPException(status_code=401, detail='Email already exists')
     hashed_password = auth_handler.get_password_hash(data['password'])
     print(hashed_password)
-    db.add( User(email = data['email'], password = hashed_password))
+    db.add( User(user_name = data['user_name'] , email = data['email'], password = hashed_password))
     db.commit()
     return data['email']
 
@@ -74,16 +74,28 @@ def protected(username=Depends(auth_handler.auth_wrapper)):
 
 @app.post("/uploadfile")
 async def create_upload_file(file: UploadFile = File(...)):
+    json_data = {}
     if not file:
         return {"message": "No upload file sent"}
     else:
-        print('1111')
         file.file.seek(0)
         try:
             pdf_reader = PdfReader(file.file)
-            print(pdf_reader)
-            dictionary = pdf_reader.getFormTextFields()
-            json_data = json.dumps(dictionary)
+            data = pdf_reader.getFormTextFields()
+            # data = json.dumps(dictionary)
+            print(data)
+            json_data =  {
+            'First_name': data['Given Name Text Box'],
+            'Last_name' : data['Family Name Text Box'],
+            'House_no' : data['House nr Text Box'],
+            'Address' : data['Address 1 Text Box'],
+            'Post_Code' : data['Postcode Text Box'],
+            'Country' : "India  ",
+            'City' : data['City Text Box'],
+            'Favorite_color' : data['Family Name Text Box'],
+            'Driving_Licence' : "yes",
+        }
+            print(json_data)
         except Exception as e:
             print(e)
         # resp = cloudinary.uploader.upload(file.file)
@@ -96,7 +108,8 @@ async def enq_data( request: Request):
     print(body1)
     body= body1['userinfo']
     # try:
-    enq_id = secrets.token_hex(10)
+    enq_id = secrets.token_hex(5)
+    # random.randrange(111111, 999999, fixed_digits)
     body['serviceInfo']['enq_id'] = enq_id
     data= IGS_ENQ_DATA(enq_id=enq_id , first_name = body['first_name'], last_name = body['last_name'], mobile = int(body["mobile"]), email = body["email"] , address=body['address'] , city=body['city'] , status = "Created" , pincode = int(body["pincode"]), enquired_for = body["enquired_for"])
     db.add(data)

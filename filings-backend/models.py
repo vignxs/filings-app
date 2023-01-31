@@ -19,7 +19,7 @@ class IGS_FILINGS_SERVICES(Base):
 	__tablename__ = "IGS_FILINGS_SERVICES"
 	__table_args__ = {'extend_existing': True} 
 
-	service_id = Column(Integer, primary_key=True, index=True)
+	service_id = Column(Integer, primary_key=True, autoincrement = True, index=True)
 	service_name = Column(String)
 class IGS_ENQ_GST(Base):
 	__tablename__ = "IGS_ENQ_GST"

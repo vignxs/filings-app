@@ -38,6 +38,7 @@ import {
 } from "@mui/material";
 import { CheckRounded, SaveRounded , DeleteRounded } from "@mui/icons-material";
 import { green } from "@mui/material/colors";
+import { useValue } from "../../Context/ContextProvider";
 // import userContext from "../Context";
 
 
@@ -113,18 +114,21 @@ export const UsersActions = ({ params, rowId, setRowId }) => {
   const handleClose = () => {
     setOpen(false);
   };
+const { state, dispatch } = useValue();
 
 
   const handleDelete = async () => {
     const data = params.row;
-    const enqId = await fetch("http://localhost:8000/enq-data-delete", {
+    const result = await fetch("http://localhost:8000/enq-data-delete", {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         data,
       }),
     });
-    console.log(enqId);
+    const id = await result.json();
+    dispatch({ type: "DELETE_REQUESTS", payload: id });
+
     // setenqData(enqData.filter((row) => row.id !== enqId.id));
   };
   const handleEdit = async () => {};

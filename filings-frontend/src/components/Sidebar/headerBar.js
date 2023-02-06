@@ -41,11 +41,11 @@ import ExpandMore from "@mui/icons-material/ExpandMore";
 
 
 const admin_nav = [
-  {
-    icon: <ListAltRoundedIcon />,
-    path: "/enq-form",
-    name: "Enquiry Form",
-  },
+  // {
+  //   icon: <ListAltRoundedIcon />,
+  //   path: "/enq-form",
+  //   name: "Enquiry Form",
+  // },
   {
     icon: <AdminPanelSettingsRoundedIcon />,
     path: "/enq-admin",

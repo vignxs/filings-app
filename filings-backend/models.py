@@ -34,6 +34,7 @@ class IGS_ENQ_DATA(Base):
 	__table_args__ = {'extend_existing': True} 
 
 	# child = relationship(IGS_ENQ_GST, backref="parent", passive_deletes=True)
+#  add primary key
 	enq_id = Column(String, primary_key=True, index=True)
 	first_name = Column(String)
 	last_name = Column(String)

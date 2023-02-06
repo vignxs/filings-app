@@ -11,6 +11,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import  {UsersActions} from "./AdminActions";
 import { Button, Paper, Tooltip } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
+import { GridToolbar } from "@mui/x-data-grid";
 import { Link } from "react-router-dom";
 import  dayjs  from "dayjs";
 import LineChart from "./AnalysisCharts";
@@ -434,6 +435,16 @@ const analyticsBoxIcon = {
             rowsPerPageOptions={[10, 20, 30]}
             pageSize={pageSize}
             onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
+            components={{ Toolbar: GridToolbar }}
+            componentsProps={{
+              toolbar: {
+                csvOptions: { disableToolbarButton: true },
+                printOptions: { disableToolbarButton: true },
+                showQuickFilter: true,
+                quickFilterProps: { debounceMs: 250 },
+              },
+            }}
+            experimentalFeatures={{ newEditingApi: true }}
             // getRowSpacing={(params) => ({
             //   top: params.isFirstVisible ? 0 : 5,
             //   bottom: params.isLastVisible ? 0 : 5,

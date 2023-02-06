@@ -46,6 +46,11 @@ async def register(request: Request):
         raise HTTPException(status_code=401, detail='Email already exists')
     hashed_password = auth_handler.get_password_hash(data['password'])
     print(hashed_password)
+    # user = User()
+    # user.user_name = data["username"]
+    # user.user_name = data["username"]
+    # user.user_name = data["username"]
+    # user.user
     db.add( User(user_name = data['user_name'] , email = data['email'], password = hashed_password))
     db.commit()
     return data['email']
@@ -122,7 +127,7 @@ async def enq_data( request: Request):
         srv  = IGS_ENQ_PAN_RGST(**body['serviceInfo'])
     elif body['enquired_for'] == "TAX Registration":
         srv  = IGS_ENQ_TAX(**body['serviceInfo'])
-    db.add(srv)
+    db.add(srv) 
     db.flush()
     db.commit() 
    

@@ -11,6 +11,7 @@ import models
 from database import SessionLocal as db
 from database import engine
 import secrets
+import string
 from sqlalchemy import  select, update, delete
 from auth import AuthHandler 
 from models import User , IGS_ENQ_DATA, IGS_ENQ_GST_RGST, IGS_ENQ_PAN_RGST, IGS_ENQ_GST, IGS_ENQ_TAX, IGS_FILINGS_SERVICES  
@@ -112,24 +113,71 @@ async def enq_data( request: Request):
     body1 = await request.json()
     print(body1)
     body= body1['userinfo']
-    # try:
-    enq_id = secrets.token_hex(5)
-    # random.randrange(111111, 999999, fixed_digits)
+    characters = string.digits
+    password = ''.join(secrets.choice(characters)
+                for i in range(5))
+    enq_id = password
     body['serviceInfo']['enq_id'] = enq_id
     data= IGS_ENQ_DATA(enq_id=enq_id , first_name = body['first_name'], last_name = body['last_name'], mobile = int(body["mobile"]), email = body["email"] , address=body['address'] , city=body['city'] , status = "Created" , pincode = int(body["pincode"]), enquired_for = body["enquired_for"])
     db.add(data)
     db.flush()
-    if body['enquired_for'] == "GST":
+    # if body['enquired_for'] == "GST":
+    #     srv  = IGS_ENQ_GST   (enq_id=body['serviceInfo']['enq_id'] , gst_time = body['serviceInfo']['gst_time'], period = list(body['serviceInfo']['period'].values())[0])
+    # elif body['enquired_for'] == "GST Registration":
+    #     srv  = IGS_ENQ_GST_RGST(**body['serviceInfo'])
+    # elif body['enquired_for'] == "PAN Registration":
+    #     srv  = IGS_ENQ_PAN_RGST(**body['serviceInfo'])
+    # elif body['enquired_for'] == "TAX Registration":
+    #     srv  = IGS_ENQ_TAX(**body['serviceInfo'])
+    # db.add(srv) 
+    # db.flush()
+    # db.commit() 
+
+
+ @app.post("/GST")  
+ async def enq_data(request:Request):
+    body1 = await request.json()
+    body= body1['userinfo']
+    body['serviceInfo']['enq_id'] = enq_id
+    body['enq_for'] = "GST"
         srv  = IGS_ENQ_GST   (enq_id=body['serviceInfo']['enq_id'] , gst_time = body['serviceInfo']['gst_time'], period = list(body['serviceInfo']['period'].values())[0])
-    elif body['enquired_for'] == "GST Registration":
-        srv  = IGS_ENQ_GST_RGST(**body['serviceInfo'])
-    elif body['enquired_for'] == "PAN Registration":
-        srv  = IGS_ENQ_PAN_RGST(**body['serviceInfo'])
-    elif body['enquired_for'] == "TAX Registration":
-        srv  = IGS_ENQ_TAX(**body['serviceInfo'])
     db.add(srv) 
     db.flush()
-    db.commit() 
+    db.commit()
+
+@app.post("/GST-Registration")  
+ async def enq_data(request:Request):
+    body1 = await request.json()
+    body= body1['userinfo']
+    body['serviceInfo']['enq_id'] = enq_id
+    body['enq_for'] = "GST Registration"
+    srv  = IGS_ENQ_GST_RGST(**body['serviceInfo'])
+    db.add(srv) 
+    db.flush()
+    db.commit()
+
+@app.post("/PAN-Registration")  
+ async def enq_data(request:Request):
+    body1 = await request.json()
+    body= body1['userinfo']
+    body['serviceInfo']['enq_id'] = enq_id
+    body['enq_for'] = "PAN Registration"
+    srv  = IGS_ENQ_PAN_RGST(**body['serviceInfo'])
+    db.add(srv) 
+    db.flush()
+    db.commit()
+
+@app.post("/TAX-Registration")  
+ async def enq_data(request:Request):
+    body1 = await request.json()
+    body= body1['userinfo']
+    body['serviceInfo']['enq_id'] = enq_id
+    body['enq_for'] = "TAX Registration"
+    srv  = IGS_ENQ_PAN_RGST(**body['serviceInfo'])
+    db.add(srv) 
+    db.flush()
+    db.commit()
+
    
 #Admin table 
 @app.get("/enq-data")

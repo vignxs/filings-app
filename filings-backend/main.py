@@ -134,9 +134,17 @@ async def enq_data( request: Request):
 #Admin table 
 @app.get("/enq-data")
 def enquiry_data():
-    data = db.query(IGS_ENQ_DATA.enq_id,IGS_ENQ_DATA.first_name, IGS_ENQ_DATA.enquired_for,IGS_ENQ_DATA.email, IGS_ENQ_DATA.status ).all()
+    data = db.query(IGS_ENQ_DATA).all()
+    print(data)
+    return data 
+
+@app.get("/enq-service-gst/{id}")
+def enquiry_service(id):
+    data = db.query(IGS_ENQ_GST).join(IGS_ENQ_DATA).filter(IGS_ENQ_DATA.enq_id == id).all()
+    print(data)
     columns = IGS_ENQ_DATA.__table__.columns.keys()
     return data 
+
 
 @app.put("/enq-data-update")
 async def enquiry_data_update(request:Request):
@@ -153,3 +161,4 @@ async def enquiry_data_delete(request:Request):
     db.commit()
     return body["data"]["enq_id"]
     
+

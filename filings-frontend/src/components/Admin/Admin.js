@@ -139,18 +139,9 @@ const enqColumns = useMemo(
 
 useEffect(() => {
   if (requests.length === 0)
-console.log(requests);
-
     getRequests(dispatch);
 }, []);
 
-console.log(requests);
-
-
-const buttonText = {fontWeight: "600",
-                      fontSize: "0.775rem",
-                      opacity: "0.5",
-                      lineHeight: "1.57143" }
 
 const PaperStyle = (backgroundColor) => {
   return {
@@ -187,7 +178,7 @@ const analyticsBoxIcon = {
 
   return (
     <ThemeProvider theme={getMuiTheme()}>
-      <Box p={5}>
+      {/* <Box p={5}>
         <Typography
           variant="h6"
           color={"#094067"}
@@ -380,9 +371,9 @@ const analyticsBoxIcon = {
             </Paper>
           </Grid>
         </Grid>
-      </Box>
+      </Box> */}
 
-      <Box
+      {/* <Box
         width={900}
         height={400}
         // bgcolor={`rgb(200, 250, 205)`}
@@ -395,7 +386,7 @@ const analyticsBoxIcon = {
         }}
       >
         <LineChart height="350px" color="#094067" />
-      </Box>
+      </Box> */}
 
       <Box border={1} borderColor="#094067" sx={inputBox}>
         <div style={{ display: "inline-flex" }}>
@@ -421,6 +412,11 @@ const analyticsBoxIcon = {
             color="primary"
             sx={{ height: "30px", top: "15px" }}
             startIcon={<AddIcon />}
+            onClick={{
+              componentDidUpdate() {
+                window.scrollTo(0, 0);
+              },
+            }}
             variant="outlined"
           >
             Add

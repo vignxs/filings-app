@@ -3,6 +3,7 @@ import React, { useContext, useState, contextProvider } from "react";
 import ReactDOM from "react-dom";
 import InputLabel from "@mui/material/InputLabel";
 import Divider from "@mui/material/Divider";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import QontoConnector from "../Utils/StepperUtils";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
@@ -19,7 +20,7 @@ import createCache from "@emotion/cache";
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useEffect, useMemo } from "react";
-import { Avatar, Grid , MenuItem} from "@mui/material";
+import { Avatar, FormControlLabel, FormLabel, Grid , MenuItem, Radio, RadioGroup} from "@mui/material";
 import { DataGrid, gridClasses } from "@mui/x-data-grid";
 import moment from "moment";
 import { grey } from "@mui/material/colors";
@@ -39,148 +40,392 @@ import {
 import { CheckRounded, SaveRounded, DeleteRounded } from "@mui/icons-material";
 import { green } from "@mui/material/colors";
 import { useValue } from "../../Context/ContextProvider";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 // import userContext from "../Context";
 
 export const UsersActions = ({ params, rowId, setRowId }) => {
-  
-   const services = [
-     "GST",
-     "GST Registration",
-     "PAN Registration",
-     "TAX Registration",
-   ];
+  const [Gstinfo, setGstInfo] = React.useState({ gst_time: "", period: {} });
+  const [Paninfo, setPanInfo] = React.useState({});
+  const [Taxinfo, setTaxInfo] = React.useState({});
+  // const [heightBox, setheightBox] = React.useState("700px");
+
+  const quaters = ["Q1", "Q2", "Q3", "Q4"];
+  const [userinfo, setInfo] = React.useState({
+    first_name: params.row.first_name,
+    last_name: params.row.last_name,
+    mobile: params.row.mobile,
+    email: params.row.email,
+    address: params.row.address,
+    city: params.row.city,
+    pincode: params.row.pincode,
+    enquired_for: params.row.enquired_for
+  });
+
   function getSteps() {
     return ["Personal Information", "Services", "Documents"];
   }
-  // let data = userContext()
+const [output ,setOutput] =React.useState()
+
+   useEffect((props) => {
+    if (userinfo.enquired_for === "GST") {
+      fetch("http://localhost:8000/enquiry-service-gst/" + rowId)
+        .then((res) => res.json())
+        .then((result) => {
+          setOutput(result);
+        });
+    }
+     
+   },[]);
+
 
   function PersonalInfo() {
     return (
       <Grid
-                style={{
-                  paddingTop: "10px",
-                  "& .MuiTypographyH6": {
-                    fontSize: "12px",
-                    lineHeight: "35px",
-                    fontWeight: "600",
-                  },
-                  flexDirection: "column",
-                  position: "relative",
-                }}
-                container
-                direction="row"
-                justify="center"
-                alignItems="inherit"
-              >
-                <Grid style={{ display: "flex" }}>
-                  <TextValidator
-                    label="First name"
-                    size="small"
-                    
-                    type="text"
-                    name="first_name"
-                    required={true}
-                    // value={userinfo.first_name}
-                    // onChange={(e) => handleChangeInfo(e, "user")}
-                  />
-                  <TextValidator
-                    label="Last name"
-                    size="small"
-                    
-                    type="text"
-                    name="last_name"
-                    required={true}
-                    // value={userinfo.last_name}
-                    // onChange={(e) => handleChangeInfo(e, "user")}
-                  />
-                </Grid>
-                <Grid style={{ display: "flex" }}>
-                  <TextValidator
-                    label="Mobile"
-                    name="mobile"
-                    validators={["isNumber"]}
-                    errorMessages={["Please enter 10 digit Mobile number"]}
-                    // value={userinfo.mobile}
-                    required={true}
-                    // onChange={(e) => handleChangeInfo(e, "user")}
-                    size="small"
-                    
-                    type="text"
-                  />
-                  <TextValidator
-                    label="Email"
-                    // onChange={(e) => handleChangeInfo(e, "user")}
-                    name="email"
-                    size="small"
-                    
-                    // required={true}
-                    // value={userinfo.email}
-                    validators={["isEmail"]}
-                    errorMessages={["email is not valid"]}
-                  />
-                </Grid>
-                <Grid style={{ display: "flex" }}>
-                  <TextValidator
-                    label="Address"
-                    multiline
-                    name="address"
-                    // value={userinfo.address}
-                    // onChange={(e) => handleChangeInfo(e, "user")}
-                    size="small"
-                    required={true}
-                    
-                    type="text"
-                  />
-                  <TextValidator
-                    label="City"
-                    size="small"
-                    name="city"
-                    // value={userinfo.city}
-                    // onChange={(e) => handleChangeInfo(e, "user")}
-                    
-                    // required={true}
-                    type="text"
-                  />
-                  <TextValidator
-                    label="Pincode"
-                    size="small"
-                    name="pincode"
-                    // value={userinfo.pincode}
-                    // onChange={(e) => handleChangeInfo(e, "user")}
-                    
-                    validators={["isNumber", "matchRegexp:^[1-9][0-9]{5}$"]}
-                    errorMessages={[
-                      "Please enter 6 digit Pincode",
-                      "Please enter 6 digit Pincode",
-                    ]}
-                    type="text"
-                    // required={true}
-                  />
-                </Grid>
-                <Grid style={{ display: "flex" }}>
-                  <FormControl sx={{ m: 1.5, minWidth: "23ch" }} size="small">
-                    <InputLabel  id="demo-simple-select-label">
-                      Enquired for*
-                    </InputLabel>
-                    <Select
-                      labelId="demo-simple-select-label"
-                      id="demo-simple-label"
-                      label="Enquired for*"
-                      
-                      // value={userinfo.enquired_for || ""}
-                      name="enquired_for"
-                      required={true}
-                      // onChange={(e) => handleChangeInfo(e, "user")}
-                    >
-                      {services.map((val) => (
-                        <MenuItem value={val}>{val}</MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
-                </Grid>
-                </Grid>
+        style={{
+          left:"20px",
+          "& .MuiTypographyH6": {
+            fontSize: "12px",
+            lineHeight: "35px",
+            fontWeight: "600",
+          },
+          flexDirection: "column",
+          position: "relative",
+        }}
+        container
+        direction="row"
+        justify="center"
+        alignItems="center"
+      >
+        <Grid style={{ display: "flex" }}>
+          <TextValidator
+            label="First name"
+            size="small"
+            type="text"
+            name="first_name"
+            required={true}
+            value={userinfo.first_name}
+            // onChange={(e) => handleChangeInfo(e, "user")}
+          />
+          <TextValidator
+            label="Last name"
+            size="small"
+            type="text"
+            name="last_name"
+            required={true}
+            value={userinfo.last_name}
+            // onChange={(e) => handleChangeInfo(e, "user")}
+          />
+        </Grid>
+        <Grid style={{ display: "flex" }}>
+          <TextValidator
+            label="Mobile"
+            name="mobile"
+            validators={["isNumber"]}
+            errorMessages={["Please enter 10 digit Mobile number"]}
+            value={userinfo.mobile}
+            required={true}
+            // onChange={(e) => handleChangeInfo(e, "user")}
+            size="small"
+            type="text"
+          />
+          <TextValidator
+            label="Email"
+            // onChange={(e) => handleChangeInfo(e, "user")}
+            name="email"
+            size="small"
+            // required={true}
+            value={userinfo.email}
+            validators={["isEmail"]}
+            errorMessages={["email is not valid"]}
+          />
+        </Grid>
+        <Grid style={{ display: "flex" }}>
+          <TextValidator
+            label="Address"
+            multiline
+            name="address"
+            value={userinfo.address}
+            // onChange={(e) => handleChangeInfo(e, "user")}
+            size="small"
+            required={true}
+            type="text"
+          />
+          <TextValidator
+            label="City"
+            size="small"
+            name="city"
+            value={userinfo.city}
+            // onChange={(e) => handleChangeInfo(e, "user")}
+
+            required={true}
+            type="text"
+          />
+        </Grid>
+        <Grid style={{ display: "flex" }}>
+          <TextValidator
+            label="Pincode"
+            size="small"
+            name="pincode"
+            value={userinfo.pincode}
+            // onChange={(e) => handleChangeInfo(e, "user")}
+
+            validators={["isNumber", "matchRegexp:^[1-9][0-9]{5}$"]}
+            errorMessages={[
+              "Please enter 6 digit Pincode",
+              "Please enter 6 digit Pincode",
+            ]}
+            type="text"
+            required={true}
+          />
+          <TextValidator
+            size="small"
+            labelId="demo-simple-select-label"
+            id="demo-simple-label"
+            label="Enquired for"
+            value={userinfo.enquired_for || ""}
+            name="enquired_for"
+            required={true}
+          />
+        </Grid>
+      </Grid>
     );
   }
+function ServiceForm(params) {
+  return (
+    <>
+      {userinfo.enquired_for === "GST" ? (
+        <Grid>
+          <RadioGroup
+            row
+            name="gst_time"
+            required={true}
+            sx={{ mb: 2, p: 0, left: "20px", position: "relative" }}
+            // value={Gstinfo.gst_time || ""}
+            // onChange={(e) => handleChangeInfo(e, "gst")}
+          >
+            <FormLabel
+              value="Monthly"
+              label="Monthly"
+              labelPlacement="end"
+              control={<Radio required={true}  />}
+            />
+
+            <FormControlLabel
+              value="Quaterly"
+              label="Quaterly"
+              labelPlacement="end"
+              control={<Radio required={true}  />}
+            />
+
+            <FormControlLabel
+              value="Yearly"
+              label="Yearly"
+              labelPlacement="end"
+              control={<Radio required={true}  />}
+            />
+          </RadioGroup>
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            {Gstinfo.gst_time === "Yearly" ? (
+              <DatePicker
+                orientation="landscape"
+                openTo="year"
+                views={["year"]}
+                value={Gstinfo.period.year}
+                label="Period"
+                onChange={(e) =>
+                  setGstInfo({ ...Gstinfo, period: { year: e } })
+                }
+                renderInput={(params) => (
+                  <TextValidator
+                    size="small"
+                    {...params}
+                    helperText={null}
+                    fullWidth
+                  />
+                )}
+              />
+            ) : Gstinfo.gst_time === "Monthly" ? (
+              <DatePicker
+                orientation="landscape"
+                openTo="month"
+                label="Period"
+                views={["year", "month"]}
+                value={Gstinfo.period.month}
+                onChange={(e) =>
+                  setGstInfo({ ...Gstinfo, period: { month: e } })
+                }
+                renderInput={(params) => (
+                  <TextValidator
+                    size="small"
+                    {...params}
+                    helperText={null}
+                    fullWidth
+                  />
+                )}
+              />
+            ) : Gstinfo.gst_time === "Quaterly" ? (
+              <FormControl sx={{ m: 1.5, minWidth: "23ch" }} size="small">
+                <InputLabel id="demo-simple-select-label">Period</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={Gstinfo.period.quater || "Q1"}
+                  label="Period"
+                  name="period"
+                  onChange={(e) => {
+                    setGstInfo({
+                      ...Gstinfo,
+                      period: { quater: e.target.value },
+                    });
+                  }}
+                >
+                  {quaters.map((val) => (
+                    <MenuItem value={val}>{val}</MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            ) : (
+              false
+            )}
+          </LocalizationProvider>
+        </Grid>
+      // ) : userinfo.enquired_for === "GST Registration" ? (
+      //   <>
+      //     <Grid style={{ display: "flex" }}>
+      //       <TextValidator
+      //         label="Company name"
+      //         size="small"
+      //         name="company_name"
+      //         required={true}
+      //         // value={newGstinfo.company_name}
+      //         // onChange={(e) => handleChangeInfo(e, "newgst")}
+      //         type="text"
+      //       />
+      //     </Grid>
+      //     <Grid style={{ display: "flex" }}>
+      //       <TextValidator
+      //         label="Company address"
+      //         multiline
+      //         size="small"
+      //         name="company_address"
+      //         // value={newGstinfo.company_address}
+      //         // onChange={(e) => handleChangeInfo(e, "newgst")}
+      //         color="green"
+      //         type="text"
+      //       />
+      //       <TextValidator
+      //         label="City"
+      //         name="company_city"
+      //         // value={"" || newGstinfo.company_city}
+      //         // onChange={(e) => handleChangeInfo(e, "newgst")}
+      //         size="small"
+      //         color="green"
+      //         type="text"
+      //       />
+      //       <TextValidator
+      //         label="Pincode"
+      //         name="company_pincode"
+      //         // value={newGstinfo.company_pincode}
+      //         // onChange={(e) => handleChangeInfo(e, "newgst")}
+      //         size="small"
+      //         color="green"
+      //         type="tel"
+      //       />
+      //     </Grid>
+      //     <Grid style={{ display: "flex" }}>
+      //       <TextValidator
+      //         label="Email"
+      //         name="company_email"
+      //         validators={["required", "isEmail"]}
+      //         errorMessages={["this field is required", "email is not valid"]}
+      //         // value={newGstinfo.company_email}
+      //         // onChange={(e) => handleChangeInfo(e, "newgst")}
+      //         size="small"
+      //         color="green"
+      //         type="email"
+      //       />
+      //       <TextValidator
+      //         label="Employer Pan"
+      //         name="employer_pan"
+      //         // value={newGstinfo.employer_pan}
+      //         // onChange={(e) => handleChangeInfo(e, "newgst")}
+      //         size="small"
+      //         required={true}
+      //         color="green"
+      //         type="tel"
+      //       />
+      //     </Grid>
+      //   </>
+      // ) : userinfo.enquired_for === "PAN Registration" ? (
+      //   <Grid
+      //     style={{
+      //       display: "flex",
+      //     }}
+      //   >
+      //     <TextValidator
+      //       label="Aadhar Number"
+      //       size="small"
+      //       color="green"
+      //       validators={["matchRegexp:^[0-9]{4}[ -]?[0-9]{4}[ -]?[0-9]{4}$"]}
+      //       errorMessages={["Please enter 12 digit number "]}
+      //       name="aadhar"
+      //       required={true}
+      //       // value={Paninfo.aadhar}
+      //       // onChange={(e) => handleChangeInfo(e, "pan")}
+      //       type="text"
+      //     />
+      //   </Grid>
+      // ) : userinfo.enquired_for === "TAX Registration" ? (
+      //   <LocalizationProvider dateAdapter={AdapterDayjs}>
+      //     <Grid style={{ display: "flex" }}>
+      //       <DatePicker
+      //         orientation="landscape"
+      //         width="inherit"
+      //         openTo="year"
+      //         label="Assessment year"
+      //         views={["year"]}
+      //         // value={Taxinfo.assessment_year}
+      //         // onChange={(e) => setTaxInfo({ ...Taxinfo, assessment_year: e })}
+      //         renderInput={(params) => (
+      //           <TextValidator
+      //             required={true}
+      //             size="small"
+      //             color="green"
+      //             {...params}
+      //             helperText={null}
+      //             fullWidth
+      //           />
+      //         )}
+      //       />
+      //       <TextValidator
+      //         inputProps={{ style: { textTransform: "uppercase" } }}
+      //         size="small"
+      //         label="Pan"
+      //         required={true}
+      //         color="green"
+      //         name="pan"
+      //         validators={["matchRegexp:^[A-Za-z]{5}[0-9]{4}[A-Za-z]{1}$"]}
+      //         errorMessages={["Please valid Pan number "]}
+      //         // value={Taxinfo.pan}
+      //         // onChange={(e) => handleChangeInfo(e, "tax")}
+      //         type="text"
+      //         id="outlined-textarea"
+      //       />
+      //     </Grid>
+      //   </LocalizationProvider>
+      ) : (
+        false
+      )}
+    </>
+  );
+}
+  const services = [
+    "GST",
+    "GST Registration",
+    "PAN Registration",
+    "TAX Registration",
+  ];
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [open, setOpen] = React.useState(false);
@@ -190,10 +435,9 @@ export const UsersActions = ({ params, rowId, setRowId }) => {
   function getStepContent(stepIndex) {
     switch (stepIndex) {
       case 0:
-      return <PersonalInfo/>
+      return <PersonalInfo />;
       case 1:
-        return `Integer euismod dapibus sapien, a interdum augue blandit eget. Donec pellentesque, sapien iaculis dignissim sagittis, risus nulla auctor eros, sed suscipit eros mauris id lorem. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer porttitor mauris egestas consequat molestie. Nam egestas iaculis malesuada. Praesent sagittis venenatis finibus. Praesent porttitor ipsum et sapien cursus, eu mattis augue ornare.`;
-
+        return <ServiceForm />;
       case 2:
         return `In laoreet, dui vel tristique facilisis, velit dui dictum diam, nec feugiat mi mauris eu nunc. Nullam auctor eget ante ac laoreet. Aliquam et ante ligula. Nam imperdiet augue magna, ac tincidunt neque mollis nec. Sed eu nunc sit amet tellus commodo elementum non sit amet sem. Etiam ipsum nibh, rutrum vel ultrices in, vulputate ac dolor. Morbi dictum lectus id orci dapibus, et faucibus nulla viverra. Nulla consectetur ex vitae pretium vehicula. Quisque varius tempor erat et semper. Vivamus consectetur, eros sit amet ornare facilisis, nulla felis laoreet tortor, sit amet egestas risus ipsum sed eros.`;
 
@@ -286,9 +530,9 @@ const getMuiTheme = () =>
     if (rowId === params.id && success) setSuccess(false);
   }, [rowId]);
   const inputBox = {
-    margin: "0 auto",
+    // margin: "0 auto",  
     "& .MuiTextField-root": {
-      m: 1.5,
+      m: 2,
       // borderRadius:'15px',
       backgroundColor: "#fffffe",
       borderRadius: "10px",
@@ -315,12 +559,12 @@ const getMuiTheme = () =>
     // bgcolor: "#094067",
     // left: "-170px",
     // top: ".8rem",
-    // width: "1300px",
+    width: "800px",
     // height: {heightBox},
     flexGrow: 1,
     position: "relative",
     borderRadius: "10px",
-    ml:"120px"
+    // ml:"180px"
   };
   return (
     <ThemeProvider theme={getMuiTheme()}>
@@ -383,7 +627,7 @@ const getMuiTheme = () =>
             scroll={"body"}
             fullWidth
             maxWidth={"md"}
-            sx={{ inputBox }}
+            // sx={{ inputBox }}
             open={open}
             onClose={handleClose}
           >
@@ -399,7 +643,7 @@ const getMuiTheme = () =>
             >
               Update Form
             </DialogTitle>
-            <DialogContent style={{ width: "1000px", height: "450px" }}>
+            <DialogContent style={{ width: "900px", height: "450px" }}>
               <DialogContentText></DialogContentText>
               <Box>
                 <ThemeProvider theme={theme}>
@@ -415,7 +659,7 @@ const getMuiTheme = () =>
                     ))}
                   </Stepper>
 
-                  <Box mt={4} sx={{ paddingTop: "30px" }}>
+                  <Box mt={2}>
                     {activeStep === steps.length ? (
                       <Box>
                         <Typography>All steps completed</Typography>
@@ -434,42 +678,44 @@ const getMuiTheme = () =>
                         <ValidatorForm>
                           {getStepContent(activeStep)}
                         </ValidatorForm>
-
-                        <Box
-                          pt={2}
-                          sx={{
-                            ml: 2,
-                            display: "flex",
-                            justifyContent: "space-evenly",
-                            top: "90px",
-                            position: "relative",
+                        <div
+                          style={{
+                            position: "absolute",
+                            left:"20px",
+                            width: "100%",
+                            display:"flex",
+                            marginTop:"20px",
+                            justifyContent:"center",
+                            // alignItems:"center"
                           }}
                         >
-                          <Button
-                            variant="contained"
-                            color="secondary"
-                            disabled={activeStep === 0}
-                            onClick={handleBack}
-                          >
-                            Back
-                          </Button>
-                          <Button
-                            variant="contained"
-                            color="primary"
-                            onClick={handleNext}
-                          >
-                            {activeStep === steps.length - 1
-                              ? "Finish"
-                              : "Next"}
-                          </Button>
-                        </Box>
+                          <Stack spacing={40} direction="row">
+                            <Button
+                              variant="contained"
+                              color="secondary"
+                              disabled={activeStep === 0}
+                              onClick={handleBack}
+                            >
+                              Back
+                            </Button>
+                            <Button
+                              variant="contained"
+                              color="primary"
+                              onClick={handleNext}
+                            >
+                              {activeStep === steps.length - 1
+                                ? "Finish"
+                                : "Next"}
+                            </Button>
+                          </Stack>
+                        </div>
                       </Box>
                     )}
                   </Box>
                 </ThemeProvider>
               </Box>
             </DialogContent>
-            <DialogActions>
+            <DialogActions sx={{ justifyContent:"space-between" }} >
               <Button onClick={handleClose}>Cancel</Button>
               <Button onClick={handleClose}>Subscribe</Button>
             </DialogActions>

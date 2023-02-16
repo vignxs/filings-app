@@ -62,7 +62,7 @@ export  function SignInComponent() {
         // refreshTokenExpireIn: res.data.refreshTokenExpireIn, // Only if you are using refreshToken feature
       });
     localStorage.setItem("user", JSON.stringify(values.user_name));
-    navigate(-1);
+    navigate("/");
     }
     
   };

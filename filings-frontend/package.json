@@ -29,6 +29,7 @@
     "react": "^18.2.0",
     "react-auth-kit": "^2.7.1",
     "react-dom": "^18.2.0",
+    "react-drag-drop-files": "^2.3.8",
     "react-hook-form": "^7.41.5",
     "react-material-ui-form-validator": "^3.0.1",
     "react-router-dom": "^6.4.3",
@@ -37,7 +38,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "dev":"concurrently \"react-scripts start\" \"cd ..\\filings-backend && uvicorn main:app ",
+    "dev": "concurrently \"react-scripts start\" \"cd ..\\filings-backend && uvicorn main:app ",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

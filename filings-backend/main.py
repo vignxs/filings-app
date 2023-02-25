@@ -135,15 +135,27 @@ async def enq_data( request: Request):
 @app.get("/enq-data")
 def enquiry_data():
     data = db.query(IGS_ENQ_DATA).all()
-    print(data)
     return data 
 
 @app.get("/enq-service-gst/{id}")
-def enquiry_service(id):
-    data = db.query(IGS_ENQ_GST).join(IGS_ENQ_DATA).filter(IGS_ENQ_DATA.enq_id == id).all()
-    print(data)
-    columns = IGS_ENQ_DATA.__table__.columns.keys()
+def enquiry_service_gst(id):
+    data = db.query(IGS_ENQ_GST).filter(IGS_ENQ_GST.enq_id == id).all()
     return data 
+
+@app.get("/enq-service-gst-reg/{id}")
+def enquiry_service_gst_reg(id):
+    data = db.query(IGS_ENQ_GST_RGST).filter(IGS_ENQ_GST_RGST.enq_id == id).all()
+    return data 
+
+@app.get("/enq-service-pan-reg/{id}")
+def enquiry_service_pan_reg(id):
+    data = db.query(IGS_ENQ_PAN_RGST).filter(IGS_ENQ_PAN_RGST.enq_id == id).all()
+    return data
+
+@app.get("/enq-service-tax-reg/{id}")
+def enquiry_service_tax_reg(id):
+    data = db.query(IGS_ENQ_TAX).filter(IGS_ENQ_TAX.enq_id == id).all()
+    return data
 
 
 @app.put("/enq-data-update")
@@ -161,4 +173,3 @@ async def enquiry_data_delete(request:Request):
     db.commit()
     return body["data"]["enq_id"]
     
-

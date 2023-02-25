@@ -179,11 +179,7 @@ export const EnqForm = (props) => {
 
     return (
       <>
-        <Box
-          border={1}
-          borderColor="#094067"
-          sx={inputBox}
-        >
+        <Box border={1} borderColor="#094067" sx={inputBox}>
           <Typography
             variant="h6"
             color={"#ef4565"}
@@ -369,8 +365,11 @@ export const EnqForm = (props) => {
                           views={["year"]}
                           value={Gstinfo.period.year}
                           label="Period"
-                          onChange={(e) =>
-                            setGstInfo({ ...Gstinfo, period: { year: e } })
+                          onChange={(date) =>
+                            setGstInfo({
+                              ...Gstinfo,
+                              period: { year: date ? date.toISOString() : "" },
+                            })
                           }
                           renderInput={(params) => (
                             <TextValidator

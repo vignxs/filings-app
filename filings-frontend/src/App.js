@@ -28,7 +28,7 @@ function App() {
               // <RequireAuth loginPath='/login'>
 
               <EnqAdmin />
-              // </RequireAuth>
+              // </RequireAuth>z
             }
           />
         </Routes>

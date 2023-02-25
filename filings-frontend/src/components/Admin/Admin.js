@@ -7,7 +7,7 @@ import { CacheProvider } from "@emotion/react";
 import createCache from "@emotion/cache";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import {  useMemo } from "react";
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid, GridToolbarColumnsButton, GridToolbarContainer, GridToolbarFilterButton, GridToolbarExport, GridToolbarQuickFilter } from "@mui/x-data-grid";
 import  {UsersActions} from "./AdminActions";
 import { Button, Paper, Tooltip } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
@@ -18,6 +18,11 @@ import LineChart from "./AnalysisCharts";
 import { AccessTimeRounded,  ArrowRightAltRounded, GroupRounded, PersonRounded, SupportAgentRounded,  VerifiedRounded,  } from "@mui/icons-material";
 import  {useValue}  from "../../Context/ContextProvider";
 import { getRequests } from "../../Context/actions";
+
+// inspiration
+// https://www.figcomponents.com?id=62cf946b12847cc9ecafe6b2
+
+
 // import userContext  from "../Context";
 const muiCache = createCache({
   key: "mui-datatables",
@@ -28,14 +33,42 @@ const muiCache = createCache({
 
 export const EnqAdmin = (props) => {
     const inputBox = {
+      "& .MuiDataGrid-toolbarQuickFilter": {
+        "& .MuiTextField-root": {
+          // m: 2,
+          // borderRadius:'15px',
+          backgroundColor: "#fffffe",
+          borderRadius: "2px",
+          width: "70ch",
+        },
+        borderRadius: "5px",
+        width: "70ch",
+      },
+      "& .MuiDataGrid-columnHeaderTitle": {
+        opacity: ".8",
+        // backgroundColor: "rgba(255, 7, 0, 0.55)",
+        fontWeight: "700",
+      },
+      "& .MuiDataGrid-toolbarContainer ": {
+        // top: "-69px",
+        // left: "808px",
+        justifyContent: "space-between",
+        backgroundColor: "rgba(145, 158, 171, 0.12)",
+        // position: "relative",
+      },
+      "& .MuiDataGrid-main ": {
+        // top: "-38px",
+        // backgroundColor: "rgba(255, 7, 0, 0.55)",
+        // position: "relative",
+      },
       margin: "0 auto",
       width: "100%",
       "& .MuiTextField-root": {
         m: 2,
         // borderRadius:'15px',
         backgroundColor: "#fffffe",
-        borderRadius: "10px",
-        width: "30ch",
+        borderRadius: "2px",
+        width: "50ch",
       },
       "& .MuiInputBase-input": {
         borderRadius: "10px",
@@ -54,15 +87,17 @@ export const EnqAdmin = (props) => {
       },
       // marginLeft: "70px",
       justifyContent: "center",
-      boxShadow: `rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px`,
+      // boxShadow: `rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px`,
+      // boxShadow: `rgb(145 158 171 / 20%) 0px 0px 2px 0px, rgb(145 158 171 / 12%) 0px 12px 24px -4px`,
       // bgcolor: "#094067",
       // left: "-170px",
       // top: ".8rem",
       // width: "1300px",
-      height: "650px",   
+      height: "700px",
       flexGrow: 1,
       position: "relative",
-      borderRadius: "10px",
+      borderRadius: "12px",
+      padding: "30px",
     };
 
 const date = new Date()
@@ -89,7 +124,7 @@ const {
   dispatch,
 } = useValue();
 
-
+const headerClassName = "MuiDataGrid-columnHeaderTitle--bold";
 const [ openChart  ,  setOpenChart] = useState(true)
 const [pageSize, setPageSize] = useState(10);
 const [rowId, setRowId] = useState(null);
@@ -110,10 +145,23 @@ const enqColumns = useMemo(
       sortable: false,
       filterable: false,
     },
-    { field: "first_name", headerName: "Name", width: 120 },
+    {
+      field: "first_name",
+      headerName: "Name",
+      width: 120,
+    },
     // "last_name",
     // "mobile",
-    { field: "email", headerName: "Email", width: 180 },
+    {
+      field: "mobile",
+      headerName: "Mobile",
+      width: 180,
+    },
+    {
+      field: "email",
+      headerName: "Email",
+      width: 180,
+    },
     // "address",
     // "city",
     // "pincode",
@@ -142,6 +190,7 @@ useEffect(() => {
     getRequests(dispatch);
 }, []);
 
+console.log(rowId)
 
 const PaperStyle = (backgroundColor) => {
   return {
@@ -174,8 +223,21 @@ const analyticsBoxIcon = {
 //     console.log(content)
 //   })();
 // }, []);
-
-
+// .MuiDataGrid-cell:focus {
+//     outline: solid #094067 1px;
+//     border-radius: 12px;
+// }
+function CustomToolbar() {
+  return (
+    <GridToolbarContainer sx={{ background: "#000000" }}>
+       <GridToolbarQuickFilter />
+      {/* <GridToolbarColumnsButton /> */}
+      <GridToolbarFilterButton sx={{ m: 2, bgcolor: "#FFFFFF", left:"340px" }} />
+      {/* <GridToolbarDensitySelector /> */}
+      <GridToolbarExport sx={{ m: 2, bgcolor: "#FFFFFF" }} />
+    </GridToolbarContainer>
+  );
+}
   return (
     <ThemeProvider theme={getMuiTheme()}>
       {/* <Box p={5}>
@@ -388,73 +450,107 @@ const analyticsBoxIcon = {
         <LineChart height="350px" color="#094067" />
       </Box> */}
 
-      <Box border={1} borderColor="#094067" sx={inputBox}>
-        <div style={{ display: "inline-flex" }}>
+      <Paper
+        elevation={3}
+        // border={1} borderColor="#094067"
+        sx={inputBox}
+      >
+        <div
+          style={{
+            display: "inline-flex",
+            flexDirection: "row",
+            position: "relative",
+            right: "3px",
+            width: "100%",
+            paddingBottom: "5px",
+            alignItems:"center",
+            justifyContent:"space-between"
+          }}
+        >
+        <div>
           <Typography
             variant="h6"
             color={"#ef4565"}
             sx={{
-              p: 2,
-              fontWeight: "500",
-              fontSize: "18px",
+              padding: "10px",
+              fontWeight: "bold",
+              fontSize: "23px",
               flexGrow: 1,
-              fontFamily: "PT Sans Caption",
+              fontFamily: "Nunito Sans",
             }}
             noWrap
             component="h3"
           >
             Enquiry List
           </Typography>
-          <Button
-            to="/enq-form"
-            component={Link}
-            size="small"
-            color="primary"
-            sx={{ height: "30px", top: "15px" }}
-            startIcon={<AddIcon />}
-            onClick={{
-              componentDidUpdate() {
-                window.scrollTo(0, 0);
-              },
+
+          <Typography
+            variant="p"
+            color={"#000000"}
+            sx={{
+              paddingLeft: "10px",
+              fontWeight: "400",
+              fontSize: "15px",
+              opacity: ".8",
+              flexGrow: 1,
+              fontFamily: "Nunito Sans",
             }}
-            variant="outlined"
+            noWrap
+            component="h3"
           >
-            Add
-          </Button>
+            Manage your requests detail and status
+          </Typography>
+          </div>
+
+          <div>
+            <Button
+              to="/enq-form"
+              component={Link}
+              size="small"
+              color="primary"
+              sx={{ height: "30px", width: "40px" }}
+              startIcon={<AddIcon />}
+              onClick={{
+                componentDidUpdate() {
+                  window.scrollTo(0, 0);
+                },
+              }}
+              variant="contained"
+            >
+              Add
+            </Button>
+          </div>
         </div>
-        <Divider />
+        {/* <Divider /> */}
         <CacheProvider value={muiCache}>
-          <DataGrid
-            columns={enqColumns}
-            rows={requests}
-            getRowId={(row) => row.enq_id}
-            rowsPerPageOptions={[10, 20, 30]}
-            pageSize={pageSize}
-            onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
-            components={{ Toolbar: GridToolbar }}
-            componentsProps={{
-              toolbar: {
-                csvOptions: { disableToolbarButton: true },
-                printOptions: { disableToolbarButton: true },
-                showQuickFilter: true,
-                quickFilterProps: { debounceMs: 250 },
-              },
-            }}
-            experimentalFeatures={{ newEditingApi: true }}
-            // getRowSpacing={(params) => ({
-            //   top: params.isFirstVisible ? 0 : 5,
-            //   bottom: params.isLastVisible ? 0 : 5,
-            // })}
-            // sx={{
-            //   [`& .${gridClasses.row}`]: {
-            //     bgcolor: (theme) =>
-            //       theme.palette.mode === "light" ? grey[200] : grey[900],
-            //   },
-            // }}
-            onCellEditCommit={(params) => setRowId(params.id)}
-          />
+          <Box height={595}>
+            <DataGrid
+              sx={{ border: 0 }}
+              columns={enqColumns}
+              rows={requests}
+              getRowId={(row) => row.enq_id}
+              rowsPerPageOptions={[10, 20, 30]}
+              pageSize={pageSize}
+              onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
+              components={{ Toolbar: CustomToolbar }}
+              componentsProps={{
+                toolbar: {
+                  csvOptions: { disableToolbarButton: true },
+                  printOptions: { disableToolbarButton: true },
+                  showQuickFilter: true,
+                  quickFilterProps: { debounceMs: 250 },
+                },
+              }}
+              // experimentalFeatures={{ newEditingApi: true }}
+              // getRowSpacing={(params) => ({
+              //   top: params.isFirstVisible ? 0 : 5,
+              //   bottom: params.isLastVisible ? 0 : 5,
+              // })}
+              onCellEditCommit={(params) => setRowId(params.id)}
+            />
+          </Box>
         </CacheProvider>
-      </Box>
+      </Paper>
     </ThemeProvider>
 
     // </userContext.Provider>

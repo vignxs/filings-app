@@ -1,5 +1,6 @@
 import MUIDataTable from "mui-datatables";
 import React, { useContext, useState, contextProvider } from "react";
+import { FileUploader } from "react-drag-drop-files";
 import ReactDOM from "react-dom";
 import InputLabel from "@mui/material/InputLabel";
 import Divider from "@mui/material/Divider";
@@ -37,7 +38,7 @@ import {
   IconButton,
   Tooltip,
 } from "@mui/material";
-import { CheckRounded, SaveRounded, DeleteRounded } from "@mui/icons-material";
+import { CheckRounded, CheckOutlined,EditOutlined, SaveRounded , SaveOutlined, DeleteRounded , DeleteOutlined } from "@mui/icons-material";
 import { green } from "@mui/material/colors";
 import { useValue } from "../../Context/ContextProvider";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -62,23 +63,15 @@ export const UsersActions = ({ params, rowId, setRowId }) => {
     enquired_for: params.row.enquired_for
   });
 
+  const fileTypes = ["JPEG", "PNG", "GIF"];
+  const [file, setFile] = useState(null);
+  const handleFileChange = (file) => {
+    setFile(file);
+      };
   function getSteps() {
     return ["Personal Information", "Services", "Documents"];
   }
-const [output ,setOutput] =React.useState()
-
-   useEffect((props) => {
-    if (userinfo.enquired_for === "GST") {
-      fetch("http://localhost:8000/enquiry-service-gst/" + rowId)
-        .then((res) => res.json())
-        .then((result) => {
-          setOutput(result);
-        });
-    }
-     
-   },[]);
-
-
+const [output ,setOutput] =React.useState({})
   function PersonalInfo() {
     return (
       <Grid
@@ -194,229 +187,289 @@ const [output ,setOutput] =React.useState()
 function ServiceForm(params) {
   return (
     <>
-      {userinfo.enquired_for === "GST" ? (
-        <Grid>
-          <RadioGroup
-            row
-            name="gst_time"
-            required={true}
-            sx={{ mb: 2, p: 0, left: "20px", position: "relative" }}
-            // value={Gstinfo.gst_time || ""}
-            // onChange={(e) => handleChangeInfo(e, "gst")}
-          >
-            <FormLabel
-              value="Monthly"
-              label="Monthly"
-              labelPlacement="end"
-              control={<Radio required={true}  />}
-            />
-
-            <FormControlLabel
-              value="Quaterly"
-              label="Quaterly"
-              labelPlacement="end"
-              control={<Radio required={true}  />}
-            />
-
-            <FormControlLabel
-              value="Yearly"
-              label="Yearly"
-              labelPlacement="end"
-              control={<Radio required={true}  />}
-            />
-          </RadioGroup>
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            {Gstinfo.gst_time === "Yearly" ? (
-              <DatePicker
-                orientation="landscape"
-                openTo="year"
-                views={["year"]}
-                value={Gstinfo.period.year}
-                label="Period"
-                onChange={(e) =>
-                  setGstInfo({ ...Gstinfo, period: { year: e } })
-                }
-                renderInput={(params) => (
-                  <TextValidator
-                    size="small"
-                    {...params}
-                    helperText={null}
-                    fullWidth
-                  />
-                )}
+      <Grid
+        style={{
+          left: "20px",
+          "& .MuiTypographyH6": {
+            fontSize: "12px",
+            lineHeight: "35px",
+            fontWeight: "600",
+          },
+          flexDirection: "column",
+          position: "relative",
+        }}
+        container
+        direction="row"
+        justify="center"
+        alignItems="center"
+      >
+        {userinfo.enquired_for === "GST" ? (
+          <Grid>
+            <RadioGroup
+              row
+              name="gst_time"
+              required={true}
+              sx={{ mb: 2, p: 0, position: "relative" }}
+              value={output.gst_time || ""}
+              onChange={(e) =>
+                setOutput({ ...output, [e.target.name]: e.target.value })
+              }
+            >
+              <FormControlLabel
+                value="Monthly"
+                label="Monthly"
+                labelPlacement="end"
+                control={<Radio required={true} />}
               />
-            ) : Gstinfo.gst_time === "Monthly" ? (
-              <DatePicker
-                orientation="landscape"
-                openTo="month"
-                label="Period"
-                views={["year", "month"]}
-                value={Gstinfo.period.month}
-                onChange={(e) =>
-                  setGstInfo({ ...Gstinfo, period: { month: e } })
-                }
-                renderInput={(params) => (
-                  <TextValidator
-                    size="small"
-                    {...params}
-                    helperText={null}
-                    fullWidth
-                  />
-                )}
+
+              <FormControlLabel
+                value="Quaterly"
+                label="Quaterly"
+                labelPlacement="end"
+                control={<Radio required={true} />}
               />
-            ) : Gstinfo.gst_time === "Quaterly" ? (
-              <FormControl sx={{ m: 1.5, minWidth: "23ch" }} size="small">
-                <InputLabel id="demo-simple-select-label">Period</InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  value={Gstinfo.period.quater || "Q1"}
+
+              <FormControlLabel
+                value="Yearly"
+                label="Yearly"
+                labelPlacement="end"
+                control={<Radio required={true} />}
+              />
+            </RadioGroup>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              {output.gst_time === "Yearly" ? (
+                <DatePicker
+                  orientation="landscape"
+                  openTo="year"
+                  views={["year"]}
+                  value={output.period.year}
                   label="Period"
-                  name="period"
-                  onChange={(e) => {
-                    setGstInfo({
-                      ...Gstinfo,
-                      period: { quater: e.target.value },
-                    });
-                  }}
-                >
-                  {quaters.map((val) => (
-                    <MenuItem value={val}>{val}</MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            ) : (
-              false
-            )}
+                  onChange={(e) =>
+                    setOutput({ ...output, period: { year: e } })
+                  }
+                  renderInput={(params) => (
+                    <TextValidator
+                      size="small"
+                      {...params}
+                      helperText={null}
+                      fullWidth
+                    />
+                  )}
+                />
+              ) : output.gst_time === "Monthly" ? (
+                <DatePicker
+                  orientation="landscape"
+                  openTo="month"
+                  label="Period"
+                  views={["year", "month"]}
+                  value={output.period.month}
+                  onChange={(e) =>
+                    setOutput({ ...output, period: { month: e } })
+                  }
+                  renderInput={(params) => (
+                    <TextValidator
+                      size="small"
+                      {...params}
+                      helperText={null}
+                      fullWidth
+                    />
+                  )}
+                />
+              ) : output.gst_time === "Quaterly" ? (
+                <FormControl sx={{ m: 1.5, minWidth: "23ch" }} size="small">
+                  <InputLabel id="demo-simple-select-label">Period</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={output.period.quater || "Q1"}
+                    label="Period"
+                    name="period"
+                    onChange={(e) => {
+                      setOutput({
+                        ...output,
+                        period: { quater: e.target.value },
+                      });
+                    }}
+                  >
+                    {quaters.map((val) => (
+                      <MenuItem value={val}>{val}</MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              ) : (
+                false
+              )}
+            </LocalizationProvider>
+          </Grid>
+        ) : userinfo.enquired_for === "GST Registration" ? (
+          <>
+            <Grid style={{ display: "flex" }}>
+              <TextValidator
+                label="Company name"
+                size="small"
+                name="company_name"
+                required={true}
+                value={output.company_name}
+                onChange={(e) =>
+                  setOutput({ ...output, [e.target.name]: e.target.value })
+                }
+                type="text"
+              />
+              <TextValidator
+                label="Company address"
+                multiline
+                size="small"
+                name="company_address"
+                value={output.company_address}
+                onChange={(e) =>
+                  setOutput({ ...output, [e.target.name]: e.target.value })
+                }
+                type="text"
+              />
+            </Grid>
+            <Grid style={{ display: "flex" }}>
+              <TextValidator
+                label="City"
+                name="company_city"
+                value={"" || output.company_city}
+                onChange={(e) =>
+                  setOutput({ ...output, [e.target.name]: e.target.value })
+                }
+                size="small"
+                type="text"
+              />
+              <TextValidator
+                label="Pincode"
+                name="company_pincode"
+                value={output.company_pincode}
+                onChange={(e) =>
+                  setOutput({ ...output, [e.target.name]: e.target.value })
+                }
+                size="small"
+                type="tel"
+              />
+            </Grid>
+            <Grid style={{ display: "flex" }}>
+              <TextValidator
+                label="Email"
+                name="company_email"
+                validators={["required", "isEmail"]}
+                errorMessages={["this field is required", "email is not valid"]}
+                value={output.company_email}
+                onChange={(e) =>
+                  setOutput({ ...output, [e.target.name]: e.target.value })
+                }
+                size="small"
+                type="email"
+              />
+              <TextValidator
+                label="Employer Pan"
+                name="employer_pan"
+                value={output.employer_pan || ""}
+                onChange={(e) =>
+                  setOutput({ ...output, [e.target.name]: e.target.value })
+                }
+                size="small"
+                required={true}
+                type="tel"
+              />
+            </Grid>
+          </>
+        ) : userinfo.enquired_for === "PAN Registration" ? (
+          <Grid
+            style={{
+              display: "flex",
+            }}
+          >
+            <TextValidator
+              label="Aadhar Number"
+              size="small"
+              validators={["matchRegexp:^[0-9]{4}[ -]?[0-9]{4}[ -]?[0-9]{4}$"]}
+              errorMessages={["Please enter 12 digit number "]}
+              name="aadhar"
+              required={true}
+              value={output.aadhar || ""}
+              onChange={(e) =>
+                setOutput({ ...output, [e.target.name]: e.target.value })
+              }
+              type="text"
+            />
+          </Grid>
+        ) : userinfo.enquired_for === "TAX Registration" ? (
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <Grid style={{ display: "flex" }}>
+              <DatePicker
+                orientation="landscape"
+                width="inherit"
+                openTo="year"
+                label="Assessment year"
+                views={["year"]}
+                value={output.assessment_year || ""}
+                onChange={(e) =>
+                  setOutput({ ...output, [e.target.name]: e.target.value })
+                }
+                renderInput={(params) => (
+                  <TextValidator
+                    required={true}
+                    size="small"
+                    {...params}
+                    helperText={null}
+                    fullWidth
+                  />
+                )}
+              />
+              <TextValidator
+                inputProps={{ style: { textTransform: "uppercase" } }}
+                size="small"
+                label="Pan"
+                required={true}
+                name="pan"
+                validators={["matchRegexp:^[A-Za-z]{5}[0-9]{4}[A-Za-z]{1}$"]}
+                errorMessages={["Please valid Pan number "]}
+                value={output.pan || ""}
+                onChange={(e) =>
+                  setOutput({ ...output, [e.target.name]: e.target.value })
+                }
+                type="text"
+                id="outlined-textarea"
+              />
+            </Grid>
           </LocalizationProvider>
-        </Grid>
-      // ) : userinfo.enquired_for === "GST Registration" ? (
-      //   <>
-      //     <Grid style={{ display: "flex" }}>
-      //       <TextValidator
-      //         label="Company name"
-      //         size="small"
-      //         name="company_name"
-      //         required={true}
-      //         // value={newGstinfo.company_name}
-      //         // onChange={(e) => handleChangeInfo(e, "newgst")}
-      //         type="text"
-      //       />
-      //     </Grid>
-      //     <Grid style={{ display: "flex" }}>
-      //       <TextValidator
-      //         label="Company address"
-      //         multiline
-      //         size="small"
-      //         name="company_address"
-      //         // value={newGstinfo.company_address}
-      //         // onChange={(e) => handleChangeInfo(e, "newgst")}
-      //         color="green"
-      //         type="text"
-      //       />
-      //       <TextValidator
-      //         label="City"
-      //         name="company_city"
-      //         // value={"" || newGstinfo.company_city}
-      //         // onChange={(e) => handleChangeInfo(e, "newgst")}
-      //         size="small"
-      //         color="green"
-      //         type="text"
-      //       />
-      //       <TextValidator
-      //         label="Pincode"
-      //         name="company_pincode"
-      //         // value={newGstinfo.company_pincode}
-      //         // onChange={(e) => handleChangeInfo(e, "newgst")}
-      //         size="small"
-      //         color="green"
-      //         type="tel"
-      //       />
-      //     </Grid>
-      //     <Grid style={{ display: "flex" }}>
-      //       <TextValidator
-      //         label="Email"
-      //         name="company_email"
-      //         validators={["required", "isEmail"]}
-      //         errorMessages={["this field is required", "email is not valid"]}
-      //         // value={newGstinfo.company_email}
-      //         // onChange={(e) => handleChangeInfo(e, "newgst")}
-      //         size="small"
-      //         color="green"
-      //         type="email"
-      //       />
-      //       <TextValidator
-      //         label="Employer Pan"
-      //         name="employer_pan"
-      //         // value={newGstinfo.employer_pan}
-      //         // onChange={(e) => handleChangeInfo(e, "newgst")}
-      //         size="small"
-      //         required={true}
-      //         color="green"
-      //         type="tel"
-      //       />
-      //     </Grid>
-      //   </>
-      // ) : userinfo.enquired_for === "PAN Registration" ? (
-      //   <Grid
-      //     style={{
-      //       display: "flex",
-      //     }}
-      //   >
-      //     <TextValidator
-      //       label="Aadhar Number"
-      //       size="small"
-      //       color="green"
-      //       validators={["matchRegexp:^[0-9]{4}[ -]?[0-9]{4}[ -]?[0-9]{4}$"]}
-      //       errorMessages={["Please enter 12 digit number "]}
-      //       name="aadhar"
-      //       required={true}
-      //       // value={Paninfo.aadhar}
-      //       // onChange={(e) => handleChangeInfo(e, "pan")}
-      //       type="text"
-      //     />
-      //   </Grid>
-      // ) : userinfo.enquired_for === "TAX Registration" ? (
-      //   <LocalizationProvider dateAdapter={AdapterDayjs}>
-      //     <Grid style={{ display: "flex" }}>
-      //       <DatePicker
-      //         orientation="landscape"
-      //         width="inherit"
-      //         openTo="year"
-      //         label="Assessment year"
-      //         views={["year"]}
-      //         // value={Taxinfo.assessment_year}
-      //         // onChange={(e) => setTaxInfo({ ...Taxinfo, assessment_year: e })}
-      //         renderInput={(params) => (
-      //           <TextValidator
-      //             required={true}
-      //             size="small"
-      //             color="green"
-      //             {...params}
-      //             helperText={null}
-      //             fullWidth
-      //           />
-      //         )}
-      //       />
-      //       <TextValidator
-      //         inputProps={{ style: { textTransform: "uppercase" } }}
-      //         size="small"
-      //         label="Pan"
-      //         required={true}
-      //         color="green"
-      //         name="pan"
-      //         validators={["matchRegexp:^[A-Za-z]{5}[0-9]{4}[A-Za-z]{1}$"]}
-      //         errorMessages={["Please valid Pan number "]}
-      //         // value={Taxinfo.pan}
-      //         // onChange={(e) => handleChangeInfo(e, "tax")}
-      //         type="text"
-      //         id="outlined-textarea"
-      //       />
-      //     </Grid>
-      //   </LocalizationProvider>
-      ) : (
-        false
-      )}
+        ) : (
+          0
+        )}
+      </Grid>
+    </>
+  );
+}
+function ServiceFileForm(params) {
+  return (
+    <>
+      <Grid
+        style={{
+          left: "20px",
+          "& .MuiTypographyH6": {
+            fontSize: "12px",
+            lineHeight: "35px",
+            fontWeight: "600",
+          },
+          flexDirection: "column",
+          margin:'20px',
+          position: "relative",
+        }}
+        container
+        direction="row"
+        justify="center"
+        alignItems="center"
+      >
+        <FileUploader
+          multiple={true}
+          handleChange={handleFileChange}
+          name="file"
+          types={fileTypes}
+        />
+        <p style={ { padding:"20px" }}>{file ? `File name: ${file[0].name}` : "No files uploaded yet"}</p>
+      </Grid>
     </>
   );
 }
@@ -439,8 +492,7 @@ function ServiceForm(params) {
       case 1:
         return <ServiceForm />;
       case 2:
-        return `In laoreet, dui vel tristique facilisis, velit dui dictum diam, nec feugiat mi mauris eu nunc. Nullam auctor eget ante ac laoreet. Aliquam et ante ligula. Nam imperdiet augue magna, ac tincidunt neque mollis nec. Sed eu nunc sit amet tellus commodo elementum non sit amet sem. Etiam ipsum nibh, rutrum vel ultrices in, vulputate ac dolor. Morbi dictum lectus id orci dapibus, et faucibus nulla viverra. Nulla consectetur ex vitae pretium vehicula. Quisque varius tempor erat et semper. Vivamus consectetur, eros sit amet ornare facilisis, nulla felis laoreet tortor, sit amet egestas risus ipsum sed eros.`;
-
+        return <ServiceFileForm/>;
       default:
         return `Aenean arcu ligula, porttitor id neque imperdiet, congue convallis erat. Integer libero sapien, convallis a vulputate vel, pretium vulputate metus. Donec leo justo, viverra ut tempor commodo, laoreet eu velit. Donec vel sem quis velit pharetra elementum. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Etiam in commodo mauris. Ut iaculis ipsum velit.`;
     }
@@ -470,6 +522,31 @@ function ServiceForm(params) {
 
   const handleClickOpen = () => {
     setOpen(true);
+    if (userinfo.enquired_for === "GST") {
+      fetch("http://localhost:8000/enq-service-gst/" + params.row.enq_id)
+        .then((res) => res.json())
+        .then((result) => {
+          setOutput(result[0]);
+        });
+    } else if (userinfo.enquired_for === "GST Registration") {
+      fetch("http://localhost:8000/enq-service-gst-reg/" + params.row.enq_id)
+        .then((res) => res.json())
+        .then((result) => {
+          setOutput(result[0]);
+        });
+    } else if (userinfo.enquired_for === "PAN Registration") {
+      fetch("http://localhost:8000/enq-service-pan-reg/" + params.row.enq_id)
+        .then((res) => res.json())
+        .then((result) => {
+          setOutput(result[0]);
+        });
+    } else if (userinfo.enquired_for === "TAX Registration") {
+      fetch("http://localhost:8000/enq-service-tax-reg/" + params.row.enq_id)
+        .then((res) => res.json())
+        .then((result) => {
+          setOutput(result[0]);
+        });
+    }
   };
 
   const handleClose = () => {
@@ -509,6 +586,10 @@ const getMuiTheme = () =>
       },
     },
   });
+  const handleFormSubmit = async () => {
+console.log(`Submit`)
+  };
+
   const handleSubmit = async () => {
     setLoading(true);
     const data = params.row;
@@ -585,7 +666,7 @@ const getMuiTheme = () =>
                 "&:hover": { bgcolor: green[700] },
               }}
             >
-              <CheckRounded />
+              <CheckOutlined />
             </IconButton>
           ) : (
             <IconButton
@@ -599,7 +680,7 @@ const getMuiTheme = () =>
               disabled={params.id !== rowId || loading}
               onClick={handleSubmit}
             >
-              <SaveRounded />
+              <SaveOutlined />
             </IconButton>
           )}
           {loading && (
@@ -621,7 +702,7 @@ const getMuiTheme = () =>
             aria-label="edit"
             onClick={handleClickOpen}
           >
-            <EditRoundedIcon />
+            <EditOutlined />
           </IconButton>
           <Dialog
             scroll={"body"}
@@ -661,8 +742,8 @@ const getMuiTheme = () =>
 
                   <Box mt={2}>
                     {activeStep === steps.length ? (
-                      <Box>
-                        <Typography>All steps completed</Typography>
+                      <Box sx={ { display:"flex", flexDirection:"column", alignItems:"center", margin:"60px" }}>
+                        <Typography>All steps completed , Do you wanna go back? , else update below!</Typography>
 
                         <Button
                           sx={{ mt: 2 }}
@@ -670,12 +751,12 @@ const getMuiTheme = () =>
                           color="secondary"
                           onClick={handleReset}
                         >
-                          Reset
+                          Go Back
                         </Button>
                       </Box>
                     ) : (
                       <Box sx={inputBox}>
-                        <ValidatorForm>
+                        <ValidatorForm onSubmit={ handleFormSubmit }>
                           {getStepContent(activeStep)}
                         </ValidatorForm>
                         <div
@@ -727,7 +808,7 @@ const getMuiTheme = () =>
             aria-label="edit"
             onClick={handleDelete}
           >
-            <DeleteRounded />
+            <DeleteOutlined />
           </IconButton>
         </Stack>
       </Box>

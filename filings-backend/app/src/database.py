@@ -9,7 +9,7 @@ from sqlalchemy.orm import sessionmaker
 # Database Configuration
 ###
 
-SQLALCHEMY_DATABASE_URL = "postgresql://postgres:12345@localhost:5432/filings_db3"
+SQLALCHEMY_DATABASE_URL = "postgresql://postgres:12345@localhost:5432/fdb"
 # "postgresql://fhtbzqtj:A7--8_LfuRd0ngPY2itsOkFbn5Ehrmxu@rosie.db.elephantsql.com/fhtbzqtj"
 
 engine = create_engine(
@@ -19,3 +19,6 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 Base = declarative_base() 
 
+# Each time you modify your SQLAlchemy models, 
+# you should generate a new migration script using alembic revision --autogenerate 
+# and then apply the migration using alembic upgrade head.

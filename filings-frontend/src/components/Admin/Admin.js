@@ -44,6 +44,12 @@ export const EnqAdmin = (props) => {
         borderRadius: "5px",
         width: "70ch",
       },
+      "& .MuiPopperUnstyled-root": {
+        inset: `-125px auto auto 350px`,
+      },
+      "& .MuiDataGrid-panel": {
+        inset: `-125px auto auto 350px`,
+      },
       "& .MuiDataGrid-columnHeaderTitle": {
         opacity: ".8",
         // backgroundColor: "rgba(255, 7, 0, 0.55)",
@@ -68,7 +74,7 @@ export const EnqAdmin = (props) => {
         // borderRadius:'15px',
         backgroundColor: "#fffffe",
         borderRadius: "2px",
-        width: "50ch",
+        width: "40ch",
       },
       "& .MuiInputBase-input": {
         borderRadius: "10px",
@@ -143,10 +149,14 @@ const enqColumns = useMemo(
       headerName: "EnqID",
       width: 200,
       sortable: false,
+      headerAlign: "center",
+      align: "center",
       filterable: false,
     },
     {
       field: "first_name",
+      headerAlign: "center",
+      align: "center",
       headerName: "Name",
       width: 120,
     },
@@ -154,11 +164,15 @@ const enqColumns = useMemo(
     // "mobile",
     {
       field: "mobile",
+      headerAlign: "center",
+      align: "center",
       headerName: "Mobile",
       width: 180,
     },
     {
       field: "email",
+      headerAlign: "center",
+      align: "center",
       headerName: "Email",
       width: 180,
     },
@@ -168,6 +182,8 @@ const enqColumns = useMemo(
     {
       field: "enquired_for",
       headerName: "Enquired For",
+      headerAlign: "center",
+      align: "center",
       width: 180,
       sortable: true,
       filterable: true,
@@ -177,6 +193,8 @@ const enqColumns = useMemo(
       headerName: "Status",
       width: 150,
       type: "singleSelect",
+      headerAlign: "center",
+      align: "center",
       valueOptions: ["In-Progress", "Created", "Closed"],
       editable: true,
       // currentUser?.role === "admin",
@@ -230,9 +248,13 @@ const analyticsBoxIcon = {
 function CustomToolbar() {
   return (
     <GridToolbarContainer sx={{ background: "#000000" }}>
-       <GridToolbarQuickFilter />
+      <GridToolbarQuickFilter sx={{ marginRight: "auto" }} />
       {/* <GridToolbarColumnsButton /> */}
-      <GridToolbarFilterButton sx={{ m: 2, bgcolor: "#FFFFFF", left:"340px" }} />
+      <GridToolbarFilterButton
+
+        PopperProps={{color:"#000000",  inset: `-125px auto auto 350px` }}
+        sx={{ m: 2, bgcolor: "#FFFFFF", marginLeft: "auto" }}
+      />
       {/* <GridToolbarDensitySelector /> */}
       <GridToolbarExport sx={{ m: 2, bgcolor: "#FFFFFF" }} />
     </GridToolbarContainer>
@@ -463,43 +485,43 @@ function CustomToolbar() {
             right: "3px",
             width: "100%",
             paddingBottom: "5px",
-            alignItems:"center",
-            justifyContent:"space-between"
+            alignItems: "center",
+            justifyContent: "space-between",
           }}
         >
-        <div>
-          <Typography
-            variant="h6"
-            color={"#ef4565"}
-            sx={{
-              padding: "10px",
-              fontWeight: "bold",
-              fontSize: "23px",
-              flexGrow: 1,
-              fontFamily: "Nunito Sans",
-            }}
-            noWrap
-            component="h3"
-          >
-            Enquiry List
-          </Typography>
+          <div>
+            <Typography
+              variant="h6"
+              color={"#ef4565"}
+              sx={{
+                padding: "4px",
+                fontWeight: "bold",
+                fontSize: "23px",
+                flexGrow: 1,
+                fontFamily: "Nunito Sans",
+              }}
+              noWrap
+              component="h3"
+            >
+              Request List
+            </Typography>
 
-          <Typography
-            variant="p"
-            color={"#000000"}
-            sx={{
-              paddingLeft: "10px",
-              fontWeight: "400",
-              fontSize: "15px",
-              opacity: ".8",
-              flexGrow: 1,
-              fontFamily: "Nunito Sans",
-            }}
-            noWrap
-            component="h3"
-          >
-            Manage your requests detail and status
-          </Typography>
+            <Typography
+              variant="p"
+              color={"#000000"}
+              sx={{
+                paddingLeft: "4px",
+                fontWeight: "400",
+                fontSize: "15px",
+                opacity: ".8",
+                flexGrow: 1,
+                fontFamily: "Nunito Sans",
+              }}
+              noWrap
+              component="h3"
+            >
+              Manage your requests detail and status
+            </Typography>
           </div>
 
           <div>
@@ -539,6 +561,17 @@ function CustomToolbar() {
                   printOptions: { disableToolbarButton: true },
                   showQuickFilter: true,
                   quickFilterProps: { debounceMs: 250 },
+                },
+                panel: {
+                  sx: {
+                    "& .MuiDataGrid-filterForm": {
+                      // inset: `-125px auto auto 350px`,
+                    },
+                    "& .MuiDataGrid-paper": {
+                      boxShadow: "none !important",
+                    },
+                    inset: `-125px auto auto 448px !important`,
+                  },
                 },
               }}
               // experimentalFeatures={{ newEditingApi: true }}

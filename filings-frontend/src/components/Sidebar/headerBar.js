@@ -223,7 +223,7 @@ const user = JSON.parse(localStorage.getItem("user"));
                       fontWeight: "bold",
                       flexGrow: 1,
                       float: "right",
-                      fontFamily: "PT Sans Caption",
+                      fontFamily: "Poppins",
                     }}
                     noWrap
                     component="div"

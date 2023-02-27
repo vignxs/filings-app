@@ -14,20 +14,16 @@ config = context.config
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
-import sys
-sys.path.append('..')
-
 # add your model's MetaData object here
 # for 'autogenerate' support
-from database import Base
-target_metadata = Base.metadata
-# target_metadata = None
+from src.services.auth import models
+# from myapp import mymodel
+target_metadata = models.Base.metadata
+target_metadata = None
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:
 # my_important_option = config.get_main_option("my_important_option")
-db_url = os.environ.get("DATABASE_URL")
-config.set_main_option("sqlalchemy.url", db_url)
 # ... etc.
 
 
@@ -63,7 +59,7 @@ def run_migrations_online() -> None:
 
     """
     connectable = engine_from_config(
-        config.get_section(config.config_ini_section),
+        config.get_section(config.config_ini_section, {}),
         prefix="sqlalchemy.",
         poolclass=pool.NullPool,
     )

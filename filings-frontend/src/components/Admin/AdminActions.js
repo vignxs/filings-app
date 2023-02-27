@@ -1,5 +1,6 @@
 import MUIDataTable from "mui-datatables";
 import React, { useContext, useState, contextProvider } from "react";
+import { Icon } from "@iconify/react";
 import { FileUploader } from "react-drag-drop-files";
 import ReactDOM from "react-dom";
 import InputLabel from "@mui/material/InputLabel";
@@ -681,6 +682,7 @@ console.log(`Submit`)
               onClick={handleSubmit}
             >
               <SaveOutlined />
+              {/* <Icon icon={"eva:save-outline"} /> */}
             </IconButton>
           )}
           {loading && (
@@ -698,11 +700,12 @@ console.log(`Submit`)
           <IconButton
             color="secondary"
             sx={{ boxShadow: 0 }}
-            size="small"
+            // size="small"
             aria-label="edit"
             onClick={handleClickOpen}
           >
             <EditOutlined />
+            {/* <Icon icon={"eva:edit-outline"} /> */}
           </IconButton>
           <Dialog
             scroll={"body"}
@@ -742,8 +745,18 @@ console.log(`Submit`)
 
                   <Box mt={2}>
                     {activeStep === steps.length ? (
-                      <Box sx={ { display:"flex", flexDirection:"column", alignItems:"center", margin:"60px" }}>
-                        <Typography>All steps completed , Do you wanna go back? , else update below!</Typography>
+                      <Box
+                        sx={{
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "center",
+                          margin: "60px",
+                        }}
+                      >
+                        <Typography>
+                          All steps completed , Do you wanna go back? , else
+                          update below!
+                        </Typography>
 
                         <Button
                           sx={{ mt: 2 }}
@@ -756,17 +769,17 @@ console.log(`Submit`)
                       </Box>
                     ) : (
                       <Box sx={inputBox}>
-                        <ValidatorForm onSubmit={ handleFormSubmit }>
+                        <ValidatorForm onSubmit={handleFormSubmit}>
                           {getStepContent(activeStep)}
                         </ValidatorForm>
                         <div
                           style={{
                             position: "absolute",
-                            left:"20px",
+                            left: "20px",
                             width: "100%",
-                            display:"flex",
-                            marginTop:"20px",
-                            justifyContent:"center",
+                            display: "flex",
+                            marginTop: "20px",
+                            justifyContent: "center",
                             // alignItems:"center"
                           }}
                         >
@@ -796,7 +809,7 @@ console.log(`Submit`)
                 </ThemeProvider>
               </Box>
             </DialogContent>
-            <DialogActions sx={{ justifyContent:"space-between" }} >
+            <DialogActions sx={{ justifyContent: "space-between" }}>
               <Button onClick={handleClose}>Cancel</Button>
               <Button onClick={handleClose}>Subscribe</Button>
             </DialogActions>

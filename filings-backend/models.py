@@ -3,17 +3,7 @@ from sqlalchemy.orm import relationship
 from database import Base
 # import bcrypt
 
-class User(Base):
-	
-	__tablename__ = "Users"
-	__table_args__ = {'extend_existing': True} 
- 
-	user_id = Column(Integer,  primary_key=True, autoincrement = True , index=True)
-	user_name = Column(String, unique=True)
-	email = Column(String, unique=True)
-	password = Column(String)
-	# active_flag
- 
+
  
 class IGS_FILINGS_SERVICES(Base):
 	__tablename__ = "IGS_FILINGS_SERVICES"

@@ -1,4 +1,4 @@
-import { Box  } from "@mui/material";
+import { Box, Paper  } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import React from "react";
 import Container from "@mui/material/Container";
@@ -136,7 +136,7 @@ export const EnqForm = (props) => {
       m: 1.5,
       // borderRadius:'15px',
       backgroundColor: "#fffffe",
-      borderRadius: "10px",
+      borderRadius: "2px",
       width: "23ch",
     },
     "& .MuiInputBase-input": {
@@ -152,11 +152,11 @@ export const EnqForm = (props) => {
       paddingLeft: 10,
     },
     "& .MuiOutlinedInput-root": {
-      borderRadius: "10px",
+      borderRadius: "6px",
     },
     // marginLeft: "70px",
     justifyContent: "center",
-    boxShadow: `rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px`,
+    // boxShadow: `rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px`,
     // bgcolor: "#094067",
     // left: "-170px",
     // top: ".8rem",
@@ -165,6 +165,7 @@ export const EnqForm = (props) => {
     flexGrow:1,
     position: "relative",
     borderRadius: "10px",
+    padding:"30px 20px 0 30px"
   };
       const theme = createTheme({
         palette: {
@@ -179,23 +180,73 @@ export const EnqForm = (props) => {
 
     return (
       <>
-        <Box border={1} borderColor="#094067" sx={inputBox}>
-          <Typography
-            variant="h6"
-            color={"#ef4565"}
-            sx={{
-              p: 2,
-              fontWeight: "500",
-              fontSize: "18px",
-              flexGrow: 1,
-              fontFamily: "PT Sans Caption",
+        <Paper elevation={3} sx={inputBox}>
+          <div
+            style={{
+              display: "inline-flex",
+              flexDirection: "row",
+              position: "relative",
+              right: "3px",
+              width: "100%",
+              paddingBottom: "5px",
+              alignItems: "center",
+              justifyContent: "space-between",
             }}
-            noWrap
-            component="h3"
           >
-            Enquiry Form
-          </Typography>
-          <Divider />
+            <div>
+              <Typography
+                variant="h6"
+                color={"#ef4565"}
+                sx={{
+                  padding: "4px",
+                  fontWeight: "bold",
+                  fontSize: "23px",
+                  flexGrow: 1,
+                  fontFamily: "Nunito Sans",
+                }}
+                noWrap
+                component="h3"
+              >
+                Request Form
+              </Typography>
+
+              <Typography
+                variant="p"
+                color={"#000000"}
+                sx={{
+                  paddingLeft: "4px",
+                  fontWeight: "400",
+                  fontSize: "15px",
+                  opacity: ".8",
+                  flexGrow: 1,
+                  fontFamily: "Nunito Sans",
+                }}
+                noWrap
+                component="h3"
+              >
+                Submit your form with your details
+              </Typography>
+            </div>
+
+            <div>
+              {/* <Button
+                to="/enq-form"
+                // component={Link}
+                size="small"
+                color="primary"
+                sx={{ height: "30px", width: "40px" }}
+                startIcon={<AddIcon />}
+                onClick={{
+                  componentDidUpdate() {
+                    window.scrollTo(0, 0);
+                  },
+                }}
+                variant="contained"
+              >
+                Add
+              </Button> */}
+            </div>
+          </div>
           <ThemeProvider theme={theme}>
             <ValidatorForm
               // instantValidate
@@ -204,6 +255,7 @@ export const EnqForm = (props) => {
             >
               <Grid
                 style={{
+                  right: "10px",
                   paddingTop: "10px",
                   "& .MuiTypographyH6": {
                     fontSize: "12px",
@@ -600,7 +652,7 @@ export const EnqForm = (props) => {
               </div>
             </ValidatorForm>
           </ThemeProvider>
-        </Box>
+        </Paper>
       </>
     );
   };

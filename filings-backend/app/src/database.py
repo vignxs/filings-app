@@ -1,6 +1,13 @@
-from sqlalchemy import create_engine , select
+import os
+from sqlalchemy import create_engine 
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
+#TODO USE ENV VAR FOR DB URL
+
+
+###
+# Database Configuration
+###
 
 SQLALCHEMY_DATABASE_URL = "postgresql://postgres:12345@localhost:5432/filings_db3"
 # "postgresql://fhtbzqtj:A7--8_LfuRd0ngPY2itsOkFbn5Ehrmxu@rosie.db.elephantsql.com/fhtbzqtj"

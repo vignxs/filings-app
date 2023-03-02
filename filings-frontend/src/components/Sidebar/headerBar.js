@@ -1,6 +1,6 @@
 import React from "react";
 import { useSignOut } from "react-auth-kit";
-import { styled, useTheme } from "@mui/material/styles";
+import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import MuiDrawer from "@mui/material/Drawer";
 import Button from "@mui/material/Button";
@@ -11,15 +11,9 @@ import Toolbar from "@mui/material/Toolbar";
 import List from "@mui/material/List";
 import CssBaseline from "@mui/material/CssBaseline";
 import Typography from "@mui/material/Typography";
-import { NavLink, useNavigate } from "react-router-dom";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
-import Menu from "@mui/material/Menu";
-import Avatar from "@mui/material/Avatar";
-import Tooltip from "@mui/material/Tooltip";
-import MenuItem from "@mui/material/MenuItem";
-import AdbIcon from "@mui/icons-material/Adb";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import ListItem from "@mui/material/ListItem";
@@ -31,10 +25,8 @@ import { Link } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import RequestPageRoundedIcon from "@mui/icons-material/RequestPageRounded";
 import AdminPanelSettingsRoundedIcon from "@mui/icons-material/AdminPanelSettingsRounded";
-import ListAltRoundedIcon from "@mui/icons-material/ListAltRounded";
 import ContactPageRoundedIcon from "@mui/icons-material/ContactPageRounded";
 import DescriptionRoundedIcon from "@mui/icons-material/DescriptionRounded";
-import Cookies from "js-cookie";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import AddTaskIcon from "@mui/icons-material/AddTask";
 import ExpandMore from "@mui/icons-material/ExpandMore";
@@ -142,8 +134,6 @@ const data = [
 
   export default function HeaderBar(props) {
 
-  const navigate = useNavigate();
-
     const [Expand, setExpand] = React.useState(false);
     const [ReqExpand, setReqExpand] = React.useState(false);
 
@@ -188,7 +178,10 @@ const user = JSON.parse(localStorage.getItem("user"));
 
   const handleClick = () => {
       signOut();
+      sessionStorage.setItem("logged-out", "true")
     };
+  
+  const isLogged = sessionStorage.getItem("logged-out");
 
 // const auth = useAuthUser();
 
@@ -196,7 +189,7 @@ const user = JSON.parse(localStorage.getItem("user"));
       <ThemeProvider theme={theme}>
         <Box sx={{ display: "flex", flexGrow: 1 }}>
           <CssBaseline />
-          <AppBar position="fixed" color="background" open={open}>
+          <AppBar sx={ { display: isLogged === "true" ? "none" : "block" }} position="fixed" color="background" open={open}>
             <Toolbar>
               <Box sx={{ display: "flex", flexGrow: 1 }}>
                 <IconButton
@@ -258,6 +251,7 @@ const user = JSON.parse(localStorage.getItem("user"));
               },
             }}
             sx={{
+            display: isLogged === "true" ? "none" : "block" ,
               "& .MuiDrawer-paper": {
                 backgroundColor: "#d8eefe",
               },
@@ -533,15 +527,17 @@ const user = JSON.parse(localStorage.getItem("user"));
             </List>
           </Drawer>
           <Box
-            component="main"
             sx={{
               flexGrow: 1,
-              p: 4,
+              paddingTop: "96px",
+              paddingLeft: "38px",
+              paddingRight: "38px",
               bgcolor: "#FFFFFE",
               width: "100vw",
               minHeight: "100vw",
             }}
           >
+          
             {props.children}
           </Box>
         </Box>

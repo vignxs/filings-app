@@ -3,7 +3,7 @@ from . import models, schemas
 
 
 def create_pan_rgst(db: Session, pan_rgst: schemas.IGS_REQ_PAN_RGST):
-    db_user = models.IGS_REQ_PAN_RGST(**pan_rgst)
+    db_user = models.IGS_REQ_PAN_RGST(**pan_rgst.dict())
     db.add(db_user)
     db.commit()
     db.refresh(db_user)

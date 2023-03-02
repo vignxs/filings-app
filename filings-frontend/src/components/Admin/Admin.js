@@ -4,6 +4,7 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import { CacheProvider } from "@emotion/react";
+import moment from "moment";
 import createCache from "@emotion/cache";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import {  useMemo } from "react";
@@ -60,6 +61,7 @@ export const EnqAdmin = (props) => {
         // left: "808px",
         justifyContent: "space-between",
         backgroundColor: "rgba(145, 158, 171, 0.12)",
+        borderRadius: "10px",
         // position: "relative",
       },
       "& .MuiDataGrid-main ": {
@@ -130,24 +132,21 @@ const {
   dispatch,
 } = useValue();
 
-const headerClassName = "MuiDataGrid-columnHeaderTitle--bold";
-const [ openChart  ,  setOpenChart] = useState(true)
 const [pageSize, setPageSize] = useState(10);
 const [rowId, setRowId] = useState(null);
-const [enqData, setenqData] = useState([]);
 const enqColumns = useMemo(
   () => [
     {
       field: "actions",
       headerName: "",
       type: "actions",
-      width: 110,
+      width: 130,
       renderCell: (params) => <UsersActions {...{ params, rowId, setRowId }} />,
     },
     {
-      field: "enq_id",
-      headerName: "EnqID",
-      width: 200,
+      field: "req_id",
+      headerName: "ReqId",
+      width: 100,
       sortable: false,
       headerAlign: "center",
       align: "center",
@@ -167,14 +166,14 @@ const enqColumns = useMemo(
       headerAlign: "center",
       align: "center",
       headerName: "Mobile",
-      width: 180,
+      width: 100,
     },
     {
       field: "email",
       headerAlign: "center",
       align: "center",
       headerName: "Email",
-      width: 180,
+      width: 160,
     },
     // "address",
     // "city",
@@ -184,19 +183,39 @@ const enqColumns = useMemo(
       headerName: "Enquired For",
       headerAlign: "center",
       align: "center",
-      width: 180,
+      width: 160,
       sortable: true,
       filterable: true,
     },
     {
       field: "status",
       headerName: "Status",
-      width: 150,
+      width: 100,
       type: "singleSelect",
       headerAlign: "center",
       align: "center",
       valueOptions: ["In-Progress", "Created", "Closed"],
       editable: true,
+      // currentUser?.role === "admin",
+    },
+    {
+      field: "created_at",
+      headerName: "CreatedAt",
+      width: 150,
+      headerAlign: "center",
+      align: "center",
+      renderCell: (params) =>
+        moment(params.row.createdAt).format("YYYY-MM-DD HH:MM:SS"),
+      // currentUser?.role === "admin",
+    },
+    {
+      field: "updated_at",
+      headerName: "UpdatedAt",
+      width: 150,
+      headerAlign: "center",
+      align: "center",
+      renderCell: (params) =>
+        moment(params.row.createdAt).format("YYYY-MM-DD HH:MM:SS"),
       // currentUser?.role === "admin",
     },
   ],
@@ -210,37 +229,8 @@ useEffect(() => {
 
 console.log(rowId)
 
-const PaperStyle = (backgroundColor) => {
-  return {
-                padding: "20px",
-                flexDirection: "column",
-                borderRadius: "16px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                flexWrap: "nowrap",
-                width: "190px",
-                height: " 180px",
-                backgroundColor: backgroundColor};
-}
 
-const analyticsBoxIcon = {
-  width: "50px",
-  height: "50px",    
-  color: `rgb(0, 123, 85)`,
-  padding: "13px",
-  marginBottom: "15px",
-  borderRadius: "50%",
-  background: `linear-gradient(135deg, rgba(0, 123, 85, 0) 0%, rgba(0, 123, 85, 0.24) 100%)`,
-};
-// React.useEffect(() => {
-//   (async () => {
-//     const response = await fetch("http://localhost:8000/enq-data");
-//     const content = await response.json();
-//     setenqData(content);
-//     console.log(content)
-//   })();
-// }, []);
+
 // .MuiDataGrid-cell:focus {
 //     outline: solid #094067 1px;
 //     border-radius: 12px;
@@ -532,11 +522,7 @@ function CustomToolbar() {
               color="primary"
               sx={{ height: "30px", width: "40px" }}
               startIcon={<AddIcon />}
-              onClick={{
-                componentDidUpdate() {
-                  window.scrollTo(0, 0);
-                },
-              }}
+              onClick={window.scrollTo(0, 0)}
               variant="contained"
             >
               Add
@@ -550,7 +536,7 @@ function CustomToolbar() {
               sx={{ border: 0 }}
               columns={enqColumns}
               rows={requests}
-              getRowId={(row) => row.enq_id}
+              getRowId={(row) => row.req_id}
               rowsPerPageOptions={[10, 20, 30]}
               pageSize={pageSize}
               onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}

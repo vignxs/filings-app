@@ -10,10 +10,10 @@ class IGS_REQ_GST_RGST(BaseModel):
     company_pincode : str
     company_email : str
     employer_pan : str
-    created_by : str
-    updated_by : str
-    created_at : datetime
-    updated_at : datetime
+    created_by : str = "admin"
+    updated_by : str = "admin"
+    created_at : datetime = datetime.now()
+    updated_at : datetime = datetime.now()
     
     class Config:
         orm_mode = True

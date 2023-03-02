@@ -1,9 +1,10 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi import Request, Response
 from fastapi.middleware.cors import CORSMiddleware
 from src.routers.api import router as router_api
 from src.database import engine, SessionLocal, Base
 from src.config import API_PREFIX #ALLOWED_HOSTS
+from src.routers.handler.http_error import http_error_handler
 
 ###
 # Main application file
@@ -22,7 +23,7 @@ def get_application() -> FastAPI:
     application.include_router(router_api, prefix=API_PREFIX)
 
     ## Add exception handlers
-    # application.add_exception_handler(HTTPException, http_error_handler)
+    application.add_exception_handler(HTTPException, http_error_handler)
 
     ## Allow cors
     application.add_middleware(
@@ -42,10 +43,15 @@ def get_application() -> FastAPI:
     #     dependencies=[Depends(get_token_header)],
     #     responses={418: {"description": "I'm a teapot"}},
     # )
-    # print(len(application.routes))
+    
+    #to get the routes
+    # url_list = [{"path": route.path, "name": route.name} for route in application.routes]
+    # print(url_list)
+    
     return application
 
-
+    # Using FastAPI instance
+    
 app = get_application()
 
 @app.middleware("http")

@@ -1,7 +1,7 @@
 from sqlalchemy import  Column, Integer, String, ForeignKey, ForeignKey, func, DateTime
 from ...database import Base
 
-class IGS_REQ_TAX(Base):
+class IGS_REQ_TAX_RGST(Base):
     __tablename__ ="IGS_REQ_TAX"
     __table_args__ = {'extend_existing': True} 
 

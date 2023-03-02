@@ -5,13 +5,12 @@ from ..dependencies import get_db
 from ..services.request import service, schemas
 
 router = APIRouter(
-    prefix="/request",
     tags=["request"],
     dependencies=[],
     responses={404: {"description": "Not found"}},
 )
 
-@router.post('/req-data', response_model=schemas.IGS_REQ_DATA, status_code=201)
+@router.post('/req-data', status_code=200)
 async def request_data(request:schemas.IGS_REQ_DATA,  db: Session = Depends(get_db)):
     return service.create_request(db=db , request=request)
 

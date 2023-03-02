@@ -5,13 +5,12 @@ from ..dependencies import get_db
 from ..services.gst import service, schemas
 
 router = APIRouter(
-    prefix="/gst",
     tags=["gst"],
     dependencies=[],
     responses={404: {"description": "Not found"}},
 )
 
-@router.post("/req-gst",  response_model=schemas.IGS_REQ_GST, status_code=201)
+@router.post("/req-gst", status_code=200)
 async def request_gst(gst: schemas.IGS_REQ_GST, db: Session= Depends(get_db)):
     return service.create_gst(db=db ,  gst=gst )
 

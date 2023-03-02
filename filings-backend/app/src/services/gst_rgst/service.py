@@ -3,7 +3,7 @@ from . import models, schemas
 
 
 def create_gst_rgst(db: Session, gst_rgst: schemas.IGS_REQ_GST_RGST):
-    db_user = models.IGS_REQ_GST_RGST(**gst_rgst)
+    db_user = models.IGS_REQ_GST_RGST(**gst_rgst.dict())
     db.add(db_user)
     db.commit()
     db.refresh(db_user)

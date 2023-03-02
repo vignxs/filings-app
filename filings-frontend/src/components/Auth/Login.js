@@ -7,7 +7,7 @@ import Button from "@material-ui/core/Button";
 import FormControl from "@material-ui/core/FormControl";
 import Box from "@material-ui/core/Box";
 import { useSignIn } from "react-auth-kit";
-import { json, NavLink , useNavigate } from "react-router-dom";
+import {  NavLink , useNavigate } from "react-router-dom";
 import { Typography } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
@@ -61,7 +61,10 @@ export  function SignInComponent() {
         // refreshToken: res.data.refreshToken, // Only if you are using refreshToken feature
         // refreshTokenExpireIn: res.data.refreshTokenExpireIn, // Only if you are using refreshToken feature
       });
-    localStorage.setItem("user", JSON.stringify(values.user_name));
+    sessionStorage.setItem("user", JSON.stringify(values.user_name));
+
+      sessionStorage.setItem("logged-out", "false");
+      
     navigate("/");
     }
     

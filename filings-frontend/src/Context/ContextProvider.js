@@ -2,8 +2,8 @@ import { useContext, useReducer, createContext } from "react";
 import reducer from './reducer'
 
 const initialState = {
-    requests:[]
-}
+  requests: [],
+};
 
 export const Context = createContext()
 

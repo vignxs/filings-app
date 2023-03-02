@@ -6,10 +6,11 @@ class IGS_REQ_TAX_RGST(BaseModel):
     req_id : str
     assessment_year : str
     pan : str
-    created_by : str
-    updated_by : str
-    created_at : datetime
-    updated_at : datetime
+    created_by : str = "admin"
+    updated_by : str = "admin"
+    created_at : datetime = datetime.now()
+    updated_at : datetime = datetime.now()
+
 
     class Config:
         orm_mode = True

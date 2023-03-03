@@ -671,23 +671,24 @@ export const UsersActions = ({ params, rowId, setRowId }) => {
       m: 2,
       // borderRadius:'15px',
       backgroundColor: "#fffffe",
-      borderRadius: "10px",
+      borderRadius: "2px",
       width: "23ch",
     },
     "& .MuiInputBase-input": {
-      borderRadius: "10px",
+      borderRadius: "6px",
       backgroundColor: "#fffffe",
     },
     "& .MuiAutocomplete-popupIndicator": {
       display: "none !important",
     },
     "&  .MuiFormHelperText-root.Mui-error": {
-      background: "#d8eefe",
+      background: "#fffffe",
       margin: 0,
       paddingLeft: 10,
     },
     "& .MuiOutlinedInput-root": {
-      borderRadius: "10px",
+      borderRadius: "6px",
+      
     },
     // marginLeft: "70px",
     justifyContent: "center",

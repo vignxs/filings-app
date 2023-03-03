@@ -195,7 +195,12 @@ const user = JSON.parse(sessionStorage.getItem("user"));
       <ThemeProvider theme={theme}>
         <Box sx={{ display: "flex", flexGrow: 1 }}>
           <CssBaseline />
-          <AppBar sx={ { display: isLogged === true ? "none" : "block" }} position="fixed" color="background" open={open}>
+          <AppBar
+            sx={{ display: isLogged === true ? "none" : "block" }}
+            position="fixed"
+            color="background"
+            open={open}
+          >
             <Toolbar>
               <Box sx={{ display: "flex", flexGrow: 1 }}>
                 <IconButton
@@ -209,7 +214,7 @@ const user = JSON.parse(sessionStorage.getItem("user"));
                 >
                   <MenuRoundedIcon color="teritiary" />
                 </IconButton>
-                
+
                 <Button
                   to="/enq-admin"
                   component={Link}
@@ -250,6 +255,7 @@ const user = JSON.parse(sessionStorage.getItem("user"));
             </Toolbar>
           </AppBar>
           <Drawer
+            transitionDuration={500}
             variant="permanent"
             PaperProps={{
               sx: {
@@ -257,7 +263,7 @@ const user = JSON.parse(sessionStorage.getItem("user"));
               },
             }}
             sx={{
-            display: isLogged === true ? "none" : "block" ,
+              display: isLogged === true ? "none" : "block",
               "& .MuiDrawer-paper": {
                 backgroundColor: "#d8eefe",
               },
@@ -543,7 +549,6 @@ const user = JSON.parse(sessionStorage.getItem("user"));
               minHeight: "100vw",
             }}
           >
-          
             {props.children}
           </Box>
         </Box>

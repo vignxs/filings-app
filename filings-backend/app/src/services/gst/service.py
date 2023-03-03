@@ -9,7 +9,7 @@ def create_gst(db: Session, gst: schemas.IGS_REQ_GST):
     db.refresh(db_user)
     return gst.req_id
 
-def get_gst(db: Session, req_id : int):
-    return db.query(models.IGS_REQ_GST).filter(models.IGS_REQ_GST.req_id == req_id).all()
+def get_gst(db: Session, req_id : str):
+    return db.query(models.IGS_REQ_GST).filter(models.IGS_REQ_GST.req_id == req_id).first()
     
 

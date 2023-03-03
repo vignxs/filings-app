@@ -9,6 +9,8 @@ import Box from "@material-ui/core/Box";
 import { useSignIn } from "react-auth-kit";
 import {  NavLink , useNavigate } from "react-router-dom";
 import { Typography } from "@material-ui/core";
+import { useValue } from "../../Context/ContextProvider";
+
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -29,6 +31,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export  function SignInComponent() {
+  const {
+    dispatch,
+  } = useValue();
   const classes = useStyles();
   const signIn = useSignIn();
   const [values, setValues] = React.useState({
@@ -52,7 +57,6 @@ export  function SignInComponent() {
     });
     const post_resp = await res.json();
     if (post_resp) {
-      console.log(post_resp);
       signIn({
         token: post_resp.token,
         expiresIn: 3600,
@@ -63,7 +67,8 @@ export  function SignInComponent() {
       });
     sessionStorage.setItem("user", JSON.stringify(values.user_name));
 
-      sessionStorage.setItem("logged-out", "false");
+    dispatch({ type: "LOGGED_IN", payload: false });
+
       
     navigate("/");
     }

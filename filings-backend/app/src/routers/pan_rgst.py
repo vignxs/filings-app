@@ -15,6 +15,6 @@ router = APIRouter(
 async def request_pan_rgst(pan_rgst: schemas.IGS_REQ_PAN_RGST, db: Session= Depends(get_db)):
     return service.create_pan_rgst(db=db ,  pan_rgst=pan_rgst )
 
-@router.get("/req-service-pan_rgst/{id}", response_model=schemas.IGS_REQ_PAN_RGST)
-def request_service_pan_rgst(id: int,  db: Session = Depends(get_db)):
+@router.get("/req-service-pan-rgst/{id}")
+def request_service_pan_rgst(id: str,  db: Session = Depends(get_db)):
     return service.get_pan_rgst(db=db, req_id = id)

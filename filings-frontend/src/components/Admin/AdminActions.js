@@ -22,11 +22,15 @@ import createCache from "@emotion/cache";
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useEffect, useMemo } from "react";
-import { Avatar, FormControlLabel, FormLabel, Grid , MenuItem, Radio, RadioGroup} from "@mui/material";
-import { DataGrid, gridClasses } from "@mui/x-data-grid";
-import moment from "moment";
-import { grey } from "@mui/material/colors";
-import TextField from "@mui/material/TextField";
+import {
+  Avatar,
+  FormControlLabel,
+  FormLabel,
+  Grid,
+  MenuItem,
+  Radio,
+  RadioGroup,
+} from "@mui/material";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
@@ -39,7 +43,15 @@ import {
   IconButton,
   Tooltip,
 } from "@mui/material";
-import { CheckRounded, CheckOutlined,EditOutlined, SaveRounded , SaveOutlined, DeleteRounded , DeleteOutlined } from "@mui/icons-material";
+import {
+  CheckRounded,
+  CheckOutlined,
+  EditOutlined,
+  SaveRounded,
+  SaveOutlined,
+  DeleteRounded,
+  DeleteOutlined,
+} from "@mui/icons-material";
 import { green } from "@mui/material/colors";
 import { useValue } from "../../Context/ContextProvider";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -61,23 +73,23 @@ export const UsersActions = ({ params, rowId, setRowId }) => {
     address: params.row.address,
     city: params.row.city,
     pincode: params.row.pincode,
-    enquired_for: params.row.enquired_for
+    enquired_for: params.row.enquired_for,
   });
 
   const fileTypes = ["JPEG", "PNG", "GIF"];
   const [file, setFile] = useState(null);
   const handleFileChange = (file) => {
     setFile(file);
-      };
+  };
   function getSteps() {
     return ["Personal Information", "Services", "Documents"];
   }
-const [output ,setOutput] =React.useState({})
+  const [output, setOutput] = React.useState({});
   function PersonalInfo() {
     return (
       <Grid
         style={{
-          left:"20px",
+          left: "20px",
           "& .MuiTypographyH6": {
             fontSize: "12px",
             lineHeight: "35px",
@@ -185,295 +197,304 @@ const [output ,setOutput] =React.useState({})
       </Grid>
     );
   }
-function ServiceForm(params) {
-  return (
-    <>
-      <Grid
-        style={{
-          left: "20px",
-          "& .MuiTypographyH6": {
-            fontSize: "12px",
-            lineHeight: "35px",
-            fontWeight: "600",
-          },
-          flexDirection: "column",
-          position: "relative",
-        }}
-        container
-        direction="row"
-        justify="center"
-        alignItems="center"
-      >
-        {userinfo.enquired_for === "GST" ? (
-          <Grid>
-            <RadioGroup
-              row
-              name="gst_time"
-              required={true}
-              sx={{ mb: 2, p: 0, position: "relative" }}
-              value={output.gst_time || ""}
-              onChange={(e) =>
-                setOutput({ ...output, [e.target.name]: e.target.value })
-              }
-            >
-              <FormControlLabel
-                value="Monthly"
-                label="Monthly"
-                labelPlacement="end"
-                control={<Radio required={true} />}
-              />
-
-              <FormControlLabel
-                value="Quaterly"
-                label="Quaterly"
-                labelPlacement="end"
-                control={<Radio required={true} />}
-              />
-
-              <FormControlLabel
-                value="Yearly"
-                label="Yearly"
-                labelPlacement="end"
-                control={<Radio required={true} />}
-              />
-            </RadioGroup>
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              {output.gst_time === "Yearly" ? (
-                <DatePicker
-                  orientation="landscape"
-                  openTo="year"
-                  views={["year"]}
-                  value={output.period.year}
-                  label="Period"
-                  onChange={(e) =>
-                    setOutput({ ...output, period: { year: e } })
-                  }
-                  renderInput={(params) => (
-                    <TextValidator
-                      size="small"
-                      {...params}
-                      helperText={null}
-                      fullWidth
-                    />
-                  )}
+  function ServiceForm(params) {
+    return (
+      <>
+        <Grid
+          style={{
+            left: "20px",
+            "& .MuiTypographyH6": {
+              fontSize: "12px",
+              lineHeight: "35px",
+              fontWeight: "600",
+            },
+            flexDirection: "column",
+            position: "relative",
+          }}
+          container
+          direction="row"
+          justify="center"
+          alignItems="center"
+        >
+          {userinfo.enquired_for === "GST" ? (
+            <Grid>
+              <RadioGroup
+                row
+                name="gst_time"
+                required={true}
+                sx={{ mb: 2, p: 0, position: "relative" }}
+                value={output.gst_time || ""}
+                onChange={(e) =>
+                  setOutput({ ...output, [e.target.name]: e.target.value })
+                }
+              >
+                <FormControlLabel
+                  value="Monthly"
+                  label="Monthly"
+                  labelPlacement="end"
+                  control={<Radio required={true} />}
                 />
-              ) : output.gst_time === "Monthly" ? (
-                <DatePicker
-                  orientation="landscape"
-                  openTo="month"
-                  label="Period"
-                  views={["year", "month"]}
-                  value={output.period.month}
-                  onChange={(e) =>
-                    setOutput({ ...output, period: { month: e } })
-                  }
-                  renderInput={(params) => (
-                    <TextValidator
-                      size="small"
-                      {...params}
-                      helperText={null}
-                      fullWidth
-                    />
-                  )}
+
+                <FormControlLabel
+                  value="Quaterly"
+                  label="Quaterly"
+                  labelPlacement="end"
+                  control={<Radio required={true} />}
                 />
-              ) : output.gst_time === "Quaterly" ? (
-                <FormControl sx={{ m: 1.5, minWidth: "23ch" }} size="small">
-                  <InputLabel id="demo-simple-select-label">Period</InputLabel>
-                  <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={output.period.quater || "Q1"}
+
+                <FormControlLabel
+                  value="Yearly"
+                  label="Yearly"
+                  labelPlacement="end"
+                  control={<Radio required={true} />}
+                />
+              </RadioGroup>
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                {output.gst_time === "Yearly" ? (
+                  <DatePicker
+                    orientation="landscape"
+                    openTo="year"
+                    views={["year"]}
+                    value={output.period.year}
                     label="Period"
-                    name="period"
-                    onChange={(e) => {
-                      setOutput({
-                        ...output,
-                        period: { quater: e.target.value },
-                      });
-                    }}
-                  >
-                    {quaters.map((val) => (
-                      <MenuItem value={val}>{val}</MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              ) : (
-                false
-              )}
-            </LocalizationProvider>
-          </Grid>
-        ) : userinfo.enquired_for === "GST Registration" ? (
-          <>
-            <Grid style={{ display: "flex" }}>
-              <TextValidator
-                label="Company name"
-                size="small"
-                name="company_name"
-                required={true}
-                value={output.company_name}
-                onChange={(e) =>
-                  setOutput({ ...output, [e.target.name]: e.target.value })
-                }
-                type="text"
-              />
-              <TextValidator
-                label="Company address"
-                multiline
-                size="small"
-                name="company_address"
-                value={output.company_address}
-                onChange={(e) =>
-                  setOutput({ ...output, [e.target.name]: e.target.value })
-                }
-                type="text"
-              />
-            </Grid>
-            <Grid style={{ display: "flex" }}>
-              <TextValidator
-                label="City"
-                name="company_city"
-                value={"" || output.company_city}
-                onChange={(e) =>
-                  setOutput({ ...output, [e.target.name]: e.target.value })
-                }
-                size="small"
-                type="text"
-              />
-              <TextValidator
-                label="Pincode"
-                name="company_pincode"
-                value={output.company_pincode}
-                onChange={(e) =>
-                  setOutput({ ...output, [e.target.name]: e.target.value })
-                }
-                size="small"
-                type="tel"
-              />
-            </Grid>
-            <Grid style={{ display: "flex" }}>
-              <TextValidator
-                label="Email"
-                name="company_email"
-                validators={["required", "isEmail"]}
-                errorMessages={["this field is required", "email is not valid"]}
-                value={output.company_email}
-                onChange={(e) =>
-                  setOutput({ ...output, [e.target.name]: e.target.value })
-                }
-                size="small"
-                type="email"
-              />
-              <TextValidator
-                label="Employer Pan"
-                name="employer_pan"
-                value={output.employer_pan || ""}
-                onChange={(e) =>
-                  setOutput({ ...output, [e.target.name]: e.target.value })
-                }
-                size="small"
-                required={true}
-                type="tel"
-              />
-            </Grid>
-          </>
-        ) : userinfo.enquired_for === "PAN Registration" ? (
-          <Grid
-            style={{
-              display: "flex",
-            }}
-          >
-            <TextValidator
-              label="Aadhar Number"
-              size="small"
-              validators={["matchRegexp:^[0-9]{4}[ -]?[0-9]{4}[ -]?[0-9]{4}$"]}
-              errorMessages={["Please enter 12 digit number "]}
-              name="aadhar"
-              required={true}
-              value={output.aadhar || ""}
-              onChange={(e) =>
-                setOutput({ ...output, [e.target.name]: e.target.value })
-              }
-              type="text"
-            />
-          </Grid>
-        ) : userinfo.enquired_for === "TAX Registration" ? (
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <Grid style={{ display: "flex" }}>
-              <DatePicker
-                orientation="landscape"
-                width="inherit"
-                openTo="year"
-                label="Assessment year"
-                views={["year"]}
-                value={output.assessment_year || ""}
-                onChange={(e) =>
-                  setOutput({ ...output, [e.target.name]: e.target.value })
-                }
-                renderInput={(params) => (
-                  <TextValidator
-                    required={true}
-                    size="small"
-                    {...params}
-                    helperText={null}
-                    fullWidth
+                    onChange={(e) =>
+                      setOutput({ ...output, period: { year: e } })
+                    }
+                    renderInput={(params) => (
+                      <TextValidator
+                        size="small"
+                        {...params}
+                        helperText={null}
+                        fullWidth
+                      />
+                    )}
                   />
+                ) : output.gst_time === "Monthly" ? (
+                  <DatePicker
+                    orientation="landscape"
+                    openTo="month"
+                    label="Period"
+                    views={["year", "month"]}
+                    value={output.period.month}
+                    onChange={(e) =>
+                      setOutput({ ...output, period: { month: e } })
+                    }
+                    renderInput={(params) => (
+                      <TextValidator
+                        size="small"
+                        {...params}
+                        helperText={null}
+                        fullWidth
+                      />
+                    )}
+                  />
+                ) : output.gst_time === "Quaterly" ? (
+                  <FormControl sx={{ m: 1.5, minWidth: "23ch" }} size="small">
+                    <InputLabel id="demo-simple-select-label">
+                      Period
+                    </InputLabel>
+                    <Select
+                      labelId="demo-simple-select-label"
+                      id="demo-simple-select"
+                      value={output.period.quater || "Q1"}
+                      label="Period"
+                      name="period"
+                      onChange={(e) => {
+                        setOutput({
+                          ...output,
+                          period: { quater: e.target.value },
+                        });
+                      }}
+                    >
+                      {quaters.map((val) => (
+                        <MenuItem value={val}>{val}</MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                ) : (
+                  false
                 )}
-              />
+              </LocalizationProvider>
+            </Grid>
+          ) : userinfo.enquired_for === "GST Registration" ? (
+            <>
+              <Grid style={{ display: "flex" }}>
+                <TextValidator
+                  label="Company name"
+                  size="small"
+                  name="company_name"
+                  required={true}
+                  value={output.company_name}
+                  onChange={(e) =>
+                    setOutput({ ...output, [e.target.name]: e.target.value })
+                  }
+                  type="text"
+                />
+                <TextValidator
+                  label="Company address"
+                  multiline
+                  size="small"
+                  name="company_address"
+                  value={output.company_address}
+                  onChange={(e) =>
+                    setOutput({ ...output, [e.target.name]: e.target.value })
+                  }
+                  type="text"
+                />
+              </Grid>
+              <Grid style={{ display: "flex" }}>
+                <TextValidator
+                  label="City"
+                  name="company_city"
+                  value={"" || output.company_city}
+                  onChange={(e) =>
+                    setOutput({ ...output, [e.target.name]: e.target.value })
+                  }
+                  size="small"
+                  type="text"
+                />
+                <TextValidator
+                  label="Pincode"
+                  name="company_pincode"
+                  value={output.company_pincode}
+                  onChange={(e) =>
+                    setOutput({ ...output, [e.target.name]: e.target.value })
+                  }
+                  size="small"
+                  type="tel"
+                />
+              </Grid>
+              <Grid style={{ display: "flex" }}>
+                <TextValidator
+                  label="Email"
+                  name="company_email"
+                  validators={["required", "isEmail"]}
+                  errorMessages={[
+                    "this field is required",
+                    "email is not valid",
+                  ]}
+                  value={output.company_email}
+                  onChange={(e) =>
+                    setOutput({ ...output, [e.target.name]: e.target.value })
+                  }
+                  size="small"
+                  type="email"
+                />
+                <TextValidator
+                  label="Employer Pan"
+                  name="employer_pan"
+                  value={output.employer_pan || ""}
+                  onChange={(e) =>
+                    setOutput({ ...output, [e.target.name]: e.target.value })
+                  }
+                  size="small"
+                  required={true}
+                  type="tel"
+                />
+              </Grid>
+            </>
+          ) : userinfo.enquired_for === "PAN Registration" ? (
+            <Grid
+              style={{
+                display: "flex",
+              }}
+            >
               <TextValidator
-                inputProps={{ style: { textTransform: "uppercase" } }}
+                label="Aadhar Number"
                 size="small"
-                label="Pan"
+                validators={[
+                  "matchRegexp:^[0-9]{4}[ -]?[0-9]{4}[ -]?[0-9]{4}$",
+                ]}
+                errorMessages={["Please enter 12 digit number "]}
+                name="aadhar"
                 required={true}
-                name="pan"
-                validators={["matchRegexp:^[A-Za-z]{5}[0-9]{4}[A-Za-z]{1}$"]}
-                errorMessages={["Please valid Pan number "]}
-                value={output.pan || ""}
+                value={output.aadhar || ""}
                 onChange={(e) =>
                   setOutput({ ...output, [e.target.name]: e.target.value })
                 }
                 type="text"
-                id="outlined-textarea"
               />
             </Grid>
-          </LocalizationProvider>
-        ) : (
-          0
-        )}
-      </Grid>
-    </>
-  );
-}
-function ServiceFileForm(params) {
-  return (
-    <>
-      <Grid
-        style={{
-          left: "20px",
-          "& .MuiTypographyH6": {
-            fontSize: "12px",
-            lineHeight: "35px",
-            fontWeight: "600",
-          },
-          flexDirection: "column",
-          margin:'20px',
-          position: "relative",
-        }}
-        container
-        direction="row"
-        justify="center"
-        alignItems="center"
-      >
-        <FileUploader
-          multiple={true}
-          handleChange={handleFileChange}
-          name="file"
-          types={fileTypes}
-        />
-        <p style={ { padding:"20px" }}>{file ? `File name: ${file[0].name}` : "No files uploaded yet"}</p>
-      </Grid>
-    </>
-  );
-}
+          ) : userinfo.enquired_for === "TAX Registration" ? (
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <Grid style={{ display: "flex" }}>
+                <DatePicker
+                  orientation="landscape"
+                  width="inherit"
+                  openTo="year"
+                  label="Assessment year"
+                  views={["year"]}
+                  value={output.assessment_year || ""}
+                  onChange={(e) =>
+                    setOutput({ ...output, [e.target.name]: e.target.value })
+                  }
+                  renderInput={(params) => (
+                    <TextValidator
+                      required={true}
+                      size="small"
+                      {...params}
+                      helperText={null}
+                      fullWidth
+                    />
+                  )}
+                />
+                <TextValidator
+                  inputProps={{ style: { textTransform: "uppercase" } }}
+                  size="small"
+                  label="Pan"
+                  required={true}
+                  name="pan"
+                  validators={["matchRegexp:^[A-Za-z]{5}[0-9]{4}[A-Za-z]{1}$"]}
+                  errorMessages={["Please valid Pan number "]}
+                  value={output.pan || ""}
+                  onChange={(e) =>
+                    setOutput({ ...output, [e.target.name]: e.target.value })
+                  }
+                  type="text"
+                  id="outlined-textarea"
+                />
+              </Grid>
+            </LocalizationProvider>
+          ) : (
+            0
+          )}
+        </Grid>
+      </>
+    );
+  }
+  function ServiceFileForm(params) {
+    return (
+      <>
+        <Grid
+          style={{
+            left: "20px",
+            "& .MuiTypographyH6": {
+              fontSize: "12px",
+              lineHeight: "35px",
+              fontWeight: "600",
+            },
+            flexDirection: "column",
+            margin: "20px",
+            position: "relative",
+          }}
+          container
+          direction="row"
+          justify="center"
+          alignItems="center"
+        >
+          <FileUploader
+            multiple={true}
+            handleChange={handleFileChange}
+            name="file"
+            types={fileTypes}
+          />
+          <p style={{ padding: "20px" }}>
+            {file ? `File name: ${file[0].name}` : "No files uploaded yet"}
+          </p>
+        </Grid>
+      </>
+    );
+  }
   const services = [
     "GST",
     "GST Registration",
@@ -489,11 +510,11 @@ function ServiceFileForm(params) {
   function getStepContent(stepIndex) {
     switch (stepIndex) {
       case 0:
-      return <PersonalInfo />;
+        return <PersonalInfo />;
       case 1:
         return <ServiceForm />;
       case 2:
-        return <ServiceFileForm/>;
+        return <ServiceFileForm />;
       default:
         return `Aenean arcu ligula, porttitor id neque imperdiet, congue convallis erat. Integer libero sapien, convallis a vulputate vel, pretium vulputate metus. Donec leo justo, viverra ut tempor commodo, laoreet eu velit. Donec vel sem quis velit pharetra elementum. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Etiam in commodo mauris. Ut iaculis ipsum velit.`;
     }
@@ -524,25 +545,32 @@ function ServiceFileForm(params) {
   const handleClickOpen = () => {
     setOpen(true);
     if (userinfo.enquired_for === "GST") {
-      fetch("http://localhost:8000/enq-service-gst/" + params.row.enq_id)
+      fetch("http://localhost:8000/api/v1/req-service-gst/" + params.row.req_id)
         .then((res) => res.json())
         .then((result) => {
-          setOutput(result[0]);
+          setOutput(result);
         });
     } else if (userinfo.enquired_for === "GST Registration") {
-      fetch("http://localhost:8000/enq-service-gst-reg/" + params.row.enq_id)
+      fetch(
+        "http://localhost:8000/api/v1/req-service-gst-rgst/" + params.row.req_id
+      )
         .then((res) => res.json())
         .then((result) => {
           setOutput(result[0]);
         });
     } else if (userinfo.enquired_for === "PAN Registration") {
-      fetch("http://localhost:8000/enq-service-pan-reg/" + params.row.enq_id)
+      fetch(
+        "http://localhost:8000/api/v1/req-service-pan-rgst/" + params.row.req_id
+      )
         .then((res) => res.json())
         .then((result) => {
-          setOutput(result[0]);
+          setOutput(result);
         });
+      console.log(output);
     } else if (userinfo.enquired_for === "TAX Registration") {
-      fetch("http://localhost:8000/enq-service-tax-reg/" + params.row.enq_id)
+      fetch(
+        "http://localhost:8000/api/v1/req-service-tax-rgst/" + params.row.req_id
+      )
         .then((res) => res.json())
         .then((result) => {
           setOutput(result[0]);
@@ -557,49 +585,44 @@ function ServiceFileForm(params) {
 
   const handleDelete = async () => {
     const data = params.row;
-    const result = await fetch("http://localhost:8000/enq-data-delete", {
+    const result = await fetch("http://localhost:8000/api/v1/req-data-delete", {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        data,
-      }),
+      body: JSON.stringify(data),
     });
+
     const id = await result.json();
     dispatch({ type: "DELETE_REQUESTS", payload: id });
 
     // setenqData(enqData.filter((row) => row.id !== enqId.id));
   };
   const handleEdit = async () => {};
-const getMuiTheme = () =>
-  createTheme({
-    palette: {
-      primary: {
-        main: "#094067",
+  const getMuiTheme = () =>
+    createTheme({
+      palette: {
+        primary: {
+          main: "#094067",
+        },
+        green: {
+          main: "#094067",
+        },
+        secondary: {
+          main: "#90b4ce",
+        },
+        teritiary: {
+          main: "#ef4565",
+        },
       },
-      green: {
-        main: "#094067",
-      },
-      secondary: {
-        main: "#90b4ce",
-      },
-      teritiary: {
-        main: "#ef4565",
-      },
-    },
-  });
-  const handleFormSubmit = async () => {
-console.log(`Submit`)
-  };
+    });
+  const handleFormSubmit = async () => {};
 
   const handleSubmit = async () => {
     setLoading(true);
     const data = params.row;
-    const result = await fetch("http://localhost:8000/enq-data-update", {
+    const result = await fetch("http://localhost:8000/api/v1/req-data-update", {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        data,
-      }),
+      body: JSON.stringify(data),
     });
     if (result) {
       setSuccess(true);
@@ -612,7 +635,7 @@ console.log(`Submit`)
     if (rowId === params.id && success) setSuccess(false);
   }, [rowId]);
   const inputBox = {
-    // margin: "0 auto",  
+    // margin: "0 auto",
     "& .MuiTextField-root": {
       m: 2,
       // borderRadius:'15px',

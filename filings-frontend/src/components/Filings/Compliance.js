@@ -42,7 +42,6 @@ export const Compliance = (props) => {
     tableBodyHeight,
     tableBodyMaxHeight,
     onTableChange: (action, state) => {
-      console.log(action);
       console.dir(state);
     }
   };

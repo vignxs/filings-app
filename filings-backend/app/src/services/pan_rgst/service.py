@@ -1,5 +1,6 @@
 from sqlalchemy.orm import Session
 from . import models, schemas
+from sqlalchemy import  select, update, delete
 
 
 def create_pan_rgst(db: Session, pan_rgst: schemas.IGS_REQ_PAN_RGST):
@@ -13,4 +14,8 @@ def get_pan_rgst(db: Session, req_id : int):
     print(req_id)
     return db.query(models.IGS_REQ_PAN_RGST).filter(models.IGS_REQ_PAN_RGST.req_id == req_id).first()
     
-
+def update_pan_rgst(db:Session , pan_rgst_update:schemas.IGS_REQ_PAN_RGST):
+    stmt = update(models.IGS_REQ_PAN_RGST).where(models.IGS_REQ_PAN_RGST.req_id == pan_rgst_update.req_id).values(pan_rgst_update.dict())
+    db.execute(stmt)
+    db.commit()
+    return pan_rgst_update.req_id

@@ -500,7 +500,7 @@ export const EnqForm = (props) => {
                         label="Period"
                         onChange={(e) => {
                           const date = new Date(e);
-                          // Extract the month and year from the date
+                          // Extract the year from the date
                           const year = date.getFullYear();
 
                           setGstInfo({

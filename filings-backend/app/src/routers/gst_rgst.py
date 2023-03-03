@@ -16,3 +16,7 @@ async def request_gst_rgst(gst_rgst: schemas.IGS_REQ_GST_RGST, db: Session= Depe
 @router.get("/req-service-gst-rgst/{id}")
 def request_service_gst_rgst(id: str,  db: Session = Depends(get_db)):
     return service.get_gst_rgst(db=db, req_id = id)
+
+@router.put("/gst-rgst-update", response_model=schemas.IGS_REQ_GST_RGST)
+async def gst_rgst_data_update(gst_rgst_update:schemas.IGS_REQ_GST_RGST,  db: Session = Depends(get_db)):
+    service.update_gst_rgst(db=db , gst_rgst_update=gst_rgst_update)

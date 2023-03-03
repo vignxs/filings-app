@@ -59,9 +59,6 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 // import userContext from "../Context";
 
 export const UsersActions = ({ params, rowId, setRowId }) => {
-  const [Gstinfo, setGstInfo] = React.useState({ gst_time: "", period: {} });
-  const [Paninfo, setPanInfo] = React.useState({});
-  const [Taxinfo, setTaxInfo] = React.useState({});
   // const [heightBox, setheightBox] = React.useState("700px");
 
   const quaters = ["Q1", "Q2", "Q3", "Q4"];
@@ -243,11 +240,17 @@ export const UsersActions = ({ params, rowId, setRowId }) => {
                     orientation="landscape"
                     openTo="year"
                     views={["year"]}
-                    value={output.period.year}
+                    value={output.period || Date()}
                     label="Period"
-                    onChange={(e) =>
-                      setOutput({ ...output, period: { year: e } })
-                    }
+                    onChange={(e) => {
+                      const date = new Date(e);
+                      // Extract the year from the date
+                      const year = date.getFullYear();
+                      setOutput({
+                        ...output,
+                        period: `${year}`,
+                      });
+                    }}
                     renderInput={(params) => (
                       <TextValidator
                         size="small"
@@ -264,9 +267,18 @@ export const UsersActions = ({ params, rowId, setRowId }) => {
                     label="Period"
                     views={["year", "month"]}
                     value={output.period.month}
-                    onChange={(e) =>
-                      setOutput({ ...output, period: { month: e } })
-                    }
+                    onChange={(e) => {
+                      const date = new Date(e);
+                      // Extract the month and year from the date
+                      const month = date.toLocaleString("default", {
+                        month: "short",
+                      });
+                      const year = date.getFullYear();
+                      setOutput({
+                        ...output,
+                        period: `${year}-${month}`,
+                      });
+                    }}
                     renderInput={(params) => (
                       <TextValidator
                         size="small"
@@ -284,13 +296,13 @@ export const UsersActions = ({ params, rowId, setRowId }) => {
                     <Select
                       labelId="demo-simple-select-label"
                       id="demo-simple-select"
-                      value={output.period.quater || "Q1"}
+                      value={output.period || "Q1"}
                       label="Period"
                       name="period"
                       onChange={(e) => {
                         setOutput({
                           ...output,
-                          period: { quater: e.target.value },
+                          period: e.target.value,
                         });
                       }}
                     >
@@ -464,10 +476,16 @@ export const UsersActions = ({ params, rowId, setRowId }) => {
                     label="Assessment year"
                     views={["year"]}
                     name="assessment_year"
-                    value={output.assessment_year || null}
-                    onChange={(date) =>
-                      setOutput({ ...output, assessment_year: date })
-                    }
+                    value={output.assessment_year || Date()}
+                    onChange={(e) => {
+                      const date = new Date(e);
+                      // Extract the year from the date
+                      const year = date.getFullYear();
+                      setOutput({
+                        ...output,
+                        assessment_year: `${year}`,
+                      });
+                    }}
                     renderInput={(params) => (
                       <TextValidator
                         required={true}
@@ -539,7 +557,7 @@ export const UsersActions = ({ params, rowId, setRowId }) => {
       </>
     );
   }
-  
+
   const services = [
     "GST",
     "GST Registration",
@@ -561,7 +579,7 @@ export const UsersActions = ({ params, rowId, setRowId }) => {
       case 2:
         return <ServiceFileForm />;
       default:
-        return `Aenean arcu ligula, porttitor id neque imperdiet, congue convallis erat. Integer libero sapien, convallis a vulputate vel, pretium vulputate metus. Donec leo justo, viverra ut tempor commodo, laoreet eu velit. Donec vel sem quis velit pharetra elementum. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Etiam in commodo mauris. Ut iaculis ipsum velit.`;
+        break;
     }
   }
 
@@ -591,7 +609,7 @@ export const UsersActions = ({ params, rowId, setRowId }) => {
     setOpen(true);
 
     const endpoints = {
-      "GST": "req-service-gst",
+      GST: "req-service-gst",
       "GST Registration": "req-service-gst-rgst",
       "PAN Registration": "req-service-pan-rgst",
       "TAX Registration": "req-service-tax-rgst",
@@ -607,7 +625,6 @@ export const UsersActions = ({ params, rowId, setRowId }) => {
         });
     }
   };
-
 
   const handleClose = () => {
     setOpen(false);
@@ -645,7 +662,9 @@ export const UsersActions = ({ params, rowId, setRowId }) => {
         },
       },
     });
-  const handleFormSubmit = async () => {};
+  const handleFormSubmit = async () => {
+    console.log(output)
+  };
 
   const handleSubmit = async () => {
     setLoading(true);
@@ -665,6 +684,7 @@ export const UsersActions = ({ params, rowId, setRowId }) => {
   useEffect(() => {
     if (rowId === params.id && success) setSuccess(false);
   }, [rowId]);
+
   const inputBox = {
     // margin: "0 auto",
     "& .MuiTextField-root": {
@@ -688,7 +708,6 @@ export const UsersActions = ({ params, rowId, setRowId }) => {
     },
     "& .MuiOutlinedInput-root": {
       borderRadius: "6px",
-      
     },
     // marginLeft: "70px",
     justifyContent: "center",
@@ -703,6 +722,7 @@ export const UsersActions = ({ params, rowId, setRowId }) => {
     borderRadius: "10px",
     // ml:"180px"
   };
+
   return (
     <ThemeProvider theme={getMuiTheme()}>
       <Box
@@ -760,115 +780,114 @@ export const UsersActions = ({ params, rowId, setRowId }) => {
             onClick={handleClickOpen}
           >
             <EditOutlined />
-            {/* <Icon icon={"eva:edit-outline"} /> */}
           </IconButton>
-          <Dialog
-            scroll={"body"}
-            fullWidth
-            maxWidth={"md"}
-            // sx={{ inputBox }}
-            open={open}
-            onClose={handleClose}
-          >
-            <DialogTitle
-              sx={{
-                fontFamily: "PT Sans Caption",
-                fontSize: "18px",
-                margin: "30px",
-                fontWeight: "500",
-                position: "relative",
-                color: "#ef4565",
-              }}
+          <ValidatorForm onSubmit={handleFormSubmit}>
+            <Dialog
+              scroll={"body"}
+              fullWidth
+              maxWidth={"md"}
+              open={open}
+              onClose={handleClose}
             >
-              Update Form
-            </DialogTitle>
-            <DialogContent sx={{ width: "900px", height: "450px" }}>
-              <DialogContentText></DialogContentText>
-              <Box>
-                <ThemeProvider theme={theme}>
-                  <Stepper
-                    activeStep={activeStep}
-                    alternativeLabel
-                    connector={<QontoConnector />}
-                  >
-                    {steps.map((label) => (
-                      <Step key={label}>
-                        <StepLabel>{label}</StepLabel>
-                      </Step>
-                    ))}
-                  </Stepper>
+              <DialogTitle
+                sx={{
+                  fontFamily: "PT Sans Caption",
+                  fontSize: "18px",
+                  margin: "30px",
+                  fontWeight: "500",
+                  position: "relative",
+                  color: "#ef4565",
+                }}
+              >
+                Update Form
+              </DialogTitle>
+              <DialogContent sx={{ width: "900px", height: "450px" }}>
+                <DialogContentText></DialogContentText>
+                <Box>
+                  <ThemeProvider theme={theme}>
+                    <Stepper
+                      activeStep={activeStep}
+                      alternativeLabel
+                      connector={<QontoConnector />}
+                    >
+                      {steps.map((label) => (
+                        <Step key={label}>
+                          <StepLabel>{label}</StepLabel>
+                        </Step>
+                      ))}
+                    </Stepper>
 
-                  <Box mt={2}>
-                    {activeStep === steps.length ? (
-                      <Box
-                        sx={{
-                          display: "flex",
-                          flexDirection: "column",
-                          alignItems: "center",
-                          margin: "60px",
-                        }}
-                      >
-                        <Typography>
-                          All steps completed , Do you wanna go back? , else
-                          update below!
-                        </Typography>
-
-                        <Button
-                          sx={{ mt: 2 }}
-                          variant="contained"
-                          color="secondary"
-                          onClick={handleReset}
-                        >
-                          Go Back
-                        </Button>
-                      </Box>
-                    ) : (
-                      <Box sx={inputBox}>
-                        <ValidatorForm onSubmit={handleFormSubmit}>
-                          {getStepContent(activeStep)}
-                        </ValidatorForm>
-                        <div
-                          style={{
-                            position: "absolute",
-                            left: "20px",
-                            width: "100%",
+                    <Box mt={2}>
+                      {activeStep === steps.length ? (
+                        <Box
+                          sx={{
                             display: "flex",
-                            marginTop: "20px",
-                            justifyContent: "center",
-                            // alignItems:"center"
+                            flexDirection: "column",
+                            alignItems: "center",
+                            margin: "60px",
                           }}
                         >
-                          <Stack spacing={40} direction="row">
-                            <Button
-                              variant="contained"
-                              color="secondary"
-                              disabled={activeStep === 0}
-                              onClick={handleBack}
-                            >
-                              Back
-                            </Button>
-                            <Button
-                              variant="contained"
-                              color="primary"
-                              onClick={handleNext}
-                            >
-                              {activeStep === steps.length - 1
-                                ? "Finish"
-                                : "Next"}
-                            </Button>
-                          </Stack>
-                        </div>
-                      </Box>
-                    )}
-                  </Box>
-                </ThemeProvider>
-              </Box>
-            </DialogContent>
-            <DialogActions sx={{ justifyContent: "space-between" }}>
-              <Button onClick={handleClose}>Cancel</Button>
-              <Button onClick={handleClose}>Subscribe</Button>
-            </DialogActions>
-          </Dialog>
+                          <Typography>
+                            All steps completed , Do you wanna go back? , else
+                            update below!
+                          </Typography>
+
+                          <Button
+                            sx={{ mt: 2 }}
+                            variant="contained"
+                            color="secondary"
+                            onClick={handleReset}
+                          >
+                            Go Back
+                          </Button>
+                        </Box>
+                      ) : (
+                        <Box sx={inputBox}>
+                          {getStepContent(activeStep)}
+                          <div
+                            style={{
+                              position: "absolute",
+                              left: "20px",
+                              width: "100%",
+                              display: "flex",
+                              marginTop: "20px",
+                              justifyContent: "center",
+                            }}
+                          >
+                            <Stack spacing={40} direction="row">
+                              <Button
+                                variant="contained"
+                                color="secondary"
+                                disabled={activeStep === 0}
+                                onClick={handleBack}
+                              >
+                                Back
+                              </Button>
+                              <Button
+                                variant="contained"
+                                color="primary"
+                                onClick={handleNext}
+                              >
+                                {activeStep === steps.length - 1
+                                  ? "Finish"
+                                  : "Next"}
+                              </Button>
+                            </Stack>
+                          </div>
+                        </Box>
+                      )}
+                    </Box>
+                  </ThemeProvider>
+                </Box>
+              </DialogContent>
+              <DialogActions sx={{ justifyContent: "space-between" }}>
+                <Button onClick={handleClose}>Cancel</Button>
+                <Button type="submit" onClick={handleFormSubmit}>
+                  Save
+                </Button>
+              </DialogActions>
+            </Dialog>
+          </ValidatorForm>
           <IconButton
             color="teritiary"
             sx={{ boxShadow: 0 }}

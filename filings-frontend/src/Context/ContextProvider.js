@@ -3,6 +3,7 @@ import reducer from './reducer'
 
 const initialState = {
   requests: [],
+  isLogged: false
 };
 
 export const Context = createContext()

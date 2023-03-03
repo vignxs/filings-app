@@ -136,7 +136,6 @@ export const EnqForm = (props) => {
             body: JSON.stringify(Gstinfo),
           });
         } else if (userinfo.enquired_for === "GST Registration") {
-          console.log(newGstinfo);
           // Send POST request for GST registration info
           await fetch("http://localhost:8000/api/v1/req-gst-rgst", {
             method: "POST",
@@ -497,7 +496,6 @@ export const EnqForm = (props) => {
                           const date = new Date(e);
                           // Extract the month and year from the date
                           const year = date.getFullYear();
-                          console.log(year);
 
                           setGstInfo({
                             ...Gstinfo,
@@ -528,7 +526,6 @@ export const EnqForm = (props) => {
                             month: "short",
                           });
                           const year = date.getFullYear();
-                          console.log(`${year}-${month}`);
                           setGstInfo({
                             ...Gstinfo,
                             period: `${year}-${month}`,
@@ -685,7 +682,6 @@ export const EnqForm = (props) => {
                         const date = new Date(e);
                         // Extract the month and year from the date
                         const year = date.getFullYear();
-                        console.log(year);
                         setTaxInfo({
                           ...Taxinfo,
                           assessment_year: `${year}`,

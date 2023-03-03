@@ -141,6 +141,7 @@ const enqColumns = useMemo(
       headerName: "",
       type: "actions",
       width: 130,
+      filterable: false,
       renderCell: (params) => <UsersActions {...{ params, rowId, setRowId }} />,
     },
     {
@@ -156,6 +157,7 @@ const enqColumns = useMemo(
       field: "first_name",
       headerAlign: "center",
       align: "center",
+      filterable: false,
       headerName: "Name",
       width: 120,
     },
@@ -167,6 +169,7 @@ const enqColumns = useMemo(
       align: "center",
       headerName: "Mobile",
       width: 100,
+      filterable: false,
     },
     {
       field: "email",
@@ -174,6 +177,7 @@ const enqColumns = useMemo(
       align: "center",
       headerName: "Email",
       width: 160,
+      filterable: false,
     },
     // "address",
     // "city",
@@ -185,7 +189,7 @@ const enqColumns = useMemo(
       align: "center",
       width: 160,
       sortable: true,
-      filterable: true,
+      filterable: false,
     },
     {
       field: "status",
@@ -196,6 +200,7 @@ const enqColumns = useMemo(
       align: "center",
       valueOptions: ["In-Progress", "Created", "Closed"],
       editable: true,
+      filterable: false,
       // currentUser?.role === "admin",
     },
     {
@@ -203,6 +208,7 @@ const enqColumns = useMemo(
       headerName: "CreatedAt",
       width: 150,
       headerAlign: "center",
+      filterable: false,
       align: "center",
       renderCell: (params) =>
         moment(params.row.createdAt).format("YYYY-MM-DD HH:MM:SS"),
@@ -214,6 +220,7 @@ const enqColumns = useMemo(
       width: 150,
       headerAlign: "center",
       align: "center",
+      filterable: false,
       renderCell: (params) =>
         moment(params.row.createdAt).format("YYYY-MM-DD HH:MM:SS"),
       // currentUser?.role === "admin",
@@ -227,7 +234,6 @@ useEffect(() => {
     getRequests(dispatch);
 }, []);
 
-console.log(rowId)
 
 
 

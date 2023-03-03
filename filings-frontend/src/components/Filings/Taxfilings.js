@@ -77,7 +77,6 @@ export const Filings = (props) => {
     });
     const post_resp = await resp.json();
     setED(post_resp);
-    console.log(extractedData)
     first.Fname = extractedData.First_name;
     first.Lname = extractedData.Last_name;
     first.Hno = extractedData.House_no;
@@ -87,7 +86,6 @@ export const Filings = (props) => {
     first.country = extractedData.Country;
     first.favClr = extractedData.Favorite_color;
     first.drivinglicence = extractedData.Driving_Licence;
-    console.log(extractedData.First_name);
     setLoading(true);
   };
 

@@ -15,14 +15,14 @@ def get_requests(db:Session):
     return db.query(models.IGS_REQ_DATA).all()
 
 def update_request(db:Session , request:schemas.IGS_REQ_DATA):
-    stmt = update(models.IGS_REQ_DATA).where(models.IGS_REQ_DATA.req_id == request.req_id).values(request)
-    db.update(stmt)
+    stmt = update(models.IGS_REQ_DATA).where(models.IGS_REQ_DATA.req_id == request.req_id).values(request.dict())
+    db.execute(stmt)
     db.commit()
     return request.req_id
     
 def delete_request(db:Session , request:schemas.IGS_REQ_DATA):
-    # stmt = delete(models.IGS_REQ_DATA).where(models.IGS_REQ_DATA.req_id == request.req_id)
-    db.delete(request)
+    stmt = delete(models.IGS_REQ_DATA).where(models.IGS_REQ_DATA.req_id == request.req_id)
+    db.execute(stmt)
     db.commit()
     return request.req_id
     

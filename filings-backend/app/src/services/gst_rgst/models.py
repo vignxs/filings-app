@@ -6,7 +6,7 @@ class IGS_REQ_GST_RGST(Base):
     __table_args__ = {'extend_existing': True} 
 
     id = Column(Integer, primary_key=True,autoincrement = True,  index=True)
-    req_id = Column(String, ForeignKey("IGS_REQ_DATA.req_id"))
+    req_id = Column(String, ForeignKey("IGS_REQ_DATA.req_id",  ondelete='CASCADE'))
     company_name = Column(String)
     company_address = Column(String)
     company_city = Column(String)

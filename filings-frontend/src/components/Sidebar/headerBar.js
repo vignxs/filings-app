@@ -30,6 +30,7 @@ import DescriptionRoundedIcon from "@mui/icons-material/DescriptionRounded";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import AddTaskIcon from "@mui/icons-material/AddTask";
 import ExpandMore from "@mui/icons-material/ExpandMore";
+import { useValue } from "../../Context/ContextProvider";
 
 
 const admin_nav = [
@@ -134,6 +135,12 @@ const data = [
 
   export default function HeaderBar(props) {
 
+    const {
+      state: { isLogged },
+      dispatch,
+    } = useValue();
+
+
     const [Expand, setExpand] = React.useState(false);
     const [ReqExpand, setReqExpand] = React.useState(false);
 
@@ -165,7 +172,7 @@ const handleClickReqExpand = () => {
     });
     // const theme = useTheme();
     const [open, setOpen] = React.useState(false);
-const user = JSON.parse(localStorage.getItem("user"));
+const user = JSON.parse(sessionStorage.getItem("user"));
     const handleDrawerOpen = () => {
       setOpen(true);
     };
@@ -178,10 +185,9 @@ const user = JSON.parse(localStorage.getItem("user"));
 
   const handleClick = () => {
       signOut();
-      sessionStorage.setItem("logged-out", "true")
+    dispatch({ type: "LOGGED_OUT", payload: true });
     };
   
-  const isLogged = sessionStorage.getItem("logged-out");
 
 // const auth = useAuthUser();
 
@@ -189,7 +195,7 @@ const user = JSON.parse(localStorage.getItem("user"));
       <ThemeProvider theme={theme}>
         <Box sx={{ display: "flex", flexGrow: 1 }}>
           <CssBaseline />
-          <AppBar sx={ { display: isLogged === "true" ? "none" : "block" }} position="fixed" color="background" open={open}>
+          <AppBar sx={ { display: isLogged === true ? "none" : "block" }} position="fixed" color="background" open={open}>
             <Toolbar>
               <Box sx={{ display: "flex", flexGrow: 1 }}>
                 <IconButton
@@ -251,7 +257,7 @@ const user = JSON.parse(localStorage.getItem("user"));
               },
             }}
             sx={{
-            display: isLogged === "true" ? "none" : "block" ,
+            display: isLogged === true ? "none" : "block" ,
               "& .MuiDrawer-paper": {
                 backgroundColor: "#d8eefe",
               },

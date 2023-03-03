@@ -32,7 +32,6 @@ import AddTaskIcon from "@mui/icons-material/AddTask";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import { useValue } from "../../Context/ContextProvider";
 
-
 const admin_nav = [
   // {
   //   icon: <ListAltRoundedIcon />,
@@ -63,334 +62,438 @@ const data = [
   },
 ];
 
-  const drawerWidth = 220;
+const drawerWidth = 220;
 
-  const openedMixin = (theme) => ({
-    width: drawerWidth,
-    transition: theme.transitions.create("width", {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-    overflowX: "hidden",
-  });
+const openedMixin = (theme) => ({
+  width: drawerWidth,
+  transition: theme.transitions.create("width", {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.enteringScreen,
+  }),
+  overflowX: "hidden",
+});
 
-  const closedMixin = (theme) => ({
-    transition: theme.transitions.create("width", {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    overflowX: "hidden",
-    width: `calc(${theme.spacing(7)} + 1px)`,
-    [theme.breakpoints.up("sm")]: {
-      width: `calc(${theme.spacing(8)} + 1px)`,
-    },
-  });
+const closedMixin = (theme) => ({
+  transition: theme.transitions.create("width", {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+  overflowX: "hidden",
+  width: `calc(${theme.spacing(7)} + 1px)`,
+  [theme.breakpoints.up("sm")]: {
+    width: `calc(${theme.spacing(8)} + 1px)`,
+  },
+});
 
-  const DrawerHeader = styled("div")(({ theme }) => ({
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "flex-end",
-    padding: theme.spacing(0, 1),
-    // necessary for content to be below app bar
-    ...theme.mixins.toolbar,
-  }));
+const DrawerHeader = styled("div")(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "flex-end",
+  padding: theme.spacing(0, 1),
+  // necessary for content to be below app bar
+  ...theme.mixins.toolbar,
+}));
 
-  const AppBar = styled(MuiAppBar, {
-    shouldForwardProp: (prop) => prop !== "open",
-  })(({ theme, open }) => ({
-    zIndex: theme.zIndex.drawer + 1,
+const AppBar = styled(MuiAppBar, {
+  shouldForwardProp: (prop) => prop !== "open",
+})(({ theme, open }) => ({
+  zIndex: theme.zIndex.drawer + 1,
+  boxShadow: `rgb(0 0 0 / 6%) 0px 5px 5px -3px, rgb(0 0 0 / 4%) 0px 8px 10px 1px, rgb(0 0 0 / 4%) 0px 3px 14px 2px`,
+  transition: theme.transitions.create(["width", "margin"], {
+    easing: theme.transitions.easing.easeInOut,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+  ...(open && {
+    marginLeft: drawerWidth,
+    width: `calc(100% - ${drawerWidth}px)`,
     boxShadow: `rgb(0 0 0 / 6%) 0px 5px 5px -3px, rgb(0 0 0 / 4%) 0px 8px 10px 1px, rgb(0 0 0 / 4%) 0px 3px 14px 2px`,
+
     transition: theme.transitions.create(["width", "margin"], {
       easing: theme.transitions.easing.easeInOut,
-      duration: theme.transitions.duration.leavingScreen,
+      duration: theme.transitions.duration.enteringScreen,
     }),
-    ...(open && {
-      marginLeft: drawerWidth,
-      width: `calc(100% - ${drawerWidth}px)`,
-      boxShadow: `rgb(0 0 0 / 6%) 0px 5px 5px -3px, rgb(0 0 0 / 4%) 0px 8px 10px 1px, rgb(0 0 0 / 4%) 0px 3px 14px 2px`,
+  }),
+}));
+const Drawer = styled(MuiDrawer, {
+  shouldForwardProp: (prop) => prop !== "open",
+})(({ theme, open }) => ({
+  // boxShadow: "rgb(0 0 0 / 6%) 0px 5px 5px -3px, rgb(0 0 0 / 4%) 0px 8px 10px 1px, rgb(0 0 0 / 4%) 0px 3px 14px 2px",
+  width: drawerWidth,
+  flexShrink: 0,
+  whiteSpace: "nowrap",
+  boxSizing: "border-box",
+  ...(open && {
+    ...openedMixin(theme),
+    "& .MuiDrawer-paper": openedMixin(theme),
+  }),
+  ...(!open && {
+    ...closedMixin(theme),
+    "& .MuiDrawer-paper": closedMixin(theme),
+  }),
+}));
 
-      transition: theme.transitions.create(["width", "margin"], {
-        easing: theme.transitions.easing.easeInOut,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
-    }),
-  }));
-  const Drawer = styled(MuiDrawer, {
-    shouldForwardProp: (prop) => prop !== "open",
-  })(({ theme, open }) => ({
-    // boxShadow: "rgb(0 0 0 / 6%) 0px 5px 5px -3px, rgb(0 0 0 / 4%) 0px 8px 10px 1px, rgb(0 0 0 / 4%) 0px 3px 14px 2px", 
-    width: drawerWidth,
-    flexShrink: 0,
-    whiteSpace: "nowrap",
-    boxSizing: "border-box",
-    ...(open && {
-      ...openedMixin(theme),
-      "& .MuiDrawer-paper": openedMixin(theme),
-    }),
-    ...(!open && {
-      ...closedMixin(theme),
-      "& .MuiDrawer-paper": closedMixin(theme),
-    }),
-  }));
+export default function HeaderBar(props) {
+  const {
+    state: { isLogged },
+    dispatch,
+  } = useValue();
 
-  export default function HeaderBar(props) {
-
-    const {
-      state: { isLogged },
-      dispatch,
-    } = useValue();
-
-
-    const [Expand, setExpand] = React.useState(false);
-    const [ReqExpand, setReqExpand] = React.useState(false);
+  const [Expand, setExpand] = React.useState(false);
+  const [ReqExpand, setReqExpand] = React.useState(false);
 
   const handleClickExpand = () => {
     setExpand(!Expand);
   };
-const handleClickReqExpand = () => {
-  setReqExpand(!ReqExpand);
-};
+  const handleClickReqExpand = () => {
+    setReqExpand(!ReqExpand);
+  };
 
-    const theme = createTheme({
-      palette: {
-        primary: {
-          main: "#094067",
-        },
-        green: {
-          main: "#004643",
-        },
-        background: {
-          main: "#d8eefe",
-        },
-        teritiary: {
-          main: "#ef4565",
-        },
-        bg: {
-          main: "#FFFFFE",
-        },
+  const theme = createTheme({
+    palette: {
+      primary: {
+        main: "#094067",
       },
-    });
-    // const theme = useTheme();
-    const [open, setOpen] = React.useState(false);
-const user = JSON.parse(sessionStorage.getItem("user"));
-    const handleDrawerOpen = () => {
-      setOpen(true);
-    };
+      green: {
+        main: "#004643",
+      },
+      background: {
+        main: "#d8eefe",
+      },
+      teritiary: {
+        main: "#ef4565",
+      },
+      bg: {
+        main: "#FFFFFE",
+      },
+    },
+  });
+  // const theme = useTheme();
+  const [open, setOpen] = React.useState(false);
+  const user = JSON.parse(sessionStorage.getItem("user"));
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
 
-    const handleDrawerClose = () => {
-      setOpen(false);
-    };
+  const handleDrawerClose = () => {
+    setOpen(false);
+  };
 
   const signOut = useSignOut();
 
   const handleClick = () => {
-      signOut();
+    signOut();
     dispatch({ type: "LOGGED_OUT", payload: true });
-    };
-  
+  };
 
-// const auth = useAuthUser();
+  // const auth = useAuthUser();
 
-    return (
-      <ThemeProvider theme={theme}>
-        <Box sx={{ display: "flex", flexGrow: 1 }}>
-          <CssBaseline />
-          <AppBar
-            sx={{ display: isLogged === true ? "none" : "block" }}
-            position="fixed"
-            color="background"
-            open={open}
-          >
-            <Toolbar>
-              <Box sx={{ display: "flex", flexGrow: 1 }}>
-                <IconButton
-                  aria-label="open drawer"
-                  onClick={handleDrawerOpen}
-                  edge="start"
-                  sx={{
-                    marginRight: 5,
-                    ...(open && { display: "none" }),
-                  }}
-                >
-                  <MenuRoundedIcon color="teritiary" />
-                </IconButton>
-
-                <Button
-                  to="/enq-admin"
-                  component={Link}
-                  sx={{ textTransform: "none" }}
-                >
-                  <Typography
-                    variant="h6"
-                    color={"#094067"}
-                    sx={{
-                      fontWeight: "bold",
-                      flexGrow: 1,
-                      float: "right",
-                      fontFamily: "Poppins",
-                    }}
-                    noWrap
-                    component="div"
-                  >
-                    Intellecto Global Services
-                  </Typography>
-                </Button>
-              </Box>
-              <Button
-                variant="contained"
-                color="primary"
-                size="small"
+  return (
+    <ThemeProvider theme={theme}>
+      <Box sx={{ display: "flex", flexGrow: 1 }}>
+        <CssBaseline />
+        <AppBar
+          sx={{ display: isLogged === true ? "none" : "block" }}
+          position="fixed"
+          color="background"
+          open={open}
+        >
+          <Toolbar>
+            <Box sx={{ display: "flex", flexGrow: 1 }}>
+              <IconButton
+                aria-label="open drawer"
+                onClick={handleDrawerOpen}
+                edge="start"
                 sx={{
-                  p: 1,
-                  m: 1,
-                  float: "right",
-                  // left: "1150px",
-                  fontWeight: "600",
-                  letterSpacing: "1px",
+                  marginRight: 5,
+                  ...(open && { display: "none" }),
                 }}
               >
-                {user || "Login"}
-                {/* .replace(/['"]+/g, "") */}
-              </Button>
-            </Toolbar>
-          </AppBar>
-          <Drawer
-            transitionDuration={500}
-            variant="permanent"
-            PaperProps={{
-              sx: {
-                // backgroundColor: "black",
-              },
-            }}
-            sx={{
-              display: isLogged === true ? "none" : "block",
-              "& .MuiDrawer-paper": {
-                backgroundColor: "#d8eefe",
-              },
-            }}
-            open={open}
-          >
-            <DrawerHeader>
-              <IconButton onClick={handleDrawerClose}>
-                {theme.direction === "rtl" ? (
-                  <ChevronRightIcon color="teritiary" />
-                ) : (
-                  <ChevronLeftIcon color="teritiary" />
-                )}
+                <MenuRoundedIcon color="teritiary" />
               </IconButton>
-            </DrawerHeader>
-            <Divider />
-            <List>
-              <ListItemButton
-                sx={{
-                  borderRadius: "6px",
-                  "&:hover": {
-                    background: "#90b4ce",
-                    "& .icon-list-1": {
-                      color: "#FFFFFE",
-                    },
-                    "& .text-list-1": {
-                      color: "#FFFFFE",
-                    },
-                  },
-                  minHeight: 48,
-                  justifyContent: open ? "initial" : "center",
-                  px: 2.5,
-                }}
-                onClick={handleClickReqExpand}
+
+              <Button
+                to="/enq-admin"
+                component={Link}
+                sx={{ textTransform: "none" }}
               >
-                <ListItemIcon
+                <Typography
+                  variant="h6"
+                  color={"#094067"}
+                  sx={{
+                    fontWeight: "bold",
+                    flexGrow: 1,
+                    float: "right",
+                    fontFamily: "Poppins",
+                  }}
+                  noWrap
+                  component="div"
+                >
+                  Intellecto Global Services
+                </Typography>
+              </Button>
+            </Box>
+            <Button
+              variant="contained"
+              color="primary"
+              size="small"
+              sx={{
+                p: 1,
+                m: 1,
+                float: "right",
+                // left: "1150px",
+                fontWeight: "600",
+                letterSpacing: "1px",
+              }}
+            >
+              {user || "Login"}
+              {/* .replace(/['"]+/g, "") */}
+            </Button>
+          </Toolbar>
+        </AppBar>
+        <Drawer
+          transitionDuration={500}
+          variant="permanent"
+          PaperProps={{
+            sx: {
+              // backgroundColor: "black",
+            },
+          }}
+          sx={{
+            display: isLogged === true ? "none" : "block",
+            "& .MuiDrawer-paper": {
+              backgroundColor: "#d8eefe",
+            },
+          }}
+          open={open}
+        >
+          <DrawerHeader>
+            <IconButton onClick={handleDrawerClose}>
+              {theme.direction === "rtl" ? (
+                <ChevronRightIcon color="teritiary" />
+              ) : (
+                <ChevronLeftIcon color="teritiary" />
+              )}
+            </IconButton>
+          </DrawerHeader>
+          <Divider />
+          <List>
+            <ListItemButton
+              sx={{
+                borderRadius: "6px",
+                "&:hover": {
+                  background: "#90b4ce",
+                  "& .icon-list-1": {
+                    color: "#FFFFFE",
+                  },
+                  "& .text-list-1": {
+                    color: "#FFFFFE",
+                  },
+                },
+                minHeight: 48,
+                justifyContent: open ? "initial" : "center",
+                px: 2.5,
+              }}
+              onClick={handleClickReqExpand}
+            >
+              <ListItemIcon
+                className="icon-list-1"
+                sx={{
+                  color: "#094067",
+                  minWidth: 0,
+                  mr: open ? 3 : "auto",
+                  justifyContent: "center",
+                }}
+              >
+                <AddTaskIcon />
+              </ListItemIcon>
+              <ListItemText
+                className="text-list-1"
+                sx={{ color: "#094067", opacity: open ? 1 : 0 }}
+                primary="Requests"
+              />
+              {ReqExpand ? (
+                <ExpandLess
                   className="icon-list-1"
                   sx={{
                     color: "#094067",
-                    minWidth: 0,
-                    mr: open ? 3 : "auto",
-                    justifyContent: "center",
+                    // minWidth: 0,
+                    // mr: open ? 3 : "auto",
+                    // justifyContent: "center",
                   }}
-                >
-                  <AddTaskIcon />
-                </ListItemIcon>
-                <ListItemText
-                  className="text-list-1"
-                  sx={{ color: "#094067", opacity: open ? 1 : 0 }}
-                  primary="Requests"
                 />
-                {ReqExpand ? (
-                  <ExpandLess
-                    className="icon-list-1"
-                    sx={{
-                      color: "#094067",
-                      // minWidth: 0,
-                      // mr: open ? 3 : "auto",
-                      // justifyContent: "center",
-                    }}
-                  />
-                ) : (
-                  <ExpandMore
-                    className="icon-list-1"
-                    sx={{
-                      color: "#094067",
-                      // minWidth: 0,
-                      // mr: open ? 3 : "auto",
-                      // justifyContent: "center",
-                    }}
-                  />
-                )}
-              </ListItemButton>
-              <Collapse in={ReqExpand} timeout="auto" unmountOnExit>
-                {admin_nav.map((text, idx) => (
-                  <ListItem
+              ) : (
+                <ExpandMore
+                  className="icon-list-1"
+                  sx={{
+                    color: "#094067",
+                    // minWidth: 0,
+                    // mr: open ? 3 : "auto",
+                    // justifyContent: "center",
+                  }}
+                />
+              )}
+            </ListItemButton>
+            <Collapse in={ReqExpand} timeout="auto" unmountOnExit>
+              {admin_nav.map((text, idx) => (
+                <ListItem
+                  component={Link}
+                  to={text.path}
+                  key={idx}
+                  disablePadding
+                  sx={{ display: "block" }}
+                >
+                  <ListItemButton
                     component={Link}
                     to={text.path}
                     key={idx}
-                    disablePadding
-                    sx={{ display: "block" }}
-                  >
-                    <ListItemButton
-                      component={Link}
-                      to={text.path}
-                      key={idx}
-                      sx={{
-                        borderRadius: "6px",
+                    sx={{
+                      borderRadius: "6px",
 
-                        "&:hover": {
-                          background: "#90b4ce",
-                          "& .icon-list-1": {
-                            color: "#FFFFFE",
-                          },
-                          "& .text-list-1": {
-                            color: "#FFFFFE",
-                          },
+                      "&:hover": {
+                        background: "#90b4ce",
+                        "& .icon-list-1": {
+                          color: "#FFFFFE",
                         },
-                        minHeight: 48,
-                        justifyContent: open ? "initial" : "center",
-                        px: 2.5,
+                        "& .text-list-1": {
+                          color: "#FFFFFE",
+                        },
+                      },
+                      minHeight: 48,
+                      justifyContent: open ? "initial" : "center",
+                      px: 2.5,
+                    }}
+                  >
+                    <ListItemIcon
+                      className="icon-list-1"
+                      sx={{
+                        color: "#094067",
+                        minWidth: 0,
+                        mr: open ? 3 : "auto",
+                        justifyContent: "center",
                       }}
                     >
-                      <ListItemIcon
-                        className="icon-list-1"
-                        sx={{
-                          color: "#094067",
-                          minWidth: 0,
-                          mr: open ? 3 : "auto",
-                          justifyContent: "center",
-                        }}
-                      >
-                        {text.icon}
-                      </ListItemIcon>
-                      <ListItemText
-                        className="text-list-1"
-                        primary={text.name}
-                        sx={{ color: "#094067", opacity: open ? 1 : 0 }}
-                      />
-                    </ListItemButton>
-                  </ListItem>
-                ))}
-              </Collapse>
-            </List>
+                      {text.icon}
+                    </ListItemIcon>
+                    <ListItemText
+                      className="text-list-1"
+                      primary={text.name}
+                      sx={{ color: "#094067", opacity: open ? 1 : 0 }}
+                    />
+                  </ListItemButton>
+                </ListItem>
+              ))}
+            </Collapse>
+          </List>
+          <Divider />
+          <List>
+            <ListItemButton
+              sx={{
+                borderRadius: "6px",
+                "&:hover": {
+                  background: "#90b4ce",
+                  "& .icon-list-1": {
+                    color: "#FFFFFE",
+                  },
+                  "& .text-list-1": {
+                    color: "#FFFFFE",
+                  },
+                },
+                minHeight: 48,
+                justifyContent: open ? "initial" : "center",
+                px: 2.5,
+              }}
+              onClick={handleClickExpand}
+            >
+              <ListItemIcon
+                className="icon-list-1"
+                sx={{
+                  color: "#094067",
+                  minWidth: 0,
+                  mr: open ? 3 : "auto",
+                  justifyContent: "center",
+                }}
+              >
+                <EngineeringRoundedIcon />
+              </ListItemIcon>
+              <ListItemText
+                className="text-list-1"
+                sx={{ color: "#094067", opacity: open ? 1 : 0 }}
+                primary="Services"
+              />
+              {Expand ? (
+                <ExpandLess
+                  className="icon-list-1"
+                  sx={{
+                    color: "#094067",
+                    // minWidth: 0,
+                    // mr: open ? 3 : "auto",
+                    // justifyContent: "center",
+                  }}
+                />
+              ) : (
+                <ExpandMore
+                  className="icon-list-1"
+                  sx={{
+                    color: "#094067",
+                    // minWidth: 0,
+                    // mr: open ? 3 : "auto",
+                    // justifyContent: "center",
+                  }}
+                />
+              )}
+            </ListItemButton>
+            <Collapse in={Expand} timeout="auto" unmountOnExit>
+              {data.map((text, index) => (
+                <ListItem key={index} disablePadding sx={{ display: "block" }}>
+                  <ListItemButton
+                    component={Link}
+                    to={text.path}
+                    key={index}
+                    sx={{
+                      pl: 4,
+                      borderRadius: "6px",
+                      "&:hover": {
+                        background: "#90b4ce",
+                        "& .icon-list-1": {
+                          color: "#FFFFFE",
+                        },
+                        "& .text-list-1": {
+                          color: "#FFFFFE",
+                        },
+                      },
+                      minHeight: 48,
+                      justifyContent: open ? "initial" : "center",
+                      px: 2.5,
+                    }}
+                  >
+                    <ListItemIcon
+                      className="icon-list-1"
+                      sx={{
+                        color: "#094067",
+                        minWidth: 0,
+                        mr: open ? 3 : "auto",
+                        justifyContent: "center",
+                      }}
+                    >
+                      {text.icon}
+                    </ListItemIcon>
+                    <ListItemText
+                      className="text-list-1"
+                      primary={text.name}
+                      sx={{ color: "#094067", opacity: open ? 1 : 0 }}
+                    />
+                  </ListItemButton>
+                </ListItem>
+              ))}
+            </Collapse>
+          </List>
+          <List style={{ marginTop: `auto` }}>
             <Divider />
-            <List>
+            <ListItem key={1} disablePadding sx={{ display: "block" }}>
               <ListItemButton
+                onClick={handleClick}
+                component={Link}
+                to={"/login"}
                 sx={{
                   borderRadius: "6px",
                   "&:hover": {
@@ -406,7 +509,6 @@ const user = JSON.parse(sessionStorage.getItem("user"));
                   justifyContent: open ? "initial" : "center",
                   px: 2.5,
                 }}
-                onClick={handleClickExpand}
               >
                 <ListItemIcon
                   className="icon-list-1"
@@ -417,142 +519,31 @@ const user = JSON.parse(sessionStorage.getItem("user"));
                     justifyContent: "center",
                   }}
                 >
-                  <EngineeringRoundedIcon />
+                  <LogoutRoundedIcon />
                 </ListItemIcon>
                 <ListItemText
                   className="text-list-1"
+                  primary={"Logout"}
                   sx={{ color: "#094067", opacity: open ? 1 : 0 }}
-                  primary="Services"
                 />
-                {Expand ? (
-                  <ExpandLess
-                    className="icon-list-1"
-                    sx={{
-                      color: "#094067",
-                      // minWidth: 0,
-                      // mr: open ? 3 : "auto",
-                      // justifyContent: "center",
-                    }}
-                  />
-                ) : (
-                  <ExpandMore
-                    className="icon-list-1"
-                    sx={{
-                      color: "#094067",
-                      // minWidth: 0,
-                      // mr: open ? 3 : "auto",
-                      // justifyContent: "center",
-                    }}
-                  />
-                )}
               </ListItemButton>
-              <Collapse in={Expand} timeout="auto" unmountOnExit>
-                {data.map((text, index) => (
-                  <ListItem
-                    key={index}
-                    disablePadding
-                    sx={{ display: "block" }}
-                  >
-                    <ListItemButton
-                      component={Link}
-                      to={text.path}
-                      key={index}
-                      sx={{
-                        pl: 4,
-                        borderRadius: "6px",
-                        "&:hover": {
-                          background: "#90b4ce",
-                          "& .icon-list-1": {
-                            color: "#FFFFFE",
-                          },
-                          "& .text-list-1": {
-                            color: "#FFFFFE",
-                          },
-                        },
-                        minHeight: 48,
-                        justifyContent: open ? "initial" : "center",
-                        px: 2.5,
-                      }}
-                    >
-                      <ListItemIcon
-                        className="icon-list-1"
-                        sx={{
-                          color: "#094067",
-                          minWidth: 0,
-                          mr: open ? 3 : "auto",
-                          justifyContent: "center",
-                        }}
-                      >
-                        {text.icon}
-                      </ListItemIcon>
-                      <ListItemText
-                        className="text-list-1"
-                        primary={text.name}
-                        sx={{ color: "#094067", opacity: open ? 1 : 0 }}
-                      />
-                    </ListItemButton>
-                  </ListItem>
-                ))}
-              </Collapse>
-            </List>
-            <List style={{ marginTop: `auto` }}>
-              <Divider />
-              <ListItem key={1} disablePadding sx={{ display: "block" }}>
-                <ListItemButton
-                  onClick={handleClick}
-                  component={Link}
-                  to={"/login"}
-                  sx={{
-                    borderRadius: "6px",
-                    "&:hover": {
-                      background: "#90b4ce",
-                      "& .icon-list-1": {
-                        color: "#FFFFFE",
-                      },
-                      "& .text-list-1": {
-                        color: "#FFFFFE",
-                      },
-                    },
-                    minHeight: 48,
-                    justifyContent: open ? "initial" : "center",
-                    px: 2.5,
-                  }}
-                >
-                  <ListItemIcon
-                    className="icon-list-1"
-                    sx={{
-                      color: "#094067",
-                      minWidth: 0,
-                      mr: open ? 3 : "auto",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <LogoutRoundedIcon />
-                  </ListItemIcon>
-                  <ListItemText
-                    className="text-list-1"
-                    primary={"Logout"}
-                    sx={{ color: "#094067", opacity: open ? 1 : 0 }}
-                  />
-                </ListItemButton>
-              </ListItem>
-            </List>
-          </Drawer>
-          <Box
-            sx={{
-              flexGrow: 1,
-              paddingTop: "96px",
-              paddingLeft: "38px",
-              paddingRight: "38px",
-              bgcolor: "#FFFFFE",
-              width: "100vw",
-              minHeight: "100vw",
-            }}
-          >
-            {props.children}
-          </Box>
+            </ListItem>
+          </List>
+        </Drawer>
+        <Box
+          sx={{
+            flexGrow: 1,
+            paddingTop: "96px",
+            paddingLeft: "38px",
+            paddingRight: "38px",
+            bgcolor: "#FFFFFE",
+            width: "100vw",
+            minHeight: "100vw",
+          }}
+        >
+          {props.children}
         </Box>
-      </ThemeProvider>
-    );
-  };
-
+      </Box>
+    </ThemeProvider>
+  );
+}

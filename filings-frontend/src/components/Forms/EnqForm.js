@@ -1,30 +1,26 @@
-import { Box, Paper  } from "@mui/material";
+import { Paper  } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import React from "react";
-import Container from "@mui/material/Container";
+import Snackbar from "@material-ui/core/Snackbar";
 import FormControl from "@mui/material/FormControl";
-import Sidebar from "../Sidebar/Sidebar";
 import Divider from "@mui/material/Divider";
 import Typography from "@mui/material/Typography";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import InputLabel from "@mui/material/InputLabel";
 import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
-import { useForm } from "react-hook-form";
 import { useSnackbar } from "notistack";
-import dayjs from "dayjs";
 import Stack from "@mui/material/Stack";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import { Grid } from "@mui/material";
+import green from "@material-ui/core/colors/green";
 import Button from "@mui/material/Button";
-
+import { Alert } from "@material-ui/lab";
 import {
   FormControlLabel,
   Radio,
-  styled,
   RadioGroup,
-  TextField,
 } from "@mui/material";
 import { v4 as uuid } from "uuid";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -33,7 +29,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 export const EnqForm = (props) => {
 
   const [uid, setUid] = React.useState(uuid().slice(0, 7));
-
+  const [open, setOpen] = React.useState(false);
   const [userinfo, setInfo] = React.useState({
     req_id: uid,
     first_name: "vignesh",
@@ -179,7 +175,7 @@ export const EnqForm = (props) => {
        city: "PYR",
        pincode: "609307",
      });
-
+     setOpen(true);
      // Clear user info and service info objects
      // Object.keys(userinfo).forEach((key) => delete userinfo[key]);
      // Object.keys(userinfo.serviceInfo).forEach(
@@ -203,6 +199,9 @@ export const EnqForm = (props) => {
   const inputBox = {
     margin: "0 auto",
     width: "100%",
+    "& .MuiAlert-icon": {
+      color: "white !important", // replace with your desired color
+    },
     "& .MuiTextField-root": {
       m: 1.5,
       // borderRadius:'15px',
@@ -218,7 +217,7 @@ export const EnqForm = (props) => {
       display: "none !important",
     },
     "&  .MuiFormHelperText-root.Mui-error": {
-      background: "#d8eefe",
+      background: "#fffffe",
       margin: 0,
       paddingLeft: 10,
     },
@@ -238,6 +237,13 @@ export const EnqForm = (props) => {
     borderRadius: "10px",
     padding: "30px 20px 0 30px",
   };
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
+  };
   const theme = createTheme({
     palette: {
       primary: {
@@ -245,6 +251,9 @@ export const EnqForm = (props) => {
       },
       green: {
         main: "#094067",
+      },
+      success: {
+        main: green[600],
       },
     },
   });
@@ -745,6 +754,23 @@ export const EnqForm = (props) => {
               </Stack>
             </div>
           </ValidatorForm>
+          <Snackbar
+            open={open}
+            autoHideDuration={5000}
+            anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+            onClose={handleClose}
+          >
+            <Alert
+              style={{
+                color: "white",
+                backgroundColor: "#4caf50",
+              }}
+              onClose={handleClose}
+              severity="success"
+            >
+              Request submitted succesfully!
+            </Alert>
+          </Snackbar>
         </ThemeProvider>
       </Paper>
     </>

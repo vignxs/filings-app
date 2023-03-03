@@ -13,6 +13,6 @@ router = APIRouter(
 async def request_gst_rgst(gst_rgst: schemas.IGS_REQ_GST_RGST, db: Session= Depends(get_db)):
     return service.create_gst_rgst(db=db ,  gst_rgst=gst_rgst )
 
-@router.get("/enq-service-gst-rgst/{id}", response_model=schemas.IGS_REQ_GST_RGST)
-def request_service_gst_rgst(id: int,  db: Session = Depends(get_db)):
+@router.get("/req-service-gst-rgst/{id}")
+def request_service_gst_rgst(id: str,  db: Session = Depends(get_db)):
     return service.get_gst_rgst(db=db, req_id = id)

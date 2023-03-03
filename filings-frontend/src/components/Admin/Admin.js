@@ -7,22 +7,35 @@ import { CacheProvider } from "@emotion/react";
 import moment from "moment";
 import createCache from "@emotion/cache";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import {  useMemo } from "react";
-import { DataGrid, GridToolbarColumnsButton, GridToolbarContainer, GridToolbarFilterButton, GridToolbarExport, GridToolbarQuickFilter } from "@mui/x-data-grid";
-import  {UsersActions} from "./AdminActions";
+import { useMemo } from "react";
+import {
+  DataGrid,
+  GridToolbarColumnsButton,
+  GridToolbarContainer,
+  GridToolbarFilterButton,
+  GridToolbarExport,
+  GridToolbarQuickFilter,
+} from "@mui/x-data-grid";
+import { UsersActions } from "./AdminActions";
 import { Button, Paper, Tooltip } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { GridToolbar } from "@mui/x-data-grid";
 import { Link } from "react-router-dom";
-import  dayjs  from "dayjs";
+import dayjs from "dayjs";
 import LineChart from "./AnalysisCharts";
-import { AccessTimeRounded,  ArrowRightAltRounded, GroupRounded, PersonRounded, SupportAgentRounded,  VerifiedRounded,  } from "@mui/icons-material";
-import  {useValue}  from "../../Context/ContextProvider";
+import {
+  AccessTimeRounded,
+  ArrowRightAltRounded,
+  GroupRounded,
+  PersonRounded,
+  SupportAgentRounded,
+  VerifiedRounded,
+} from "@mui/icons-material";
+import { useValue } from "../../Context/ContextProvider";
 import { getRequests } from "../../Context/actions";
 
 // inspiration
 // https://www.figcomponents.com?id=62cf946b12847cc9ecafe6b2
-
 
 // import userContext  from "../Context";
 const muiCache = createCache({
@@ -30,85 +43,83 @@ const muiCache = createCache({
   prepend: true,
 });
 
-
-
 export const EnqAdmin = (props) => {
-    const inputBox = {
-      "& .MuiDataGrid-toolbarQuickFilter": {
-        "& .MuiTextField-root": {
-          // m: 2,
-          // borderRadius:'15px',
-          backgroundColor: "#fffffe",
-          borderRadius: "2px",
-          width: "70ch",
-        },
-        borderRadius: "5px",
-        width: "70ch",
-      },
-      "& .MuiPopperUnstyled-root": {
-        inset: `-125px auto auto 350px`,
-      },
-      "& .MuiDataGrid-panel": {
-        inset: `-125px auto auto 350px`,
-      },
-      "& .MuiDataGrid-columnHeaderTitle": {
-        opacity: ".8",
-        // backgroundColor: "rgba(255, 7, 0, 0.55)",
-        fontWeight: "700",
-      },
-      "& .MuiDataGrid-toolbarContainer ": {
-        // top: "-69px",
-        // left: "808px",
-        justifyContent: "space-between",
-        backgroundColor: "rgba(145, 158, 171, 0.12)",
-        borderRadius: "10px",
-        // position: "relative",
-      },
-      "& .MuiDataGrid-main ": {
-        // top: "-38px",
-        // backgroundColor: "rgba(255, 7, 0, 0.55)",
-        // position: "relative",
-      },
-      margin: "0 auto",
-      width: "100%",
+  const inputBox = {
+    "& .MuiDataGrid-toolbarQuickFilter": {
       "& .MuiTextField-root": {
-        m: 2,
+        // m: 2,
         // borderRadius:'15px',
         backgroundColor: "#fffffe",
         borderRadius: "2px",
-        width: "40ch",
+        width: "70ch",
       },
-      "& .MuiInputBase-input": {
-        borderRadius: "10px",
-        backgroundColor: "#fffffe",
-      },
-      "& .MuiAutocomplete-popupIndicator": {
-        display: "none !important",
-      },
-      "&  .MuiFormHelperText-root.Mui-error": {
-        background: "#d8eefe",
-        margin: 0,
-        paddingLeft: 10,
-      },
-      "& .MuiOutlinedInput-root": {
-        borderRadius: "10px",
-      },
-      // marginLeft: "70px",
-      justifyContent: "center",
-      // boxShadow: `rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px`,
-      // boxShadow: `rgb(145 158 171 / 20%) 0px 0px 2px 0px, rgb(145 158 171 / 12%) 0px 12px 24px -4px`,
-      // bgcolor: "#094067",
-      // left: "-170px",
-      // top: ".8rem",
-      // width: "1300px",
-      height: "700px",
-      flexGrow: 1,
-      position: "relative",
-      borderRadius: "12px",
-      padding: "30px",
-    };
+      borderRadius: "5px",
+      width: "70ch",
+    },
+    "& .MuiPopperUnstyled-root": {
+      inset: `-125px auto auto 350px`,
+    },
+    "& .MuiDataGrid-panel": {
+      inset: `-125px auto auto 350px`,
+    },
+    "& .MuiDataGrid-columnHeaderTitle": {
+      opacity: ".8",
+      // backgroundColor: "rgba(255, 7, 0, 0.55)",
+      fontWeight: "700",
+    },
+    "& .MuiDataGrid-toolbarContainer ": {
+      // top: "-69px",
+      // left: "808px",
+      justifyContent: "space-between",
+      backgroundColor: "rgba(145, 158, 171, 0.12)",
+      borderRadius: "10px",
+      // position: "relative",
+    },
+    "& .MuiDataGrid-main ": {
+      // top: "-38px",
+      // backgroundColor: "rgba(255, 7, 0, 0.55)",
+      // position: "relative",
+    },
+    margin: "0 auto",
+    width: "100%",
+    "& .MuiTextField-root": {
+      m: 2,
+      // borderRadius:'15px',
+      backgroundColor: "#fffffe",
+      borderRadius: "2px",
+      width: "40ch",
+    },
+    "& .MuiInputBase-input": {
+      borderRadius: "10px",
+      backgroundColor: "#fffffe",
+    },
+    "& .MuiAutocomplete-popupIndicator": {
+      display: "none !important",
+    },
+    "&  .MuiFormHelperText-root.Mui-error": {
+      background: "#d8eefe",
+      margin: 0,
+      paddingLeft: 10,
+    },
+    "& .MuiOutlinedInput-root": {
+      borderRadius: "10px",
+    },
+    // marginLeft: "70px",
+    justifyContent: "center",
+    // boxShadow: `rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px`,
+    // boxShadow: `rgb(145 158 171 / 20%) 0px 0px 2px 0px, rgb(145 158 171 / 12%) 0px 12px 24px -4px`,
+    // bgcolor: "#094067",
+    // left: "-170px",
+    // top: ".8rem",
+    // width: "1300px",
+    height: "700px",
+    flexGrow: 1,
+    position: "relative",
+    borderRadius: "12px",
+    padding: "30px",
+  };
 
-const date = new Date()
+  const date = new Date();
   const getMuiTheme = () =>
     createTheme({
       palette: {
@@ -126,136 +137,133 @@ const date = new Date()
         },
       },
     });
-    
-const {
-  state:{requests},
-  dispatch,
-} = useValue();
 
-const [pageSize, setPageSize] = useState(10);
-const [rowId, setRowId] = useState(null);
-const enqColumns = useMemo(
-  () => [
-    {
-      field: "actions",
-      headerName: "",
-      type: "actions",
-      width: 130,
-      filterable: false,
-      renderCell: (params) => <UsersActions {...{ params, rowId, setRowId }} />,
-    },
-    {
-      field: "req_id",
-      headerName: "ReqId",
-      width: 100,
-      sortable: false,
-      headerAlign: "center",
-      align: "center",
-      filterable: false,
-    },
-    {
-      field: "first_name",
-      headerAlign: "center",
-      align: "center",
-      filterable: false,
-      headerName: "Name",
-      width: 120,
-    },
-    // "last_name",
-    // "mobile",
-    {
-      field: "mobile",
-      headerAlign: "center",
-      align: "center",
-      headerName: "Mobile",
-      width: 100,
-      filterable: false,
-    },
-    {
-      field: "email",
-      headerAlign: "center",
-      align: "center",
-      headerName: "Email",
-      width: 160,
-      filterable: false,
-    },
-    // "address",
-    // "city",
-    // "pincode",
-    {
-      field: "enquired_for",
-      headerName: "Enquired For",
-      headerAlign: "center",
-      align: "center",
-      width: 160,
-      sortable: true,
-      filterable: false,
-    },
-    {
-      field: "status",
-      headerName: "Status",
-      width: 100,
-      type: "singleSelect",
-      headerAlign: "center",
-      align: "center",
-      valueOptions: ["In-Progress", "Created", "Closed"],
-      editable: true,
-      filterable: false,
-      // currentUser?.role === "admin",
-    },
-    {
-      field: "created_at",
-      headerName: "CreatedAt",
-      width: 150,
-      headerAlign: "center",
-      filterable: false,
-      align: "center",
-      renderCell: (params) =>
-        moment(params.row.createdAt).format("YYYY-MM-DD HH:MM:SS"),
-      // currentUser?.role === "admin",
-    },
-    {
-      field: "updated_at",
-      headerName: "UpdatedAt",
-      width: 150,
-      headerAlign: "center",
-      align: "center",
-      filterable: false,
-      renderCell: (params) =>
-        moment(params.row.createdAt).format("YYYY-MM-DD HH:MM:SS"),
-      // currentUser?.role === "admin",
-    },
-  ],
-  [rowId]
-);
+  const {
+    state: { requests },
+    dispatch,
+  } = useValue();
 
-useEffect(() => {
-  if (requests.length === 0)
-    getRequests(dispatch);
-}, []);
-
-
-
-
-// .MuiDataGrid-cell:focus {
-//     outline: solid #094067 1px;
-//     border-radius: 12px;
-// }
-function CustomToolbar() {
-  return (
-    <GridToolbarContainer sx={{ background: "#000000" }}>
-      <GridToolbarQuickFilter sx={{ marginRight: "auto" }} />
-      {/* <GridToolbarColumnsButton /> */}
-      <GridToolbarFilterButton
-
-        PopperProps={{color:"#000000",  inset: `-125px auto auto 350px` }}
-        sx={{ m: 2, bgcolor: "#FFFFFF", marginLeft: "auto" }}
-      />
-      {/* <GridToolbarDensitySelector /> */}
-      <GridToolbarExport sx={{ m: 2, bgcolor: "#FFFFFF" }} />
-    </GridToolbarContainer>
+  const [pageSize, setPageSize] = useState(10);
+  const [rowId, setRowId] = useState(null);
+  const enqColumns = useMemo(
+    () => [
+      {
+        field: "actions",
+        headerName: "",
+        type: "actions",
+        width: 130,
+        filterable: false,
+        renderCell: (params) => (
+          <UsersActions {...{ params, rowId, setRowId }} />
+        ),
+      },
+      {
+        field: "req_id",
+        headerName: "ReqId",
+        width: 100,
+        sortable: false,
+        headerAlign: "center",
+        align: "center",
+        filterable: false,
+      },
+      {
+        field: "first_name",
+        headerAlign: "center",
+        align: "center",
+        filterable: false,
+        headerName: "Name",
+        width: 120,
+      },
+      // "last_name",
+      // "mobile",
+      {
+        field: "mobile",
+        headerAlign: "center",
+        align: "center",
+        headerName: "Mobile",
+        width: 100,
+        filterable: false,
+      },
+      {
+        field: "email",
+        headerAlign: "center",
+        align: "center",
+        headerName: "Email",
+        width: 160,
+        filterable: false,
+      },
+      // "address",
+      // "city",
+      // "pincode",
+      {
+        field: "enquired_for",
+        headerName: "Enquired For",
+        headerAlign: "center",
+        align: "center",
+        width: 160,
+        sortable: true,
+        filterable: false,
+      },
+      {
+        field: "status",
+        headerName: "Status",
+        width: 100,
+        type: "singleSelect",
+        headerAlign: "center",
+        align: "center",
+        valueOptions: ["In-Progress", "Created", "Closed"],
+        editable: true,
+        filterable: false,
+        // currentUser?.role === "admin",
+      },
+      {
+        field: "created_at",
+        headerName: "CreatedAt",
+        width: 150,
+        headerAlign: "center",
+        filterable: false,
+        align: "center",
+        renderCell: (params) =>
+          moment(params.row.createdAt).format("YYYY-MM-DD HH:MM:SS"),
+        // currentUser?.role === "admin",
+      },
+      {
+        field: "updated_at",
+        headerName: "UpdatedAt",
+        width: 150,
+        headerAlign: "center",
+        align: "center",
+        filterable: false,
+        renderCell: (params) =>
+          moment(params.row.createdAt).format("YYYY-MM-DD HH:MM:SS"),
+        // currentUser?.role === "admin",
+      },
+    ],
+    [rowId]
   );
-}
+
+  useEffect(() => {
+    if (requests.length === 0) getRequests(dispatch);
+  }, []);
+
+  // .MuiDataGrid-cell:focus {
+  //     outline: solid #094067 1px;
+  //     border-radius: 12px;
+  // }
+  function CustomToolbar() {
+    return (
+      <GridToolbarContainer sx={{ background: "#000000" }}>
+        <GridToolbarQuickFilter sx={{ marginRight: "auto" }} />
+        {/* <GridToolbarColumnsButton /> */}
+        <GridToolbarFilterButton
+          PopperProps={{ color: "#000000", inset: `-125px auto auto 350px` }}
+          sx={{ m: 2, bgcolor: "#FFFFFF", marginLeft: "auto" }}
+        />
+        {/* <GridToolbarDensitySelector /> */}
+        <GridToolbarExport sx={{ m: 2, bgcolor: "#FFFFFF" }} />
+      </GridToolbarContainer>
+    );
+  }
   return (
     <ThemeProvider theme={getMuiTheme()}>
       {/* <Box p={5}>
@@ -581,4 +589,3 @@ function CustomToolbar() {
     // </userContext.Provider>
   );
 };
-

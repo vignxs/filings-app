@@ -81,32 +81,28 @@ export const EnqForm = (props) => {
 
   const handleChangeInfo = (e, service) => {
     const { name, value } = e.target;
-    if (service === "user") {
-      setInfo((prevalues) => {
-        return { ...prevalues, [name]: value };
-      });
-    }
-    if (service === "gst") {
-      setGstInfo((prevalues) => {
-        return { ...prevalues, [name]: value };
-      });
-    }
-    if (service === "newgst") {
-      setnewGstInfo((prevalues) => {
-        return { ...prevalues, [name]: value };
-      });
-    }
-    if (service === "pan") {
-      setPanInfo((prevalues) => {
-        return { ...prevalues, [name]: value };
-      });
-    }
-    if (service === "tax") {
-      setTaxInfo((prevalues) => {
-        return { ...prevalues, [name]: value };
-      });
+
+    switch (service) {
+      case "user":
+        setInfo((prev) => ({ ...prev, [name]: value }));
+        break;
+      case "gst":
+        setGstInfo((prev) => ({ ...prev, [name]: value }));
+        break;
+      case "newgst":
+        setnewGstInfo((prev) => ({ ...prev, [name]: value }));
+        break;
+      case "pan":
+        setPanInfo((prev) => ({ ...prev, [name]: value }));
+        break;
+      case "tax":
+        setTaxInfo((prev) => ({ ...prev, [name]: value }));
+        break;
+      default:
+        break;
     }
   };
+
 
   const { enqueueSnackbar } = useSnackbar();
   const handleClickVariant = (variant) => () => {
@@ -114,87 +110,87 @@ export const EnqForm = (props) => {
     enqueueSnackbar("File uploaded successfuly!", { variant });
   };
 
-  async function userInfoPost(e) {
-    e.preventDefault();
+ const API_ENDPOINT = "http://localhost:8000/api/v1";
 
-    try {
-      // Send POST request to save user info
-      const response = await fetch("http://localhost:8000/api/v1/req-data", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(userinfo),
-      });
-      const newUid = uuid().slice(0, 7);
-      setUid(newUid);
-      // Check response status and proceed accordingly
-      if (response.status === 200) {
-        if (userinfo.enquired_for === "GST") {
-          // Send POST request for GST info
-          await fetch("http://localhost:8000/api/v1/req-gst", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(Gstinfo),
-          });
-        } else if (userinfo.enquired_for === "GST Registration") {
-          // Send POST request for GST registration info
-          await fetch("http://localhost:8000/api/v1/req-gst-rgst", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(newGstinfo),
-          });
-          // Generating new req_id after submission
-          setnewGstInfo({ req_id: newUid });
-        } else if (userinfo.enquired_for === "PAN Registration") {
-          // Send POST request for PAN registration info
-          await fetch("http://localhost:8000/api/v1/req-pan-rgst", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(Paninfo),
-          });
-    
-          // Generating new req_id after submission
-          setGstInfo({ req_id: newUid });
-        } else if (userinfo.enquired_for === "TAX Registration") {
-          // Send POST request for TAX registration info
-          await fetch("http://localhost:8000/api/v1/req-tax-rgst", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(Taxinfo),
-          });
-          // Generating new req_id after submission
-          setTaxInfo({ req_id: newUid });
-        }
-      } else {
-        // Handle non-200 response status
-        throw new Error(`Failed to save user info: ${response.status}`);
-      }
+ async function userInfoPost(e) {
+   e.preventDefault();
 
-      // Generate and set new UID
-      
+   try {
+     // Send POST request to save user info
+     const response = await fetch(`${API_ENDPOINT}/req-data`, {
+       method: "POST",
+       headers: { "Content-Type": "application/json" },
+       body: JSON.stringify(userinfo),
+     });
+     const newUid = uuid().slice(0, 7);
+     setUid(newUid);
 
-      // Set submitted flag and new info object
-      setInfo({
-        req_id: newUid,
-        first_name: "vignesh",
-        last_name: "siva",
-        mobile: "7639290579",
-        email: "vignxs@gmail.com",
-        address: "15/10, mela thoopu street",
-        city: "PYR",
-        pincode: "609307",
-      });
+     // Check response status and proceed accordingly
+     if (response.status === 200) {
+       if (userinfo.enquired_for === "GST") {
+         // Send POST request for GST info
+         await fetch(`${API_ENDPOINT}/req-gst`, {
+           method: "POST",
+           headers: { "Content-Type": "application/json" },
+           body: JSON.stringify(Gstinfo),
+         });
+       } else if (userinfo.enquired_for === "GST Registration") {
+         // Send POST request for GST registration info
+         await fetch(`${API_ENDPOINT}/req-gst-rgst`, {
+           method: "POST",
+           headers: { "Content-Type": "application/json" },
+           body: JSON.stringify(newGstinfo),
+         });
+         // Generating new req_id after submission
+         setnewGstInfo({ req_id: newUid });
+       } else if (userinfo.enquired_for === "PAN Registration") {
+         // Send POST request for PAN registration info
+         await fetch(`${API_ENDPOINT}/req-pan-rgst`, {
+           method: "POST",
+           headers: { "Content-Type": "application/json" },
+           body: JSON.stringify(Paninfo),
+         });
 
-      // Clear user info and service info objects
-      // Object.keys(userinfo).forEach((key) => delete userinfo[key]);
-      // Object.keys(userinfo.serviceInfo).forEach(
-      //   (key) => delete userinfo.serviceInfo[key]
-      // );
-    } catch (error) {
-      // Handle fetch errors
-      handleClickVariant("error");
-      console.error(`Error while saving user info: ${error}`);
-    }
-  }
+         // Generating new req_id after submission
+         setGstInfo({ req_id: newUid });
+       } else if (userinfo.enquired_for === "TAX Registration") {
+         // Send POST request for TAX registration info
+         await fetch(`${API_ENDPOINT}/req-tax-rgst`, {
+           method: "POST",
+           headers: { "Content-Type": "application/json" },
+           body: JSON.stringify(Taxinfo),
+         });
+         // Generating new req_id after submission
+         setTaxInfo({ req_id: newUid });
+       }
+     } else {
+       // Handle non-200 response status
+       throw new Error(`Failed to save user info: ${response.status}`);
+     }
+
+     // Set submitted flag and new info object
+     setInfo({
+       req_id: newUid,
+       first_name: "vignesh",
+       last_name: "siva",
+       mobile: "7639290579",
+       email: "vignxs@gmail.com",
+       address: "15/10, mela thoopu street",
+       city: "PYR",
+       pincode: "609307",
+     });
+
+     // Clear user info and service info objects
+     // Object.keys(userinfo).forEach((key) => delete userinfo[key]);
+     // Object.keys(userinfo.serviceInfo).forEach(
+     //   (key) => delete userinfo.serviceInfo[key]
+     // );
+   } catch (error) {
+     // Handle fetch errors
+     handleClickVariant("error");
+     console.error(`Error while saving user info: ${error}`);
+   }
+ }
 
 
   const services = [
@@ -203,6 +199,7 @@ export const EnqForm = (props) => {
     "PAN Registration",
     "TAX Registration",
   ];
+
   const inputBox = {
     margin: "0 auto",
     width: "100%",

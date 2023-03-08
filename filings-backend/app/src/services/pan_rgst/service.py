@@ -11,7 +11,7 @@ def create_pan_rgst(db: Session, pan_rgst: schemas.IGS_REQ_PAN_RGST):
     return pan_rgst.req_id
 
 def get_pan_rgst(db: Session, req_id : int):
-    print(req_id)
+    print(db.query(models.IGS_REQ_PAN_RGST).filter(models.IGS_REQ_PAN_RGST.req_id == req_id).first())
     return db.query(models.IGS_REQ_PAN_RGST).filter(models.IGS_REQ_PAN_RGST.req_id == req_id).first()
     
 def update_pan_rgst(db:Session , pan_rgst_update:schemas.IGS_REQ_PAN_RGST):

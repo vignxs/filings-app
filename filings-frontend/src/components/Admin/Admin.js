@@ -142,7 +142,10 @@ export const EnqAdmin = (props) => {
     state: { requests },
     dispatch,
   } = useValue();
-
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleString();
+  };
   const [pageSize, setPageSize] = useState(10);
   const [rowId, setRowId] = useState(null);
   const enqColumns = useMemo(
@@ -152,7 +155,7 @@ export const EnqAdmin = (props) => {
         headerName: "",
         type: "actions",
         width: 130,
-        filterable: false,
+        filterable: true,
         renderCell: (params) => (
           <UsersActions {...{ params, rowId, setRowId }} />
         ),
@@ -164,13 +167,13 @@ export const EnqAdmin = (props) => {
         sortable: false,
         headerAlign: "center",
         align: "center",
-        filterable: false,
+        filterable: true,
       },
       {
         field: "first_name",
         headerAlign: "center",
         align: "center",
-        filterable: false,
+        filterable: true,
         headerName: "Name",
         width: 120,
       },
@@ -190,7 +193,7 @@ export const EnqAdmin = (props) => {
         align: "center",
         headerName: "Email",
         width: 160,
-        filterable: false,
+        filterable: true,
       },
       // "address",
       // "city",
@@ -202,7 +205,7 @@ export const EnqAdmin = (props) => {
         align: "center",
         width: 160,
         sortable: true,
-        filterable: false,
+        filterable: true,
       },
       {
         field: "status",
@@ -219,23 +222,25 @@ export const EnqAdmin = (props) => {
       {
         field: "created_at",
         headerName: "CreatedAt",
-        width: 150,
+        width: 180,
         headerAlign: "center",
         filterable: false,
         align: "center",
-        renderCell: (params) =>
-          moment(params.row.createdAt).format("YYYY-MM-DD HH:MM:SS"),
+        // valueFormatter: (params) => formatDate(params.value),
+        // renderCell: (params) =>
+        //   moment(params.row.createdAt).format("YYYY-MM-DD HH:MM:SS"),
         // currentUser?.role === "admin",
       },
       {
         field: "updated_at",
         headerName: "UpdatedAt",
-        width: 150,
+        width: 180,
         headerAlign: "center",
         align: "center",
         filterable: false,
-        renderCell: (params) =>
-          moment(params.row.createdAt).format("YYYY-MM-DD HH:MM:SS"),
+        // valueFormatter: (params) => formatDate(params.value),
+        // renderCell: (params) =>
+        //   moment(params.row.createdAt).format("YYYY-MM-DD HH:MM:SS"),
         // currentUser?.role === "admin",
       },
     ],
@@ -246,6 +251,7 @@ export const EnqAdmin = (props) => {
     if (requests.length === 0) getRequests(dispatch);
   }, []);
 
+  console.log(requests);
   // .MuiDataGrid-cell:focus {
   //     outline: solid #094067 1px;
   //     border-radius: 12px;

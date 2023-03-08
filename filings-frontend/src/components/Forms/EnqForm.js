@@ -9,7 +9,6 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import InputLabel from "@mui/material/InputLabel";
 import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
-import { useSnackbar } from "notistack";
 import Stack from "@mui/material/Stack";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
@@ -100,11 +99,6 @@ export const EnqForm = (props) => {
   };
 
 
-  const { enqueueSnackbar } = useSnackbar();
-  const handleClickVariant = (variant) => () => {
-    // variant could be success, error, warning, info, or default
-    enqueueSnackbar("File uploaded successfuly!", { variant });
-  };
 
  const API_ENDPOINT = "http://localhost:8000/api/v1";
 
@@ -118,6 +112,7 @@ export const EnqForm = (props) => {
        headers: { "Content-Type": "application/json" },
        body: JSON.stringify(userinfo),
      });
+         console.log(userinfo);
      const newUid = uuid().slice(0, 7);
      setUid(newUid);
 
@@ -130,6 +125,8 @@ export const EnqForm = (props) => {
            headers: { "Content-Type": "application/json" },
            body: JSON.stringify(Gstinfo),
          });
+         console.log(Gstinfo);
+         setGstInfo({ req_id: newUid });
        } else if (userinfo.enquired_for === "GST Registration") {
          // Send POST request for GST registration info
          await fetch(`${API_ENDPOINT}/req-gst-rgst`, {
@@ -148,7 +145,7 @@ export const EnqForm = (props) => {
          });
 
          // Generating new req_id after submission
-         setGstInfo({ req_id: newUid });
+         setPanInfo({ req_id: newUid });
        } else if (userinfo.enquired_for === "TAX Registration") {
          // Send POST request for TAX registration info
          await fetch(`${API_ENDPOINT}/req-tax-rgst`, {
@@ -183,7 +180,6 @@ export const EnqForm = (props) => {
      // );
    } catch (error) {
      // Handle fetch errors
-     handleClickVariant("error");
      console.error(`Error while saving user info: ${error}`);
    }
  }

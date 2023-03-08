@@ -38,24 +38,29 @@ const admin_nav = [
   //   path: "/enq-form",
   //   name: "Enquiry Form",
   // },
-  {
+  { 
+    isSelected : 1,
     icon: <AdminPanelSettingsRoundedIcon />,
     path: "/enq-admin",
     name: "Enquiry Admin",
   },
 ];
+
 const data = [
   {
+    isSelected: 2,
     icon: <RequestPageRoundedIcon />,
     path: "/tax-filing",
     name: "Tax Filing",
   },
   {
+    isSelected: 3,
     icon: <DescriptionRoundedIcon />,
     path: "/compliance",
     name: "Compliance",
   },
   {
+    isSelected: 4,
     icon: <ContactPageRoundedIcon />,
     path: "/payroll-hr",
     name: "Payroll & HR",
@@ -168,6 +173,11 @@ export default function HeaderBar(props) {
     },
   });
   // const theme = useTheme();
+  const [selectedIndex, setSelectedIndex] = React.useState(1);
+
+  const handleListItemClick = (event, index) => {
+    setSelectedIndex(index);
+  };
   const [open, setOpen] = React.useState(false);
   const user = JSON.parse(sessionStorage.getItem("user"));
   const handleDrawerOpen = () => {
@@ -276,7 +286,7 @@ export default function HeaderBar(props) {
             </IconButton>
           </DrawerHeader>
           <Divider />
-          <List>
+          <List component="div">
             <ListItemButton
               sx={{
                 borderRadius: "6px",
@@ -343,7 +353,11 @@ export default function HeaderBar(props) {
                   sx={{ display: "block" }}
                 >
                   <ListItemButton
-                    component={Link}
+                    selected={selectedIndex === text.isSelected}
+                    onClick={(event) =>
+                      handleListItemClick(event, text.isSelected)
+                    }
+                    component="div"
                     to={text.path}
                     key={idx}
                     sx={{
@@ -360,7 +374,7 @@ export default function HeaderBar(props) {
                       },
                       minHeight: 48,
                       justifyContent: open ? "initial" : "center",
-                      px: 2.5,
+                      pl: open ? 4 : 2.5,
                     }}
                   >
                     <ListItemIcon
@@ -385,7 +399,7 @@ export default function HeaderBar(props) {
             </Collapse>
           </List>
           <Divider />
-          <List>
+          <List component="div">
             <ListItemButton
               sx={{
                 borderRadius: "6px",
@@ -400,7 +414,7 @@ export default function HeaderBar(props) {
                 },
                 minHeight: 48,
                 justifyContent: open ? "initial" : "center",
-                px: 2.5,
+                pl: 2.5,
               }}
               onClick={handleClickExpand}
             >
@@ -443,14 +457,19 @@ export default function HeaderBar(props) {
               )}
             </ListItemButton>
             <Collapse in={Expand} timeout="auto" unmountOnExit>
-              {data.map((text, index) => (
-                <ListItem key={index} disablePadding sx={{ display: "block" }}>
+              <List>
+                {data.map((text, index) => (
+                  // <ListItem key={index} disablePadding sx={{ display: "block" }}>
                   <ListItemButton
+                    selected={selectedIndex === text.isSelected}
+                    onClick={(event) =>
+                      handleListItemClick(event, text.isSelected)
+                    }
                     component={Link}
                     to={text.path}
                     key={index}
                     sx={{
-                      pl: 4,
+                      // pl: 4,
                       borderRadius: "6px",
                       "&:hover": {
                         background: "#90b4ce",
@@ -463,7 +482,7 @@ export default function HeaderBar(props) {
                       },
                       minHeight: 48,
                       justifyContent: open ? "initial" : "center",
-                      px: 2.5,
+                      pl: open ? 4 : 2.5,
                     }}
                   >
                     <ListItemIcon
@@ -483,8 +502,9 @@ export default function HeaderBar(props) {
                       sx={{ color: "#094067", opacity: open ? 1 : 0 }}
                     />
                   </ListItemButton>
-                </ListItem>
-              ))}
+                  // </ListItem>
+                ))}
+              </List>
             </Collapse>
           </List>
           <List style={{ marginTop: `auto` }}>

@@ -46,7 +46,7 @@ def get_application() -> FastAPI:
     
     #to get the routes
     # url_list = [{"path": route.path, "name": route.name} for route in application.routes]
-    # print(url_list)
+    # print(len(url_list))
     
     return application
 

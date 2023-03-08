@@ -21,4 +21,4 @@ def request_service_pan_rgst(id: str,  db: Session = Depends(get_db)):
 
 @router.put("/pan-rgst-update", response_model=schemas.IGS_REQ_PAN_RGST)
 async def pan__rgst_data_update(pan_rgst_update:schemas.IGS_REQ_PAN_RGST,  db: Session = Depends(get_db)):
-    service.update_pan_rgst(db=db , pan_rgst_update=pan_rgst_update)
+   service.update_pan_rgst(db=db , pan_rgst_update=pan_rgst_update)

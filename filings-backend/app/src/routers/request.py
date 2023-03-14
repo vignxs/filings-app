@@ -18,7 +18,7 @@ async def request_data(request:schemas.IGS_REQ_DATA,  db: Session = Depends(get_
 def request_data(db: Session = Depends(get_db)):
     return service.get_requests(db=db) 
 
-@router.put("/req-data-update", response_model=schemas.IGS_REQ_DATA)
+@router.put("/req-data-update") #response_model=schemas.IGS_REQ_DATA)
 async def request_data_update(request:schemas.IGS_REQ_DATA,  db: Session = Depends(get_db)):
     service.update_request(db=db , request=request)
     

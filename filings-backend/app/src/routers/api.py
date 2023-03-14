@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 from ..config import ROUTE_PREFIX_V1
-from . import auth, request , gst , gst_rgst, tax_rgst, pan_rgst
+from . import auth, request , gst , gst_rgst, tax_rgst, pan_rgst, course_enq
 
 router = APIRouter()
 
@@ -12,6 +12,7 @@ def include_api_routes():
     router.include_router(gst_rgst.router, prefix=ROUTE_PREFIX_V1)
     router.include_router(tax_rgst.router, prefix=ROUTE_PREFIX_V1)
     router.include_router(pan_rgst.router, prefix=ROUTE_PREFIX_V1)
+    router.include_router(course_enq.router,prefix=ROUTE_PREFIX_V1)
     # router.include_router(buyers.router, prefix=ROUTE_PREFIX_V1)
     # router.include_router(sales.router, prefix=ROUTE_PREFIX_V1)
 

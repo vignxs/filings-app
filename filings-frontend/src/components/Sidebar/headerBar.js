@@ -459,7 +459,7 @@ export default function HeaderBar(props) {
             <Collapse in={Expand} timeout="auto" unmountOnExit>
               <List>
                 {data.map((text, index) => (
-                  // <ListItem key={index} disablePadding sx={{ display: "block" }}>
+                  <ListItem key={index} disablePadding sx={{ display: "block" }}>
                   <ListItemButton
                     selected={selectedIndex === text.isSelected}
                     onClick={(event) =>
@@ -502,7 +502,7 @@ export default function HeaderBar(props) {
                       sx={{ color: "#094067", opacity: open ? 1 : 0 }}
                     />
                   </ListItemButton>
-                  // </ListItem>
+                  </ListItem>
                 ))}
               </List>
             </Collapse>

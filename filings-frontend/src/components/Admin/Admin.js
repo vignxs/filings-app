@@ -561,6 +561,7 @@ export const EnqAdmin = (props) => {
               pageSize={pageSize}
               onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
               components={{ Toolbar: CustomToolbar }}
+              disableColumnMenu
               componentsProps={{
                 toolbar: {
                   csvOptions: { disableToolbarButton: true },

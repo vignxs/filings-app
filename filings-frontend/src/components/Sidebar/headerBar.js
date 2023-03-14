@@ -534,7 +534,9 @@ const user = JSON.parse(localStorage.getItem("user"));
               paddingRight: "38px",
               bgcolor: "#FFFFFE",
               width: "100vw",
-              minHeight: "100vw",
+              minHeight: "100vh",
+              display: "flex", 
+              justifyContent:"center",
             }}
           >
           

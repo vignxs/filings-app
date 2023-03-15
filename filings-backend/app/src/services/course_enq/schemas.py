@@ -2,7 +2,8 @@ from pydantic import BaseModel
 from datetime import date
 
 class IGS_COURSE_ENQ(BaseModel):
-    
+   
+    req_id : str
     name : str
     followup_call_date: date
     followup_status : str

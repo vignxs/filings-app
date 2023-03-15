@@ -7,20 +7,19 @@ def create_course_enquiry(db: Session, request: schemas.IGS_COURSE_ENQ):
     db.add(deeds)
     db.commit()
     db.refresh(deeds)
-    return deeds.name
+    return deeds.req_id
 
 def course_enquiry(db:Session):
     return db.query(models.IGS_COURSE_ENQ).all()
 
 def update_course_enquiry(db:Session , request:schemas.IGS_COURSE_ENQ):
-    deeds = update(models.IGS_COURSE_ENQ).where(models.IGS_COURSE_ENQ.name == request.name).values(request.dict())
+    deeds = update(models.IGS_COURSE_ENQ).where(models.IGS_COURSE_ENQ.req_id == request.req_id).values(request.dict())
     db.execute(deeds)
     db.commit()
-    return request.name
-    
+    return request.req_id
+
 def delete_course_enquiry(db:Session , request:schemas.IGS_COURSE_ENQ):
-    deeds = delete(models.IGS_COURSE_ENQ).where(models.IGS_COURSE_ENQ.name == request.name)
+    deeds = delete(models.IGS_COURSE_ENQ).where(models.IGS_COURSE_ENQ.req_id == request.req_id)
     db.execute(deeds)
     db.commit()
-    return request.name
-    
+    return request.req_id

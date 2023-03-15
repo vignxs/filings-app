@@ -6,7 +6,7 @@ from sqlalchemy import select, update, delete
 
 
 def create_request(db: Session, request: schemas.IGS_JOB_SUPPORT):
-    db_req = models.IGS_REQ_DATA(**request.dict())
+    db_req = models.IGS_JOB_SUPPORT(**request.dict())
     db.add(db_req)
     db.commit()
     db.refresh(db_req)
@@ -17,7 +17,7 @@ def get_requests(db: Session):
     return db.query(models.IGS_JOB_SUPPORT).all()
 
 
-def update_request(db: Session, request: schemas.IGS_JOB_SUPPORT) -> int:
+def update_request(db: Session, request: schemas.IGS_JOB_SUPPORT_GU) -> int:
     db_req = models.IGS_JOB_SUPPORT(**request.dict())
     db_req.id = request.id
     db.merge(db_req)

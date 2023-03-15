@@ -1,4 +1,4 @@
-from sqlalchemy import  Column, Integer, String, ForeignKey, DateTime, func 
+from sqlalchemy import  Column, Integer, String, DateTime, BigInteger
 from ...database import Base
 
 class IGS_JOB_SUPPORT(Base):
@@ -7,7 +7,7 @@ class IGS_JOB_SUPPORT(Base):
 
     id = Column(Integer, primary_key=True,autoincrement = True,  index=True)
     candidate_name=Column(String)
-    mobile= Column(Integer)
+    mobile= Column(BigInteger)
     technology= Column(String)
     start_date= Column(DateTime)
     followup_date= Column(DateTime)

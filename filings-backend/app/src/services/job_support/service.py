@@ -26,8 +26,7 @@ def update_request(db: Session, request: schemas.IGS_JOB_SUPPORT_GU) -> int:
 
 
 def delete_request(db: Session, request: schemas.IGS_JOB_SUPPORT) -> int:
-    db_req = models.IGS_JOB_SUPPORT(**request.dict())
-    db_req.id = request.id
-    db.delete(db_req)
+    db_req= delete(models.IGS_JOB_SUPPORT).where(models.IGS_JOB_SUPPORT.id==request.id)
+    db.execute(db_req)
     db.commit()
     return request.id

@@ -8,7 +8,7 @@ import FormControl from "@material-ui/core/FormControl";
 import Box from "@material-ui/core/Box";
 import { useSignIn } from "react-auth-kit";
 import {  NavLink , useNavigate } from "react-router-dom";
-import { Typography } from "@material-ui/core";
+import { Paper, Typography } from "@material-ui/core";
 import { useValue } from "../../Context/ContextProvider";
 
 
@@ -31,9 +31,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export  function SignInComponent() {
+  
   const {
     dispatch,
   } = useValue();
+
   const classes = useStyles();
   const signIn = useSignIn();
   const [values, setValues] = React.useState({
@@ -76,9 +78,8 @@ export  function SignInComponent() {
   };
 
   return (
-    <Card className={classes.card}>
-      <CardContent>
-        {/* <Typography
+    <Paper width= {400} elevation={3}>
+      {/* <Typography
           variant="h6"
           color={"#094067"}
           sx={{
@@ -91,61 +92,62 @@ export  function SignInComponent() {
         >
           Intellecto Global Services
         </Typography> */}
-        <form onSubmit={handleSubmit} className={classes.form}>
-          <FormControl>
-            <Box mb={2}>
-              <TextField
-                className={classes.textField}
-                label="Username"
-                name="user_name"
-                variant="outlined"
-                size="small"
-                type="text"
-                value={values.user_name}
-                onChange={handleChange}
-                required
-              />
-            </Box>
-            <Box mb={2}>
-              <TextField
-                className={classes.textField}
-                label="Email"
-                name="email"
-                variant="outlined"
-                size="small"
-                type="email"
-                value={values.email}
-                onChange={handleChange}
-                required
-              />
-            </Box>
-            <Box mb={2}>
-              <TextField
-                className={classes.textField}
-                label="Password"
-                name="password"
-                variant="outlined"
-                size="small"
-                type="password"
-                value={values.password}
-                onChange={handleChange}
-                required
-              />
-            </Box>
-            <Button type="submit" variant="contained" color="primary">
-              Login
-            </Button>
-          </FormControl>
-        </form>
-        <div style={{ margin: "20px", display: "flex", justifyContent: "center" }}>
-          <Typography>
-            Don't have an account?
-            <NavLink to="/register" style={{ color: "primary", marginLeft: 5 }}>
-              Register
-            </NavLink>
-          </Typography>
-        </div>
-      </CardContent>
-    </Card>
+      <form onSubmit={handleSubmit} className={classes.form}>
+        <FormControl>
+          <Box mb={2}>
+            <TextField
+              className={classes.textField}
+              label="Username"
+              name="user_name"
+              variant="outlined"
+              size="small"
+              type="text"
+              value={values.user_name}
+              onChange={handleChange}
+              required
+            />
+          </Box>
+          <Box mb={2}>
+            <TextField
+              className={classes.textField}
+              label="Email"
+              name="email"
+              variant="outlined"
+              size="small"
+              type="email"
+              value={values.email}
+              onChange={handleChange}
+              required
+            />
+          </Box>
+          <Box mb={2}>
+            <TextField
+              className={classes.textField}
+              label="Password"
+              name="password"
+              variant="outlined"
+              size="small"
+              type="password"
+              value={values.password}
+              onChange={handleChange}
+              required
+            />
+          </Box>
+          <Button type="submit" variant="contained" color="primary">
+            Login
+          </Button>
+        </FormControl>
+      </form>
+      <div
+        style={{ margin: "20px", display: "flex", justifyContent: "center" }}
+      >
+        <Typography>
+          Don't have an account?
+          <NavLink to="/register" style={{ color: "primary", marginLeft: 5 }}>
+            Register
+          </NavLink>
+        </Typography>
+      </div>
+    </Paper>
   );
 }

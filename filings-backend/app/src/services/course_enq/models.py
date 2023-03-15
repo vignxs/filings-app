@@ -4,7 +4,8 @@ from ...database import Base
 class IGS_COURSE_ENQ(Base):
     __tablename__ = "Course_Enquiry"
 
-    name = Column(String, primary_key=True) 
+    req_id = Column(String, primary_key=True, index=True)
+    name = Column(String)
     followup_call_date = Column(Date)
     followup_status = Column(String)
     enquiry_by = Column(String)

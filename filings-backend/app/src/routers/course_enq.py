@@ -16,12 +16,12 @@ async def course_enquiry(request:schemas.IGS_COURSE_ENQ,  db: Session = Depends(
 
 @router.get("/course-enquiry-all", response_model=List[schemas.IGS_COURSE_ENQ])
 def request_course_enquiry(db: Session = Depends(get_db)):
-    return service.course_enquiry(db=db) 
+    return service.course_enquiry(db=db)
 
 @router.put("/course-enquiry-update", response_model=schemas.IGS_COURSE_ENQ)
 async def course_enquiry_update(request:schemas.IGS_COURSE_ENQ,  db: Session = Depends(get_db)):
     service.update_course_enquiry(db=db , request=request)
-    
+ 
 @router.delete("/course-enquiry-delete")
 async def course_enquiry_delete(request:schemas.IGS_COURSE_ENQ,  db: Session = Depends(get_db)):
     return service.delete_course_enquiry(db=db , request=request)

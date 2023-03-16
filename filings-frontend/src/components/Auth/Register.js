@@ -1,135 +1,200 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
-import FormControl from "@material-ui/core/FormControl";
-import Box from "@material-ui/core/Box";
-import { useSignIn } from "react-auth-kit";
-import { NavLink, useNavigate } from "react-router-dom";
-import { Typography } from "@material-ui/core";
+import Button from "@mui/material/Button";
+import CssBaseline from "@mui/material/CssBaseline";
+import TextField from "@mui/material/TextField";
+import { Link } from "react-router-dom";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 
-const useStyles = makeStyles((theme) => ({
-  card: {
-    width: "30%",
-    margin: "0 auto",
-    marginTop: theme.spacing(10),
-    padding: theme.spacing(2),
-    borderRadius: theme.shape.borderRadius,
+const theme = createTheme({
+  palette: {
+    mode: "light",
   },
-  form: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-  },
-  textField: {
-    marginBottom: theme.spacing(2),
-  },
-}));
+});
 
-export function SignUpComponent() {
-  const classes = useStyles();
-  const signIn = useSignIn();
-  const [values, setValues] = React.useState({
-    email: "",
-    user_name: "",
-    password: "",
-  });
-  const navigate = useNavigate();
-
-  const handleChange = (event) => {
-    setValues({ ...values, [event.target.name]: event.target.value });
-  };
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    const res = await fetch("http://127.0.0.1:8000/api/register", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(values),
-    });
-    const post_resp = await res.json();
-    if (post_resp) {
-      
-      navigate(-1);
-    }
-  };
-
+export default function SignUpComponent() {
   return (
-    <Card className={classes.card}>
-      <CardContent>
-        {/* <Typography
-          variant="h6"
-          color={"#094067"}
-          sx={{
-            fontWeight: "bold",
-            flexGrow: 1,
-            fontFamily: "PT Sans Caption",
-          }}
-          noWrap
-          component="div"
-        >
-          Intellecto Global Services
-        </Typography> */}
-        <form onSubmit={handleSubmit} className={classes.form}>
-          <FormControl>
-            <Box mb={2}>
-              <TextField
-                className={classes.textField}
-                label="Username"
-                name="user_name"
-                variant="outlined"
-                size="small"
-                type="text"
-                value={values.user_name}
-                onChange={handleChange}
-                required
-              />
+    <ThemeProvider theme={theme}>
+      <Paper
+        sx={{
+          borderRadius: "12px",
+          width: "40vw",
+          margin: "auto",
+          marginTop: "5vw",
+        }}
+        elevation={3}
+      >
+        <Container component="main" maxWidth="sm">
+          <CssBaseline />
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              padding: "4vw",
+              paddingTop: "2vw",
+              borderRadius: "20px",
+            }}
+          >
+            <Typography
+              component="h1"
+              variant="h5"
+              sx={{
+                fontSize: "2.5vw",
+              }}
+            >
+              Sign Up
+            </Typography>
+            <Box component="form" noValidate autoComplete="off">
+              <Grid
+                container
+                spacing={2}
+                sx={{
+                  marginTop: "4vw",
+                  "& .MuiGrid-item": { paddingTop: "0px" },
+                }}
+              >
+                <Grid item xs={12}>
+                  <TextField
+                    required
+                    fullWidth
+                    label="Username"
+                    type="text"
+                    variant="filled"
+                    sx={{
+                      border: "1px solid #d8eefe",
+                      "&:hover": {
+                        border: "1px solid blue",
+                        "& .css-2y464i-MuiInputBase-root-MuiFilledInput-root": {
+                          "&:before": {
+                            borderBottom: "0px",
+                          },
+                        },
+                      },
+                      borderRadius: "20px 20px 0px 0px",
+                      "& .css-2y464i-MuiInputBase-root-MuiFilledInput-root": {
+                        backgroundColor: "#00000000",
+                        "&:hover": {
+                          backgroundColor: "#00000000",
+                        },
+                        "&:before": {
+                          borderBottom: "0px",
+                        },
+                      },
+                    }}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    required
+                    fullWidth
+                    label="Email"
+                    type="text"
+                    variant="filled"
+                    sx={{
+                      border: "1px solid #d8eefe",
+                      "&:hover": {
+                        border: "1px solid blue",
+                        "& .css-2y464i-MuiInputBase-root-MuiFilledInput-root": {
+                          "&:before": {
+                            borderBottom: "0px",
+                          },
+                        },
+                      },
+
+                      "& .css-2y464i-MuiInputBase-root-MuiFilledInput-root": {
+                        backgroundColor: "#00000000",
+
+                        "&:hover": {
+                          backgroundColor: "#00000000",
+                        },
+                        "&:before": {
+                          borderBottom: "0px",
+                        },
+                      },
+                    }}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    required
+                    fullWidth
+                    label="Password"
+                    type="pasword"
+                    variant="filled"
+                    security="*"
+                    sx={{
+                      border: "1px solid #d8eefe",
+                      "&:hover::active": {
+                        "&:before": {
+                          borderBottom: "0px",
+                        },
+                      },
+                      "&:hover": {
+                        border: "1px solid blue",
+
+                        "& .css-2y464i-MuiInputBase-root-MuiFilledInput-root": {
+                          "&:before": {
+                            borderBottom: "0px",
+                          },
+                        },
+                      },
+                      "&:hover:before": { borderBottom: "0px" },
+                      borderRadius: "0px 0px 20px 20px",
+                      "& .css-2y464i-MuiInputBase-root-MuiFilledInput-root": {
+                        backgroundColor: "#00000000",
+
+                        "before:& .css-2y464i-MuiInputBase-root-MuiFilledInput-root":
+                          {
+                            borderBottom: "none",
+                          },
+                        "&:before": {
+                          borderBottom: "0px",
+                        },
+                      },
+                    }}
+                  />
+                </Grid>
+              </Grid>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+              >
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  sx={{
+                    mt: 5,
+                    mb: 2,
+                    border: "1px",
+                    borderRadius: "2vw",
+                    width: "10vw",
+                    height: "3vw",
+                    fontSize: "6rm",
+                    backgroundColor: "#1f8fff",
+                  }}
+                >
+                  Sign Up
+                </Button>
+              </Box>
+              <Grid container justifyContent="flex-end">
+                <Grid item>
+                  <Link to="/login" style={{ textDecoration: "none" }}>
+                    Already have an account? Sign In
+                  </Link>
+                </Grid>
+              </Grid>
             </Box>
-            <Box mb={2}>
-              <TextField
-                className={classes.textField}
-                label="Email"
-                name="email"
-                variant="outlined"
-                size="small"
-                type="email"
-                value={values.email}
-                onChange={handleChange}
-                required
-              />
-            </Box>
-            <Box mb={2}>
-              <TextField
-                className={classes.textField}
-                label="Password"
-                name="password"
-                variant="outlined"
-                size="small"
-                type="password"
-                value={values.password}
-                onChange={handleChange}
-                required
-              />
-            </Box>
-            <Button type="submit" variant="contained" color="primary">
-              Register
-            </Button>
-          </FormControl>
-        </form>
-        <div
-          style={{ margin: "20px", display: "flex", justifyContent: "center" }}
-        >
-          <Typography>
-            Already have an account?
-            <NavLink to="/login" style={{ color: "primary", marginLeft: 5 }}>
-              LogIn
-            </NavLink>
-          </Typography>
-        </div>
-      </CardContent>
-    </Card>
+          </Box>
+        </Container>
+      </Paper>
+    </ThemeProvider>
   );
 }

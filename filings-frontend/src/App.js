@@ -5,8 +5,10 @@ import { PayrollHR} from "./components/Filings/PayrollHR";
 import {EnqForm}  from "./components/Forms/EnqForm";
 import { EnqAdmin } from "./components/Admin/Admin";
 import HeaderBar from "./components/Sidebar/headerBar";
-import { SignInComponent } from "./components/Auth/Login";
+import SignInComponent  from "./components/Auth/Login";
 import { SignUpComponent } from "./components/Auth/Register";
+import JobSupportForm from "./components/JsForm/JobSupportForm";
+import EnquiryForm from "./components/EnquiryForm/EnquiryForm";
 import { RequireAuth } from "react-auth-kit";
 
 function App() {
@@ -22,6 +24,8 @@ function App() {
           <Route path="/enq-admin" element={<EnqAdmin />} />
           <Route path="/login" element={<SignInComponent />} />
           <Route path="/register" element={<SignUpComponent />} />
+          <Route path="/job-supp-form" element={<JobSupportForm/>} />
+          <Route path="/enquiry-form" element={<EnquiryForm/>} />
           <Route
             path="/"
             element={

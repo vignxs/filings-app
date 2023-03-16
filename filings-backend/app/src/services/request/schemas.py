@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, root_validator
 from datetime import datetime
 
 class IGS_REQ_DATA(BaseModel):
@@ -20,3 +20,8 @@ class IGS_REQ_DATA(BaseModel):
     
     class Config:
         orm_mode = True
+        
+    @root_validator
+    def number_validator(cls, values):
+        values["updated_at"] = datetime.now()
+        return values

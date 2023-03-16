@@ -4,11 +4,10 @@
 const reducer = ( state, action) => {
     switch (action.type) {
       case "DELETE_REQUESTS":
-        console.log(action.payload);
         return {
           ...state,
           requests: state.requests.filter(
-            (requests) => requests.enq_id !== action.payload
+            (requests) => requests.req_id !== action.payload
           ),
         };
       case "UPDATE_REQUESTS":
@@ -25,6 +24,16 @@ const reducer = ( state, action) => {
         return {
           ...state,
           sidebarState: action.payload,
+        };
+      case "LOGGED_IN":
+        return {
+          ...state,
+          isLogged: action.payload,
+        };
+      case "LOGGED_OUT":
+        return {
+          ...state,
+          isLogged: action.payload,
         };
 
       default:

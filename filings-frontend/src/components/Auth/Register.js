@@ -52,7 +52,6 @@ export function SignUpComponent() {
     });
     const post_resp = await res.json();
     if (post_resp) {
-      console.log(post_resp);
       
       navigate(-1);
     }

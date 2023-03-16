@@ -20,7 +20,12 @@ export default function SignInComponent() {
   return (
     <ThemeProvider theme={theme}>
       <Paper
-        sx={{ borderRadius: "12px", width: "40vw", margin: "auto" ,marginTop:"5vw"}}
+        sx={{
+          borderRadius: "12px",
+          width: "40vw",
+          margin: "auto",
+          marginTop: "5vw",
+        }}
         elevation={3}
       >
         <Container component="main" maxWidth="sm">
@@ -73,7 +78,7 @@ export default function SignInComponent() {
                       borderRadius: "20px 20px 0px 0px",
                       "& .css-2y464i-MuiInputBase-root-MuiFilledInput-root": {
                         backgroundColor: "#00000000",
-                         
+
                         "&:hover": {
                           backgroundColor: "#00000000",
                         },
@@ -112,7 +117,6 @@ export default function SignInComponent() {
                       borderRadius: "0px 0px 20px 20px",
                       "& .css-2y464i-MuiInputBase-root-MuiFilledInput-root": {
                         backgroundColor: "#00000000",
-
 
                         "before:& .css-2y464i-MuiInputBase-root-MuiFilledInput-root":
                           {
@@ -158,7 +162,7 @@ export default function SignInComponent() {
                     width: "10vw",
                     height: "3vw",
                     fontSize: "6rm",
-                    backgroundColor: "#1f8fff",
+                    backgroundColor: "#3da9fc",
                   }}
                 >
                   Sign in

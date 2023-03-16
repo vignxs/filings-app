@@ -38,8 +38,8 @@ const admin_nav = [
   //   path: "/enq-form",
   //   name: "Enquiry Form",
   // },
-  { 
-    isSelected : 1,
+  {
+    isSelected: 1,
     icon: <AdminPanelSettingsRoundedIcon />,
     path: "/enq-admin",
     name: "Enquiry Admin",
@@ -552,114 +552,6 @@ export default function HeaderBar(props) {
                   sx={{ color: "#094067", opacity: 1 }}
                 />
               </ListItemButton>
-              <Collapse in={Expand} timeout="auto" unmountOnExit>
-                {data.map((text, index) => (
-                  <ListItem
-                    key={index}
-                    disablePadding
-                    sx={{ display: "block" }}
-                  >
-                    <ListItemButton
-                      component={Link}
-                      to={text.path}
-                      key={index}
-                      sx={{
-                        pl: 4,
-                        borderRadius: "6px",
-                        "&:hover": {
-                          background: "#90b4ce",
-                          "& .icon-list-1": {
-                            color: "#FFFFFE",
-                          },
-                          "& .text-list-1": {
-                            color: "#FFFFFE",
-                          },
-                        },
-                        minHeight: 48,
-                        justifyContent: open ? "initial" : "center",
-                        px: 2.5,
-                      }}
-                    >
-                      <ListItemIcon
-                        className="icon-list-1"
-                        sx={{
-                          color: "#094067",
-                          minWidth: 0,
-                          mr: open ? 3 : "auto",
-                          justifyContent: "center",
-                        }}
-                      >
-                        {text.icon}
-                      </ListItemIcon>
-                      <ListItemText
-                        className="text-list-1"
-                        primary={text.name}
-                        sx={{ color: "#094067", opacity: open ? 1 : 0 }}
-                      />
-                    </ListItemButton>
-                  </ListItem>
-                ))}
-              </Collapse>
-            </List>
-            <List style={{ marginTop: `auto` }}>
-              <Divider />
-              <ListItem key={1} disablePadding sx={{ display: "block" }}>
-                <ListItemButton
-                  onClick={handleClick}
-                  component={Link}
-                  to={"/login"}
-                  sx={{
-                    borderRadius: "6px",
-                    "&:hover": {
-                      background: "#90b4ce",
-                      "& .icon-list-1": {
-                        color: "#FFFFFE",
-                      },
-                      "& .text-list-1": {
-                        color: "#FFFFFE",
-                      },
-                    },
-                    minHeight: 48,
-                    justifyContent: open ? "initial" : "center",
-                    px: 2.5,
-                  }}
-                >
-                  <ListItemIcon
-                    className="icon-list-1"
-                    sx={{
-                      color: "#094067",
-                      minWidth: 0,
-                      mr: open ? 3 : "auto",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <LogoutRoundedIcon />
-                  </ListItemIcon>
-                  <ListItemText
-                    className="text-list-1"
-                    primary={"Logout"}
-                    sx={{ color: "#094067", opacity: open ? 1 : 0 }}
-                  />
-                </ListItemButton>
-              </ListItem>
-            </List>
-          </Drawer>
-          <Box
-            sx={{
-              flexGrow: 1,
-              paddingTop: "96px",
-              paddingLeft: "38px",
-              paddingRight: "38px",
-              bgcolor: "#FFFFFE",
-              width: "100vw",
-              minHeight: "100vh",
-              display: "flex", 
-              justifyContent:"center",
-            }}
-          >
-          
-            {props.children}
-          </Box>
             </ListItem>
           </List>
         </Drawer>
@@ -671,7 +563,7 @@ export default function HeaderBar(props) {
             paddingRight: "38px",
             bgcolor: "#FFFFFE",
             width: "100vw",
-            minHeight: "100vw",
+            minHeight: "100vh",
           }}
         >
           {props.children}

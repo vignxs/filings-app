@@ -79,7 +79,16 @@ import { useSignIn } from "react-auth-kit";
 import {  NavLink , useNavigate } from "react-router-dom";
 import { Paper, Typography } from "@material-ui/core";
 import { useValue } from "../../Context/ContextProvider";
-
+import Avatar from "@mui/material/Avatar";
+import CssBaseline from "@mui/material/CssBaseline";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
+import { Link } from "react-router-dom";
+import Grid from "@mui/material/Grid";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import Container from "@mui/material/Container";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+// import { useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -99,7 +108,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export  function SignInComponent() {
+export default function SignInComponent() {
   
   const {
     dispatch,
@@ -240,22 +249,8 @@ export  function SignInComponent() {
 // -------------------
 
 
-import * as React from "react";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import { Link } from "react-router-dom";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-// import { useNavigate } from "react-router-dom";
+
+
 
 
 
@@ -265,7 +260,7 @@ const theme = createTheme({
   },
 });
 
-export default function SignInComponent() {
+function SignInComponent() {
     
     
   return (
@@ -444,6 +439,5 @@ export default function SignInComponent() {
         </Typography>
       </div>
     </Paper>
-
-  );
+);
 }

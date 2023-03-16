@@ -5,7 +5,7 @@ import { PayrollHR} from "./components/Filings/PayrollHR";
 import {EnqForm}  from "./components/Forms/EnqForm";
 import { EnqAdmin } from "./components/Admin/Admin";
 import HeaderBar from "./components/Sidebar/headerBar";
-import { SignInComponent } from "./components/Auth/Login";
+import SignInComponent  from "./components/Auth/Login";
 import { SignUpComponent } from "./components/Auth/Register";
 import { RequireAuth } from "react-auth-kit";
 

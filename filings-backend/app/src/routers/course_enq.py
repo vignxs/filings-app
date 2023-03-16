@@ -18,7 +18,7 @@ async def course_enquiry(request:schemas.IGS_COURSE_ENQ,  db: Session = Depends(
 def request_course_enquiry(db: Session = Depends(get_db)):
     return service.course_enquiry(db=db)
 
-@router.put("/course-enquiry-update", response_model=schemas.IGS_COURSE_ENQ)
+@router.put("/course-enquiry-update")#response_model=schemas.IGS_COURSE_ENQ)
 async def course_enquiry_update(request:schemas.IGS_COURSE_ENQ,  db: Session = Depends(get_db)):
     service.update_course_enquiry(db=db , request=request)
  

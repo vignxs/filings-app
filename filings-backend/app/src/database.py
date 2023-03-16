@@ -9,7 +9,7 @@ from sqlalchemy.orm import sessionmaker
 # Database Configuration
 ###
 
-SQLALCHEMY_DATABASE_URL = "postgresql://fhtbzqtj:A7--8_LfuRd0ngPY2itsOkFbn5Ehrmxu@rosie.db.elephantsql.com/fhtbzqtj"
+SQLALCHEMY_DATABASE_URL = "postgresql://postgres:12345@localhost/fdb"
 
 
 engine = create_engine(

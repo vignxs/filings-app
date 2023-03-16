@@ -38,8 +38,8 @@ const admin_nav = [
   //   path: "/enq-form",
   //   name: "Enquiry Form",
   // },
-  { 
-    isSelected : 1,
+  {
+    isSelected: 1,
     icon: <AdminPanelSettingsRoundedIcon />,
     path: "/enq-admin",
     name: "Enquiry Admin",
@@ -563,7 +563,7 @@ export default function HeaderBar(props) {
             paddingRight: "38px",
             bgcolor: "#FFFFFE",
             width: "100vw",
-            minHeight: "100vw",
+            minHeight: "100vh",
           }}
         >
           {props.children}

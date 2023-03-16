@@ -17,7 +17,7 @@ import axios from "axios";
   });
   
 
-  const handleChange = (e,date) => {
+  const handleChange = (e) => {
     const { name, value } = e.target;
     setValues((prevalues) => {
       return {

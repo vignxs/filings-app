@@ -1,4 +1,4 @@
-from sqlalchemy import  Column, Integer, String, DateTime, BigInteger
+from sqlalchemy import  Column, Integer, String, DateTime, BigInteger, func
 from ...database import Base
 
 class IGS_JOB_SUPPORT(Base):
@@ -14,5 +14,8 @@ class IGS_JOB_SUPPORT(Base):
     resource= Column(String)
     status= Column(String)
     feedback= Column(String)
-
+    created_by = Column(String)
+    updated_by = Column(String)
+    created_at = Column(DateTime, default=func.now())
+    updated_at = Column(DateTime, default=func.now(), onupdate=func.now())
  

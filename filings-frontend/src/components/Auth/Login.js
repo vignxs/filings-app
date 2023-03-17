@@ -14,9 +14,6 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
-// -------------------
-
-// import { useNavigate } from "react-router-dom";
 
 const theme = createTheme({
   palette: {
@@ -25,8 +22,6 @@ const theme = createTheme({
 });
 
 export default function SignInComponent() {
-    
-    
   return (
     <ThemeProvider theme={theme}>
       <Paper sx={{ borderRadius: "12px" }} elevation={3}>
@@ -68,7 +63,7 @@ export default function SignInComponent() {
                 container
                 spacing={2}
                 sx={{
-                  paddingTop: "0px",
+                  marginTop: "5vw",
                   "& .MuiGrid-item": { paddingTop: "0px" },
                 }}
               >
@@ -79,15 +74,16 @@ export default function SignInComponent() {
                     fullWidth
                     name="username"
                     label="Username"
-                    type="username"
+               
                     id="username"
                     variant="filled"
                     sx={{
-                      border: "2.5px solid #d8eefe",
-                      "&:hover": { border: "2.5px solid #094067" },
+                      border: "1px solid #d8eefe",
+                      "&:hover": { border: "1px solid blue" },
                       borderRadius: "20px 20px 0px 0px",
                       "& .css-2y464i-MuiInputBase-root-MuiFilledInput-root": {
-                        backgroundColor: "#00000000",
+                          backgroundColor: "#00000000",
+                          borderBottom:0,
                         "before& .css-2y464i-MuiInputBase-root-MuiFilledInput-root":
                           {
                             borderBottom: "none",
@@ -107,8 +103,8 @@ export default function SignInComponent() {
                     id="password"
                     variant="filled"
                     sx={{
-                      border: "1px solid #ffff",
-                      "&:hover": { border: "1px solid #ffff" },
+                      border: "1px solid #d8eefe",
+                      "&:hover": { border: "1px solid blue" },
                       borderRadius: "0px 0px 20px 20px",
                       "& .css-2y464i-MuiInputBase-root-MuiFilledInput-root": {
                         backgroundColor: "#00000000",
@@ -162,65 +158,5 @@ export default function SignInComponent() {
         </Container>
       </Paper>
     </ThemeProvider>
-          Intellecto Global Services
-        </Typography> */}
-      <form onSubmit={handleSubmit} className={classes.form}>
-        <FormControl>
-          <Box mb={2}>
-            <TextField
-              className={classes.textField}
-              label="Username"
-              name="user_name"
-              variant="outlined"
-              size="small"
-              type="text"
-              value={values.user_name}
-              onChange={handleChange}
-              required
-            />
-          </Box>
-          <Box mb={2}>
-            <TextField
-              className={classes.textField}
-              label="Email"
-              name="email"
-              variant="outlined"
-              size="small"
-              type="email"
-              value={values.email}
-              onChange={handleChange}
-              required
-            />
-          </Box>
-          <Box mb={2}>
-            <TextField
-              className={classes.textField}
-              label="Password"
-              name="password"
-              variant="outlined"
-              size="small"
-              type="password"
-              value={values.password}
-              onChange={handleChange}
-              required
-            />
-          </Box>
-          <Button type="submit" variant="contained" color="primary">
-            Login
-          </Button>
-        </FormControl>
-      </form>
-      <div
-        style={{ margin: "20px", display: "flex", justifyContent: "center" }}
-      >
-        <Typography>
-          Don't have an account?
-          <NavLink to="/register" style={{ color: "primary", marginLeft: 5 }}>
-            Register
-          </NavLink>
-        </Typography>
-      </div>
-    </Paper>
-
   );
 }

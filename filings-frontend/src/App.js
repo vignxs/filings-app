@@ -10,6 +10,7 @@ import { SignUpComponent } from "./components/Auth/Register";
 import JobSupportForm from "./components/JsForm/JobSupportForm";
 import EnquiryForm from "./components/EnquiryForm/EnquiryForm";
 import { RequireAuth } from "react-auth-kit";
+import JobSupportDataTable from './components/JsForm/JobSupportDataTable';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           <Route path="/register" element={<SignUpComponent />} />
           <Route path="/job-supp-form" element={<JobSupportForm/>} />
           <Route path="/enquiry-form" element={<EnquiryForm/>} />
+          <Route path="/job-supp-table" element={<JobSupportDataTable/>} />
           <Route
             path="/"
             element={

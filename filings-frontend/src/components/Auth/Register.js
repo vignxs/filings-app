@@ -124,7 +124,7 @@ export default function SignUpComponent() {
                     required
                     fullWidth
                     label="Password"
-                    type="pasword"
+                    type="passsword"
                     variant="filled"
                     security="*"
                     sx={{
@@ -148,13 +148,12 @@ export default function SignUpComponent() {
                       "& .css-2y464i-MuiInputBase-root-MuiFilledInput-root": {
                         backgroundColor: "#00000000",
 
-                        "before:& .css-2y464i-MuiInputBase-root-MuiFilledInput-root":
-                          {
-                            borderBottom: "none",
-                          },
                         "&:before": {
                           borderBottom: "0px",
                         },
+                      },
+                      "& .Mui-focused": {
+                        borderBottom: "0px",
                       },
                     }}
                   />
@@ -178,7 +177,7 @@ export default function SignUpComponent() {
                     width: "10vw",
                     height: "3vw",
                     fontSize: "6rm",
-                    backgroundColor: "#1f8fff",
+                    backgroundColor: "#3da9fc",
                   }}
                 >
                   Sign Up

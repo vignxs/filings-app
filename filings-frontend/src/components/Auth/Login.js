@@ -10,6 +10,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
+
 const theme = createTheme({
   palette: {
     mode: "light",
@@ -49,7 +50,9 @@ export default function SignInComponent() {
                 container
                 spacing={2}
                 sx={{
-                  marginTop: "4vw",
+
+                  marginTop: "5vw",
+
                   "& .MuiGrid-item": { paddingTop: "0px" },
                 }}
               >
@@ -58,28 +61,22 @@ export default function SignInComponent() {
                     required
                     fullWidth
                     label="Username"
-                    type="text"
+
+               
+                    id="username"
                     variant="filled"
                     sx={{
                       border: "1px solid #d8eefe",
-                      "&:hover": {
-                        border: "1px solid blue",
-                        "& .css-2y464i-MuiInputBase-root-MuiFilledInput-root": {
-                          "&:before": {
-                            borderBottom: "0px",
-                          },
-                        },
-                      },
+                      "&:hover": { border: "1px solid blue" },
                       borderRadius: "20px 20px 0px 0px",
                       "& .css-2y464i-MuiInputBase-root-MuiFilledInput-root": {
-                        backgroundColor: "#00000000",
-                         
-                        "&:hover": {
                           backgroundColor: "#00000000",
-                        },
-                        "&:before": {
-                          borderBottom: "0px",
-                        },
+                          borderBottom:0,
+                        "before& .css-2y464i-MuiInputBase-root-MuiFilledInput-root":
+                          {
+                            borderBottom: "none",
+                          },
+
                       },
                     }}
                   />
@@ -94,6 +91,9 @@ export default function SignInComponent() {
                     security="*"
                     sx={{
                       border: "1px solid #d8eefe",
+
+                      "&:hover": { border: "1px solid blue" },
+
                       "&:active": {
                         "&:before": {
                           borderBottom: "0px",
@@ -109,6 +109,7 @@ export default function SignInComponent() {
                         },
                       },
                       "&:hover:before": { borderBottom: "0px" },
+
                       borderRadius: "0px 0px 20px 20px",
                       "& .css-2y464i-MuiInputBase-root-MuiFilledInput-root": {
                         backgroundColor: "#00000000",

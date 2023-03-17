@@ -636,7 +636,7 @@ export const UsersActions = ({ params, rowId, setRowId }) => {
           setOutput(result);
         });
     }
-    console.log(output)
+    console.log(output);
   };
 
   const handleClose = () => {

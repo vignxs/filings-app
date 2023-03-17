@@ -25,3 +25,12 @@ class IGS_REQ_DATA(BaseModel):
     def number_validator(cls, values):
         values["updated_at"] = datetime.now()
         return values
+    
+
+class IGS_REQ_SERVICES(BaseModel):
+
+    service_id : int
+    service_name : str
+
+    class Config:
+        orm_mode = True

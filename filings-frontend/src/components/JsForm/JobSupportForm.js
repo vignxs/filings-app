@@ -31,7 +31,6 @@ const JobSupportForm = () => {
     },
     "& .MuiTextField-root": {
       m: 1.5,
-      // borderRadius:'15px',
       backgroundColor: "#fffffe",
       borderRadius: "2px",
       width: "23ch",
@@ -51,14 +50,7 @@ const JobSupportForm = () => {
     "& .MuiOutlinedInput-root": {
       borderRadius: "6px",
     },
-    // marginLeft: "70px",
     justifyContent: "center",
-    // boxShadow: `rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px`,
-    // bgcolor: "#094067",
-    // left: "-170px",
-    // top: ".8rem",
-    // width: "1300px",
-    // height: {heightBox},
     flexGrow: 1,
     position: "relative",
     borderRadius: "10px",
@@ -90,9 +82,6 @@ const JobSupportForm = () => {
     "Resource Not Available",
     "Waiting For Response",
   ];
-  //   var curr = new Date();
-  //     curr.setDate(curr.getDate());
-  //     var date = curr.toISOString().substring(0,10);
   return (
     <>
       <Paper elevation={3} sx={inputBox}>

@@ -3,23 +3,25 @@ from . import models, schemas
 from sqlalchemy import update,delete
 
 def create_course_enquiry(db: Session, request: schemas.IGS_COURSE_ENQ):
-    deeds = models.IGS_COURSE_ENQ(**request.dict())
-    db.add(deeds)
+    db_req = models.IGS_COURSE_ENQ(**request.dict())
+    db.add(db_req)
     db.commit()
-    db.refresh(deeds)
-    return deeds.req_id
+    db.refresh(db_req)
+    return db_req.id
 
-def course_enquiry(db:Session):
+def get_course_enquiry(db:Session):
     return db.query(models.IGS_COURSE_ENQ).all()
 
-def update_course_enquiry(db:Session , request:schemas.IGS_COURSE_ENQ):
-    deeds = update(models.IGS_COURSE_ENQ).where(models.IGS_COURSE_ENQ.req_id == request.req_id).values(request.dict())
-    db.execute(deeds)
-    db.commit()
-    return request.req_id
 
-def delete_course_enquiry(db:Session , request:schemas.IGS_COURSE_ENQ):
-    deeds = delete(models.IGS_COURSE_ENQ).where(models.IGS_COURSE_ENQ.req_id == request.req_id)
-    db.execute(deeds)
+def update_course_enquiry(db:Session , request:schemas.IGS_COURSE_ENQ) -> int:
+    db_req = update(models.IGS_COURSE_ENQ).where(models.IGS_COURSE_ENQ.id == request.id).values(request.dict())
+    db.execute(db_req)
     db.commit()
-    return request.req_id
+    return request.id
+
+
+def delete_course_enquiry(db:Session , request:schemas.IGS_COURSE_ENQ) -> int:
+    db_req = delete(models.IGS_COURSE_ENQ).where(models.IGS_COURSE_ENQ.id == request.id)
+    db.execute(db_req)
+    db.commit()
+    return request.id

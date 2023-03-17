@@ -25,4 +25,22 @@ def delete_request(db:Session , request:schemas.IGS_REQ_DATA):
     db.execute(stmt)
     db.commit()
     return request.req_id
-    
+
+
+def create_service(db: Session, request: schemas.IGS_REQ_SERVICES):
+    db_req = models.IGS_REQ_SERVICES(**request.dict())
+    db.add(db_req)
+    db.commit()
+    db.refresh(db_req)
+    return db_req.service_id
+
+def get_service(db: Session):
+    return db.query(models.IGS_REQ_SERVICES).all()
+
+
+def update_service(db: Session, request: schemas.IGS_REQ_SERVICES):
+    stmt = update(models.IGS_REQ_SERVICES).where(
+        models.IGS_REQ_SERVICES.service_id == request.service_id).values(request.dict())
+    db.execute(stmt)
+    db.commit()
+    return request.service_id

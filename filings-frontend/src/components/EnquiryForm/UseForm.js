@@ -4,7 +4,7 @@ import axios from "axios";
  const UseForm = ()=> {
   const [values, setValues] = useState({
     name: "",
-    followupcalldate: "",
+    followupcalldate:null,
     followupstatus: "",
     enquiryby: "",
     mobile: "",
@@ -84,6 +84,6 @@ import axios from "axios";
   };
   
 
-  return { handleChange, values, handleSubmit };
+  return { handleChange, values, handleSubmit,setValues };
 }
 export default UseForm;

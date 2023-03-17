@@ -13,7 +13,7 @@ router = APIRouter(
 async def request_tax_rgst(tax_rgst: schemas.IGS_REQ_TAX_RGST, db: Session= Depends(get_db)):
     return service.create_tax_rgst(db=db, tax_rgst=tax_rgst )
 
-@router.get("/req-service-tax-rgst/{id}", response_model=schemas.IGS_REQ_TAX_RGST)
+@router.get("/req-service-tax-rgst/{id}")
 def request_service_tax_rgst(id: str,  db: Session = Depends(get_db)):
     return service.get_tax_rgst(db=db, req_id = id)
 

@@ -200,12 +200,12 @@ export default function HeaderBar(props) {
   return (
     <ThemeProvider theme={theme}>
       <Box sx={{ display: "flex", flexGrow: 1 }}>
+        <CssBaseline />
         <AppBar
+          sx={{ display: isLogged === true ? "none" : "block" }}
           position="fixed"
-          sx={{
-            zIndex: (theme) => theme.zIndex.drawer + 1,
-            backgroundColor: "#d8eefe",
-          }}
+          color="background"
+          open={open}
         >
           <Toolbar>
             <Box sx={{ display: "flex", flexGrow: 1 }}>
@@ -214,7 +214,8 @@ export default function HeaderBar(props) {
                 onClick={handleDrawerOpen}
                 edge="start"
                 sx={{
-                  marginRight: 1,
+                  marginRight: 5,
+                  ...(open && { display: "none" }),
                 }}
               >
                 <MenuRoundedIcon color="teritiary" />
@@ -259,8 +260,6 @@ export default function HeaderBar(props) {
             </Button>
           </Toolbar>
         </AppBar>
-
-        <CssBaseline />
         <Drawer
           transitionDuration={500}
           variant="permanent"
@@ -275,7 +274,7 @@ export default function HeaderBar(props) {
               backgroundColor: "#d8eefe",
             },
           }}
-          open={true}
+          open={open}
         >
           <DrawerHeader>
             <IconButton onClick={handleDrawerClose}>
@@ -301,7 +300,7 @@ export default function HeaderBar(props) {
                   },
                 },
                 minHeight: 48,
-                justifyContent: "initial",
+                justifyContent: open ? "initial" : "center",
                 px: 2.5,
               }}
               onClick={handleClickReqExpand}
@@ -311,7 +310,7 @@ export default function HeaderBar(props) {
                 sx={{
                   color: "#094067",
                   minWidth: 0,
-                  mr: 3,
+                  mr: open ? 3 : "auto",
                   justifyContent: "center",
                 }}
               >
@@ -319,7 +318,7 @@ export default function HeaderBar(props) {
               </ListItemIcon>
               <ListItemText
                 className="text-list-1"
-                sx={{ color: "#094067", opacity: 1 }}
+                sx={{ color: "#094067", opacity: open ? 1 : 0 }}
                 primary="Requests"
               />
               {ReqExpand ? (
@@ -328,7 +327,7 @@ export default function HeaderBar(props) {
                   sx={{
                     color: "#094067",
                     // minWidth: 0,
-                    // mr: 3,
+                    // mr: open ? 3 : "auto",
                     // justifyContent: "center",
                   }}
                 />
@@ -338,7 +337,7 @@ export default function HeaderBar(props) {
                   sx={{
                     color: "#094067",
                     // minWidth: 0,
-                    // mr: 3,
+                    // mr: open ? 3 : "auto",
                     // justifyContent: "center",
                   }}
                 />
@@ -374,8 +373,8 @@ export default function HeaderBar(props) {
                         },
                       },
                       minHeight: 48,
-                      justifyContent: "initial",
-                      pl: 4,
+                      justifyContent: open ? "initial" : "center",
+                      pl: open ? 4 : 2.5,
                     }}
                   >
                     <ListItemIcon
@@ -383,7 +382,7 @@ export default function HeaderBar(props) {
                       sx={{
                         color: "#094067",
                         minWidth: 0,
-                        mr: 3,
+                        mr: open ? 3 : "auto",
                         justifyContent: "center",
                       }}
                     >
@@ -392,7 +391,7 @@ export default function HeaderBar(props) {
                     <ListItemText
                       className="text-list-1"
                       primary={text.name}
-                      sx={{ color: "#094067", opacity: 1 }}
+                      sx={{ color: "#094067", opacity: open ? 1 : 0 }}
                     />
                   </ListItemButton>
                 </ListItem>
@@ -414,7 +413,7 @@ export default function HeaderBar(props) {
                   },
                 },
                 minHeight: 48,
-                justifyContent: "initial",
+                justifyContent: open ? "initial" : "center",
                 pl: 2.5,
               }}
               onClick={handleClickExpand}
@@ -424,7 +423,7 @@ export default function HeaderBar(props) {
                 sx={{
                   color: "#094067",
                   minWidth: 0,
-                  mr: 3,
+                  mr: open ? 3 : "auto",
                   justifyContent: "center",
                 }}
               >
@@ -432,7 +431,7 @@ export default function HeaderBar(props) {
               </ListItemIcon>
               <ListItemText
                 className="text-list-1"
-                sx={{ color: "#094067", opacity: 1 }}
+                sx={{ color: "#094067", opacity: open ? 1 : 0 }}
                 primary="Services"
               />
               {Expand ? (
@@ -441,7 +440,7 @@ export default function HeaderBar(props) {
                   sx={{
                     color: "#094067",
                     // minWidth: 0,
-                    // mr: 3,
+                    // mr: open ? 3 : "auto",
                     // justifyContent: "center",
                   }}
                 />
@@ -451,7 +450,7 @@ export default function HeaderBar(props) {
                   sx={{
                     color: "#094067",
                     // minWidth: 0,
-                    // mr: 3,
+                    // mr: open ? 3 : "auto",
                     // justifyContent: "center",
                   }}
                 />
@@ -486,8 +485,8 @@ export default function HeaderBar(props) {
                           },
                         },
                         minHeight: 48,
-                        justifyContent: "initial",
-                        pl: 4,
+                        justifyContent: open ? "initial" : "center",
+                        pl: open ? 4 : 2.5,
                       }}
                     >
                       <ListItemIcon
@@ -495,7 +494,7 @@ export default function HeaderBar(props) {
                         sx={{
                           color: "#094067",
                           minWidth: 0,
-                          mr: 3,
+                          mr: open ? 3 : "auto",
                           justifyContent: "center",
                         }}
                       >
@@ -504,7 +503,7 @@ export default function HeaderBar(props) {
                       <ListItemText
                         className="text-list-1"
                         primary={text.name}
-                        sx={{ color: "#094067", opacity: 1 }}
+                        sx={{ color: "#094067", opacity: open ? 1 : 0 }}
                       />
                     </ListItemButton>
                   </ListItem>
@@ -531,7 +530,7 @@ export default function HeaderBar(props) {
                     },
                   },
                   minHeight: 48,
-                  justifyContent: "initial",
+                  justifyContent: open ? "initial" : "center",
                   px: 2.5,
                 }}
               >
@@ -540,7 +539,7 @@ export default function HeaderBar(props) {
                   sx={{
                     color: "#094067",
                     minWidth: 0,
-                    mr: 3,
+                    mr: open ? 3 : "auto",
                     justifyContent: "center",
                   }}
                 >
@@ -549,7 +548,7 @@ export default function HeaderBar(props) {
                 <ListItemText
                   className="text-list-1"
                   primary={"Logout"}
-                  sx={{ color: "#094067", opacity: 1 }}
+                  sx={{ color: "#094067", opacity: open ? 1 : 0 }}
                 />
               </ListItemButton>
             </ListItem>
@@ -563,7 +562,7 @@ export default function HeaderBar(props) {
             paddingRight: "38px",
             bgcolor: "#FFFFFE",
             width: "100vw",
-            minHeight: "100vh",
+            minHeight: "100vw",
           }}
         >
           {props.children}

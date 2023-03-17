@@ -55,7 +55,6 @@ export default function SignInComponent() {
                 container
                 spacing={2}
                 sx={{
-
                   marginTop: "5vw",
 
                   "& .MuiGrid-item": { paddingTop: "0px" },
@@ -66,27 +65,41 @@ export default function SignInComponent() {
                     required
                     fullWidth
                     label="Username"
-
-               
-                    id="username"
+                    type="username"
                     variant="filled"
+                     
                     sx={{
                       border: "1px solid #d8eefe",
+
                       "&:hover": { border: "1px solid blue" },
+
+                      "&:active": {
+                        "&:before": {
+                          borderBottom: "0px",
+                        },
+                      },
+                      "&:hover": {
+                        border: "1px solid blue",
+
+                        "& .css-2y464i-MuiInputBase-root-MuiFilledInput-root": {
+                          "&:before": {
+                            borderBottom: "0px",
+                          },
+                        },
+                      },
+                      "&:hover:before": { borderBottom: "0px" },
+
                       borderRadius: "20px 20px 0px 0px",
                       "& .css-2y464i-MuiInputBase-root-MuiFilledInput-root": {
-
                         backgroundColor: "#00000000",
 
-                        "&:hover": {
-
-                          backgroundColor: "#00000000",
-                          borderBottom:0,
-                        "before& .css-2y464i-MuiInputBase-root-MuiFilledInput-root":
+                        "before:& .css-2y464i-MuiInputBase-root-MuiFilledInput-root":
                           {
                             borderBottom: "none",
                           },
-
+                        "&:before": {
+                          borderBottom: "0px",
+                        },
                       },
                     }}
                   />
@@ -98,7 +111,7 @@ export default function SignInComponent() {
                     label="Password"
                     type="password"
                     variant="filled"
-                    security="*"
+                     
                     sx={{
                       border: "1px solid #d8eefe",
 

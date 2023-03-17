@@ -9,9 +9,9 @@ from sqlalchemy.orm import sessionmaker
 # Database Configuration
 ###
 
-SQLALCHEMY_DATABASE_URL = "postgresql://postgres:admin@localhost:5432/a2priora"
+SQLALCHEMY_DATABASE_URL = "postgresql://postgres:12345@localhost/fdb"
 
-# "postgresql://fhtbzqtj:A7--8_LfuRd0ngPY2itsOkFbn5Ehrmxu@rosie.db.elephantsql.com/fhtbzqtj"
+
 
 engine = create_engine(
     SQLALCHEMY_DATABASE_URL

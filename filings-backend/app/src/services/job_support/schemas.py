@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from datetime import date
+from datetime import date , datetime
 
 class IGS_JOB_SUPPORT(BaseModel):
 
@@ -11,6 +11,10 @@ class IGS_JOB_SUPPORT(BaseModel):
     resource : str
     status : str
     feedback : str
+    created_by: str = "admin"
+    updated_by: str = "admin"
+    created_at: datetime = datetime.now()
+    updated_at: datetime = datetime.now()
     
     class Config:
         orm_mode = True
@@ -27,6 +31,10 @@ class IGS_JOB_SUPPORT_GU(BaseModel):
     resource: str
     status: str
     feedback: str
+    created_by: str = "admin"
+    updated_by: str = "admin"
+    created_at: datetime = datetime.now()
+    updated_at: datetime = datetime.now()
 
     class Config:
         orm_mode = True

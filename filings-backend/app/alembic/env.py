@@ -16,10 +16,17 @@ if config.config_file_name is not None:
 
 # add your model's MetaData object here
 # for 'autogenerate' support
-from src.services.auth import models
+from src.database import Base
+from src.services.auth.models import User
+from src.services.course_enq.models import IGS_COURSE_ENQ
+from src.services.gst.models import IGS_REQ_GST
+from src.services.gst_rgst.models import IGS_REQ_GST_RGST
+from src.services.job_support.models import IGS_JOB_SUPPORT
+from src.services.pan_rgst.models import IGS_REQ_PAN_RGST
+from src.services.request.models import IGS_REQ_DATA,IGS_REQ_SERVICES
+from src.services.tax_rgst.models import IGS_REQ_TAX_RGST
 # from myapp import mymodel
-target_metadata = models.Base.metadata
-target_metadata = None
+target_metadata = Base.metadata
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:

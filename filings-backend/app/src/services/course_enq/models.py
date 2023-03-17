@@ -1,15 +1,16 @@
-from sqlalchemy import Column, String, Integer, Date
+from sqlalchemy import Column,String,Integer,BigInteger,Date
 from ...database import Base
 
 class IGS_COURSE_ENQ(Base):
-    __tablename__ = "Course_Enquiry"
+    __tablename__ = "IGS_COURSE_ENQUIRY"
+    __table_args__ = {'extend_existing': True} 
 
-    req_id = Column(String, primary_key=True, index=True)
+    id = Column(Integer, primary_key=True,autoincrement = True, index=True)
     name = Column(String)
     followup_call_date = Column(Date)
     followup_status = Column(String)
     enquiry_by = Column(String)
-    mobile = Column(Integer)
+    mobile = Column(BigInteger)
     location = Column(String)
     course = Column(String)
     fee_structure = Column(String)

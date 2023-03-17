@@ -213,7 +213,7 @@ const EnquiryForm = () => {
                     <Select
                       labelId="demo-simple-select-label"
                       id="demo-simple-label"
-                      label="Enquired for*"
+                      label="Follow Up Status*"
                       color="green"
                       name="followupstatus"
                       required={true}
@@ -240,14 +240,14 @@ const EnquiryForm = () => {
                   />
                 </Grid>
                 <Grid style={{ display: "flex" }}>
-                  <FormControl sx={{ m: 1.5, minWidth: "23ch" }} size="small">
+                  <FormControl sx={{ m:1.5, minWidth:"23ch" }} size="small">
                     <InputLabel color="green" id="demo-simple-select-label">
-                      Enquiry By
+                      Enquired By
                     </InputLabel>
                     <Select
                       labelId="demo-simple-select-label"
                       id="demo-simple-label"
-                      label="Enquired for*"
+                      label="Enquired By*"
                       color="green"
                       name="enquiryby"
                       required={true}
@@ -315,7 +315,7 @@ const EnquiryForm = () => {
                     <Select
                       labelId="demo-simple-select-label"
                       id="demo-simple-label"
-                      label="Enquired for*"
+                      label="Experience/Domain*"
                       color="green"
                       name="exprienceby"
                       required={true}
@@ -344,7 +344,7 @@ const EnquiryForm = () => {
                     size="small"
                     color="green"
                     type="text"
-                    name="Purpose"
+                    name="purpose"
                     required={true}
                     value={values.purpose}
                     onChange={handleChange}
@@ -358,7 +358,7 @@ const EnquiryForm = () => {
                     <Select
                       labelId="demo-simple-select-label"
                       id="demo-simple-label"
-                      label="Enquired for*"
+                      label="Mode*"
                       color="green"
                       name="mode"
                       required={true}

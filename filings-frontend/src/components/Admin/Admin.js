@@ -57,10 +57,10 @@ export const EnqAdmin = (props) => {
       width: "70ch",
     },
     "& .MuiPopperUnstyled-root": {
-      inset: `-125px auto auto 350px`,
+      inset: `-5px auto auto 350px`,
     },
     "& .MuiDataGrid-panel": {
-      inset: `-125px auto auto 350px`,
+      inset: `-1px auto auto 350px`,
     },
     "& .MuiDataGrid-columnHeaderTitle": {
       opacity: ".8",
@@ -142,6 +142,7 @@ export const EnqAdmin = (props) => {
     state: { requests },
     dispatch,
   } = useValue();
+  
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     return date.toLocaleString();
@@ -261,7 +262,7 @@ export const EnqAdmin = (props) => {
         <GridToolbarQuickFilter sx={{ marginRight: "auto" }} />
         {/* <GridToolbarColumnsButton /> */}
         <GridToolbarFilterButton
-          PopperProps={{ color: "#000000", inset: `-125px auto auto 350px` }}
+          PopperProps={{ color: "#000000", inset: `-5px auto auto 350px` }}
           sx={{ m: 2, bgcolor: "#FFFFFF", marginLeft: "auto" }}
         />
         {/* <GridToolbarDensitySelector /> */}
@@ -574,9 +575,13 @@ export const EnqAdmin = (props) => {
                       // inset: `-125px auto auto 350px`,
                     },
                     "& .MuiDataGrid-paper": {
-                      boxShadow: "none !important",
+                      //   boxShadow: "none !important",
                     },
-                    inset: `-125px auto auto 448px !important`,
+                    inset: `-18vh auto auto 25vw !important`,
+                    width: "35vw",
+                    "& .mui-datatables-1t5wrdm-MuiDataGrid-filterForm": {
+                      width: "35vw",
+                    },
                   },
                 },
               }}

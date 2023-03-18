@@ -228,8 +228,8 @@ export const EnqAdmin = (props) => {
         filterable: false,
         align: "center",
         // valueFormatter: (params) => formatDate(params.value),
-        // renderCell: (params) =>
-        //   moment(params.row.createdAt).format("YYYY-MM-DD HH:MM:SS"),
+        renderCell: (params) =>
+          moment(params.row.createdAt).format("YYYY-MM-DD HH:MM:SS"),
         // currentUser?.role === "admin",
       },
       {
@@ -240,8 +240,8 @@ export const EnqAdmin = (props) => {
         align: "center",
         filterable: false,
         // valueFormatter: (params) => formatDate(params.value),
-        // renderCell: (params) =>
-        //   moment(params.row.createdAt).format("YYYY-MM-DD HH:MM:SS"),
+        renderCell: (params) =>
+          moment(params.row.createdAt).format("YYYY-MM-DD HH:MM:SS"),
         // currentUser?.role === "admin",
       },
     ],
@@ -252,7 +252,6 @@ export const EnqAdmin = (props) => {
     if (requests.length === 0) getRequests(dispatch);
   }, []);
 
-  console.log(requests);
   // .MuiDataGrid-cell:focus {
   //     outline: solid #094067 1px;
   //     border-radius: 12px;

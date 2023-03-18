@@ -112,7 +112,6 @@ export const EnqForm = (props) => {
        headers: { "Content-Type": "application/json" },
        body: JSON.stringify(userinfo),
      });
-         console.log(userinfo);
      const newUid = uuid().slice(0, 7);
      setUid(newUid);
 
@@ -125,7 +124,6 @@ export const EnqForm = (props) => {
            headers: { "Content-Type": "application/json" },
            body: JSON.stringify(Gstinfo),
          });
-         console.log(Gstinfo);
          setGstInfo({ req_id: newUid });
        } else if (userinfo.enquired_for === "GST Registration") {
          // Send POST request for GST registration info

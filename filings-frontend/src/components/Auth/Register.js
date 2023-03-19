@@ -2,13 +2,14 @@ import React from "react";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { useSignIn } from "react-auth-kit";
 
 const theme = createTheme({
   palette: {
@@ -17,6 +18,34 @@ const theme = createTheme({
 });
 
 export default function SignUpComponent() {
+    const signIn = useSignIn();
+    const [values, setValues] = React.useState({
+      email: "",
+      user_name: "",
+      password: "",
+      is_admin: 1,
+      apps : ["filings", "admin", "job-support"]
+    });
+    const navigate = useNavigate();
+
+    const handleChange = (event) => {
+      setValues({ ...values, [event.target.name]: event.target.value });
+    };
+
+    const handleSubmit = async (event) => {
+      event.preventDefault();
+      console.log(values)
+
+      const res = await fetch("http://127.0.0.1:8000/api/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(values),
+      });
+      const post_resp = await res.json();
+      if (post_resp) {
+        navigate(-1);
+      }
+    };
   return (
     <ThemeProvider theme={theme}>
       <Paper
@@ -63,8 +92,11 @@ export default function SignUpComponent() {
                     required
                     fullWidth
                     label="Username"
+                    name="user_name"
                     type="text"
                     variant="filled"
+                    value={values.user_name}
+                    onChange={handleChange}
                     sx={{
                       border: "1px solid #d8eefe",
                       "&:hover": {
@@ -93,8 +125,11 @@ export default function SignUpComponent() {
                     required
                     fullWidth
                     label="Email"
+                    name="email"
                     type="text"
                     variant="filled"
+                    value={values.email}
+                    onChange={handleChange}
                     sx={{
                       border: "1px solid #d8eefe",
                       "&:hover": {
@@ -123,8 +158,12 @@ export default function SignUpComponent() {
                   <TextField
                     required
                     fullWidth
+                    name="password"
                     label="Password"
-                    type="passsword"
+                    value={values.password}
+                    onChange={handleChange}
+                    type="pas
+                    sword"
                     variant="filled"
                     security="*"
                     sx={{
@@ -168,6 +207,7 @@ export default function SignUpComponent() {
                 <Button
                   type="submit"
                   fullWidth
+                  onClick={handleSubmit}
                   variant="contained"
                   sx={{
                     mt: 5,

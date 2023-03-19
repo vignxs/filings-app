@@ -22,8 +22,7 @@ import ListItemText from "@mui/material/ListItemText";
 import { Link } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useValue } from "../../Context/ContextProvider";
-import { FilingsRoutes ,JobSuppRoutes } from "./SidebarRoutes";
-
+import { AdminRoutes, FilingsRoutes ,JobSuppRoutes } from "./SidebarRoutes";
 
 
 const drawerWidth = 220;
@@ -124,10 +123,9 @@ const [currentApp, setCurrentApp] = React.useState("");
       },
     },
   });
-  // const theme = useTheme();
   
   const [open, setOpen] = React.useState(false);
-  const user = JSON.parse(sessionStorage.getItem("user"));
+  const user = "hi" || JSON.parse(sessionStorage.getItem("user"));
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -144,16 +142,32 @@ const [currentApp, setCurrentApp] = React.useState("");
   };
 
   // const auth = useAuthUser();
-const ButtonWithOptions = ({ text, variant, color, onClick, size, sx }) => (
-  <Button variant={variant} color={color} onClick={onClick} size={size} sx={sx}>
+const ButtonWithOptions = ({
+  text,
+  variant,
+  color,
+  onClick,
+  size,
+  sx,
+  linkTo,
+}) => (
+  <Button
+    variant={variant}
+    color={color}
+    onClick={onClick}
+    size={size}
+    sx={sx}
+    component={Link}
+    to={linkTo}
+  >
     {text}
   </Button>
 );
 
 const options = [
-  { text: "Filings", value: "Filings" },
-  { text: "Admin", value: "Admin" },
-  { text: "Job-Support", value: "Job-Support" },
+  { text: "Filings", value: "Filings", href: "/enq-admin" },
+  { text: "Admin", value: "Admin", href: "/admin" },
+  { text: "Job-Support", value: "Job-Support", href: "/job-supp-form" },
 ];
 
 const ButtonGroup = () => {
@@ -170,6 +184,7 @@ const ButtonGroup = () => {
           variant="text"
           color="primary"
           size="small"
+          linkTo={option.href}
           sx={{
             p: 1,
             m: 1,
@@ -274,10 +289,9 @@ const ButtonGroup = () => {
           <Divider />
           {/* app Switch */}
 
-          {currentApp === "Filings" && (
-            <FilingsRoutes {...{ open }} />
-          )}
+          {currentApp === "Filings" && <FilingsRoutes {...{ open }} />}
           {currentApp === "Job-Support" && <JobSuppRoutes open={open} />}
+          {currentApp === "Admin" && <AdminRoutes open={open} />}
 
           <List style={{ marginTop: `auto` }}>
             <Divider />

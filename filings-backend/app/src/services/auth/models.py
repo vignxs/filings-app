@@ -1,4 +1,4 @@
-from sqlalchemy import  Column, Integer, String, BOOLEAN 
+from sqlalchemy import  Column, Integer, String, BOOLEAN , ARRAY
 from ...database import Base
 
 class User(Base):
@@ -11,4 +11,5 @@ class User(Base):
 	email = Column(String, unique=True)
 	password = Column(String)
 	active_flag = Column(BOOLEAN)
- 
+	is_admin = Column(BOOLEAN)
+	apps = Column(ARRAY(String))

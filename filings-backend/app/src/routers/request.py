@@ -38,4 +38,4 @@ def service_data(db: Session = Depends(get_db)):
 
 @router.put("/req-services-update") 
 async def service_data_update(request: schemas.IGS_REQ_SERVICES,  db: Session = Depends(get_db)):
-    service.update_service(db=db, request=request)
+    return service.update_service(db=db, request=request)

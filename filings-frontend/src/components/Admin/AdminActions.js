@@ -27,28 +27,26 @@ import { inputBoxAdminAction } from "../Utils/MuiStyles";
 import { ServiceFileForm, getSteps } from "./Services";
 import UserInfoForm from "./Forms/UserInfoForm";
 import ServiceInfoForm from "./Forms/ServiceInfoForm";
-import UseForm from "./UseForms";
+import UseForm from "./UseForm";
 export const UsersActions = ({ params, rowId, setRowId }) => {
-    const {handleClickOpen}=UseForm()
-  const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
-  
-  const [sbOpen, setsbOpen] = React.useState(false);
-
-  const [activeStep, setActiveStep] = React.useState(0);
-  const [output, setOutput] = React.useState({});
-
-
-
-  const steps = getSteps();
-  console.log("user info", userinfo);
-  let value = userinfo;
-
-
-  const handleNext = () =>
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-
-  const handleReset = () => setActiveStep(0);
+  const {
+    handleClickOpen,
+    sbhandleClose,
+    sbOpen,
+    handleDelete,
+    handleSubmit,
+    handleFormSubmit,
+    compHandleClose,
+    steps,
+    activeStep,
+    handleClose,
+    handleNext,
+    getStepContent,
+    success,
+    loading,
+    setSuccess,
+    handleReset,
+  } = UseForm({ params });
 
   const theme = createTheme({
     palette: {
@@ -63,35 +61,6 @@ export const UsersActions = ({ params, rowId, setRowId }) => {
       },
     },
   });
-
- 
-
-  const handleClose = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  };
-  const compHandleClose = () => {
-    setOpen(false);
-  };
-  const sbhandleClose = () => {
-    setsbOpen(false);
-  };
-  const { dispatch } = useValue();
-
-  const handleDelete = async () => {
-    const data = params.row;
-    if (window.confirm("Are you sure to delete this record?")) {
-      const result = await fetch(
-        "http://localhost:8000/api/v1/req-data-delete",
-        {
-          method: "DELETE",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(data),
-        }
-      );
-      const id = await result.json();
-      dispatch({ type: "DELETE_REQUESTS", payload: id });
-    }
-  };
 
   const getMuiTheme = () =>
     createTheme({
@@ -111,50 +80,6 @@ export const UsersActions = ({ params, rowId, setRowId }) => {
       },
     });
 
-  const handleFormSubmit = async () => {
-    setOpen(false);
- 
-    const endpoints = {
-      GST: "/gst-update",
-      "GST Registration": "/gst-rgst-update",
-      "PAN Registration": "/pan-rgst-update",
-      "TAX Registration": "/tax-rgst-update",
-    };
-
-    const endpoint = endpoints[userinfo.enquired_for];
-    const API_ENDPOINT = "http://localhost:8000/api/v1";
- 
-    // Send POST request to save user info
-    fetch(`${API_ENDPOINT}/req-data-update`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(userinfo),
-    });
-
-    if (endpoint) {
-      fetch(`${API_ENDPOINT}${endpoint}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(output),
-      });
-    }
-    setsbOpen(true);
-  };
-
-  const handleSubmit = async () => {
-    setLoading(true);
-    const data = params.row;
-    const result = await fetch("http://localhost:8000/api/v1/req-data-update", {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    });
-    if (result) {
-      setSuccess(true);
-      setRowId(null);
-    }
-    setLoading(false);
-  };
 
   useEffect(() => {
     if (rowId === params.id && success) setSuccess(false);
@@ -223,7 +148,7 @@ export const UsersActions = ({ params, rowId, setRowId }) => {
             scroll={"body"}
             fullWidth
             maxWidth={"md"}
-            open={open}
+            // open={open}
             onClose={handleClose}
           >
             <DialogTitle

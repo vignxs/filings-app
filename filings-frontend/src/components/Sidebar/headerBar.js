@@ -99,9 +99,10 @@ export default function HeaderBar(props) {
 const [currentApp, setCurrentApp] = React.useState("");
 
   const {
-    state: { isLogged },
+    state: { isLogged, apps, currentUser },
     dispatch,
   } = useValue();
+  console.log(apps)
 
 
   const theme = createTheme({
@@ -125,7 +126,6 @@ const [currentApp, setCurrentApp] = React.useState("");
   });
   
   const [open, setOpen] = React.useState(false);
-  const user = "hi" || JSON.parse(sessionStorage.getItem("user"));
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -179,7 +179,7 @@ const ButtonGroup = () => {
   return (
     <>
       {options.map((option) => (
-        <ButtonWithOptions
+          <ButtonWithOptions
           key={option.value}
           variant="text"
           color="primary"
@@ -261,7 +261,7 @@ const ButtonGroup = () => {
                 letterSpacing: "1px",
               }}
             >
-              {user || "Login"}
+              {currentUser || "Login"}
               {/* .replace(/['"]+/g, "") */}
             </Button>
           </Toolbar>

@@ -35,6 +35,21 @@ const reducer = ( state, action) => {
           ...state,
           isLogged: action.payload,
         };
+      case "IS_ADMIN":
+        return {
+          ...state,
+          isAdmin: action.payload,
+        };
+      case "APPS_ACCESS":
+        return {
+          ...state,
+          apps: action.payload,
+        };
+      case "CURRENT_USER":
+        return {
+          ...state,
+          currentUser: action.payload,
+        };
 
       default:
         throw new Error("No action matched");

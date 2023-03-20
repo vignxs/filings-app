@@ -1,48 +1,12 @@
 import React, { useState } from "react";
-import { FileUploader } from "react-drag-drop-files";
-import InputLabel from "@mui/material/InputLabel";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import QontoConnector from "../Utils/StepperUtils";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
-import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
-import Step from "@mui/material/Step";
-import StepLabel from "@mui/material/StepLabel";
-import Stepper from "@mui/material/Stepper";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { useEffect } from "react";
-import {
-  Alert,
-  FormControlLabel,
-  Grid,
-  MenuItem,
-  Radio,
-  RadioGroup,
-  Snackbar,
-  TextField,
-} from "@mui/material";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
-import { CircularProgress, Stack, IconButton } from "@mui/material";
-import {
-  CheckOutlined,
-  EditOutlined,
-  SaveOutlined,
-  DeleteOutlined,
-} from "@mui/icons-material";
-import { green } from "@mui/material/colors";
-// import { useValue } from "../../Context/ContextProvider";
-import UseForm from "./UseForm"
+import { Stack, IconButton } from "@mui/material";
+import { DeleteOutlined } from "@mui/icons-material";
+import UseForm from "./UseForm";
 
 const JSformActions = ({ params }) => {
-
-  const {handleDelete} = UseForm()
+  const { handleDelete } = UseForm(params);
   const inputBox = {
     // margin: "0 auto",
     "& .MuiTextField-root": {
@@ -107,15 +71,15 @@ const JSformActions = ({ params }) => {
           }}
         >
           <Stack spacing={0} direction="row">
-          <IconButton
-            color="teritiary"
-            sx={{ boxShadow: 0 }}
-            size="small"
-            aria-label="edit"
-            onClick={handleDelete}
-          >
-            <DeleteOutlined />
-          </IconButton>
+            <IconButton
+              color="teritiary"
+              sx={{ boxShadow: 0 }}
+              size="small"
+              aria-label="edit"
+              onClick={handleDelete}
+            >
+              <DeleteOutlined />
+            </IconButton>
           </Stack>
         </Box>
       </ThemeProvider>

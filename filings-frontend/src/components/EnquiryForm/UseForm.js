@@ -1,21 +1,21 @@
-import {useState} from "react";
+import { useState } from "react";
 import axios from "axios";
 
- const UseForm = ()=> {
+const UseForm = () => {
   const [values, setValues] = useState({
     name: "",
-    followupcalldate:null,
+    followupcalldate: null,
     followupstatus: "",
     enquiryby: "",
     mobile: "",
     location: "",
     course: "",
-    feestructure:"",
+    feestructure: "",
     experienceby: "",
     infosource: "",
     purpose: "",
     mode: "",
-    comments: ""
+    comments: "",
   });
 
   const handleChange = (e) => {
@@ -36,7 +36,7 @@ import axios from "axios";
     mobile: values.mobile,
     location: values.location,
     course: values.course,
-    feestructure:values.feestructure,
+    feestructure: values.feestructure,
     experienceby: values.experienceby,
     infosource: values.infosource,
     purpose: values.purpose,
@@ -44,46 +44,43 @@ import axios from "axios";
     comments: values.comments,
   };
 
-
-  const postData=()=>{
-    if(Object.values(values).includes("") === false){
-      axios.post('https://curious-dog-baseball-cap.cyclic.app/enq/EnquiryData', enqdata) 
-      .then(res=>console.log(res.data))
-       console.log("success",Object.values(values))
+  const postData = () => {
+    if (Object.values(values).includes("") === false) {
+      axios
+        .post(
+          "https://curious-dog-baseball-cap.cyclic.app/enq/EnquiryData",
+          enqdata
+        )
+        .then((res) => console.log(res.data));
+      console.log("success", Object.values(values));
     }
-  }
-  
+  };
 
- const handleSubmit = (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
     // console.log(event)
-     console.log(values)
-     console.log("I am Working")
+    console.log(values);
+    console.log("I am Working");
 
-    
-     postData()
-  
-        
+    postData();
 
     setValues({
-    name: "",
-    followupcalldate: "",
-    followupstatus: "",
-    enquiryby: "",
-    mobile: "",
-    location: "",
-    course: "",
-    feestructure:"",
-    experienceby: "",
-    infosource: "",
-    purpose: "",
-    mode: "",
-    comments: ""
+      name: "",
+      followupcalldate: "",
+      followupstatus: "",
+      enquiryby: "",
+      mobile: "",
+      location: "",
+      course: "",
+      feestructure: "",
+      experienceby: "",
+      infosource: "",
+      purpose: "",
+      mode: "",
+      comments: "",
     });
-
   };
-  
 
-  return { handleChange, values, handleSubmit,setValues };
-}
+  return { handleChange, values, handleSubmit, setValues };
+};
 export default UseForm;

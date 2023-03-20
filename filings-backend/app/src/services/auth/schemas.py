@@ -1,11 +1,16 @@
 from pydantic import BaseModel
 
 class User(BaseModel):
-	# user_id : str
 	email: str
 	user_name : str
 	password: str
 	active_flag : bool = 1
+	is_admin : bool 
+	apps : list 
 
 	class Config:
 		orm_mode = True
+  
+class UserLogin(BaseModel):
+	email: str
+	password: str

@@ -20,8 +20,10 @@ def update_course_enquiry(db:Session , request:schemas.IGS_COURSE_ENQ) -> int:
     return request.id
 
 
-def delete_course_enquiry(db:Session , request:schemas.IGS_COURSE_ENQ) -> int:
-    db_req = delete(models.IGS_COURSE_ENQ).where(models.IGS_COURSE_ENQ.id == request.id)
-    db.execute(db_req)
-    db.commit()
-    return request.id
+def delete_course_enquiry(id:int, db:Session , request:schemas.IGS_COURSE_ENQ) -> int:
+    if id is not None:
+        db_req = db.get(models.IGS_COURSE_ENQ,id)
+        db.delete(db_req)
+        db.commit()
+        return {request.id}
+    

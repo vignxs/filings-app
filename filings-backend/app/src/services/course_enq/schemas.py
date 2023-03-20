@@ -4,7 +4,7 @@ from datetime import date
 class IGS_COURSE_ENQ(BaseModel):
 
     name : str
-    followup_call_date: date
+    followup_call_date: str
     followup_status : str
     enquiry_by : str
     mobile : int
@@ -24,7 +24,7 @@ class IGS_COURSE_ENQ_ID(BaseModel):
 
     id : int
     name : str
-    followup_call_date: date
+    followup_call_date: str
     followup_status : str
     enquiry_by : str
     mobile : int

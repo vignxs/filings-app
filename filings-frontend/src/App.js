@@ -14,7 +14,6 @@ import JobSupportDataTable from './components/JsForm/JobSupportDataTable';
 import { AdminList } from "./components/AppAdmin/AdminList";
 import EnquiryFormDataTable from "./components/EnquiryForm/EnquiryFormDataTable";
 
-
 function App() {
   return (
     <BrowserRouter>

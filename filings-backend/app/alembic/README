@@ -1,1 +1,7 @@
-Generic single-database configuration.
+Steps to be followed to migrate the changes in models to database:
+
+"alembic revision --autogenerate -m 'changes made as a message'" - this is will create a revision file in alembic/versions directory.
+
+(optional) "alembic upgrade head --sql" - this command will list out the sql queries that is going to be applied. use this command to make sure the changes are correct before making migrations.
+
+"alembic upgrade head" - this command will migrate the changes into database.

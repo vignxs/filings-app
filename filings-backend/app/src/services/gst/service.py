@@ -11,6 +11,7 @@ def create_gst(db: Session, gst: schemas.IGS_REQ_GST):
     return gst.req_id
 
 def get_gst(db: Session, req_id : str):
+    print(db.query(models.IGS_REQ_GST).filter(models.IGS_REQ_GST.req_id == req_id).first())
     return db.query(models.IGS_REQ_GST).filter(models.IGS_REQ_GST.req_id == req_id).first()
     
 def update_gst(db:Session , gst_update:schemas.IGS_REQ_GST):

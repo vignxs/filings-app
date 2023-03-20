@@ -64,7 +64,7 @@ export const UsersActions = ({ params, rowId, setRowId }) => {
     },
   });
 
-
+ 
 
   const handleClose = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
@@ -113,7 +113,7 @@ export const UsersActions = ({ params, rowId, setRowId }) => {
 
   const handleFormSubmit = async () => {
     setOpen(false);
-    console.log("user1", output);
+ 
     const endpoints = {
       GST: "/gst-update",
       "GST Registration": "/gst-rgst-update",
@@ -123,8 +123,7 @@ export const UsersActions = ({ params, rowId, setRowId }) => {
 
     const endpoint = endpoints[userinfo.enquired_for];
     const API_ENDPOINT = "http://localhost:8000/api/v1";
-
-    console.log("user2", userinfo);
+ 
     // Send POST request to save user info
     fetch(`${API_ENDPOINT}/req-data-update`, {
       method: "PUT",

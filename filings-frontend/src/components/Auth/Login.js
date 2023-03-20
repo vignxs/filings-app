@@ -2,14 +2,15 @@ import React from "react";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-
+import { useValue } from "../../Context/ContextProvider";
+import { useSignIn } from "react-auth-kit";
 
 const theme = createTheme({
   palette: {
@@ -18,6 +19,44 @@ const theme = createTheme({
 });
 
 export default function SignInComponent() {
+
+   const { dispatch } = useValue();
+   const signIn = useSignIn();
+   const [values, setValues] = React.useState({
+     email: "",
+     password: "",
+   });
+   const navigate = useNavigate();
+
+   const handleChange = (event) => {
+     setValues({ ...values, [event.target.name]: event.target.value });
+   };
+
+   const handleSubmit = async (event) => {
+     event.preventDefault();
+     const res = await fetch("http://127.0.0.1:8000/api/login", {
+       method: "POST",
+       headers: { "Content-Type": "application/json" },
+       body: JSON.stringify(values),
+     });
+     const post_resp = await res.json();
+     if (post_resp) {
+       signIn({
+         token: post_resp.token,
+         expiresIn: 3600,
+         tokenType: "Bearer",
+         authState: { user: values.user_name },
+         // refreshToken: res.data.refreshToken, // Only if you are using refreshToken feature
+         // refreshTokenExpireIn: res.data.refreshTokenExpireIn, // Only if you are using refreshToken feature
+       });
+       sessionStorage.setItem("user", JSON.stringify(values.user_name));
+
+       dispatch({ type: "LOGGED_IN", payload: false });
+
+       navigate("/");
+     }
+   };
+
   return (
     <ThemeProvider theme={theme}>
       <Paper
@@ -64,10 +103,12 @@ export default function SignInComponent() {
                   <TextField
                     required
                     fullWidth
-                    label="Username"
-                    type="username"
+                    name="email"
+                    label="Email"
+                    type="email"
                     variant="filled"
-                     
+                    value={values.email}
+                    onChange={handleChange}
                     sx={{
                       border: "1px solid #d8eefe",
 
@@ -108,10 +149,12 @@ export default function SignInComponent() {
                   <TextField
                     required
                     fullWidth
+                    value={values.password}
+                    onChange={handleChange}
                     label="Password"
                     type="password"
+                    name="password"
                     variant="filled"
-                     
                     sx={{
                       border: "1px solid #d8eefe",
 
@@ -171,6 +214,7 @@ export default function SignInComponent() {
               >
                 <Button
                   type="submit"
+                  onClick={handleSubmit}
                   fullWidth
                   variant="contained"
                   sx={{

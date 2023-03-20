@@ -38,7 +38,7 @@ export const UsersActions = ({ params, rowId, setRowId }) => {
   const [output, setOutput] = React.useState({});
   const steps = getSteps();
 
-//   console.log("user info", userinfo);
+  console.log("user info details", userinfo);
   let value = userinfo;
 
   const handleClickOpen = () => {

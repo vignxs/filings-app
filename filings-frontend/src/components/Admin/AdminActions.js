@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import QontoConnector from "../Utils/StepperUtils";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
@@ -22,13 +22,11 @@ import {
   DeleteOutlined,
 } from "@mui/icons-material";
 import { green } from "@mui/material/colors";
-import { useValue } from "../../Context/ContextProvider";
 import { inputBoxAdminAction } from "../Utils/MuiStyles";
-import { ServiceFileForm, getSteps } from "./Services";
-import UserInfoForm from "./Forms/UserInfoForm";
-import ServiceInfoForm from "./Forms/ServiceInfoForm";
 import UseForm from "./UseForm";
+
 export const UsersActions = ({ params, rowId, setRowId }) => {
+ 
   const {
     handleClickOpen,
     sbhandleClose,
@@ -46,7 +44,8 @@ export const UsersActions = ({ params, rowId, setRowId }) => {
     loading,
     setSuccess,
     handleReset,
-  } = UseForm({ params });
+    open,
+  } = UseForm({ params});
 
   const theme = createTheme({
     palette: {
@@ -79,7 +78,6 @@ export const UsersActions = ({ params, rowId, setRowId }) => {
         },
       },
     });
-
 
   useEffect(() => {
     if (rowId === params.id && success) setSuccess(false);
@@ -148,7 +146,7 @@ export const UsersActions = ({ params, rowId, setRowId }) => {
             scroll={"body"}
             fullWidth
             maxWidth={"md"}
-            // open={open}
+            open={open}
             onClose={handleClose}
           >
             <DialogTitle

@@ -23,16 +23,12 @@ import { inputBox } from "../Utils/MuiStyles";
 // https://www.figcomponents.com?id=62cf946b12847cc9ecafe6b2
 
 // import userContext  from "../Context";
-
-import useForm from "./UseForm";
-import moment from "moment";
 const muiCache = createCache({
   key: "mui-datatables",
   prepend: true,
 });
 
 export const EnqAdmin = (props) => {
-    const { rowId, setRowId, pageSize, setPageSize }  = useForm()
   const date = new Date();
   const getMuiTheme = () =>
     createTheme({
@@ -61,7 +57,8 @@ export const EnqAdmin = (props) => {
     const date = new Date(dateString);
     return date.toLocaleString();
   };
-
+  const [pageSize, setPageSize] = useState(10);
+  const [rowId, setRowId] = useState(null);
   const enqColumns = useMemo(
     () => [
       {
@@ -138,8 +135,8 @@ export const EnqAdmin = (props) => {
         filterable: false,
         align: "center",
         // valueFormatter: (params) => formatDate(params.value),
-        renderCell: (params) =>
-          moment(params.row.createdAt).format("YYYY-MM-DD HH:MM:SS"),
+        // renderCell: (params) =>
+        //   moment(params.row.createdAt).format("YYYY-MM-DD HH:MM:SS"),
         // currentUser?.role === "admin",
       },
       {
@@ -150,8 +147,8 @@ export const EnqAdmin = (props) => {
         align: "center",
         filterable: false,
         // valueFormatter: (params) => formatDate(params.value),
-        renderCell: (params) =>
-          moment(params.row.createdAt).format("YYYY-MM-DD HH:MM:SS"),
+        // renderCell: (params) =>
+        //   moment(params.row.createdAt).format("YYYY-MM-DD HH:MM:SS"),
         // currentUser?.role === "admin",
       },
     ],
@@ -162,6 +159,7 @@ export const EnqAdmin = (props) => {
     if (requests.length === 0) getRequests(dispatch);
   }, []);
 
+  console.log(requests);
   // .MuiDataGrid-cell:focus {
   //     outline: solid #094067 1px;
   //     border-radius: 12px;
@@ -235,13 +233,13 @@ export const EnqAdmin = (props) => {
               to="/enq-form"
               component={Link}
               size="small"
-              color="secondary"
-              sx={{ height: "30px", width: "180px", color: "#FFFFFE" }}
-              startIcon={<AddIcon color="textcolor" />}
+              color="primary"
+              sx={{ height: "30px", width: "40px" }}
+              startIcon={<AddIcon />}
               onClick={window.scrollTo(0, 0)}
               variant="contained"
             >
-              create request
+              Add
             </Button>
           </div>
         </div>

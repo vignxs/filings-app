@@ -14,7 +14,7 @@ def get_user_by_user(db: Session, user: str):
 
 def create_user(db: Session, user: schemas.User):
     hashed_password = auth_handler.get_password_hash(user.password)
-    db_user = models.User(user_name = user.user_name , email = user.email, password = hashed_password)
+    db_user = models.User(user_name = user.user_name , email = user.email, password = hashed_password, is_admin = user.is_admin, apps = user.apps)
     db.add(db_user)
     db.commit()
     db.refresh(db_user)

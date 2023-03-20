@@ -1,17 +1,10 @@
-
 import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import {  Stack, IconButton } from "@mui/material";
-import {
-  DeleteOutlined,
-} from "@mui/icons-material";
+import { Stack, IconButton } from "@mui/material";
+import { DeleteOutlined } from "@mui/icons-material";
 import UseForm from "./UseForm";
 
-
-
-
- 
 const JSformActions = ({ params }) => {
   const { handleDelete } = UseForm(params);
   const inputBox = {

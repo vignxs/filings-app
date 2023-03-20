@@ -96,13 +96,14 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 export default function HeaderBar(props) {
-const [currentApp, setCurrentApp] = React.useState("");
 
   const {
-    state: { isLogged },
+    state: { isLogged, apps, currentUser },
     dispatch,
   } = useValue();
+  console.log(apps[0])
 
+const [currentApp, setCurrentApp] = React.useState(apps[0]);
 
   const theme = createTheme({
     palette: {
@@ -125,7 +126,6 @@ const [currentApp, setCurrentApp] = React.useState("");
   });
   
   const [open, setOpen] = React.useState(false);
-  const user = "hi" || JSON.parse(sessionStorage.getItem("user"));
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -165,10 +165,12 @@ const ButtonWithOptions = ({
 );
 
 const options = [
-  { text: "Filings", value: "Filings", href: "/enq-admin" },
+  { text: "StreamLine-Filings", value: "Filings", href: "/enq-admin" },
   { text: "Admin", value: "Admin", href: "/admin" },
   { text: "Job-Support", value: "Job-Support", href: "/job-supp-form" },
 ];
+
+const filteredOptions = options.filter(option => apps.includes(option.value));
 
 const ButtonGroup = () => {
   const handlesetCurrentApp = (value) => {
@@ -178,7 +180,7 @@ const ButtonGroup = () => {
 
   return (
     <>
-      {options.map((option) => (
+      {filteredOptions.map((option) => (
         <ButtonWithOptions
           key={option.value}
           variant="text"
@@ -261,7 +263,7 @@ const ButtonGroup = () => {
                 letterSpacing: "1px",
               }}
             >
-              {user || "Login"}
+              {currentUser || "Login"}
               {/* .replace(/['"]+/g, "") */}
             </Button>
           </Toolbar>

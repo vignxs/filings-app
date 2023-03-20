@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
@@ -6,10 +7,18 @@ import {
   DeleteOutlined,
 } from "@mui/icons-material";
 import UseForm from "./UseForm"
+import React from "react";
+import Box from "@mui/material/Box";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { Stack, IconButton } from "@mui/material";
+import { DeleteOutlined } from "@mui/icons-material";
 
+import UseForm from "./UseForm";
+
+
+ 
 const JSformActions = ({ params }) => {
-
-  const {handleDelete} = UseForm(params);
+  const { handleDelete } = UseForm(params);
   const inputBox = {
     // margin: "0 auto",
     "& .MuiTextField-root": {
@@ -74,15 +83,15 @@ const JSformActions = ({ params }) => {
           }}
         >
           <Stack spacing={0} direction="row">
-          <IconButton
-            color="teritiary"
-            sx={{ boxShadow: 0 }}
-            size="small"
-            aria-label="edit"
-            onClick={handleDelete}
-          >
-            <DeleteOutlined />
-          </IconButton>
+            <IconButton
+              color="teritiary"
+              sx={{ boxShadow: 0 }}
+              size="small"
+              aria-label="edit"
+              onClick={handleDelete}
+            >
+              <DeleteOutlined />
+            </IconButton>
           </Stack>
         </Box>
       </ThemeProvider>

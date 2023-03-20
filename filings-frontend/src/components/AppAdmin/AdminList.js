@@ -1,35 +1,116 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, contextProvider } from "react";
+import Divider from "@mui/material/Divider";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
 import { CacheProvider } from "@emotion/react";
+import moment from "moment";
 import createCache from "@emotion/cache";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useMemo } from "react";
 import {
   DataGrid,
+  GridToolbarColumnsButton,
   GridToolbarContainer,
   GridToolbarFilterButton,
   GridToolbarExport,
   GridToolbarQuickFilter,
 } from "@mui/x-data-grid";
-import { UsersActions } from "./AdminActions";
-import { Button, Paper } from "@mui/material";
+// import { UsersActions } from "./AdminActions";
+import { Button, Paper, Tooltip } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
+import { GridToolbar } from "@mui/x-data-grid";
 import { Link } from "react-router-dom";
+import dayjs from "dayjs";
+import {
+  AccessTimeRounded,
+  ArrowRightAltRounded,
+  GroupRounded,
+  PersonRounded,
+  SupportAgentRounded,
+  VerifiedRounded,
+} from "@mui/icons-material";
 import { useValue } from "../../Context/ContextProvider";
 import { getRequests } from "../../Context/actions";
-import {inputBox} from "../Utils/MuiStyles"
-// inspiration
-// https://www.figcomponents.com?id=62cf946b12847cc9ecafe6b2
 
-// import userContext  from "../Context";
-const muiCache = createCache({
-  key: "mui-datatables",
-  prepend: true,
-});
 
-export const EnqAdmin = (props) => {
-  
+
+export const AdminList = () => {
+  const inputBox = {
+    "& .MuiDataGrid-toolbarQuickFilter": {
+      "& .MuiTextField-root": {
+        // m: 2,
+        // borderRadius:'15px',
+        backgroundColor: "#fffffe",
+        borderRadius: "2px",
+        width: "70ch",
+      },
+      borderRadius: "5px",
+      width: "70ch",
+    },
+    "& .MuiPopperUnstyled-root": {
+      inset: `-5px auto auto 350px`,
+    },
+    "& .MuiDataGrid-panel": {
+      inset: `-1px auto auto 350px`,
+    },
+    "& .MuiDataGrid-columnHeaderTitle": {
+      opacity: ".8",
+      // backgroundColor: "rgba(255, 7, 0, 0.55)",
+      fontWeight: "700",
+    },
+    "& .MuiDataGrid-toolbarContainer ": {
+      // top: "-69px",
+      // left: "808px",
+      justifyContent: "space-between",
+      backgroundColor: "rgba(145, 158, 171, 0.12)",
+      borderRadius: "10px",
+      // position: "relative",
+    },
+    "& .MuiDataGrid-main ": {
+      // top: "-38px",
+      // backgroundColor: "rgba(255, 7, 0, 0.55)",
+      // position: "relative",
+    },
+    margin: "0 auto",
+    width: "100%",
+    "& .MuiTextField-root": {
+      m: 2,
+      // borderRadius:'15px',
+      backgroundColor: "#fffffe",
+      borderRadius: "2px",
+      width: "40ch",
+    },
+    "& .MuiInputBase-input": {
+      borderRadius: "10px",
+      backgroundColor: "#fffffe",
+    },
+    "& .MuiAutocomplete-popupIndicator": {
+      display: "none !important",
+    },
+    "&  .MuiFormHelperText-root.Mui-error": {
+      background: "#d8eefe",
+      margin: 0,
+      paddingLeft: 10,
+    },
+    "& .MuiOutlinedInput-root": {
+      borderRadius: "10px",
+    },
+    // marginLeft: "70px",
+    justifyContent: "center",
+    // boxShadow: `rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px`,
+    // boxShadow: `rgb(145 158 171 / 20%) 0px 0px 2px 0px, rgb(145 158 171 / 12%) 0px 12px 24px -4px`,
+    // bgcolor: "#094067",
+    // left: "-170px",
+    // top: ".8rem",
+    // width: "1300px",
+    height: "700px",
+    flexGrow: 1,
+    position: "relative",
+    borderRadius: "12px",
+    padding: "30px",
+  };
+
   const date = new Date();
   const getMuiTheme = () =>
     createTheme({
@@ -45,6 +126,9 @@ export const EnqAdmin = (props) => {
         },
         teritiary: {
           main: "#ef4565",
+        },
+        textcolor: {
+          main: "#fffffe",
         },
       },
     });
@@ -62,16 +146,16 @@ export const EnqAdmin = (props) => {
   const [rowId, setRowId] = useState(null);
   const enqColumns = useMemo(
     () => [
-      {
-        field: "actions",
-        headerName: "",
-        type: "actions",
-        width: 130,
-        filterable: true,
-        renderCell: (params) => (
-          <UsersActions {...{ params, rowId, setRowId }} />
-        ),
-      },
+    //   {
+    //     field: "actions",
+    //     headerName: "",
+    //     type: "actions",
+    //     width: 130,
+    //     filterable: true,
+    //     // renderCell: (params) => (
+    //     // //   <UsersActions {...{ params, rowId, setRowId }} />
+    //     // ),
+    //   },
       {
         field: "req_id",
         headerName: "ReqId",
@@ -89,7 +173,8 @@ export const EnqAdmin = (props) => {
         headerName: "Name",
         width: 120,
       },
-
+      // "last_name",
+      // "mobile",
       {
         field: "mobile",
         headerAlign: "center",
@@ -106,7 +191,9 @@ export const EnqAdmin = (props) => {
         width: 160,
         filterable: true,
       },
-
+      // "address",
+      // "city",
+      // "pincode",
       {
         field: "enquired_for",
         headerName: "Enquired For",
@@ -168,19 +255,23 @@ export const EnqAdmin = (props) => {
     return (
       <GridToolbarContainer sx={{ background: "#000000" }}>
         <GridToolbarQuickFilter sx={{ marginRight: "auto" }} />
-
+        {/* <GridToolbarColumnsButton /> */}
         <GridToolbarFilterButton
           PopperProps={{ color: "#000000", inset: `-5px auto auto 350px` }}
           sx={{ m: 2, bgcolor: "#FFFFFF", marginLeft: "auto" }}
         />
-
+        {/* <GridToolbarDensitySelector /> */}
         <GridToolbarExport sx={{ m: 2, bgcolor: "#FFFFFF" }} />
       </GridToolbarContainer>
     );
   }
   return (
     <ThemeProvider theme={getMuiTheme()}>
-      <Paper elevation={3} sx={inputBox}>
+      <Paper
+        elevation={3}
+        // border={1} borderColor="#094067"
+        sx={inputBox}
+      >
         <div
           style={{
             display: "inline-flex",
@@ -207,7 +298,7 @@ export const EnqAdmin = (props) => {
               noWrap
               component="h3"
             >
-              Request List
+              Users List
             </Typography>
 
             <Typography
@@ -224,7 +315,7 @@ export const EnqAdmin = (props) => {
               noWrap
               component="h3"
             >
-              Manage your requests detail and status
+              Manage your users detail and status
             </Typography>
           </div>
 
@@ -234,54 +325,55 @@ export const EnqAdmin = (props) => {
               component={Link}
               size="small"
               color="secondary"
-              sx={{ height: "30px", width: "180px", color: "#FFFFFE" }}
+              sx={{ height: "30px", width: "150px", color: "#FFFFFE" }}
               startIcon={<AddIcon color="textcolor" />}
               onClick={window.scrollTo(0, 0)}
               variant="contained"
             >
-              create request
+              create user
             </Button>
           </div>
         </div>
-
-        <CacheProvider value={muiCache}>
-          <Box height={595}>
-            <DataGrid
-              sx={{ border: 0 }}
-              columns={enqColumns}
-              rows={requests}
-              getRowId={(row) => row.req_id}
-              rowsPerPageOptions={[10, 20, 30]}
-              pageSize={pageSize}
-              onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
-              components={{ Toolbar: CustomToolbar }}
-              disableColumnMenu
-              componentsProps={{
-                toolbar: {
-                  csvOptions: { disableToolbarButton: true },
-                  printOptions: { disableToolbarButton: true },
-                  showQuickFilter: true,
-                  quickFilterProps: { debounceMs: 250 },
-                },
-                panel: {
-                  sx: {
-                    "& .MuiDataGrid-filterForm": {},
-                    "& .MuiDataGrid-paper": {
-                      boxShadow: "none !important",
-                    },
-                    inset: `-17vh auto auto 25vw !important`,
+        {/* <Divider /> */}
+        <Box height={595}>
+          <DataGrid
+            sx={{ border: 0 }}
+            columns={enqColumns}
+            rows={requests}
+            getRowId={(row) => row.req_id}
+            rowsPerPageOptions={[10, 20, 30]}
+            pageSize={pageSize}
+            onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
+            components={{ Toolbar: CustomToolbar }}
+            disableColumnMenu
+            componentsProps={{
+              toolbar: {
+                csvOptions: { disableToolbarButton: true },
+                printOptions: { disableToolbarButton: true },
+                showQuickFilter: true,
+                quickFilterProps: { debounceMs: 250 },
+              },
+              panel: {
+                sx: {
+                  inset: `-18vh auto auto 25vw !important`,
+                  width: "35vw",
+                  "& .mui-datatables-1t5wrdm-MuiDataGrid-filterForm": {
                     width: "35vw",
-                    "& .mui-datatables-1t5wrdm-MuiDataGrid-filterForm": {
-                      width: "35vw",
-                    },
                   },
                 },
-              }}
-              onCellEditCommit={(params) => setRowId(params.id)}
-            />
-          </Box>
-        </CacheProvider>
+              },
+            }}
+            // experimentalFeatures={{ newEditingApi: true }}
+            // getRowSpacing={(params) => ({
+            //   top: params.isFirstVisible ? 0 : 5,
+            //   bottom: params.isLastVisible ? 0 : 5,
+            // })}
+            onCellEditCommit={(params) => setRowId(params.id)}
+          />
+        </Box>
       </Paper>
     </ThemeProvider>
+
+    // </userContext.Provider>
   );
-};
+}

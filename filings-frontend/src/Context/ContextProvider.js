@@ -6,7 +6,9 @@ const initialState = {
   isAdmin:0,
   currentUser : "",
   apps : [],
-  isLogged: false
+  isLogged: false,
+  fsrequests: [],
+  enqrequests: [],
 };
 
 export const Context = createContext()

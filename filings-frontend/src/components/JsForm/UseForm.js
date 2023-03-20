@@ -1,11 +1,17 @@
 import { useEffect, useMemo } from "react";
 import { useState } from "react";
 import axios from "axios";
+import { useValue } from "../../Context/ContextProvider";
+import { fsgetRequests } from "../../Context/actions";
 
 const UseForm = (params) => {
   const parameter = params;
-  const [fsdata, setFsdata] = useState([]);
-  const [tabledata, setTabledata] = useState([]);
+  const {
+    state: { fsrequests },
+    dispatch,
+  } = useValue();
+  
+
   const [values, setValues] = useState({
     candidate_name: "",
     mobile: "",
@@ -70,18 +76,13 @@ const UseForm = (params) => {
       feedback: "",
     });
   };
+ 
 
-  const getdata = () => {
-    axios.get("http://127.0.0.1:8000/api/v1/job-support-data-all").then((res) => {
-      setFsdata(res.data);
-      setTabledata(res.data);
-    });
-  };
 
   useEffect(() => {
-    getdata();
+    fsgetRequests(dispatch);
   }, []);
-
+ 
   const handleEdit = (params) => {
     const { id, field, value } = params;
     const updatedRow = { ...params.row, [field]: value };
@@ -103,6 +104,7 @@ const UseForm = (params) => {
     // console.log(parameter);
     const { id } = parameter.row;
     console.log(params);
+    if (window.confirm("Are you sure to delete this record?")) {
     await axios
       .delete(`http://127.0.0.1:8000/api/v1/job-support-data-delete/${id}`)
       .then((res) => console.log("Employee Data Successfully deleted"))
@@ -110,14 +112,9 @@ const UseForm = (params) => {
       .catch((error) => {
         console.log(error);
       });
-    // const newList = fsdata.filter((lists) => lists._id !== _id);
-    // setFsdata(newList);
-    
-      setFsdata((prevRows) => {
-        return [
-          ...fsdata.slice(0, prevRows.length - 1),
-          ...fsdata.slice(prevRows.length - 1 + 1),
-        ]});
+      dispatch({ type: "FSDELETE_REQUESTS", payload: id });
+    }
+  
   };
 
   return {
@@ -125,10 +122,9 @@ const UseForm = (params) => {
     values,
     handleSubmit,
     setValues,
-    fsdata,
     handleEdit,
     handleDelete,
-    tabledata,
+    fsrequests
   };
 };
 export default UseForm;

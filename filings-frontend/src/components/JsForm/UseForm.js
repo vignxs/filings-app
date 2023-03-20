@@ -1,9 +1,11 @@
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useState } from "react";
 import axios from "axios";
 
-const UseForm = () => {
+const UseForm = (params) => {
+  const parameter = params;
   const [fsdata, setFsdata] = useState([]);
+  const [tabledata, setTabledata] = useState([]);
   const [values, setValues] = useState({
     candidatename: "",
     mobile: "",
@@ -68,6 +70,7 @@ const UseForm = () => {
   const getdata = () => {
     axios.get("https://enq-form-api.onrender.com/enq").then((res) => {
       setFsdata(res.data);
+      setTabledata(res.data);
     });
   };
 
@@ -91,20 +94,39 @@ const UseForm = () => {
         console.log(error);
       });
   };
+
   const handleDelete = async (params) => {
-    const { id } = params;
-    console.log(params)
-    await axios.delete(`https://enq-form-api.onrender.com/enq/delete-enqdata/${id}`)
+    // console.log(parameter);
+    const { _id } = parameter.row;
+    console.log(params);
+    await axios
+      .delete(`https://enq-form-api.onrender.com/enq/delete-enqdata/${_id}`)
       .then((res) => console.log("Employee Data Successfully deleted"))
 
       .catch((error) => {
         console.log(error);
       });
-    const index = fsdata.findIndex((row) => row.id === id);
-    const newRows = [...fsdata];
-    newRows.splice(index, 1);
-    setFsdata(newRows);
+    // const newList = fsdata.filter((lists) => lists._id !== _id);
+    // setFsdata(newList);
+    
+      setFsdata((prevRows) => {
+        // const newRows = [...fsdata];
+        // const rowToDeleteIndex = newRows(0, );
+        return [
+          ...fsdata.slice(0, prevRows.length - 1),
+          ...fsdata.slice(prevRows.length - 1 + 1),
+        ]});
   };
-  return { handleChange, values, handleSubmit, setValues, fsdata, handleEdit,handleDelete };
+
+  return {
+    handleChange,
+    values,
+    handleSubmit,
+    setValues,
+    fsdata,
+    handleEdit,
+    handleDelete,
+    tabledata,
+  };
 };
 export default UseForm;

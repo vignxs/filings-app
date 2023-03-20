@@ -18,18 +18,20 @@ import AddIcon from "@mui/icons-material/Add";
 import { Link } from "react-router-dom";
 import { useValue } from "../../Context/ContextProvider";
 import { getRequests } from "../../Context/actions";
-import {inputBox} from "../Utils/MuiStyles"
+import { inputBox } from "../Utils/MuiStyles";
 // inspiration
 // https://www.figcomponents.com?id=62cf946b12847cc9ecafe6b2
 
 // import userContext  from "../Context";
+
+import useForm from "./UseForm";
 const muiCache = createCache({
   key: "mui-datatables",
   prepend: true,
 });
 
 export const EnqAdmin = (props) => {
-  
+    const { rowId, setRowId, pageSize, setPageSize }  = useForm()
   const date = new Date();
   const getMuiTheme = () =>
     createTheme({
@@ -58,8 +60,7 @@ export const EnqAdmin = (props) => {
     const date = new Date(dateString);
     return date.toLocaleString();
   };
-  const [pageSize, setPageSize] = useState(10);
-  const [rowId, setRowId] = useState(null);
+
   const enqColumns = useMemo(
     () => [
       {

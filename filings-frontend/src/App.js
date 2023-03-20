@@ -13,7 +13,6 @@ import { RequireAuth } from "react-auth-kit";
 import JobSupportDataTable from './components/JsForm/JobSupportDataTable';
 import { AdminList } from "./components/AppAdmin/AdminList";
 
-
 function App() {
   return (
     <BrowserRouter>

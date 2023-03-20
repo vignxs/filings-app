@@ -1,10 +1,6 @@
-import React, { useEffect, useState, contextProvider } from "react";
-import Divider from "@mui/material/Divider";
+import React, { useState } from "react";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
-import { CacheProvider } from "@emotion/react";
-import moment from "moment";
 import createCache from "@emotion/cache";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useMemo } from "react";
@@ -16,7 +12,7 @@ import {
   GridToolbarExport,
   GridToolbarQuickFilter,
 } from "@mui/x-data-grid";
-import { Button, Paper, Tooltip } from "@mui/material";
+import { Button, Paper, IconButton } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { GridToolbar } from "@mui/x-data-grid";
 import { Link } from "react-router-dom";
@@ -33,6 +29,7 @@ import { useValue } from "../../Context/ContextProvider";
 import axios from "axios";
 import UseForm from "./UseForm";
 import JSformActions from "./JSformActions";
+import { DeleteOutlined } from "@mui/icons-material";
 
 const muiCache = createCache({
   key: "mui-datatables",
@@ -134,20 +131,29 @@ const JobSupportDataTable = () => {
       },
     });
 
-  const [pageSize, setPageSize] = useState(10);
   const [rowId, setRowId] = useState(null);
-  const { fsdata , handleEdit} = UseForm();
+  const { fsdata, handleEdit, handleDelete } = UseForm();
+  const [rowHeight, setRowHeight] = useState(28);
   const enqColumns = useMemo(
     () => [
       {
         field: "actions",
         headerName: "Actions",
         type: "actions",
-        width: 130,
+        width: 80,
         filterable: true,
-        renderCell: (params) => (
-          <JSformActions {...{ params}} />
-        ),
+        renderCell: (params) => <JSformActions {...{ params }} />,
+        // renderCell: (params) => (
+        //   <IconButton
+        //     color="teritiary"
+        //     sx={{ boxShadow: 0 }}
+        //     size="small"
+        //     aria-label="edit"
+        //     onClick={() => handleDelete(params)}
+        //   >
+        //     <DeleteOutlined />
+        //   </IconButton>
+        // ),
       },
       {
         field: "_id",
@@ -172,7 +178,7 @@ const JobSupportDataTable = () => {
         headerAlign: "center",
         editable: true,
         align: "center",
-        headerName: "Candidate Name",
+        headerName: "Name",
         width: 100,
         filterable: false,
       },
@@ -182,7 +188,7 @@ const JobSupportDataTable = () => {
         align: "center",
         editable: true,
         headerName: "Mobile",
-        width: 160,
+        width: 100,
         filterable: true,
       },
       {
@@ -201,7 +207,7 @@ const JobSupportDataTable = () => {
         editable: true,
         headerAlign: "center",
         align: "center",
-        width: 160,
+        width: 100,
         sortable: true,
         filterable: true,
       },
@@ -224,7 +230,6 @@ const JobSupportDataTable = () => {
           "Resource Not Available",
           "Waiting For Response",
         ],
-        editable: true,
         filterable: false,
         // currentUser?.role === "admin",
       },
@@ -257,6 +262,17 @@ const JobSupportDataTable = () => {
     ],
     [rowId]
   );
+  const rowData = () => {
+    return fsdata;
+  };
+  React.useEffect(() => {
+    if (rowHeight === 28) {
+      setRowHeight(29);
+    } else {
+      setRowHeight(28);
+    }
+  }, [fsdata]);
+
 
   function CustomToolbar() {
     return (
@@ -273,7 +289,6 @@ const JobSupportDataTable = () => {
     );
   }
 
- 
   return (
     <>
       <ThemeProvider theme={getMuiTheme()}>
@@ -343,46 +358,50 @@ const JobSupportDataTable = () => {
               </Button>
             </div>
           </div>
-          <CacheProvider value={muiCache}>
-            <Box height={595}>
-              <DataGrid
-                sx={{ border: 0 }}
-                columns={enqColumns}
-                rows={fsdata}
-                getRowId={(row) => row._id}
-                rowsPerPageOptions={[10, 20, 30]}
-                //   pageSize={pageSize}
-                //   onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
-                components={{ Toolbar: CustomToolbar }}
-                disableColumnMenu
-                componentsProps={{
-                  toolbar: {
-                    csvOptions: { disableToolbarButton: true },
-                    printOptions: { disableToolbarButton: true },
-                    showQuickFilter: true,
-                    quickFilterProps: { debounceMs: 250 },
-                  },
-                  panel: {
-                    sx: {
-                      "& .MuiDataGrid-filterForm": {
-                        // inset: `-125px auto auto 350px`,
-                      },
-                      "& .MuiDataGrid-paper": {
-                        boxShadow: "none !important",
-                      },
-                      inset: `-125px auto auto 448px !important`,
+          {/* <CacheProvider value={muiCache}> */}
+          <Box height={595}>
+            <DataGrid
+              sx={{ border: 0 }}
+              columns={enqColumns}
+              rows={rowData()}
+              getRowId={(row) => row._id}
+              rowsPerPageOptions={[10, 20, 30]}
+              //   pageSize={pageSize}
+              //   onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
+              components={{ Toolbar: CustomToolbar }}
+              disableColumnMenu
+              componentsProps={{
+                toolbar: {
+                  csvOptions: { disableToolbarButton: true },
+                  printOptions: { disableToolbarButton: true },
+                  showQuickFilter: true,
+                  quickFilterProps: { debounceMs: 250 },
+                },
+                panel: {
+                  sx: {
+                    "& .MuiDataGrid-filterForm": {
+                      // inset: `-125px auto auto 350px`,
                     },
+                    "& .MuiDataGrid-paper": {
+                      boxShadow: "none !important",
+                    },
+                    inset: `-125px auto auto 448px !important`,
                   },
-                }}
-                // experimentalFeatures={{ newEditingApi: true }}
-                // getRowSpacing={(params) => ({
-                //   top: params.isFirstVisible ? 0 : 5,
-                //   bottom: params.isLastVisible ? 0 : 5,
-                // })}
-                onCellEditCommit={handleEdit}
-              />
-            </Box>
-          </CacheProvider>
+                },
+              }}
+              onCellEditCommit={handleEdit}
+              // actions={[
+              //   {
+              //     icon: DeleteOutlined,
+              //     tooltip: "Delete",
+              //     onClick: (event, rowData) => {
+              //       handleDelete(rowData.id);
+              //     },
+              //   },
+              // ]}
+            />
+          </Box>
+          {/* </CacheProvider> */}
         </Paper>
       </ThemeProvider>
     </>

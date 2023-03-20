@@ -156,7 +156,7 @@ const JobSupportDataTable = () => {
         // ),
       },
       {
-        field: "_id",
+        field: "id",
         headerName: "ID",
         width: 100,
         sortable: false,
@@ -165,7 +165,7 @@ const JobSupportDataTable = () => {
         filterable: true,
       },
       {
-        field: "startdate",
+        field: "start_date",
         headerAlign: "center",
         align: "center",
         editable: true,
@@ -174,7 +174,7 @@ const JobSupportDataTable = () => {
         width: 120,
       },
       {
-        field: "candidatename",
+        field: "candidate_name",
         headerAlign: "center",
         editable: true,
         align: "center",
@@ -247,7 +247,7 @@ const JobSupportDataTable = () => {
         // currentUser?.role === "admin",
       },
       {
-        field: "followupdate",
+        field: "followup_date",
         editable: true,
         headerName: "Followup Date",
         width: 180,
@@ -294,7 +294,6 @@ const JobSupportDataTable = () => {
       <ThemeProvider theme={getMuiTheme()}>
         <Paper
           elevation={3}
-          // border={1} borderColor="#094067"
           sx={inputBox}
         >
           <div
@@ -364,7 +363,7 @@ const JobSupportDataTable = () => {
               sx={{ border: 0 }}
               columns={enqColumns}
               rows={rowData()}
-              getRowId={(row) => row._id}
+              getRowId={(row) => row.id}
               rowsPerPageOptions={[10, 20, 30]}
               //   pageSize={pageSize}
               //   onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
@@ -390,15 +389,6 @@ const JobSupportDataTable = () => {
                 },
               }}
               onCellEditCommit={handleEdit}
-              // actions={[
-              //   {
-              //     icon: DeleteOutlined,
-              //     tooltip: "Delete",
-              //     onClick: (event, rowData) => {
-              //       handleDelete(rowData.id);
-              //     },
-              //   },
-              // ]}
             />
           </Box>
           {/* </CacheProvider> */}

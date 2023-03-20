@@ -1,13 +1,13 @@
 from pydantic import BaseModel
-from datetime import date , datetime
+from datetime import datetime
 
 class IGS_JOB_SUPPORT(BaseModel):
 
     candidate_name : str
     mobile : int
     technology : str
-    start_date : date
-    followup_date : date
+    start_date: str
+    followup_date: str
     resource : str
     status : str
     feedback : str
@@ -26,8 +26,8 @@ class IGS_JOB_SUPPORT_GU(BaseModel):
     candidate_name: str
     mobile: int
     technology: str
-    start_date: date
-    followup_date: date
+    start_date: str
+    followup_date: str
     resource: str
     status: str
     feedback: str

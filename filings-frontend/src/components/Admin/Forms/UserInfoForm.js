@@ -2,20 +2,15 @@ import { Grid } from "@mui/material";
 import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
 import React, { useState } from "react";
 
-const UserInfoForm = (params) => {
-  //   setInfo(userinfo.userinfo.row);
-      const [userinfo, setInfo] = React.useState(params.params.row);
-//   const userValues = params.params.row;
-  console.log("data 123", userinfo);
+const UserInfoForm = ({ params, setInfo, userinfo }) => {
+    // console.log(userdata().first_name)
   const handleChangeInfo = (e) => {
     const { name, value } = e.target;
     setInfo((prev) => ({ ...prev, [name]: value }));
   };
-  const handleBack = () => {
-    return;
-  };
+
   return (
-    <ValidatorForm onSubmit={handleBack}>
+    <ValidatorForm onSubmit={""}>
       <Grid
         style={{
           left: "20px",
@@ -41,7 +36,7 @@ const UserInfoForm = (params) => {
             type="text"
             name="first_name"
             required={true}
-            value={userinfo.first_name}
+            // value={userdata().first_name}
             onChange={handleChangeInfo}
           />
           <TextValidator
@@ -72,7 +67,7 @@ const UserInfoForm = (params) => {
             name="email"
             size="small"
             // required={true}
-            value={userinfo.email || ""}
+            value={userinfo.email}
             validators={["isEmail"]}
             errorMessages={["email is not valid"]}
           />
@@ -117,7 +112,7 @@ const UserInfoForm = (params) => {
             size="small"
             id="demo-simple-label"
             label="Enquired for"
-            value={userinfo.enquired_for || ""}
+            value={userinfo.enquired_for}
             name="enquired_for"
             required={true}
           />

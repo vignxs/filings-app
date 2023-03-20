@@ -1,18 +1,15 @@
 import { Grid } from "@mui/material";
 import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
-import React, { useState } from "react";
+import React from "react";
+import useForm from "../UseForm";
 
 const UserInfoForm = (params) => {
-  //   setInfo(userinfo.userinfo.row);
-      const [userinfo, setInfo] = React.useState(params.params.row);
-//   const userValues = params.params.row;
+    const [userinfo, setInfo] = React.useState(params.params.params.row);
+    const { handleBack } = useForm(...{params},userinfo={userinfo},setInfo={setInfo});
   console.log("data 123", userinfo);
   const handleChangeInfo = (e) => {
     const { name, value } = e.target;
     setInfo((prev) => ({ ...prev, [name]: value }));
-  };
-  const handleBack = () => {
-    return;
   };
   return (
     <ValidatorForm onSubmit={handleBack}>

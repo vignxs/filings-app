@@ -96,14 +96,14 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 export default function HeaderBar(props) {
-const [currentApp, setCurrentApp] = React.useState("");
 
   const {
     state: { isLogged, apps, currentUser },
     dispatch,
   } = useValue();
-  console.log(apps)
+  console.log(apps[0])
 
+const [currentApp, setCurrentApp] = React.useState(apps[0]);
 
   const theme = createTheme({
     palette: {
@@ -165,10 +165,12 @@ const ButtonWithOptions = ({
 );
 
 const options = [
-  { text: "Filings", value: "Filings", href: "/enq-admin" },
+  { text: "StreamLine-Filings", value: "Filings", href: "/enq-admin" },
   { text: "Admin", value: "Admin", href: "/admin" },
   { text: "Job-Support", value: "Job-Support", href: "/job-supp-form" },
 ];
+
+const filteredOptions = options.filter(option => apps.includes(option.value));
 
 const ButtonGroup = () => {
   const handlesetCurrentApp = (value) => {
@@ -178,8 +180,8 @@ const ButtonGroup = () => {
 
   return (
     <>
-      {options.map((option) => (
-          <ButtonWithOptions
+      {filteredOptions.map((option) => (
+        <ButtonWithOptions
           key={option.value}
           variant="text"
           color="primary"

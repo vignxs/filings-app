@@ -10,9 +10,6 @@ from sqlalchemy.orm import sessionmaker
 ###
 SQLALCHEMY_DATABASE_URL = "postgresql://postgres:admin@localhost/fdb"
 
-
-
-
 engine = create_engine(
     SQLALCHEMY_DATABASE_URL
 )

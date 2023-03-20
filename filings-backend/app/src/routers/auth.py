@@ -19,12 +19,12 @@ async def register(user:schemas.User,  db: Session = Depends(get_db)):
 @router.post('/login')
 def login(user: schemas.UserLogin, db: Session = Depends(get_db)):
 	db_user = service.get_user_by_email(db, email=user.email)
-	print(db_user)
+
 	if not db_user:
 		raise HTTPException(status_code=400, detail="Email not registered")
 
 	if not service.verify_password(user.password, db_user.password):
 		raise HTTPException(status_code=400, detail="You have entered the wrong password")
-	return {"token": service.create_access_token(user.email)}
+	return {"token": service.create_access_token(user.email), **db_user.__dict__}
 
 

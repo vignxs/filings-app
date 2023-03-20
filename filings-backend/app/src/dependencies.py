@@ -6,7 +6,16 @@ from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from passlib.context import CryptContext
 import bcrypt
 
+from sqlalchemy import  Column, DateTime, func
+from .database import Base
 
+class BaseModel(Base):
+    __abstract__ = True
+
+    created_at = Column(DateTime, default=func.now())
+    updated_at = Column(DateTime, default=func.now(), onupdate=func.now())
+    
+    
 def get_db():
     ''' Method for configure database '''
     db = SessionLocal()

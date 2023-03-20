@@ -2,13 +2,20 @@ import os
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
-# TODO USE ENV VAR FOR DB URL
+from dotenv import load_dotenv
 
+load_dotenv('src/db.env')
+
+DB_USER = os.getenv("DB_USER")
+DB_PASS = os.getenv("DB_PASS")
+DB_HOST = os.getenv("DB_HOST")
+DB_NAME = os.getenv("DB_NAME")
 
 ###
 # Database Configuration
 ###
-SQLALCHEMY_DATABASE_URL = "postgresql://postgres:12345@localhost/fbd5"
+
+SQLALCHEMY_DATABASE_URL = f"postgresql://{DB_USER}:{DB_PASS}@{DB_HOST}/{DB_NAME}"
 
 engine = create_engine(
     SQLALCHEMY_DATABASE_URL

@@ -4,54 +4,31 @@ import ServiceInfoForm from "./Forms/ServiceInfoForm";
 import UserInfoForm from "./Forms/UserInfoForm";
 import { getSteps, ServiceFileForm } from "./Services";
 
-const UseForm = (params) => {
+const UseForm = (params,userinfo,setInfo) => {
+    
   const [open, setOpen] = React.useState(false);
-  const [userinfo, setInfo] = React.useState();
+  const [output, setOutput] = React.useState({});
+//   const [userinfo, setInfo] = React.useState( );
   const [loading, setLoading] = React.useState(false);
   const [success, setSuccess] = React.useState(false);
   const [sbOpen, setsbOpen] = React.useState(false);
   const [activeStep, setActiveStep] = React.useState(0);
   const [pageSize, setPageSize] = React.useState(10);
   const [rowId, setRowId] = React.useState(null);
-  const [output, setOutput] = React.useState({});
   const steps = getSteps();
-
-  console.log("user info", userinfo);
-  let value = userinfo;
+ 
+  console.log("user info", userinfo );
+  //   let value = userinfo;
 
   const handleNext = () =>
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
 
   const handleReset = () => setActiveStep(0);
-  const handleClickOpen = () => {
-    setOpen(true);
-
-    const endpoints = {
-      GST: "req-service-gst",
-      "GST Registration": "req-service-gst-rgst",
-      "PAN Registration": "req-service-pan-rgst",
-      "TAX Registration": "req-service-tax-rgst",
-    };
-
-    const endpoint = endpoints[userinfo.enquired_for];
-
-    if (endpoint) {
-      fetch(`http://localhost:8000/api/v1/${endpoint}/${params.row.req_id}`)
-        .then((res) => res.json())
-        .then((result) => {
-          setOutput(result);
-          // setInfo(result)
-        });
-    }
-    console.log(output);
-  };
 
   function getStepContent(stepIndex) {
     switch (stepIndex) {
       case 0:
-        return (
-          <UserInfoForm {...{ params }} setInfo={setInfo} userinfo={userinfo} />
-        );
+            return <UserInfoForm {...{params}}  />;
       case 1:
         return (
           <ServiceInfoForm
@@ -66,16 +43,52 @@ const UseForm = (params) => {
         break;
     }
   }
+
   const handleClose = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
+
   const compHandleClose = () => {
     setOpen(false);
   };
+
   const sbhandleClose = () => {
     setsbOpen(false);
   };
+
+  const handleBack = () => {
+    return;
+  };
+  const handleChangeInfo = (e) => {
+    const { name, value } = e.target;
+    setInfo((prev) => ({ ...prev, [name]: value }));
+  };
   const { dispatch } = useValue();
+
+  const handleClickOpen = () => {
+    setOpen(true);
+    console.log("handle userinfo", userinfo);
+    const endpoints = {
+      GST: "req-service-gst",
+      "GST Registration": "req-service-gst-rgst",
+      "PAN Registration": "req-service-pan-rgst",
+      "TAX Registration": "req-service-tax-rgst",
+    };
+
+    const endpoint = endpoints[userinfo.enquired_for];
+
+    if (endpoint) {
+      const output = fetch(
+        `http://localhost:8000/api/v1/${endpoint}/${userinfo.req_id}`
+      )
+        .then((res) => res.json())
+        .then((result) => {
+          setOutput(result);
+          setInfo(result)
+        });
+      console.log("handleclickOpen", output);
+    }
+  };
 
   const handleDelete = async () => {
     const data = params.row;
@@ -159,6 +172,10 @@ const UseForm = (params) => {
     setRowId,
     pageSize,
     setPageSize,
+    open,
+    setInfo,
+    handleChangeInfo,
+    handleBack,
   };
 };
 export default UseForm;

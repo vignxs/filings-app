@@ -1,20 +1,28 @@
 import { useEffect, useMemo } from "react";
 import { useState } from "react";
 import axios from "axios";
+import { useValue } from "../../Context/ContextProvider";
+import { fsgetRequests } from "../../Context/actions";
 
 const UseForm = (params) => {
   const parameter = params;
-  const [fsdata, setFsdata] = useState([]);
-  const [tabledata, setTabledata] = useState([]);
+  const {
+    state: { fsrequests },
+    dispatch,
+  } = useValue();
+  
+
   const [values, setValues] = useState({
-    candidatename: "",
+    candidate_name: "",
     mobile: "",
     technology: "",
-    startdate: null,
-    followupdate: null,
+    start_date: null,
+    followup_date: null,
     resource: "",
     status: "",
     feedback: "",
+    created_by: "admin",
+    updated_by: "admin",
   });
 
   const handleChange = (e) => {
@@ -28,20 +36,22 @@ const UseForm = (params) => {
   };
 
   const enqdata = {
-    candidatename: values.candidatename,
+    candidate_name: values.candidate_name,
     mobile: values.mobile,
     technology: values.technology,
-    startdate: values.startdate,
-    followupdate: values.followupdate,
+    start_date: values.start_date,
+    followup_date: values.followup_date,
     resource: values.resource,
     status: values.status,
     feedback: values.feedback,
+    created_by:values.created_by,
+    updated_by:values.updated_by
   };
 
   const postData = () => {
     if (Object.values(values).includes("") === false) {
       axios
-        .post("https://enq-form-api.onrender.com/enq/EnquiryData", enqdata)
+        .post("http://127.0.0.1:8000/api/v1/job-support-data", enqdata)
         .then((res) => console.log(res.data));
       console.log("success", Object.values(values));
     }
@@ -56,34 +66,29 @@ const UseForm = (params) => {
     postData();
 
     setValues({
-      candidatename: "",
+      candidate_name: "",
       mobile: "",
       technology: "",
-      startdate: "",
-      followupdate: "",
+      start_date: "",
+      followup_date: "",
       resource: "",
       status: "",
       feedback: "",
     });
   };
+ 
 
-  const getdata = () => {
-    axios.get("https://enq-form-api.onrender.com/enq").then((res) => {
-      setFsdata(res.data);
-      setTabledata(res.data);
-    });
-  };
 
   useEffect(() => {
-    getdata();
+    fsgetRequests(dispatch);
   }, []);
-
+ 
   const handleEdit = (params) => {
     const { id, field, value } = params;
     const updatedRow = { ...params.row, [field]: value };
     axios
       .put(
-        `https://enq-form-api.onrender.com/enq/update-enqdata/${id}`,
+        `http://127.0.0.1:8000/api/v1/job-support-data-update/${id}`,
         updatedRow
       )
       .then((res) => {
@@ -97,25 +102,19 @@ const UseForm = (params) => {
 
   const handleDelete = async (params) => {
     // console.log(parameter);
-    const { _id } = parameter.row;
+    const { id } = parameter.row;
     console.log(params);
+    if (window.confirm("Are you sure to delete this record?")) {
     await axios
-      .delete(`https://enq-form-api.onrender.com/enq/delete-enqdata/${_id}`)
+      .delete(`http://127.0.0.1:8000/api/v1/job-support-data-delete/${id}`)
       .then((res) => console.log("Employee Data Successfully deleted"))
 
       .catch((error) => {
         console.log(error);
       });
-    // const newList = fsdata.filter((lists) => lists._id !== _id);
-    // setFsdata(newList);
-    
-      setFsdata((prevRows) => {
-        // const newRows = [...fsdata];
-        // const rowToDeleteIndex = newRows(0, );
-        return [
-          ...fsdata.slice(0, prevRows.length - 1),
-          ...fsdata.slice(prevRows.length - 1 + 1),
-        ]});
+      dispatch({ type: "FSDELETE_REQUESTS", payload: id });
+    }
+  
   };
 
   return {
@@ -123,10 +122,9 @@ const UseForm = (params) => {
     values,
     handleSubmit,
     setValues,
-    fsdata,
     handleEdit,
     handleDelete,
-    tabledata,
+    fsrequests
   };
 };
 export default UseForm;

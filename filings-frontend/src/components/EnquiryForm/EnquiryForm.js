@@ -317,9 +317,9 @@ const EnquiryForm = () => {
                       id="demo-simple-label"
                       label="Experience/Domain*"
                       color="green"
-                      name="exprience_by"
+                      name="experience_by"
                       required={true}
-                      value={values.exprience_by}
+                      value={values.experience_by}
                       onChange={handleChange}
                     >
                       {domain.map((val, index) => (

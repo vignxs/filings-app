@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useValue } from "../../Context/ContextProvider";
-import { fsgetRequests } from "../../Context/actions";
+import { enqgetRequests } from "../../Context/actions";
 
 const UseForm = (params) => {
   const parameter = params;
@@ -9,9 +9,10 @@ const UseForm = (params) => {
     state: { enqrequests },
     dispatch,
   } = useValue();
+  // console.log(enqrequests)
   const [values, setValues] = useState({
     name: "",
-    followup_call_date: null,
+    followup_call_date: "",
     followup_status: "",
     enquiry_by: "",
     mobile: "",
@@ -37,7 +38,7 @@ const UseForm = (params) => {
 
   const enqdata = {
     name: values.name,
-    follow_up_calldate: values.followupcalldate,
+    followup_call_date: values.followup_call_date,
     followup_status: values.followup_status,
     enquiry_by: values.enquiry_by,
     mobile: values.mobile,
@@ -52,7 +53,7 @@ const UseForm = (params) => {
   };
 
   useEffect(() => {
-    fsgetRequests(dispatch);
+    enqgetRequests(dispatch);
   }, []);
 
   const postData = () => {

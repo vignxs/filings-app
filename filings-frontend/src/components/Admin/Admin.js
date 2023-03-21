@@ -22,7 +22,7 @@ import { inputBox } from "../Utils/MuiStyles";
 // inspiration
 // https://www.figcomponents.com?id=62cf946b12847cc9ecafe6b2
 
-// import userContext  from "../Context";
+
 const muiCache = createCache({
   key: "mui-datatables",
   prepend: true,
@@ -53,10 +53,10 @@ export const EnqAdmin = (props) => {
     dispatch,
   } = useValue();
 
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    return date.toLocaleString();
-  };
+//   const formatDate = (dateString) => {
+//     const date = new Date(dateString);
+//     return date.toLocaleString();
+//   };
   const [pageSize, setPageSize] = useState(10);
   const [rowId, setRowId] = useState(null);
   const enqColumns = useMemo(

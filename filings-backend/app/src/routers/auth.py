@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from ..dependencies import get_db
 from ..services.auth import service, schemas
+from typing import List
 
 router = APIRouter(tags=["auth"])
 
@@ -27,4 +28,17 @@ def login(user: schemas.UserLogin, db: Session = Depends(get_db)):
 		raise HTTPException(status_code=400, detail="You have entered the wrong password")
 	return {"token": service.create_access_token(user.email), **db_user.__dict__}
 
+@router.post('/admin-register', status_code=201)
+async def register(user:schemas.AdminUser,  db: Session = Depends(get_db)):
+	db_user = service.get_user_by_user(db, user=user.user_name) 
+	if db_user:
+		raise HTTPException(status_code=401, detail='User name already exists')
 
+	db_user_email = service.get_user_by_email(db, email=user.email) 
+	if db_user_email:
+		raise HTTPException(status_code=401, detail='Email already exists')
+	return service.create_admin_user(db=db, user=user)
+
+@router.get("/users-data-all", response_model=List[schemas.User])
+def user(db: Session = Depends(get_db)):
+    return service.get_user(db=db)

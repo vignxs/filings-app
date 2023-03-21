@@ -161,9 +161,9 @@ const JobSupportForm = () => {
                     size="small"
                     color="green"
                     type="text"
-                    name="candidatename"
+                    name="candidate_name"
                     required={true}
-                    value={values.candidatename}
+                    value={values.candidate_name}
                     onChange={handleChange}
                   />
 
@@ -172,14 +172,14 @@ const JobSupportForm = () => {
                       orientation="landscape"
                       label="Start Date"
                       format="dd-MM-yyyy"
-                      value={values.startdate ? sdate : Date()}
+                      value={values.start_date ? sdate : Date()}
                       onChange={(e) => {
                         const date = new Date(e);
-                        const dates = moment(date).format("DD-MM-YYYY");
+                        const dates = moment(date).format("YYYY-MM-DD");
                         setSdate(date);
                         setValues({
                           ...values,
-                          startdate: `${dates}`,
+                          start_date: `${dates}`,
                         });
                       }}
                       renderInput={(params) => (
@@ -200,14 +200,14 @@ const JobSupportForm = () => {
                       openTo="day"
                       format="dd-MM-yyyy"
                       views={["day"]}
-                      value={values.followupdate ? fdate : Date()}
+                      value={values.followup_date ? fdate : Date()}
                       onChange={(e) => {
                         const date = new Date(e);
-                        const dates = moment(date).format("DD-MM-YYYY");
+                        const dates = moment(date).format("YYYY-MM-DD");
                         setFdate(date);
                         setValues({
                           ...values,
-                          followupdate: `${dates}`,
+                          followup_date: `${dates}`,
                         });
                       }}
                       renderInput={(params) => (

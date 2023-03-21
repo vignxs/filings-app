@@ -1,6 +1,8 @@
 from .database import SessionLocal
 from datetime import datetime, timedelta
 import jwt
+import random
+import string
 from fastapi import HTTPException, Security
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from passlib.context import CryptContext
@@ -58,3 +60,12 @@ class AuthHandler():
 
     def auth_wrapper(self, auth: HTTPAuthorizationCredentials = Security(security)):
         return self.decode_token(auth.credentials)
+    
+def generate_password(length):
+    # Define a string of characters to choose from
+    characters = string.ascii_letters + string.digits + string.punctuation
+    
+    # Generate a password by randomly selecting characters
+    password = ''.join(random.choice(characters) for i in range(length))
+    
+    return password

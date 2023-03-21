@@ -12,6 +12,7 @@ import EnquiryForm from "./components/EnquiryForm/EnquiryForm";
 import { RequireAuth } from "react-auth-kit";
 import JobSupportDataTable from './components/JsForm/JobSupportDataTable';
 import { AdminList } from "./components/AppAdmin/AdminList";
+import { UserCreateForm } from "./components/Forms/UserCreate";
 
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
           <Route path="/enquiry-form" element={<EnquiryForm />} />
           <Route path="/job-supp-table" element={<JobSupportDataTable />} />
           <Route path="/admin" element={<AdminList />} />
+          <Route path="/user-form" element={<UserCreateForm />} />
 
           <Route
             path="/"

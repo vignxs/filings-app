@@ -101,9 +101,11 @@ export default function HeaderBar(props) {
     state: { isLogged, apps, currentUser },
     dispatch,
   } = useValue();
-  console.log(apps[0])
-
 const [currentApp, setCurrentApp] = React.useState(apps[0]);
+
+React.useEffect(() => {
+  setCurrentApp(apps[0]);
+}, [apps]);
 
   const theme = createTheme({
     palette: {

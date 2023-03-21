@@ -14,3 +14,9 @@ class User(BaseModel):
 class UserLogin(BaseModel):
 	email: str
 	password: str
+ 
+class AdminUser(BaseModel):
+	email: str
+	user_name : str
+	is_admin : bool 
+	apps : list 

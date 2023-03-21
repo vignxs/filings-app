@@ -1,4 +1,4 @@
-from sqlalchemy import Column,String,Integer,BigInteger,Date
+from sqlalchemy import Column,String,Integer,BigInteger
 from ...database import Base
 
 class IGS_COURSE_ENQ(Base):

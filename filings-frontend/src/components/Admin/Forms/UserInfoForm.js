@@ -3,7 +3,7 @@ import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
 import React, { useState } from "react";
 
 const UserInfoForm = ({ params, setInfo, userinfo }) => {
-    // console.log(userdata().first_name)
+    console.log("user data",userinfo)
   const handleChangeInfo = (e) => {
     const { name, value } = e.target;
     setInfo((prev) => ({ ...prev, [name]: value }));
@@ -36,7 +36,7 @@ const UserInfoForm = ({ params, setInfo, userinfo }) => {
             type="text"
             name="first_name"
             required={true}
-            // value={userdata().first_name}
+            value={userinfo.first_name}
             onChange={handleChangeInfo}
           />
           <TextValidator

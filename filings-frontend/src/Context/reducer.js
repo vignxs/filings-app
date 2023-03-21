@@ -15,6 +15,11 @@ const reducer = ( state, action) => {
           ...state,
           requests: action.payload,
         };
+      case "HOME":
+        return {
+          ...state,
+          home: action.payload,
+        };
       case "OPEN_SIDEBAR":
         return {
           ...state,

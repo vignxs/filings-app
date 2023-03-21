@@ -50,7 +50,30 @@ const reducer = ( state, action) => {
           ...state,
           currentUser: action.payload,
         };
-
+      case "JS_GETREQUEST":
+        return {
+          ...state,
+          fsrequests: action.payload,
+        };
+      case "ENQ_GETREQUEST":
+        return {
+          ...state,
+          enqrequests: action.payload,
+        };
+        case "FSDELETE_REQUESTS":
+          return {
+            ...state,
+            requests: state.enqrequests.filter(
+              (requests) => requests.id !== action.payload
+            ),
+          };
+        case "ENQDELETE_REQUESTS":
+          return {
+            ...state,
+            requests: state.enqrequests.filter(
+              (requests) => requests.id !== action.payload
+            ),
+          };
       default:
         throw new Error("No action matched");
     }

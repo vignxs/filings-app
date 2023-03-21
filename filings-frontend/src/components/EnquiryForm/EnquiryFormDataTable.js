@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import createCache from "@emotion/cache";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useMemo } from "react";
 import {
@@ -15,9 +14,9 @@ import { Button, Paper } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { Link } from "react-router-dom";
 import UseForm from "./UseForm";
-import JSformActions from "./JSformActions";
+import EnqFormActions from "./EnqFormActions";
 
-const JobSupportDataTable = () => {
+const EnquiryFormDataTable = () => {
   const inputBox = {
     "& .MuiDataGrid-toolbarQuickFilter": {
       "& .MuiTextField-root": {
@@ -93,7 +92,6 @@ const JobSupportDataTable = () => {
     padding: "30px",
   };
 
-  const date = new Date();
   const getMuiTheme = () =>
     createTheme({
       palette: {
@@ -111,7 +109,7 @@ const JobSupportDataTable = () => {
         },
       },
     });
-  const { handleEdit, fsrequests } = UseForm();
+  const { handleEdit, enqrequests } = UseForm();
   const enqColumns = useMemo(() => [
     {
       field: "actions",
@@ -119,7 +117,7 @@ const JobSupportDataTable = () => {
       type: "actions",
       width: 80,
       filterable: true,
-      renderCell: (params) => <JSformActions {...{ params }} />,
+      renderCell: (params) => <EnqFormActions {...{ params }} />,
     },
     {
       field: "id",
@@ -131,22 +129,63 @@ const JobSupportDataTable = () => {
       filterable: true,
     },
     {
-      field: "start_date",
-      headerAlign: "center",
-      align: "center",
-      editable: true,
-      filterable: true,
-      headerName: "Start Date",
-      width: 120,
-    },
-    {
-      field: "candidate_name",
+      field: "name",
       headerAlign: "center",
       editable: true,
       align: "center",
       headerName: "Name",
       width: 100,
       filterable: false,
+    },
+    {
+      field: "followup_call_date",
+      headerAlign: "center",
+      align: "center",
+      editable: true,
+      filterable: true,
+      headerName: "FollowUp Date",
+      width: 120,
+    },
+    {
+      field: "followup_status",
+      headerAlign: "center",
+      align: "center",
+      editable: true,
+      filterable: true,
+      headerName: "Followup Status",
+      width: 120,
+      type: "singleSelect",
+      valueOptions: [
+        "Trainer Needed",
+        "Confrimed",
+        "Demo Completed",
+        "Demo Scheduled",
+        "Demo Yet to Schedule",
+        "Not Able To Provide",
+        "Need to Follow",
+        "No Response",
+        "Others",
+      ],
+    },
+    {
+      field: "comments",
+      headerAlign: "center",
+      align: "center",
+      editable: true,
+      filterable: true,
+      headerName: "Comments",
+      width: 120,
+    },
+    {
+      field: "enquiry_by",
+      headerAlign: "center",
+      align: "center",
+      editable: true,
+      filterable: true,
+      headerName: "Enquiry By",
+      width: 120,
+      type: "singleSelect",
+      valueOptions: ["Email", "mobile", "Email&Mobile"],
     },
     {
       field: "mobile",
@@ -158,8 +197,8 @@ const JobSupportDataTable = () => {
       filterable: true,
     },
     {
-      field: "technology",
-      headerName: "Technology",
+      field: "location",
+      headerName: "Location",
       editable: true,
       headerAlign: "center",
       align: "center",
@@ -168,8 +207,8 @@ const JobSupportDataTable = () => {
       filterable: true,
     },
     {
-      field: "resource",
-      headerName: "Resource",
+      field: "course",
+      headerName: "Course",
       editable: true,
       headerAlign: "center",
       align: "center",
@@ -178,52 +217,54 @@ const JobSupportDataTable = () => {
       filterable: true,
     },
     {
-      field: "status",
-      headerName: "Status",
+      field: "fee_structure ",
+      headerName: "Fee Structure ",
+      editable: true,
+      headerAlign: "center",
+      align: "center",
+      width: 100,
+      sortable: true,
+      filterable: true,
+    },
+    {
+      field: "experience_by",
+      headerName: "Experience/Domain",
       editable: true,
       width: 100,
+      headerAlign: "center",
+      align: "center",
       type: "singleSelect",
-      headerAlign: "center",
-      align: "center",
-      valueOptions: [
-        "Cannot Provide Support",
-        "Confrimed",
-        "Demo Completed",
-        "Demo Scheduled",
-        "Demo Yet to Schedule",
-        "Follow Up",
-        "Not Interested",
-        "Resource Not Available",
-        "Waiting For Response",
-      ],
+      valueOptions: ["Working Professional", "Corporate", "Fresher", "Student"],
       filterable: false,
-      // currentUser?.role === "admin",
     },
     {
-      field: "feedback",
+      field: "info_source",
       editable: true,
-      headerName: "Feedback",
+      headerName: "Info Source",
       width: 180,
       headerAlign: "center",
       filterable: false,
       align: "center",
-      // valueFormatter: (params) => formatDate(params.value),
-      // renderCell: (params) =>
-      //   moment(params.row.createdAt).format("YYYY-MM-DD HH:MM:SS"),
-      // currentUser?.role === "admin",
     },
     {
-      field: "followup_date",
+      field: "purpose",
       editable: true,
-      headerName: "Followup Date",
+      headerName: "Purpose",
       width: 180,
       headerAlign: "center",
       align: "center",
       filterable: false,
-      // valueFormatter: (params) => formatDate(params.value),
-      // renderCell: (params) =>
-      //   moment(params.row.createdAt).format("YYYY-MM-DD HH:MM:SS"),
-      // currentUser?.role === "admin",
+    },
+    {
+      field: "mode",
+      headerName: "Mode",
+      editable: true,
+      width: 100,
+      headerAlign: "center",
+      align: "center",
+      type: "singleSelect",
+      valueOptions: ["online", "offline", "both"],
+      filterable: false,
     },
   ]);
 
@@ -241,7 +282,6 @@ const JobSupportDataTable = () => {
       </GridToolbarContainer>
     );
   }
-
   return (
     <>
       <ThemeProvider theme={getMuiTheme()}>
@@ -294,7 +334,7 @@ const JobSupportDataTable = () => {
             </div>
             <div>
               <Button
-                to="/job-supp-form"
+                to="/enquiry-form"
                 component={Link}
                 size="small"
                 color="primary"
@@ -312,7 +352,7 @@ const JobSupportDataTable = () => {
             <DataGrid
               sx={{ border: 0 }}
               columns={enqColumns}
-              rows={fsrequests}
+              rows={enqrequests}
               getRowId={(row) => row.id}
               rowsPerPageOptions={[10, 20, 30]}
               //   pageSize={pageSize}
@@ -348,4 +388,4 @@ const JobSupportDataTable = () => {
   );
 };
 
-export default JobSupportDataTable;
+export default EnquiryFormDataTable;

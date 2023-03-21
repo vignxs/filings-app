@@ -185,14 +185,14 @@ const EnquiryForm = () => {
                       openTo="day"
                       format="dd-MM-yyyy"
                       views={["day"]}
-                      value={values.followupcalldate ? fdate : Date()}
+                      value={values.followup_call_date ? fdate : Date()}
                       onChange={(e) => {
                         const date = new Date(e);
                         const dates = moment(date).format("DD-MM-YYYY");
                         setFdate(date);
                         setValues({
                           ...values,
-                          followupcalldate: `${dates}`,
+                          followup_call_date: `${dates}`,
                         });
                       }}
                       renderInput={(params) => (
@@ -215,9 +215,9 @@ const EnquiryForm = () => {
                       id="demo-simple-label"
                       label="Follow Up Status*"
                       color="green"
-                      name="followupstatus"
+                      name="followup_status"
                       required={true}
-                      value={values.followupstatus}
+                      value={values.followup_status}
                       onChange={handleChange}
                     >
                       {statusvalues.map((val, index) => (
@@ -240,7 +240,7 @@ const EnquiryForm = () => {
                   />
                 </Grid>
                 <Grid style={{ display: "flex" }}>
-                  <FormControl sx={{ m:1.5, minWidth:"23ch" }} size="small">
+                  <FormControl sx={{ m: 1.5, minWidth: "23ch" }} size="small">
                     <InputLabel color="green" id="demo-simple-select-label">
                       Enquired By
                     </InputLabel>
@@ -249,9 +249,9 @@ const EnquiryForm = () => {
                       id="demo-simple-label"
                       label="Enquired By*"
                       color="green"
-                      name="enquiryby"
+                      name="enquiry_by"
                       required={true}
-                      value={values.enquiryby}
+                      value={values.enquiry_by}
                       onChange={handleChange}
                     >
                       {enquiry.map((val, index) => (
@@ -303,9 +303,9 @@ const EnquiryForm = () => {
                     size="small"
                     color="green"
                     type="text"
-                    name="feestructure"
+                    name="fee_structure"
                     required={true}
-                    value={values.feestructure}
+                    value={values.fee_structure}
                     onChange={handleChange}
                   />
                   <FormControl sx={{ m: 1.5, minWidth: "23ch" }} size="small">
@@ -317,9 +317,9 @@ const EnquiryForm = () => {
                       id="demo-simple-label"
                       label="Experience/Domain*"
                       color="green"
-                      name="exprienceby"
+                      name="exprience_by"
                       required={true}
-                      value={values.exprienceby}
+                      value={values.exprience_by}
                       onChange={handleChange}
                     >
                       {domain.map((val, index) => (
@@ -334,9 +334,9 @@ const EnquiryForm = () => {
                     size="small"
                     color="green"
                     type="text"
-                    name="infosource"
+                    name="info_source"
                     required={true}
-                    value={values.infosource}
+                    value={values.info_source}
                     onChange={handleChange}
                   />
                   <TextValidator

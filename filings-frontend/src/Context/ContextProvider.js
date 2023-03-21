@@ -3,11 +3,13 @@ import reducer from "./reducer";
 
 const initialState = {
   requests: [],
-  isAdmin: 0,
-  currentUser: "",
-  apps: [],
+  isAdmin:0,
+  currentUser : "",
+  apps : [],
   isLogged: false,
-};
+  fsrequests: [],
+  enqrequests: []
+  };
 
 export const Context = createContext();
 export default Context;

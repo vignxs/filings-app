@@ -22,7 +22,7 @@ import ListItemText from "@mui/material/ListItemText";
 import { Link } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useValue } from "../../Context/ContextProvider";
-import { AdminRoutes, FilingsRoutes ,JobSuppRoutes } from "./SidebarRoutes";
+import { AdminRoutes, CourseEnqRoutes, FilingsRoutes ,JobSuppRoutes } from "./SidebarRoutes";
 
 
 const drawerWidth = 220;
@@ -169,7 +169,8 @@ const ButtonWithOptions = ({
 const options = [
   { text: "StreamLine-Filings", value: "Filings", href: "/enq-admin" },
   { text: "Admin", value: "Admin", href: "/admin" },
-  { text: "Job-Support", value: "Job-Support", href: "/job-supp-form" },
+  { text: "Job-Support", value: "Job-Support", href: "/job-supp-table" },
+  { text: "Course-Enquiry", value: "Course-Enquiry", href: "/enquiry-table" },
 ];
 
 const filteredOptions = options.filter(option => apps.includes(option.value));
@@ -296,6 +297,7 @@ const ButtonGroup = () => {
           {currentApp === "Filings" && <FilingsRoutes {...{ open }} />}
           {currentApp === "Job-Support" && <JobSuppRoutes open={open} />}
           {currentApp === "Admin" && <AdminRoutes open={open} />}
+          {currentApp === "Course-Enquiry" && <CourseEnqRoutes open={open} />}
 
           <List style={{ marginTop: `auto` }}>
             <Divider />

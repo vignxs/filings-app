@@ -35,7 +35,7 @@ function getStyles(name, personName, theme) {
 
 
 export const UserCreateForm = (props) => {
-      const names  =  ["Filings", "Admin", "Job-Support"];
+      const names  =  ["Filings", "Admin", "Job-Support", "Course-Enquiry"];
 
   const [uid, setUid] = React.useState(uuid().slice(0, 7));
   const [open, setOpen] = React.useState(false);

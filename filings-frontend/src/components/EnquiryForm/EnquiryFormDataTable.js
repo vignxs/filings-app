@@ -312,7 +312,7 @@ const EnquiryFormDataTable = () => {
                 noWrap
                 component="h3"
               >
-                Job Support List
+                Course-Enquiry List
               </Typography>
 
               <Typography

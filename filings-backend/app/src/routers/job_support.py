@@ -31,7 +31,3 @@ async def job_support_data_update(request: schemas.IGS_JOB_SUPPORT_GU,  db: Sess
 def job_support_data_delete(request: schemas.IGS_JOB_SUPPORT_GU,id : str , db: Session = Depends(get_db)):
     return service.delete_request(db=db, id=id, request=request)
 
-
-# @router.get("/req-service-pan-rgst/{id}")
-# def request_service_pan_rgst(id: str,  db: Session = Depends(get_db)):
-#     return service.get_pan_rgst(db=db, req_id=id)

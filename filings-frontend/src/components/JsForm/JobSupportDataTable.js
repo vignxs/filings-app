@@ -16,6 +16,7 @@ import AddIcon from "@mui/icons-material/Add";
 import { Link } from "react-router-dom";
 import UseForm from "./UseForm";
 import JSformActions from "./JSformActions";
+import{ renderEndDateCell } from "./JScustomRender"
 
 const JobSupportDataTable = () => {
   const inputBox = {
@@ -220,6 +221,7 @@ const JobSupportDataTable = () => {
       headerAlign: "center",
       align: "center",
       filterable: false,
+      renderCell: renderEndDateCell
       // valueFormatter: (params) => formatDate(params.value),
       // renderCell: (params) =>
       //   moment(params.row.createdAt).format("YYYY-MM-DD HH:MM:SS"),

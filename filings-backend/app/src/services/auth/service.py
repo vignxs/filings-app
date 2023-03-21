@@ -12,6 +12,10 @@ def get_user_by_email(db: Session, email: str):
 def get_user_by_user(db: Session, user: str):
     return db.query(models.User).filter(models.User.user_name == user).first()
 
+
+def get_user(db: Session):
+    return db.query(models.User).all()
+
 def create_user(db: Session, user: schemas.User):
     hashed_password = auth_handler.get_password_hash(user.password)
     db_user = models.User(user_name = user.user_name , email = user.email, password = hashed_password, is_admin = user.is_admin, apps = user.apps)

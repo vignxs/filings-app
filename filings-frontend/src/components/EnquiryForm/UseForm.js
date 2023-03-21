@@ -66,13 +66,12 @@ const UseForm = (params) => {
   };
 
   const handleEdit = (params) => {
-    const { id, field, value } = params;
+    const { id, field, value,row } = params;
     const updatedRow = { ...params.row, [field]: value };
+    console.log(row);
     axios
       .put(
-        `http://127.0.0.1:8000/api/v1/course-enquiry-update/${id}`,
-        updatedRow
-      )
+        `http://127.0.0.1:8000/api/v1/course-enquiry-update`,updatedRow)
       .then((res) => {
         console.log(res.data);
         console.log("Empdata Successfully updated");
@@ -88,7 +87,7 @@ const UseForm = (params) => {
     console.log(params);
     if (window.confirm("Are you sure to delete this record?")) {
       await axios
-        .delete(`http://127.0.0.1:8000/api/v1/course-enquiry-delete/${id}`)
+        .delete(`http://127.0.0.1:8000/api/v1/course-enquiry-delete/${id}`,parameter.row)
         .then((res) => console.log("Employee Data Successfully deleted"))
 
         .catch((error) => {
@@ -123,6 +122,24 @@ const UseForm = (params) => {
     });
   };
 
+  const clearFields = ()=>{
+    setValues({
+      name: "",
+      followup_call_date: "",
+      followup_status: "",
+      enquiry_by: "",
+      mobile: "",
+      location: "",
+      course: "",
+      fee_structure: "",
+      experience_by: "",
+      info_source: "",
+      purpose: "",
+      mode: "",
+      comments: "",
+    });
+  }
+
   return {
     handleChange,
     values,
@@ -131,6 +148,7 @@ const UseForm = (params) => {
     handleEdit,
     handleDelete,
     enqrequests,
+    clearFields
   };
 };
 export default UseForm;

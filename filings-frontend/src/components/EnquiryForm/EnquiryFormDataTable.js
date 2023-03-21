@@ -217,7 +217,7 @@ const EnquiryFormDataTable = () => {
       filterable: true,
     },
     {
-      field: "fee_structure ",
+      field: "fee_structure",
       headerName: "Fee Structure ",
       editable: true,
       headerAlign: "center",

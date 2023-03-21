@@ -297,8 +297,8 @@ const JobSupportDataTable = () => {
                 to="/job-supp-form"
                 component={Link}
                 size="small"
-                color="primary"
-                sx={{ height: "30px", width: "40px" }}
+                color="secondary"
+                sx={{ height: "30px", width: "40px", color: "#FFFFFE" }}
                 startIcon={<AddIcon />}
                 onClick={window.scrollTo(0, 0)}
                 variant="contained"

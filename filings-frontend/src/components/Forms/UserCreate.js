@@ -5,8 +5,6 @@ import Snackbar from "@material-ui/core/Snackbar";
 import FormControl from "@mui/material/FormControl";
 import Divider from "@mui/material/Divider";
 import Typography from "@mui/material/Typography";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import InputLabel from "@mui/material/InputLabel";
 import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
 import Stack from "@mui/material/Stack";
@@ -18,11 +16,7 @@ import Button from "@mui/material/Button";
 import { Alert } from "@material-ui/lab";
 import {
   FormControlLabel,
-  Radio,
-  RadioGroup,
 } from "@mui/material";
-import { v4 as uuid } from "uuid";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 
 function getStyles(name, personName, theme) {
   return {
@@ -37,7 +31,6 @@ function getStyles(name, personName, theme) {
 export const UserCreateForm = (props) => {
       const names  =  ["Filings", "Admin", "Job-Support", "Course-Enquiry"];
 
-  const [uid, setUid] = React.useState(uuid().slice(0, 7));
   const [open, setOpen] = React.useState(false);
   const [userinfo, setInfo] = React.useState({
     user_name: "vignesh",
@@ -72,13 +65,12 @@ export const UserCreateForm = (props) => {
 
 
 
- const API_ENDPOINT = "http://localhost:8000/api/v1";
 
  async function userInfoPost(e) {
    e.preventDefault();
      console.log(userinfo);
 
-     const res = await fetch("http://127.0.0.1:8000/api/admin-register", {
+     await fetch("http://127.0.0.1:8000/api/admin-register", {
        method: "POST",
        headers: { "Content-Type": "application/json" },
        body: JSON.stringify(userinfo),

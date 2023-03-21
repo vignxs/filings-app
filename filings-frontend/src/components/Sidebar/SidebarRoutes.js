@@ -8,7 +8,6 @@ import DescriptionRoundedIcon from "@mui/icons-material/DescriptionRounded";
 import EngineeringRoundedIcon from "@mui/icons-material/EngineeringRounded";
 import WorkRoundedIcon from "@mui/icons-material/WorkRounded";
 import LocalLibraryRoundedIcon from "@mui/icons-material/LocalLibraryRounded";
-import AssignmentRoundedIcon from "@mui/icons-material/AssignmentRounded";
 import AddTaskIcon from "@mui/icons-material/AddTask";
 import React from "react";
 import { Link } from "react-router-dom";
@@ -296,12 +295,8 @@ const FilingsRoutes = ({open}) => {
 };
 
 const JobSuppRoutes = ({ open }) => {
-  const [Expand, setExpand] = React.useState(false);
   const [ReqExpand, setReqExpand] = React.useState(false);
 
-  const handleClickExpand = () => {
-    setExpand(!Expand);
-  };
   const handleClickReqExpand = () => {
     setReqExpand(!ReqExpand);
   };

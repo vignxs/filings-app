@@ -1,4 +1,4 @@
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, column_property
 from . import models, schemas
 from datetime import datetime, timedelta
 from typing import Optional
@@ -16,9 +16,10 @@ def create_request(db: Session, request: schemas.IGS_JOB_SUPPORT):
 def get_requests(db: Session):
     return db.query(models.IGS_JOB_SUPPORT).all()
 
-def delete_request(db: Session, request: schemas.IGS_JOB_SUPPORT) -> int:
-    db_req= delete(models.IGS_JOB_SUPPORT).where(models.IGS_JOB_SUPPORT.id==request.id)
-    db.execute(db_req)
+def delete_request(db: Session, id : int, request: schemas.IGS_JOB_SUPPORT) -> int:
+    # db_req= delete(models.IGS_JOB_SUPPORT).where(models.IGS_JOB_SUPPORT.id==request.id)
+    db_req = db.get(models.IGS_JOB_SUPPORT, id)
+    db.delete(db_req)
     db.commit()
     return request.id
 

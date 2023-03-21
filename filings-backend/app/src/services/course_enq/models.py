@@ -7,7 +7,7 @@ class IGS_COURSE_ENQ(Base):
 
     id = Column(Integer, primary_key=True,autoincrement = True, index=True)
     name = Column(String)
-    followup_call_date = Column(Date)
+    followup_call_date = Column(String)
     followup_status = Column(String)
     enquiry_by = Column(String)
     mobile = Column(BigInteger)

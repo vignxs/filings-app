@@ -23,5 +23,5 @@ async def course_enquiry_update(request:schemas.IGS_COURSE_ENQ_ID,  db: Session 
     return service.update_course_enquiry(db=db , request=request)
  
 @router.delete("/course-enquiry-delete/{id}")
-async def course_enquiry_delete(id:int,request:schemas.IGS_COURSE_ENQ_ID,  db: Session = Depends(get_db)):
-    return service.delete_course_enquiry(id=id, db=db, request=request)
+async def course_enquiry_delete(id: int,  db: Session = Depends(get_db)):
+    return service.delete_course_enquiry(db=db, id=id)

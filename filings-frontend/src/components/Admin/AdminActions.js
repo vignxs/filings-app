@@ -15,6 +15,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { CircularProgress, Stack, IconButton } from "@mui/material";
+import Fade from "react-reveal/Fade"
 import {
   CheckOutlined,
   EditOutlined,
@@ -376,26 +377,31 @@ export const UsersActions = ({ params, rowId, setRowId }) => {
       
     </ThemeProvider>
     <Snackbar
-    open={sbOpen}
-    autoHideDuration={50000}
-    anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
-    onClose={sbhandleClose}
-  >
-    <Alert
-      style={{
-        color: "white",
-        backgroundColor: "#4caf50",
-        position:"absolute",
-        left:"57vw",
-        top:"-32vh",
-        zIndex:"100"
-      }}
-      onClose={sbhandleClose}
-      severity="success"
-    >
-      Record updated succesfully!
-    </Alert>
-  </Snackbar>
+            open={open}
+            autoHideDuration={2000}
+            anchorOrigin={{ vertical: "bottom", horizontal: "bottom" }}
+            style={{
+              transition: "1s",
+              float: "right",
+              left: "76.2vw",
+              top: "4.5vw",
+            }}
+            onClose={handleClose}
+          >
+            <Fade right>
+              <Alert
+                style={{
+                  color: "white",
+                  backgroundColor: "#4caf50",
+                  float: "right",
+                }}
+                onClose={handleClose}
+                severity="success"
+              >
+                Request submitted succesfully!
+              </Alert>
+            </Fade>
+          </Snackbar>
   </>
   );
 };

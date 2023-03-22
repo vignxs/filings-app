@@ -16,12 +16,13 @@ import { Grid } from "@mui/material";
 import green from "@material-ui/core/colors/green";
 import Button from "@mui/material/Button";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { Link } from "react-router-dom";
 import moment from "moment";
 import UseForm from "./UseForm";
 
 const EnquiryForm = () => {
   const [fdate, setFdate] = React.useState(null);
-  const { values, handleChange, handleSubmit, setValues } = UseForm();
+  const { values, handleChange, handleSubmit, setValues,clearFields } = UseForm();
   const inputBox = {
     margin: "0 auto",
     width: "100%",
@@ -317,9 +318,9 @@ const EnquiryForm = () => {
                       id="demo-simple-label"
                       label="Experience/Domain*"
                       color="green"
-                      name="exprience_by"
+                      name="experience_by"
                       required={true}
-                      value={values.exprience_by}
+                      value={values.experience_by}
                       onChange={handleChange}
                     >
                       {domain.map((val, index) => (
@@ -389,6 +390,22 @@ const EnquiryForm = () => {
                     sx={{
                       m: 2,
                       width: "100px",
+                      color: "#FFFFFE",
+                      height: "38px",
+                      top: "16px",
+                      right:'10px'
+                    }}
+                    variant="contained"
+                    color="green"
+                    to="/enquiry-table"
+                    component={Link}
+                  >
+                    Go Back
+                  </Button>
+                  <Button
+                    sx={{
+                      m: 2,
+                      width: "100px",
                       height: "38px",
                       top: "17px",
                       color: "#094067",
@@ -396,6 +413,7 @@ const EnquiryForm = () => {
                     variant="outlined"
                     color="green"
                     type="reset"
+                    onClick={clearFields}
                   >
                     Clear
                   </Button>

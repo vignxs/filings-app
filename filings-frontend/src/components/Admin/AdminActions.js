@@ -201,6 +201,7 @@ export const UsersActions = ({ params, rowId, setRowId }) => {
   }
 
   return (
+    <>
     <ThemeProvider theme={getMuiTheme()}>
       <Box
         sx={{
@@ -372,23 +373,29 @@ export const UsersActions = ({ params, rowId, setRowId }) => {
           </IconButton>
         </Stack>
       </Box>
-      <Snackbar
-        open={sbOpen}
-        autoHideDuration={5000}
-        anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
-        onClose={sbhandleClose}
-      >
-        <Alert
-          style={{
-            color: "white",
-            backgroundColor: "#4caf50",
-          }}
-          onClose={sbhandleClose}
-          severity="success"
-        >
-          Record updated succesfully!
-        </Alert>
-      </Snackbar>
+      
     </ThemeProvider>
+    <Snackbar
+    open={sbOpen}
+    autoHideDuration={50000}
+    anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+    onClose={sbhandleClose}
+  >
+    <Alert
+      style={{
+        color: "white",
+        backgroundColor: "#4caf50",
+        position:"absolute",
+        left:"57vw",
+        top:"-32vh",
+        zIndex:"100"
+      }}
+      onClose={sbhandleClose}
+      severity="success"
+    >
+      Record updated succesfully!
+    </Alert>
+  </Snackbar>
+  </>
   );
 };

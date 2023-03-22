@@ -321,7 +321,7 @@ export const AdminList = () => {
 
           <div>
             <Button
-              to="/enq-form"
+              to="/user-form"
               component={Link}
               size="small"
               color="secondary"

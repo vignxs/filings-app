@@ -390,8 +390,9 @@ export const UsersActions = ({ params, rowId, setRowId }) => {
         color: "white",
         backgroundColor: "#4caf50",
         position:"absolute",
+        display:"float",
         left:"57vw",
-        top:"-32vh",
+        top:"-37vh",
         zIndex:"100"
       }}
       onClose={sbhandleClose}

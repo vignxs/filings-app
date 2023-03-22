@@ -350,7 +350,7 @@ const ButtonGroup = () => {
             paddingRight: "38px",
             bgcolor: "#FFFFFE",
             width: "100vw",
-            minHeight: "100vw",
+            minHeight: "100vh",
           }}
         >
           {props.children}

@@ -11,7 +11,7 @@ const UseForm = (params) => {
     dispatch,
   } = useValue();
   
-
+  const [updatedRow,setUpdatedRow] = useState(null);
   const [values, setValues] = useState({
     candidate_name: "",
     mobile: "",
@@ -96,11 +96,20 @@ const clearFields = () =>{
  
   const handleEdit = (params) => {
     const { id, field, value } = params;
-    const updatedRow = { ...params.row, [field]: value };
+    setUpdatedRow(fsrequests);
+    const index = updatedRow.findIndex(row => row.id === id);
+    let editedRow = null
+    if (index !== -1) {
+      const row = { ...updatedRow[index], [field]: value };
+      const updatedValues = [...updatedRow];
+      updatedValues[index] = row;
+      const newValues=updatedValues.find(row=>row.id===id)
+      editedRow=newValues
+      }
     axios
       .put(
-        `http://127.0.0.1:8000/api/v1/job-support-data-update/${id}`,
-        updatedRow
+        `http://127.0.0.1:8000/api/v1/job-support-data-update`,
+        editedRow,
       )
       .then((res) => {
         console.log(res.data);
@@ -111,10 +120,10 @@ const clearFields = () =>{
       });
   };
 
-  const handleDelete = async (params) => {
+  const handleDelete = async () => {
     // console.log(parameter);
     const { id } = parameter.row;
-    console.log(params);
+    console.log(id);
     if (window.confirm("Are you sure to delete this record?")) {
     await axios
       .delete(`http://127.0.0.1:8000/api/v1/job-support-data-delete/${id}`)
@@ -136,7 +145,8 @@ const clearFields = () =>{
     handleEdit,
     handleDelete,
     fsrequests,
-    clearFields
+    clearFields,
+    updatedRow
   };
 };
 export default UseForm;

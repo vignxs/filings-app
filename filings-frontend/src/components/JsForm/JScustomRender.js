@@ -7,7 +7,7 @@ function isEndDateClose(endDate) {
 
 export function renderEndDateCell(params) {
   const endDate = params.value;
-  console.log(params);
+  // console.log(params);
   const isClose = isEndDateClose(endDate);
   const cellStyle = isClose
     ? {

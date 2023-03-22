@@ -217,7 +217,7 @@ const EnquiryFormDataTable = () => {
       filterable: true,
     },
     {
-      field: "fee_structure ",
+      field: "fee_structure",
       headerName: "Fee Structure ",
       editable: true,
       headerAlign: "center",
@@ -312,7 +312,7 @@ const EnquiryFormDataTable = () => {
                 noWrap
                 component="h3"
               >
-                Job Support List
+                Course-Enquiry List
               </Typography>
 
               <Typography
@@ -337,8 +337,8 @@ const EnquiryFormDataTable = () => {
                 to="/enquiry-form"
                 component={Link}
                 size="small"
-                color="primary"
-                sx={{ height: "30px", width: "40px" }}
+                color="secondary"
+                sx={{ height: "30px", width: "40px", color: "#FFFFFE" }}
                 startIcon={<AddIcon />}
                 onClick={window.scrollTo(0, 0)}
                 variant="contained"

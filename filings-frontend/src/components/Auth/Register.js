@@ -24,7 +24,7 @@ export default function SignUpComponent() {
       user_name: "",
       password: "",
       is_admin: 1,
-      apps : ["Filings", "Admin", "Job-Support"]
+      apps : ["Filings", "Admin", "Job-Support", "Course-Enquiry"]
     });
     const navigate = useNavigate();
 

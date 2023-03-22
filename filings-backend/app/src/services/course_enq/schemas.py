@@ -1,5 +1,4 @@
 from pydantic import BaseModel
-from datetime import date
 
 class IGS_COURSE_ENQ(BaseModel):
 

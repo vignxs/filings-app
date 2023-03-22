@@ -27,6 +27,7 @@ import { inputBoxAdminAction } from "../Utils/MuiStyles";
 import { ServiceFileForm, getSteps } from "./Services";
 import UserInfoForm from "./Forms/UserInfoForm";
 import ServiceInfoForm from "./Forms/ServiceInfoForm";
+import { getRequests } from "../../Context/actions";
 // import UseForm from "./UseForms";
 export const UsersActions = ({ params, rowId, setRowId }) => {
   const [loading, setLoading] = useState(false);
@@ -57,7 +58,6 @@ export const UsersActions = ({ params, rowId, setRowId }) => {
         .then((res) => res.json())
         .then((result) => {
           setOutput(result);
-          setInfo(result);
         });
     }
     console.log(output);
@@ -157,7 +157,8 @@ export const UsersActions = ({ params, rowId, setRowId }) => {
         body: JSON.stringify(output),
       });
     }
-    setsbOpen(true);
+      setsbOpen(true);
+      getRequests(dispatch);
   };
 
   const handleSubmit = async () => {
@@ -178,7 +179,7 @@ export const UsersActions = ({ params, rowId, setRowId }) => {
   useEffect(() => {
     if (rowId === params.id && success) setSuccess(false);
   }, [rowId]);
-
+  console.log("setoutput", output);
   function getStepContent(stepIndex) {
     switch (stepIndex) {
       case 0:

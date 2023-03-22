@@ -15,6 +15,7 @@ import Select from "@mui/material/Select";
 import { Grid } from "@mui/material";
 import green from "@material-ui/core/colors/green";
 import Button from "@mui/material/Button";
+import { Link } from "react-router-dom";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import moment from "moment";
 import UseForm from "./UseForm";
@@ -22,7 +23,7 @@ import UseForm from "./UseForm";
 const JobSupportForm = () => {
   const [sdate, setSdate] = React.useState(null);
   const [fdate, setFdate] = React.useState(null);
-  const { values, handleChange, handleSubmit, setValues } = UseForm();
+  const { values, handleChange, handleSubmit, setValues,clearFields } = UseForm();
   const inputBox = {
     margin: "0 auto",
     width: "100%",
@@ -307,13 +308,30 @@ const JobSupportForm = () => {
                     sx={{
                       m: 2,
                       width: "100px",
+                      color: "#FFFFFE",
                       height: "38px",
-                      top: "17px",
+                      top: "16px",
+                      right:'10px'
+                    }}
+                    variant="contained"
+                    color="green"
+                    to="/job-supp-table"
+                    component={Link}
+                  >
+                    Go Back
+                  </Button>
+                  <Button
+                    sx={{
+                      m: 2,
+                      width: "100px",
+                      height: "38px",
+                      top: "16px",
                       color: "#094067",
                     }}
                     variant="outlined"
                     color="green"
                     type="reset"
+                    onClick={clearFields}
                   >
                     Clear
                   </Button>

@@ -77,7 +77,18 @@ const UseForm = (params) => {
     });
   };
  
-
+const clearFields = () =>{
+  setValues({
+    candidate_name: "",
+    mobile: "",
+    technology: "",
+    start_date: "",
+    followup_date: "",
+    resource: "",
+    status: "",
+    feedback: "",
+  });
+}
 
   useEffect(() => {
     fsgetRequests(dispatch);
@@ -124,7 +135,8 @@ const UseForm = (params) => {
     setValues,
     handleEdit,
     handleDelete,
-    fsrequests
+    fsrequests,
+    clearFields
   };
 };
 export default UseForm;

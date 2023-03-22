@@ -27,6 +27,7 @@ import { inputBoxAdminAction } from "../Utils/MuiStyles";
 import { ServiceFileForm, getSteps } from "./Services";
 import UserInfoForm from "./Forms/UserInfoForm";
 import ServiceInfoForm from "./Forms/ServiceInfoForm";
+import { getRequests } from "../../Context/actions";
 // import UseForm from "./UseForms";
 export const UsersActions = ({ params, rowId, setRowId }) => {
   const [loading, setLoading] = useState(false);
@@ -57,7 +58,6 @@ export const UsersActions = ({ params, rowId, setRowId }) => {
         .then((res) => res.json())
         .then((result) => {
           setOutput(result);
-          setInfo(result);
         });
     }
     console.log(output);
@@ -157,7 +157,8 @@ export const UsersActions = ({ params, rowId, setRowId }) => {
         body: JSON.stringify(output),
       });
     }
-    setsbOpen(true);
+      setsbOpen(true);
+      getRequests(dispatch);
   };
 
   const handleSubmit = async () => {
@@ -178,7 +179,7 @@ export const UsersActions = ({ params, rowId, setRowId }) => {
   useEffect(() => {
     if (rowId === params.id && success) setSuccess(false);
   }, [rowId]);
-
+  console.log("setoutput", output);
   function getStepContent(stepIndex) {
     switch (stepIndex) {
       case 0:
@@ -201,6 +202,7 @@ export const UsersActions = ({ params, rowId, setRowId }) => {
   }
 
   return (
+    <>
     <ThemeProvider theme={getMuiTheme()}>
       <Box
         sx={{
@@ -376,23 +378,29 @@ export const UsersActions = ({ params, rowId, setRowId }) => {
           </IconButton>
         </Stack>
       </Box>
-      <Snackbar
-        open={sbOpen}
-        autoHideDuration={5000}
-        anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
-        onClose={sbhandleClose}
-      >
-        <Alert
-          style={{
-            color: "white",
-            backgroundColor: "#4caf50",
-          }}
-          onClose={sbhandleClose}
-          severity="success"
-        >
-          Record updated succesfully!
-        </Alert>
-      </Snackbar>
+      
     </ThemeProvider>
+    <Snackbar
+    open={sbOpen}
+    autoHideDuration={50000}
+    anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+    onClose={sbhandleClose}
+  >
+    <Alert
+      style={{
+        color: "white",
+        backgroundColor: "#4caf50",
+        position:"absolute",
+        left:"57vw",
+        top:"-32vh",
+        zIndex:"100"
+      }}
+      onClose={sbhandleClose}
+      severity="success"
+    >
+      Record updated succesfully!
+    </Alert>
+  </Snackbar>
+  </>
   );
 };

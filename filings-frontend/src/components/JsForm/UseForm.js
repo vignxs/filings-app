@@ -10,8 +10,8 @@ const UseForm = (params) => {
     state: { fsrequests },
     dispatch,
   } = useValue();
-  
-  const [updatedRow,setUpdatedRow] = useState(null);
+
+  const [updatedRow, setUpdatedRow] = useState(null);
   const [values, setValues] = useState({
     candidate_name: "",
     mobile: "",
@@ -44,8 +44,8 @@ const UseForm = (params) => {
     resource: values.resource,
     status: values.status,
     feedback: values.feedback,
-    created_by:values.created_by,
-    updated_by:values.updated_by
+    created_by: values.created_by,
+    updated_by: values.updated_by,
   };
 
   const postData = () => {
@@ -76,41 +76,38 @@ const UseForm = (params) => {
       feedback: "",
     });
   };
- 
-const clearFields = () =>{
-  setValues({
-    candidate_name: "",
-    mobile: "",
-    technology: "",
-    start_date: "",
-    followup_date: "",
-    resource: "",
-    status: "",
-    feedback: "",
-  });
-}
+
+  const clearFields = () => {
+    setValues({
+      candidate_name: "",
+      mobile: "",
+      technology: "",
+      start_date: "",
+      followup_date: "",
+      resource: "",
+      status: "",
+      feedback: "",
+    });
+  };
 
   useEffect(() => {
     fsgetRequests(dispatch);
   }, []);
- 
+
   const handleEdit = (params) => {
     const { id, field, value } = params;
     setUpdatedRow(fsrequests);
-    const index = updatedRow.findIndex(row => row.id === id);
-    let editedRow = null
+    const index = updatedRow.findIndex((row) => row.id === id);
+    let editedRow = null;
     if (index !== -1) {
       const row = { ...updatedRow[index], [field]: value };
       const updatedValues = [...updatedRow];
       updatedValues[index] = row;
-      const newValues=updatedValues.find(row=>row.id===id)
-      editedRow=newValues
-      }
+      const newValues = updatedValues.find((row) => row.id === id);
+      editedRow = newValues;
+    }
     axios
-      .put(
-        `http://127.0.0.1:8000/api/v1/job-support-data-update`,
-        editedRow,
-      )
+      .put(`http://127.0.0.1:8000/api/v1/job-support-data-update`, editedRow)
       .then((res) => {
         console.log(res.data);
         console.log("Empdata Successfully updated");
@@ -121,20 +118,18 @@ const clearFields = () =>{
   };
 
   const handleDelete = async () => {
-    // console.log(parameter);
     const { id } = parameter.row;
-    console.log(id);
     if (window.confirm("Are you sure to delete this record?")) {
-    await axios
-      .delete(`http://127.0.0.1:8000/api/v1/job-support-data-delete/${id}`)
-      .then((res) => console.log("Employee Data Successfully deleted"))
+      await axios
+        .delete(`http://127.0.0.1:8000/api/v1/job-support-data-delete/${id}`)
+        .then((res) => console.log("Employee Data Successfully deleted"))
 
-      .catch((error) => {
-        console.log(error);
-      });
+        .catch((error) => {
+          console.log(error);
+        });
       dispatch({ type: "FSDELETE_REQUESTS", payload: id });
+      fsgetRequests(dispatch);
     }
-  
   };
 
   return {
@@ -146,7 +141,7 @@ const clearFields = () =>{
     handleDelete,
     fsrequests,
     clearFields,
-    updatedRow
+    updatedRow,
   };
 };
 export default UseForm;

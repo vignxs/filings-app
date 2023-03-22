@@ -27,9 +27,9 @@ async def job_support_data_update(request: schemas.IGS_JOB_SUPPORT_GU,  db: Sess
     return service.update_request(db=db, request=request)
 
 
-@router.delete("/job-support-data-delete")
-async def job_support_data_delete( request: schemas.IGS_JOB_SUPPORT_GU,  db: Session = Depends(get_db)):
-    return service.delete_request(db=db, request=request)
+@router.delete("/job-support-data-delete/{id}")
+async def job_support_data_delete(id: int,  db: Session = Depends(get_db)):
+    return service.delete_request(db=db, id=id)
 
 
 

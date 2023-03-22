@@ -72,7 +72,6 @@ const ServiceInfoForm = ({ userinfo, output, setOutput }) => {
                   label="Period"
                   onChange={(e) => {
                     const date = new Date(e);
-                    // Extract the year from the date
                     const year = date.getFullYear();
                     setOutput({
                       ...output,
@@ -97,7 +96,6 @@ const ServiceInfoForm = ({ userinfo, output, setOutput }) => {
                   value={output.period.month}
                   onChange={(e) => {
                     const date = new Date(e);
-                    // Extract the month and year from the date
                     const month = date.toLocaleString("default", {
                       month: "short",
                     });
@@ -243,7 +241,6 @@ const ServiceInfoForm = ({ userinfo, output, setOutput }) => {
             </Grid>
           </>
         )}
-
         {userinfo.enquired_for === "PAN Registration" && (
           <>
             <Grid style={{ display: "flex" }}>
@@ -280,7 +277,6 @@ const ServiceInfoForm = ({ userinfo, output, setOutput }) => {
             </Grid>
           </>
         )}
-
         {userinfo.enquired_for === "TAX Registration" && (
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <>
@@ -295,7 +291,6 @@ const ServiceInfoForm = ({ userinfo, output, setOutput }) => {
                   value={output.assessment_year || Date()}
                   onChange={(e) => {
                     const date = new Date(e);
-                    // Extract the year from the date
                     const year = date.getFullYear();
                     setOutput({
                       ...output,

@@ -376,7 +376,7 @@ export const UsersActions = ({ params, rowId, setRowId }) => {
       </Box>
       
     </ThemeProvider>
-    <Snackbar
+    {/* <Snackbar
             open={open}
             autoHideDuration={2000}
             anchorOrigin={{ vertical: "bottom", horizontal: "bottom" }}
@@ -401,7 +401,7 @@ export const UsersActions = ({ params, rowId, setRowId }) => {
                 Request submitted succesfully!
               </Alert>
             </Fade>
-          </Snackbar>
+          </Snackbar> */}
   </>
   );
 };

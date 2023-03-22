@@ -69,3 +69,13 @@ This command will list out the sql queries that is going to be applied. use this
 ### `alembic upgrade head`.
 
  this command will migrate the changes into database.
+
+ If you're getting this error while running `alembic upgrade head` command:
+
+ ### FAILED: Target database is not up to date.
+
+ Use the following command to use the current state of database to migrate:
+
+ ### `alembic stamp head`
+
+ Then run the `alembic upgrade head` to migrate.

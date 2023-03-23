@@ -8,7 +8,7 @@ const initialState = {
   apps : [],
   isLogged: false,
   fsrequests: [],
-  enqrequests: []
+  enqrequests: [],
   };
 
 export const Context = createContext();

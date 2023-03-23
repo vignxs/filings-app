@@ -112,7 +112,9 @@ export default function SignInComponent() {
                     onChange={handleChange}
                     sx={{
                       border: "2px solid #d8eefe",
-
+                      "& .MuiOutlinedInput-root.Mui-focused:before": {
+                        borderBottom: "2px solid blue", // Change the border-bottom property as per your preference
+                      },
                       "&:active": {
                         backgroundColor: '"#00000000"!important',
                         "&:before": {

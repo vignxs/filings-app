@@ -49,7 +49,7 @@ export default function SignInComponent() {
         // refreshTokenExpireIn: res.data.refreshTokenExpireIn, // Only if you are using refreshToken feature
       });
 
-      dispatch({ type: "LOGGED_IN", payload: false });
+      dispatch({ type: "LOGGED_IN", payload: true });
       dispatch({ type: "IS_ADMIN", payload: post_resp.is_admin });
       dispatch({ type: "APPS_ACCESS", payload: post_resp.apps });
       dispatch({ type: "CURRENT_USER", payload: post_resp.user_name });

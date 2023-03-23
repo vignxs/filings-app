@@ -12,16 +12,15 @@ import {
 } from "@mui/x-data-grid";
 import { Button, Paper } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import UseForm from "./UseForm";
 import EnqFormActions from "./EnqFormActions";
+import { useValue } from "../../Context/ContextProvider";
 
 const EnquiryFormDataTable = () => {
   const inputBox = {
     "& .MuiDataGrid-toolbarQuickFilter": {
       "& .MuiTextField-root": {
-        // m: 2,
-        // borderRadius:'15px',
         backgroundColor: "#fffffe",
         borderRadius: "2px",
         width: "70ch",
@@ -37,27 +36,19 @@ const EnquiryFormDataTable = () => {
     },
     "& .MuiDataGrid-columnHeaderTitle": {
       opacity: ".8",
-      // backgroundColor: "rgba(255, 7, 0, 0.55)",
       fontWeight: "700",
     },
     "& .MuiDataGrid-toolbarContainer ": {
-      // top: "-69px",
-      // left: "808px",
       justifyContent: "space-between",
       backgroundColor: "rgba(145, 158, 171, 0.12)",
       borderRadius: "10px",
-      // position: "relative",
     },
     "& .MuiDataGrid-main ": {
-      // top: "-38px",
-      // backgroundColor: "rgba(255, 7, 0, 0.55)",
-      // position: "relative",
     },
     margin: "0 auto",
     width: "100%",
     "& .MuiTextField-root": {
       m: 2,
-      // borderRadius:'15px',
       backgroundColor: "#fffffe",
       borderRadius: "2px",
       width: "40ch",
@@ -77,14 +68,7 @@ const EnquiryFormDataTable = () => {
     "& .MuiOutlinedInput-root": {
       borderRadius: "10px",
     },
-    // marginLeft: "70px",
     justifyContent: "center",
-    // boxShadow: `rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px`,
-    // boxShadow: `rgb(145 158 171 / 20%) 0px 0px 2px 0px, rgb(145 158 171 / 12%) 0px 12px 24px -4px`,
-    // bgcolor: "#094067",
-    // left: "-170px",
-    // top: ".8rem",
-    // width: "1300px",
     height: "700px",
     flexGrow: 1,
     position: "relative",
@@ -109,9 +93,16 @@ const EnquiryFormDataTable = () => {
         },
       },
     });
+  const {
+    state: { isLogged },
+  } = useValue();
   const [update, setUpdate] = useState(false);
   const [editId, setEditId] = useState(null);
   const { enqrequests } = UseForm();
+  const navigate = useNavigate();
+  const login = ()=>{
+    navigate('/login')
+  }
   const enqColumns = useMemo(() => [
     {
       field: "actions",
@@ -276,17 +267,15 @@ const EnquiryFormDataTable = () => {
     return (
       <GridToolbarContainer sx={{ background: "#000000" }}>
         <GridToolbarQuickFilter sx={{ marginRight: "auto" }} />
-        {/* <GridToolbarColumnsButton /> */}
         <GridToolbarFilterButton
           PopperProps={{ color: "#000000", inset: `-125px auto auto 350px` }}
           sx={{ m: 2, bgcolor: "#FFFFFF", marginLeft: "auto" }}
         />
-        {/* <GridToolbarDensitySelector /> */}
         <GridToolbarExport sx={{ m: 2, bgcolor: "#FFFFFF" }} />
       </GridToolbarContainer>
     );
   }
-  return (
+  return isLogged  ? (
     <>
       <ThemeProvider theme={getMuiTheme()}>
         <Paper elevation={3} sx={inputBox}>
@@ -359,8 +348,6 @@ const EnquiryFormDataTable = () => {
               rows={enqrequests}
               getRowId={(row) => row.id}
               rowsPerPageOptions={[10, 20, 30]}
-              //   pageSize={pageSize}
-              //   onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
               components={{ Toolbar: CustomToolbar }}
               disableColumnMenu
               componentsProps={{
@@ -373,7 +360,6 @@ const EnquiryFormDataTable = () => {
                 panel: {
                   sx: {
                     "& .MuiDataGrid-filterForm": {
-                      // inset: `-125px auto auto 350px`,
                     },
                     "& .MuiDataGrid-paper": {
                       boxShadow: "none !important",
@@ -388,10 +374,11 @@ const EnquiryFormDataTable = () => {
               }}
             />
           </Box>
-          {/* </CacheProvider> */}
         </Paper>
       </ThemeProvider>
     </>
+  ) : (
+    login()
   );
 };
 

@@ -16,6 +16,7 @@ import AddIcon from "@mui/icons-material/Add";
 import { Link } from "react-router-dom";
 import UseForm from "./UseForm";
 import JSformActions from "./JSformActions";
+import{ renderEndDateCell } from "./JScustomRender"
 
 const JobSupportDataTable = () => {
   const inputBox = {
@@ -111,7 +112,7 @@ const JobSupportDataTable = () => {
         },
       },
     });
-  const { handleEdit, fsrequests } = UseForm();
+  const { handleEdit, fsrequests} = UseForm();
   const enqColumns = useMemo(() => [
     {
       field: "actions",
@@ -220,6 +221,7 @@ const JobSupportDataTable = () => {
       headerAlign: "center",
       align: "center",
       filterable: false,
+      renderCell: renderEndDateCell
       // valueFormatter: (params) => formatDate(params.value),
       // renderCell: (params) =>
       //   moment(params.row.createdAt).format("YYYY-MM-DD HH:MM:SS"),
@@ -297,8 +299,8 @@ const JobSupportDataTable = () => {
                 to="/job-supp-form"
                 component={Link}
                 size="small"
-                color="primary"
-                sx={{ height: "30px", width: "40px" }}
+                color="secondary"
+                sx={{ height: "30px", width: "40px", color: "#FFFFFE" }}
                 startIcon={<AddIcon />}
                 onClick={window.scrollTo(0, 0)}
                 variant="contained"

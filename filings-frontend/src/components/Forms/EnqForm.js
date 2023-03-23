@@ -1,4 +1,4 @@
-import { Paper  } from "@mui/material";
+import { Paper } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import React from "react";
 import Snackbar from "@material-ui/core/Snackbar";
@@ -16,17 +16,12 @@ import { Grid } from "@mui/material";
 import green from "@material-ui/core/colors/green";
 import Button from "@mui/material/Button";
 import { Alert } from "@material-ui/lab";
-import {
-  FormControlLabel,
-  Radio,
-  RadioGroup,
-} from "@mui/material";
+import { FormControlLabel, Radio, RadioGroup } from "@mui/material";
 import { v4 as uuid } from "uuid";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-
+import Fade from "react-reveal/Fade";
 
 export const EnqForm = (props) => {
-
   const [uid, setUid] = React.useState(uuid().slice(0, 7));
   const [open, setOpen] = React.useState(false);
   const [userinfo, setInfo] = React.useState({
@@ -98,90 +93,87 @@ export const EnqForm = (props) => {
     }
   };
 
+  const API_ENDPOINT = "http://localhost:8000/api/v1";
 
+  async function userInfoPost(e) {
+    e.preventDefault();
 
- const API_ENDPOINT = "http://localhost:8000/api/v1";
+    try {
+      // Send POST request to save user info
+      const response = await fetch(`${API_ENDPOINT}/req-data`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(userinfo),
+      });
+      const newUid = uuid().slice(0, 7);
+      setUid(newUid);
 
- async function userInfoPost(e) {
-   e.preventDefault();
+      // Check response status and proceed accordingly
+      if (response.status === 200) {
+        if (userinfo.enquired_for === "GST") {
+          // Send POST request for GST info
+          await fetch(`${API_ENDPOINT}/req-gst`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(Gstinfo),
+          });
+          setGstInfo({ req_id: newUid });
+        } else if (userinfo.enquired_for === "GST Registration") {
+          // Send POST request for GST registration info
+          await fetch(`${API_ENDPOINT}/req-gst-rgst`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(newGstinfo),
+          });
+          // Generating new req_id after submission
+          setnewGstInfo({ req_id: newUid });
+        } else if (userinfo.enquired_for === "PAN Registration") {
+          // Send POST request for PAN registration info
+          await fetch(`${API_ENDPOINT}/req-pan-rgst`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(Paninfo),
+          });
 
-   try {
-     // Send POST request to save user info
-     const response = await fetch(`${API_ENDPOINT}/req-data`, {
-       method: "POST",
-       headers: { "Content-Type": "application/json" },
-       body: JSON.stringify(userinfo),
-     });
-     const newUid = uuid().slice(0, 7);
-     setUid(newUid);
+          // Generating new req_id after submission
+          setPanInfo({ req_id: newUid });
+        } else if (userinfo.enquired_for === "TAX Registration") {
+          // Send POST request for TAX registration info
+          await fetch(`${API_ENDPOINT}/req-tax-rgst`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(Taxinfo),
+          });
+          // Generating new req_id after submission
+          setTaxInfo({ req_id: newUid });
+        }
+      } else {
+        // Handle non-200 response status
+        throw new Error(`Failed to save user info: ${response.status}`);
+      }
 
-     // Check response status and proceed accordingly
-     if (response.status === 200) {
-       if (userinfo.enquired_for === "GST") {
-         // Send POST request for GST info
-         await fetch(`${API_ENDPOINT}/req-gst`, {
-           method: "POST",
-           headers: { "Content-Type": "application/json" },
-           body: JSON.stringify(Gstinfo),
-         });
-         setGstInfo({ req_id: newUid });
-       } else if (userinfo.enquired_for === "GST Registration") {
-         // Send POST request for GST registration info
-         await fetch(`${API_ENDPOINT}/req-gst-rgst`, {
-           method: "POST",
-           headers: { "Content-Type": "application/json" },
-           body: JSON.stringify(newGstinfo),
-         });
-         // Generating new req_id after submission
-         setnewGstInfo({ req_id: newUid });
-       } else if (userinfo.enquired_for === "PAN Registration") {
-         // Send POST request for PAN registration info
-         await fetch(`${API_ENDPOINT}/req-pan-rgst`, {
-           method: "POST",
-           headers: { "Content-Type": "application/json" },
-           body: JSON.stringify(Paninfo),
-         });
-
-         // Generating new req_id after submission
-         setPanInfo({ req_id: newUid });
-       } else if (userinfo.enquired_for === "TAX Registration") {
-         // Send POST request for TAX registration info
-         await fetch(`${API_ENDPOINT}/req-tax-rgst`, {
-           method: "POST",
-           headers: { "Content-Type": "application/json" },
-           body: JSON.stringify(Taxinfo),
-         });
-         // Generating new req_id after submission
-         setTaxInfo({ req_id: newUid });
-       }
-     } else {
-       // Handle non-200 response status
-       throw new Error(`Failed to save user info: ${response.status}`);
-     }
-
-     // Set submitted flag and new info object
-     setInfo({
-       req_id: newUid,
-       first_name: "vignesh",
-       last_name: "siva",
-       mobile: "7639290579",
-       email: "vignxs@gmail.com",
-       address: "15/10, mela thoopu street",
-       city: "PYR",
-       pincode: "609307",
-     });
-     setOpen(true);
-     // Clear user info and service info objects
-     // Object.keys(userinfo).forEach((key) => delete userinfo[key]);
-     // Object.keys(userinfo.serviceInfo).forEach(
-     //   (key) => delete userinfo.serviceInfo[key]
-     // );
-   } catch (error) {
-     // Handle fetch errors
-     console.error(`Error while saving user info: ${error}`);
-   }
- }
-
+      // Set submitted flag and new info object
+      setInfo({
+        req_id: newUid,
+        first_name: "vignesh",
+        last_name: "siva",
+        mobile: "7639290579",
+        email: "vignxs@gmail.com",
+        address: "15/10, mela thoopu street",
+        city: "PYR",
+        pincode: "609307",
+      });
+      setOpen(true);
+      // Clear user info and service info objects
+      // Object.keys(userinfo).forEach((key) => delete userinfo[key]);
+      // Object.keys(userinfo.serviceInfo).forEach(
+      //   (key) => delete userinfo.serviceInfo[key]
+      // );
+    } catch (error) {
+      // Handle fetch errors
+      console.error(`Error while saving user info: ${error}`);
+    }
+  }
 
   const services = [
     "GST",
@@ -192,7 +184,8 @@ export const EnqForm = (props) => {
 
   const inputBox = {
     margin: "0 auto",
-    width: "100%",
+      width: "100%",
+    
     "& .MuiAlert-icon": {
       color: "white !important", // replace with your desired color
     },
@@ -750,26 +743,32 @@ export const EnqForm = (props) => {
           </ValidatorForm>
           <Snackbar
             open={open}
-            autoHideDuration={5000}
-            anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+            autoHideDuration={2000}
+            anchorOrigin={{ vertical: "bottom", horizontal: "bottom" }}
+            style={{
+              transition: "1s",
+              float: "right",
+              left: "76.2vw",
+              top: "4.5vw",
+            }}
             onClose={handleClose}
           >
-            <Alert
-              style={{
-                color: "white",
-                backgroundColor: "#4caf50",
-              }}
-              onClose={handleClose}
-              severity="success"
-            >
-              Request submitted succesfully!
-            </Alert>
+            <Fade right>
+              <Alert
+                style={{
+                  color: "white",
+                  backgroundColor: "#4caf50",
+                  float: "right",
+                }}
+                onClose={handleClose}
+                severity="success"
+              >
+                Request submitted succesfully!
+              </Alert>
+            </Fade>
           </Snackbar>
         </ThemeProvider>
       </Paper>
     </>
   );
 };
-
-
-

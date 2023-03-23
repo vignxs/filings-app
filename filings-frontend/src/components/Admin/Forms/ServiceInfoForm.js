@@ -13,7 +13,10 @@ import React from "react";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
-const ServiceInfoForm = (userinfo, output, setOutput) => {
+
+const ServiceInfoForm = ({ userinfo, output, setOutput }) => {
+  console.log("Output  1", output);
+  console.log("services", userinfo);
   const handleBack = () => {
     return;
   };
@@ -70,7 +73,6 @@ const ServiceInfoForm = (userinfo, output, setOutput) => {
                   label="Period"
                   onChange={(e) => {
                     const date = new Date(e);
-                    // Extract the year from the date
                     const year = date.getFullYear();
                     setOutput({
                       ...output,
@@ -95,7 +97,6 @@ const ServiceInfoForm = (userinfo, output, setOutput) => {
                   value={output.period.month}
                   onChange={(e) => {
                     const date = new Date(e);
-                    // Extract the month and year from the date
                     const month = date.toLocaleString("default", {
                       month: "short",
                     });
@@ -144,6 +145,7 @@ const ServiceInfoForm = (userinfo, output, setOutput) => {
         {userinfo.enquired_for === "GST Registration" && (
           <>
             <Grid sx={{ display: "flex" }}>
+              {console.log("output", output)}
               <TextValidator
                 label="Company name"
                 size="small"
@@ -240,7 +242,6 @@ const ServiceInfoForm = (userinfo, output, setOutput) => {
             </Grid>
           </>
         )}
-
         {userinfo.enquired_for === "PAN Registration" && (
           <>
             <Grid style={{ display: "flex" }}>
@@ -277,7 +278,6 @@ const ServiceInfoForm = (userinfo, output, setOutput) => {
             </Grid>
           </>
         )}
-
         {userinfo.enquired_for === "TAX Registration" && (
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <>
@@ -292,7 +292,6 @@ const ServiceInfoForm = (userinfo, output, setOutput) => {
                   value={output.assessment_year || Date()}
                   onChange={(e) => {
                     const date = new Date(e);
-                    // Extract the year from the date
                     const year = date.getFullYear();
                     setOutput({
                       ...output,

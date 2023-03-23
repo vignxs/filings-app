@@ -22,7 +22,6 @@ import { inputBox } from "../Utils/MuiStyles";
 // inspiration
 // https://www.figcomponents.com?id=62cf946b12847cc9ecafe6b2
 
-// import userContext  from "../Context";
 const muiCache = createCache({
   key: "mui-datatables",
   prepend: true,
@@ -53,10 +52,10 @@ export const EnqAdmin = (props) => {
     dispatch,
   } = useValue();
 
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    return date.toLocaleString();
-  };
+  //   const formatDate = (dateString) => {
+  //     const date = new Date(dateString);
+  //     return date.toLocaleString();
+  //   };
   const [pageSize, setPageSize] = useState(10);
   const [rowId, setRowId] = useState(null);
   const enqColumns = useMemo(
@@ -125,6 +124,41 @@ export const EnqAdmin = (props) => {
         valueOptions: ["In-Progress", "Created", "Closed"],
         editable: true,
         filterable: false,
+        renderCell: (params) => {
+          const status = params.value;
+          const color =
+            status === "Closed"
+              ? "#ff000036"
+              : status == "In-Progress"
+              ? "#fff1d6"
+              : status == "Created" || status == "created"
+              ? "#00800036"
+              : "";
+          const textColor =
+            status === "Closed"
+              ? "red"
+              : status == "In-Progress"
+              ? "#be7a14"
+              : status == "Created" || status == "created"
+              ? "green"
+              : "";
+          return (
+            <div
+              style={{
+                color: textColor,
+                backgroundColor: color,
+                border: "1px",
+                padding: "5px",
+                borderRadius: "5px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              {status}
+            </div>
+          );
+        },
         // currentUser?.role === "admin",
       },
       {
@@ -233,13 +267,13 @@ export const EnqAdmin = (props) => {
               to="/enq-form"
               component={Link}
               size="small"
-              color="primary"
-              sx={{ height: "30px", width: "40px" }}
+              color="secondary"
+              sx={{ height: "30px", width: "170px", color: "#FFFFFE" }}
               startIcon={<AddIcon />}
               onClick={window.scrollTo(0, 0)}
               variant="contained"
             >
-              Add
+              create request
             </Button>
           </div>
         </div>

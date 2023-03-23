@@ -54,7 +54,7 @@ export default function SignInComponent() {
       dispatch({ type: "APPS_ACCESS", payload: post_resp.apps });
       dispatch({ type: "CURRENT_USER", payload: post_resp.user_name });
 
-      navigate("/");
+      navigate("/enq-admin");
     }
   };
 

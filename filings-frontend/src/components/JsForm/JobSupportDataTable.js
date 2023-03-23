@@ -12,12 +12,20 @@ import {
 } from "@mui/x-data-grid";
 import { Button, Paper } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import UseForm from "./UseForm";
 import JSformActions from "./JSformActions";
 import { renderEndDateCell } from "./JScustomRender";
+import { useValue } from "../../Context/ContextProvider";
 
 const JobSupportDataTable = () => {
+  const {
+    state: { isLogged },
+  } = useValue();
+  const navigate = useNavigate();
+  const login = () => {
+    navigate("/login");
+  };
   const inputBox = {
     "& .MuiDataGrid-toolbarQuickFilter": {
       "& .MuiTextField-root": {
@@ -219,7 +227,7 @@ const JobSupportDataTable = () => {
     );
   }
 
-  return (
+  return isLogged ? (
     <>
       <ThemeProvider theme={getMuiTheme()}>
         <Paper elevation={3} sx={inputBox}>
@@ -321,6 +329,8 @@ const JobSupportDataTable = () => {
         </Paper>
       </ThemeProvider>
     </>
+  ) : (
+    login()
   );
 };
 

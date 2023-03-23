@@ -1,4 +1,11 @@
-import { Box, Checkbox, Chip, FormGroup, OutlinedInput, Paper  } from "@mui/material";
+import {
+  Box,
+  Checkbox,
+  Chip,
+  FormGroup,
+  OutlinedInput,
+  Paper,
+} from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import React from "react";
 import Snackbar from "@material-ui/core/Snackbar";
@@ -14,9 +21,9 @@ import { Grid } from "@mui/material";
 import green from "@material-ui/core/colors/green";
 import Button from "@mui/material/Button";
 import { Alert } from "@material-ui/lab";
-import {
-  FormControlLabel,
-} from "@mui/material";
+import { FormControlLabel } from "@mui/material";
+import { useValue } from "../../Context/ContextProvider";
+import { useNavigate } from "react-router-dom";
 
 function getStyles(name, personName, theme) {
   return {
@@ -27,9 +34,15 @@ function getStyles(name, personName, theme) {
   };
 }
 
-
 export const UserCreateForm = (props) => {
-      const names  =  ["Filings", "Admin", "Job-Support", "Course-Enquiry"];
+  const {
+    state: { isLogged },
+  } = useValue();
+  const navigate = useNavigate();
+  const login = () => {
+    navigate("/login");
+  };
+  const names = ["Filings", "Admin", "Job-Support", "Course-Enquiry"];
 
   const [open, setOpen] = React.useState(false);
   const [userinfo, setInfo] = React.useState({
@@ -63,19 +76,16 @@ export const UserCreateForm = (props) => {
     }
   };
 
+  async function userInfoPost(e) {
+    e.preventDefault();
+    console.log(userinfo);
 
-
-
- async function userInfoPost(e) {
-   e.preventDefault();
-     console.log(userinfo);
-
-     await fetch("http://127.0.0.1:8000/api/admin-register", {
-       method: "POST",
-       headers: { "Content-Type": "application/json" },
-       body: JSON.stringify(userinfo),
-     });
-   };
+    await fetch("http://127.0.0.1:8000/api/admin-register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(userinfo),
+    });
+  }
 
   const inputBox = {
     margin: "0 auto",
@@ -139,7 +149,7 @@ export const UserCreateForm = (props) => {
     },
   });
 
-  return (
+  return isLogged ? (
     <>
       <Paper elevation={3} sx={inputBox}>
         <div
@@ -350,8 +360,7 @@ export const UserCreateForm = (props) => {
         </ThemeProvider>
       </Paper>
     </>
+  ) : (
+    login()
   );
 };
-
-
-

@@ -23,7 +23,8 @@ import UseForm from "./UseForm";
 const JobSupportForm = () => {
   const [sdate, setSdate] = React.useState(null);
   const [fdate, setFdate] = React.useState(null);
-  const { values, handleChange, handleSubmit, setValues,clearFields } = UseForm();
+  const { values, handleChange, handleSubmit, setValues, clearFields } =
+    UseForm();
   const inputBox = {
     margin: "0 auto",
     width: "100%",
@@ -311,7 +312,7 @@ const JobSupportForm = () => {
                       color: "#FFFFFE",
                       height: "38px",
                       top: "16px",
-                      right:'10px'
+                      right: "10px",
                     }}
                     variant="contained"
                     color="green"

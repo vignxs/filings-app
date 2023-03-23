@@ -173,10 +173,34 @@ export const EnqForm = (props) => {
      // Object.keys(userinfo.serviceInfo).forEach(
      //   (key) => delete userinfo.serviceInfo[key]
      // );
-     } catch (error) {
+   } catch (error) {
      // Handle fetch errors
      console.error(`Error while saving user info: ${error}`);
    }
+ }
+
+
+      // Set submitted flag and new info object
+      setInfo({
+        req_id: newUid,
+        first_name: "vignesh",
+        last_name: "siva",
+        mobile: "7639290579",
+        email: "vignxs@gmail.com",
+        address: "15/10, mela thoopu street",
+        city: "PYR",
+        pincode: "609307",
+      });
+      setOpen(true);
+      // Clear user info and service info objects
+      // Object.keys(userinfo).forEach((key) => delete userinfo[key]);
+      // Object.keys(userinfo.serviceInfo).forEach(
+      //   (key) => delete userinfo.serviceInfo[key]
+      // );
+    } catch (error) {
+      // Handle fetch errors
+      console.error(`Error while saving user info: ${error}`);
+    }
   }
 
   const services = [

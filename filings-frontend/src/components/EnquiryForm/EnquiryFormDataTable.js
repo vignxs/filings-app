@@ -109,9 +109,7 @@ const EnquiryFormDataTable = () => {
         },
       },
     });
-  const [update, setUpdate] = useState(false);
-  const [editId, setEditId] = useState(null);
-  const { enqrequests } = UseForm();
+  const { handleEdit, enqrequests } = UseForm();
   const enqColumns = useMemo(() => [
     {
       field: "actions",
@@ -119,9 +117,7 @@ const EnquiryFormDataTable = () => {
       type: "actions",
       width: 80,
       filterable: true,
-      renderCell: (params) => (
-        <EnqFormActions {...{ params, update, setUpdate, editId, setEditId }} />
-      ),
+      renderCell: (params) => <EnqFormActions {...{ params }} />,
     },
     {
       field: "id",
@@ -382,10 +378,7 @@ const EnquiryFormDataTable = () => {
                   },
                 },
               }}
-              onCellEditCommit={(params) => {
-                setEditId(params.id);
-                setUpdate(true);
-              }}
+              onCellEditCommit={handleEdit}
             />
           </Box>
           {/* </CacheProvider> */}

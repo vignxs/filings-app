@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
+import createCache from "@emotion/cache";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useMemo } from "react";
 import {
@@ -15,12 +16,14 @@ import AddIcon from "@mui/icons-material/Add";
 import { Link } from "react-router-dom";
 import UseForm from "./UseForm";
 import JSformActions from "./JSformActions";
-import { renderEndDateCell } from "./JScustomRender";
+import{ renderEndDateCell } from "./JScustomRender"
 
 const JobSupportDataTable = () => {
   const inputBox = {
     "& .MuiDataGrid-toolbarQuickFilter": {
       "& .MuiTextField-root": {
+        // m: 2,
+        // borderRadius:'15px',
         backgroundColor: "#fffffe",
         borderRadius: "2px",
         width: "70ch",
@@ -36,18 +39,27 @@ const JobSupportDataTable = () => {
     },
     "& .MuiDataGrid-columnHeaderTitle": {
       opacity: ".8",
+      // backgroundColor: "rgba(255, 7, 0, 0.55)",
       fontWeight: "700",
     },
     "& .MuiDataGrid-toolbarContainer ": {
+      // top: "-69px",
+      // left: "808px",
       justifyContent: "space-between",
       backgroundColor: "rgba(145, 158, 171, 0.12)",
       borderRadius: "10px",
+      // position: "relative",
     },
-    "& .MuiDataGrid-main ": {},
+    "& .MuiDataGrid-main ": {
+      // top: "-38px",
+      // backgroundColor: "rgba(255, 7, 0, 0.55)",
+      // position: "relative",
+    },
     margin: "0 auto",
     width: "100%",
     "& .MuiTextField-root": {
       m: 2,
+      // borderRadius:'15px',
       backgroundColor: "#fffffe",
       borderRadius: "2px",
       width: "40ch",
@@ -67,7 +79,14 @@ const JobSupportDataTable = () => {
     "& .MuiOutlinedInput-root": {
       borderRadius: "10px",
     },
+    // marginLeft: "70px",
     justifyContent: "center",
+    // boxShadow: `rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px`,
+    // boxShadow: `rgb(145 158 171 / 20%) 0px 0px 2px 0px, rgb(145 158 171 / 12%) 0px 12px 24px -4px`,
+    // bgcolor: "#094067",
+    // left: "-170px",
+    // top: ".8rem",
+    // width: "1300px",
     height: "700px",
     flexGrow: 1,
     position: "relative",
@@ -75,6 +94,7 @@ const JobSupportDataTable = () => {
     padding: "30px",
   };
 
+  const date = new Date();
   const getMuiTheme = () =>
     createTheme({
       palette: {
@@ -92,9 +112,7 @@ const JobSupportDataTable = () => {
         },
       },
     });
-  const [update, setUpdate] = useState(false);
-  const [editId, setEditId] = useState(null);
-  const { fsrequests } = UseForm();
+  const { handleEdit, fsrequests} = UseForm();
   const enqColumns = useMemo(() => [
     {
       field: "actions",
@@ -102,9 +120,7 @@ const JobSupportDataTable = () => {
       type: "actions",
       width: 80,
       filterable: true,
-      renderCell: (params) => (
-        <JSformActions {...{ params, update, setUpdate, editId, setEditId }} />
-      ),
+      renderCell: (params) => <JSformActions {...{ params }} />,
     },
     {
       field: "id",
@@ -182,6 +198,7 @@ const JobSupportDataTable = () => {
         "Waiting For Response",
       ],
       filterable: false,
+      // currentUser?.role === "admin",
     },
     {
       field: "feedback",
@@ -191,6 +208,10 @@ const JobSupportDataTable = () => {
       headerAlign: "center",
       filterable: false,
       align: "center",
+      // valueFormatter: (params) => formatDate(params.value),
+      // renderCell: (params) =>
+      //   moment(params.row.createdAt).format("YYYY-MM-DD HH:MM:SS"),
+      // currentUser?.role === "admin",
     },
     {
       field: "followup_date",
@@ -200,7 +221,11 @@ const JobSupportDataTable = () => {
       headerAlign: "center",
       align: "center",
       filterable: false,
-      renderCell: renderEndDateCell,
+      renderCell: renderEndDateCell
+      // valueFormatter: (params) => formatDate(params.value),
+      // renderCell: (params) =>
+      //   moment(params.row.createdAt).format("YYYY-MM-DD HH:MM:SS"),
+      // currentUser?.role === "admin",
     },
   ]);
 
@@ -284,6 +309,7 @@ const JobSupportDataTable = () => {
               </Button>
             </div>
           </div>
+          {/* <CacheProvider value={muiCache}> */}
           <Box height={595}>
             <DataGrid
               sx={{ border: 0 }}
@@ -291,6 +317,8 @@ const JobSupportDataTable = () => {
               rows={fsrequests}
               getRowId={(row) => row.id}
               rowsPerPageOptions={[10, 20, 30]}
+              //   pageSize={pageSize}
+              //   onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
               components={{ Toolbar: CustomToolbar }}
               disableColumnMenu
               componentsProps={{
@@ -312,12 +340,10 @@ const JobSupportDataTable = () => {
                   },
                 },
               }}
-              onCellEditCommit={(params) => {
-                setEditId(params.id);
-                setUpdate(true);
-              }}
+              onCellEditCommit={handleEdit}
             />
           </Box>
+          {/* </CacheProvider> */}
         </Paper>
       </ThemeProvider>
     </>

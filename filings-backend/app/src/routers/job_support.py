@@ -17,12 +17,12 @@ async def job_support_data(request: schemas.IGS_JOB_SUPPORT,  db: Session = Depe
     return service.create_request(db=db, request=request)
 
 
-@router.get("/job-support-data-all", response_model=List[schemas.IGS_JOB_SUPPORT_GU])
+@router.get("/job-support-data-all")
 def job_support_data(db: Session = Depends(get_db)):
     return service.get_requests(db=db)
 
 
-@router.put("/job-support-data-update")  # response_model=schemas.IGS_REQ_DATA)
+@router.put("/job-support-data-update")
 async def job_support_data_update(request: schemas.IGS_JOB_SUPPORT_GU,  db: Session = Depends(get_db)):
     return service.update_request(db=db, request=request)
 

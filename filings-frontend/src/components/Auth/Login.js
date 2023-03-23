@@ -113,15 +113,17 @@ export default function SignInComponent() {
                   <TextField
                     required
                     fullWidth
-                    name="ema il"
-                    label="Em ail"
-                    type="e mail"
+                    name="email"
+                    label="Email"
+                    type="email"
                     variant="filled"
                     value={values.email}
                     onChange={handleChange}
                     sx={{
-                      border: "1px solid #d8eefe",
-
+                      border: "2px solid #d8eefe",
+                      "& .MuiOutlinedInput-root.Mui-focused:before": {
+                        borderBottom: "2px solid blue", // Change the border-bottom property as per your preference
+                      },
                       "&:active": {
                         backgroundColor: '"#00000000"!important',
                         "&:before": {
@@ -130,7 +132,7 @@ export default function SignInComponent() {
                         },
                       },
                       "&:hover": {
-                        border: "1px solid blue",
+                        border: "2px solid #3da9fc",
                         backgroundColor: '"#00000000"!important',
                         "& .css-2y464i-MuiInputBase-root-MuiFilledInput-root": {
                           "&:before": {
@@ -140,9 +142,9 @@ export default function SignInComponent() {
                       },
                       "&:hover:before": { borderBottom: "0px" },
 
-                      borderRadius: "20px 20px 0px 0px",
+                      borderRadius: "10px 10px 0px 0px",
                       "& .css-2y464i-MuiInputBase-root-MuiFilledInput-root": {
-                        backgroundColor: "#00000000",
+                        borderRadius: "10px 10px 0px 0px",
 
                         "before:& .css-2y464i-MuiInputBase-root-MuiFilledInput-root":
                           {
@@ -162,11 +164,11 @@ export default function SignInComponent() {
                     value={values.password}
                     onChange={handleChange}
                     label="Password"
-                    type="pass word"
+                    type="password"
                     name="password"
                     variant="filled"
                     sx={{
-                      border: "1px solid #d8eefe",
+                      border: "2px solid #d8eefe",
 
                       "&:active": {
                         "&:before": {
@@ -174,7 +176,7 @@ export default function SignInComponent() {
                         },
                       },
                       "&:hover": {
-                        border: "1px solid blue",
+                        border: "2px solid #3da9fc",
 
                         "& .css-2y464i-MuiInputBase-root-MuiFilledInput-root": {
                           "&:before": {
@@ -184,9 +186,9 @@ export default function SignInComponent() {
                       },
                       "&:hover:before": { borderBottom: "0px" },
 
-                      borderRadius: "0px 0px 20px 20px",
+                      borderRadius: "0px 0px 10px 10px",
                       "& .css-2y464i-MuiInputBase-root-MuiFilledInput-root": {
-                        backgroundColor: "#00000000",
+                        borderRadius: "0px 0px 10px 10px",
 
                         "before:& .css-2y464i-MuiInputBase-root-MuiFilledInput-root":
                           {

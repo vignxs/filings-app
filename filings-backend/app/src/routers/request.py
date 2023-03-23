@@ -14,7 +14,7 @@ router = APIRouter(
 async def request_data(request:schemas.IGS_REQ_DATA,  db: Session = Depends(get_db)):
     return service.create_request(db=db , request=request)
 
-@router.get("/req-data-all", response_model=List[schemas.IGS_REQ_DATA])
+@router.get("/req-data-all")
 def request_data(db: Session = Depends(get_db)):
     return service.get_requests(db=db) 
 
@@ -31,13 +31,11 @@ async def request_data_delete(request:schemas.IGS_REQ_DATA,  db: Session = Depen
 async def service_data(request: schemas.IGS_REQ_SERVICES,  db: Session = Depends(get_db)):
     return service.create_service(db=db, request=request)
 
-@router.get("/req-services-all", response_model=List[schemas.IGS_REQ_SERVICES])
+@router.get("/req-services-all")
 def service_data(db: Session = Depends(get_db)):
     return service.get_service(db=db)
 
 
 @router.put("/req-services-update") 
 async def service_data_update(request: schemas.IGS_REQ_SERVICES,  db: Session = Depends(get_db)):
-
     return service.update_service(db=db, request=request)
-

@@ -14,7 +14,7 @@ router = APIRouter(
 async def course_enquiry(request:schemas.IGS_COURSE_ENQ,  db: Session = Depends(get_db)):
     return service.create_course_enquiry(db=db , request=request)
 
-@router.get("/course-enquiry-all", response_model=List[schemas.IGS_COURSE_ENQ_ID])
+@router.get("/course-enquiry-all")
 def request_course_enquiry(db: Session = Depends(get_db)):
     return service.get_course_enquiry(db=db)
 

@@ -3,12 +3,15 @@ import reducer from "./reducer";
 
 const initialState = {
   requests: [],
-  isAdmin:0,
+  users: [],
+  isAdmin: 0,
   currentUser : "",
   apps : [],
   isLogged: false,
   fsrequests: [],
-  enqrequests: []
+  enqrequests: [],
+  home:false,
+  sidebarState:false,
   };
 
 export const Context = createContext();

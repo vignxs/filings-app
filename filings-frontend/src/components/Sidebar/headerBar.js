@@ -10,7 +10,7 @@ import Toolbar from "@mui/material/Toolbar";
 import List from "@mui/material/List";
 import CssBaseline from "@mui/material/CssBaseline";
 import Typography from "@mui/material/Typography";
-import Divider from "@mui/material/Divider";
+import Divider, { dividerClasses } from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
@@ -98,7 +98,7 @@ const Drawer = styled(MuiDrawer, {
 export default function HeaderBar(props) {
 
   const {
-    state: { isLogged, apps, currentUser },
+    state: { isLogged, apps, currentUser,headerbar,home },
     dispatch,
   } = useValue();
 const [currentApp, setCurrentApp] = React.useState(apps[0]);
@@ -204,13 +204,13 @@ const ButtonGroup = () => {
     </>
   );
 };
-
   return (
+    <div>
     <ThemeProvider theme={theme}>
       <Box sx={{ display: "flex", flexGrow: 1 }}>
         <CssBaseline />
         <AppBar
-          sx={{ display: isLogged === true ? "none" : "block" }}
+          sx={{ display: home||isLogged === true ? "none" : "block" }}
           position="fixed"
           color="background"
           open={open}
@@ -275,7 +275,7 @@ const ButtonGroup = () => {
           transitionDuration={500}
           variant="permanent"
           sx={{
-            display: isLogged === true ? "none" : "block",
+            display: home||isLogged === true ? "none" : "block",
             "& .MuiDrawer-paper": {
               backgroundColor: "#d8eefe",
             },
@@ -357,5 +357,6 @@ const ButtonGroup = () => {
         </Box>
       </Box>
     </ThemeProvider>
+    </div>
   );
 }

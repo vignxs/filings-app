@@ -26,6 +26,11 @@ const reducer = (state, action) => {
         ...state,
         requests: action.payload,
       };
+    case "UPDATE_USERS":
+        return {
+          ...state,
+          users: action.payload,
+        };
     case "OPEN_SIDEBAR":
       return {
         ...state,
@@ -75,5 +80,6 @@ const reducer = (state, action) => {
       throw new Error("No action matched");
   }
 };
+
 
 export default reducer;

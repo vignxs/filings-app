@@ -15,7 +15,7 @@ import {
 import { UsersActions } from "./AdminActions";
 import { Button, Paper } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useValue } from "../../Context/ContextProvider";
 import { getRequests } from "../../Context/actions";
 import { inputBox } from "../Utils/MuiStyles";
@@ -28,6 +28,13 @@ const muiCache = createCache({
 });
 
 export const EnqAdmin = (props) => {
+  const {
+    state: { isLogged },
+  } = useValue();
+  const navigate = useNavigate();
+  const login = () => {
+    navigate("/login");
+  };
   const date = new Date();
   const getMuiTheme = () =>
     createTheme({
@@ -212,7 +219,7 @@ export const EnqAdmin = (props) => {
       </GridToolbarContainer>
     );
   }
-  return (
+  return isLogged ? (
     <ThemeProvider theme={getMuiTheme()}>
       <Paper elevation={3} sx={inputBox}>
         <div
@@ -317,5 +324,7 @@ export const EnqAdmin = (props) => {
         </CacheProvider>
       </Paper>
     </ThemeProvider>
+  ) : (
+    login()
   );
 };

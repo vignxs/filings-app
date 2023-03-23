@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { CircularProgress,Stack, IconButton } from "@mui/material";
+import { CircularProgress, Stack, IconButton } from "@mui/material";
 import {
   DeleteOutlined,
   CheckOutlined,
@@ -9,9 +9,18 @@ import {
 } from "@mui/icons-material";
 import { green } from "@mui/material/colors";
 import UseForm from "./UseForm";
-
-const EnqFormActions = ({ params,update, setUpdate, editId }) => {
-  const { handleDelete, success, loading, handleEdit, handleSuccess } = UseForm(params);
+import { useValue } from "../../Context/ContextProvider";
+import { useNavigate } from "react-router-dom";
+const EnqFormActions = ({ params, update, setUpdate, editId }) => {
+  const { handleDelete, success, loading, handleEdit, handleSuccess } =
+    UseForm(params);
+  const navigate = useNavigate();
+  const {
+    state: { isLogged },
+  } = useValue();
+  const login = () => {
+    navigate("/login");
+  };
   const getMuiTheme = () =>
     createTheme({
       palette: {
@@ -29,7 +38,7 @@ const EnqFormActions = ({ params,update, setUpdate, editId }) => {
         },
       },
     });
-  return (
+  return isLogged ? (
     <>
       <ThemeProvider theme={getMuiTheme()}>
         <Box
@@ -39,7 +48,7 @@ const EnqFormActions = ({ params,update, setUpdate, editId }) => {
           }}
         >
           <Stack spacing={0} direction="row">
-          {success && (
+            {success && (
               <IconButton
                 size="small"
                 color="primary"
@@ -100,6 +109,8 @@ const EnqFormActions = ({ params,update, setUpdate, editId }) => {
         </Box>
       </ThemeProvider>
     </>
+  ) : (
+    login()
   );
 };
 

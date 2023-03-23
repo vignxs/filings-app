@@ -12,7 +12,7 @@ import {
 } from "@mui/x-data-grid";
 import { Button, Paper } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
-import { Link,useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import UseForm from "./UseForm";
 import EnqFormActions from "./EnqFormActions";
 import { useValue } from "../../Context/ContextProvider";
@@ -43,8 +43,7 @@ const EnquiryFormDataTable = () => {
       backgroundColor: "rgba(145, 158, 171, 0.12)",
       borderRadius: "10px",
     },
-    "& .MuiDataGrid-main ": {
-    },
+    "& .MuiDataGrid-main ": {},
     margin: "0 auto",
     width: "100%",
     "& .MuiTextField-root": {
@@ -100,9 +99,9 @@ const EnquiryFormDataTable = () => {
   const [editId, setEditId] = useState(null);
   const { enqrequests } = UseForm();
   const navigate = useNavigate();
-  const login = ()=>{
-    navigate('/login')
-  }
+  const login = () => {
+    navigate("/login");
+  };
   const enqColumns = useMemo(() => [
     {
       field: "actions",
@@ -275,7 +274,7 @@ const EnquiryFormDataTable = () => {
       </GridToolbarContainer>
     );
   }
-  return isLogged  ? (
+  return isLogged ? (
     <>
       <ThemeProvider theme={getMuiTheme()}>
         <Paper elevation={3} sx={inputBox}>
@@ -359,8 +358,7 @@ const EnquiryFormDataTable = () => {
                 },
                 panel: {
                   sx: {
-                    "& .MuiDataGrid-filterForm": {
-                    },
+                    "& .MuiDataGrid-filterForm": {},
                     "& .MuiDataGrid-paper": {
                       boxShadow: "none !important",
                     },

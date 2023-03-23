@@ -22,12 +22,19 @@ import {
 } from "@mui/icons-material";
 import { green } from "@mui/material/colors";
 import { useValue } from "../../Context/ContextProvider";
+import { useNavigate } from "react-router-dom";
 
 // import UseForm from "./UseForms";
 export const UsersActions = ({ params, rowId, setRowId }) => {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
-
+  const {
+    state: { isLogged },
+  } = useValue();
+  const navigate = useNavigate();
+  const login = () => {
+    navigate("/login");
+  };
 
   const getMuiTheme = () =>
     createTheme({
@@ -46,7 +53,6 @@ export const UsersActions = ({ params, rowId, setRowId }) => {
         },
       },
     });
-
 
   const { dispatch } = useValue();
 
@@ -85,7 +91,7 @@ export const UsersActions = ({ params, rowId, setRowId }) => {
     if (rowId === params.id && success) setSuccess(false);
   }, [rowId]);
 
-  return (
+  return isLogged ? (
     <>
       <ThemeProvider theme={getMuiTheme()}>
         <Box
@@ -148,5 +154,7 @@ export const UsersActions = ({ params, rowId, setRowId }) => {
         </Box>
       </ThemeProvider>
     </>
+  ) : (
+    login()
   );
 };

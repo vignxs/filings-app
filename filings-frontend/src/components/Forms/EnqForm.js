@@ -19,9 +19,12 @@ import { Alert } from "@material-ui/lab";
 import { FormControlLabel, Radio, RadioGroup } from "@mui/material";
 import { v4 as uuid } from "uuid";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import Fade from "react-reveal/Fade";
 
+import { getRequests } from "../../Context/actions";
+import { useValue } from "../../Context/ContextProvider";
+import Fade from "react-reveal/Fade";
 export const EnqForm = (props) => {
+  const { dispatch } = useValue();
   const [uid, setUid] = React.useState(uuid().slice(0, 7));
   const [open, setOpen] = React.useState(false);
   const [userinfo, setInfo] = React.useState({
@@ -135,22 +138,47 @@ export const EnqForm = (props) => {
             body: JSON.stringify(Paninfo),
           });
 
-          // Generating new req_id after submission
-          setPanInfo({ req_id: newUid });
-        } else if (userinfo.enquired_for === "TAX Registration") {
-          // Send POST request for TAX registration info
-          await fetch(`${API_ENDPOINT}/req-tax-rgst`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(Taxinfo),
-          });
-          // Generating new req_id after submission
-          setTaxInfo({ req_id: newUid });
-        }
-      } else {
-        // Handle non-200 response status
-        throw new Error(`Failed to save user info: ${response.status}`);
-      }
+         // Generating new req_id after submission
+         setPanInfo({ req_id: newUid });
+       } else if (userinfo.enquired_for === "TAX Registration") {
+         // Send POST request for TAX registration info
+         await fetch(`${API_ENDPOINT}/req-tax-rgst`, {
+           method: "POST",
+           headers: { "Content-Type": "application/json" },
+           body: JSON.stringify(Taxinfo),
+         });
+         // Generating new req_id after submission
+         setTaxInfo({ req_id: newUid });
+       }
+     } else {
+       // Handle non-200 response status
+       throw new Error(`Failed to save user info: ${response.status}`);
+     }
+
+     // Set submitted flag and new info object
+     setInfo({
+       req_id: newUid,
+       first_name: "vignesh",
+       last_name: "siva",
+       mobile: "7639290579",
+       email: "vignxs@gmail.com",
+       address: "15/10, mela thoopu street",
+       city: "PYR",
+       pincode: "609307",
+     });
+     setOpen(true);
+     getRequests(dispatch)
+     // Clear user info and service info objects
+     // Object.keys(userinfo).forEach((key) => delete userinfo[key]);
+     // Object.keys(userinfo.serviceInfo).forEach(
+     //   (key) => delete userinfo.serviceInfo[key]
+     // );
+   } catch (error) {
+     // Handle fetch errors
+     console.error(`Error while saving user info: ${error}`);
+   }
+ }
+
 
       // Set submitted flag and new info object
       setInfo({

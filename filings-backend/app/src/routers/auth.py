@@ -39,7 +39,7 @@ async def register(user:schemas.AdminUser,  db: Session = Depends(get_db)):
 		raise HTTPException(status_code=401, detail='Email already exists')
 	return service.create_admin_user(db=db, user=user)
 
-@router.get("/users-data-all") #response_model=List[schemas.User_GU])
+@router.get("/users-data-all")
 def user(db: Session = Depends(get_db)):
     return service.get_user(db=db)
 

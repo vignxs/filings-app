@@ -750,6 +750,7 @@ export const EnqForm = (props) => {
               float: "right",
               left: "76.2vw",
               top: "4.5vw",
+              zIndex: 20,
             }}
             onClose={handleClose}
           >
@@ -759,6 +760,7 @@ export const EnqForm = (props) => {
                   color: "white",
                   backgroundColor: "#4caf50",
                   float: "right",
+                  zIndex: 20,
                 }}
                 onClose={handleClose}
                 severity="success"

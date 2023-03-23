@@ -1,1 +1,0 @@
-### IGS Automation Platform

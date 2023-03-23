@@ -10,6 +10,7 @@ import { Grid } from "@mui/material";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
+    zIndex: 10,
   },
   title: {
     flexGrow: 1,
@@ -55,9 +56,9 @@ function HomePage() {
   const { state, dispatch } = useValue();
 
   // Set the state for the home page
-  React.useEffect(() => {
-    dispatch({ type: "HOME", payload: true });
-  }, []);
+  //   React.useEffect(() => {
+  //     dispatch({ type: "HOME", payload: true });
+  //   }, []);
 
   return (
     <div className={classes.root}>
@@ -153,7 +154,7 @@ function HomePage() {
             src={courseEnq}
           />
         </div>
-        <motion.Button
+        <motion.button
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{
@@ -166,7 +167,7 @@ function HomePage() {
           className={classes.heroButton}
         >
           Sign In
-        </motion.Button>
+        </motion.button>
       </div>
     </div>
   );

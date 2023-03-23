@@ -62,7 +62,7 @@ export default function SignInComponent() {
         isLoggedIn:true,
       })
 
-      navigate("/");
+      navigate("/enq-admin");
     }
   };
  const loginStatus = useSelector((state)=>state.login.value)

@@ -1,6 +1,6 @@
 import { Grid } from "@mui/material";
 import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
-import React, { useState } from "react";
+import React from "react";
 
 const UserInfoForm = ({ params, setInfo, userinfo }) => {
     console.log("user data",userinfo)
@@ -8,7 +8,6 @@ const UserInfoForm = ({ params, setInfo, userinfo }) => {
     const { name, value } = e.target;
     setInfo((prev) => ({ ...prev, [name]: value }));
   };
-
   return (
     <ValidatorForm onSubmit={""}>
       <Grid
@@ -30,7 +29,6 @@ const UserInfoForm = ({ params, setInfo, userinfo }) => {
         <Grid style={{ display: "flex" }}>
           <TextValidator
             key={1}
-            // autoFocus
             label="First name"
             size="small"
             type="text"
@@ -66,7 +64,6 @@ const UserInfoForm = ({ params, setInfo, userinfo }) => {
             onChange={(e) => setInfo({ ...userinfo, email: e.target.value })}
             name="email"
             size="small"
-            // required={true}
             value={userinfo.email}
             validators={["isEmail"]}
             errorMessages={["email is not valid"]}

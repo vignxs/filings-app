@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from datetime import datetime
 
 class User(BaseModel):
 	email: str
@@ -20,3 +21,15 @@ class AdminUser(BaseModel):
 	user_name : str
 	is_admin : bool 
 	apps : list 
+	
+
+class User_GU(BaseModel):
+	user_id: int
+	user_name: str
+	email: str
+	password: str
+	active_flag: bool
+	is_admin: bool
+	apps: list
+	created_at: datetime
+	updated_at: datetime

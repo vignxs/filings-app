@@ -14,7 +14,7 @@ import JobSupportDataTable from './components/JsForm/JobSupportDataTable';
 import { AdminList } from "./components/AppAdmin/AdminList";
 import { UserCreateForm } from "./components/Forms/UserCreate";
 import EnquiryFormDataTable from "./components/EnquiryForm/EnquiryFormDataTable";
-
+import HomePage from "./components/Home/Home";
 function App() {
   return (
     <BrowserRouter>
@@ -34,7 +34,8 @@ function App() {
           <Route path="/enquiry-table" element={<EnquiryFormDataTable/>} />
           <Route path="/admin" element={<AdminList />} />
           <Route path="/user-form" element={<UserCreateForm />} />
-          <Route
+          <Route path="/" element={<HomePage/>} />
+          {/* <Route
             path="/"
             element={
               // <RequireAuth loginPath='/login'>
@@ -42,7 +43,7 @@ function App() {
               <EnqAdmin />
               // </RequireAuth>z
             }
-          />
+          /> */}
         </Routes>
       </HeaderBar>
     </BrowserRouter>

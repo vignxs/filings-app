@@ -15,6 +15,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { CircularProgress, Stack, IconButton } from "@mui/material";
+import Fade from "react-reveal/Fade"
 import {
   CheckOutlined,
   EditOutlined,
@@ -28,7 +29,7 @@ import { ServiceFileForm, getSteps } from "./Services";
 import UserInfoForm from "./Forms/UserInfoForm";
 import ServiceInfoForm from "./Forms/ServiceInfoForm";
 import { getRequests } from "../../Context/actions";
-// import UseForm from "./UseForms";
+
 export const UsersActions = ({ params, rowId, setRowId }) => {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -143,7 +144,6 @@ export const UsersActions = ({ params, rowId, setRowId }) => {
     const API_ENDPOINT = "http://localhost:8000/api/v1";
 
     console.log("user2", userinfo);
-    // Send POST request to save user info
     fetch(`${API_ENDPOINT}/req-data-update`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
@@ -157,8 +157,8 @@ export const UsersActions = ({ params, rowId, setRowId }) => {
         body: JSON.stringify(output),
       });
     }
-      setsbOpen(true);
-      getRequests(dispatch);
+    setsbOpen(true);
+    getRequests(dispatch);
   };
 
   const handleSubmit = async () => {
@@ -217,8 +217,10 @@ export const UsersActions = ({ params, rowId, setRowId }) => {
               color="primary"
               sx={{
                 boxShadow: 0,
-                bgcolor: green[500],
-                "&:hover": { bgcolor: green[700] },
+                  bgcolor: green[200],
+                  height: "2.2vw",
+                 marginTop:"3px",
+                "&:hover": { bgcolor: green[300] },
               }}
             >
               <CheckOutlined />
@@ -229,14 +231,12 @@ export const UsersActions = ({ params, rowId, setRowId }) => {
               color="primary"
               sx={{
                 width: 40,
-                // boxShadow: 0,
                 height: 40,
               }}
               disabled={params.id !== rowId || loading}
               onClick={handleSubmit}
             >
               <SaveOutlined />
-              {/* <Icon icon={"eva:save-outline"} /> */}
             </IconButton>
           )}
           {loading && (
@@ -245,7 +245,6 @@ export const UsersActions = ({ params, rowId, setRowId }) => {
               sx={{
                 color: green[500],
                 position: "absolute",
-                //   top: -6,
                 left: -1,
                 zIndex: 1,
               }}
@@ -254,13 +253,11 @@ export const UsersActions = ({ params, rowId, setRowId }) => {
           <IconButton
             color="secondary"
             sx={{ boxShadow: 0 }}
-            // size="small"
             aria-label="edit"
             onClick={handleClickOpen}
           >
             <EditOutlined />
           </IconButton>
-          {/* <ValidatorForm onSubmit={handleFormSubmit}> */}
           <Dialog
             scroll={"body"}
             fullWidth
@@ -366,7 +363,6 @@ export const UsersActions = ({ params, rowId, setRowId }) => {
               </Button>
             </DialogActions>
           </Dialog>
-          {/* </ValidatorForm> */}
           <IconButton
             color="teritiary"
             sx={{ boxShadow: 0 }}
@@ -380,27 +376,32 @@ export const UsersActions = ({ params, rowId, setRowId }) => {
       </Box>
       
     </ThemeProvider>
-    <Snackbar
-    open={sbOpen}
-    autoHideDuration={50000}
-    anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
-    onClose={sbhandleClose}
-  >
-    <Alert
-      style={{
-        color: "white",
-        backgroundColor: "#4caf50",
-        position:"absolute",
-        left:"57vw",
-        top:"-32vh",
-        zIndex:"100"
-      }}
-      onClose={sbhandleClose}
-      severity="success"
-    >
-      Record updated succesfully!
-    </Alert>
-  </Snackbar>
+    {/* <Snackbar
+            open={open}
+            autoHideDuration={2000}
+            anchorOrigin={{ vertical: "bottom", horizontal: "bottom" }}
+            style={{
+              transition: "1s",
+              float: "right",
+              left: "76.2vw",
+              top: "4.5vw",
+            }}
+            onClose={handleClose}
+          >
+            <Fade right>
+              <Alert
+                style={{
+                  color: "white",
+                  backgroundColor: "#4caf50",
+                  float: "right",
+                }}
+                onClose={handleClose}
+                severity="success"
+              >
+                Request submitted succesfully!
+              </Alert>
+            </Fade>
+          </Snackbar> */}
   </>
   );
 };

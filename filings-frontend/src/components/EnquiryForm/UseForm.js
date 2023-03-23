@@ -9,7 +9,7 @@ const UseForm = (params) => {
     state: { enqrequests },
     dispatch,
   } = useValue();
-  // console.log(enqrequests)
+  const [updatedRow, setUpdatedRow] = useState(null);
   const [values, setValues] = useState({
     name: "",
     followup_call_date: "",
@@ -66,12 +66,19 @@ const UseForm = (params) => {
   };
 
   const handleEdit = (params) => {
-    const { id, field, value,row } = params;
-    const updatedRow = { ...params.row, [field]: value };
-    console.log(row);
+    const { id, field, value} = params;
+    setUpdatedRow(enqrequests);
+    const index = updatedRow.findIndex((row) => row.id === id);
+    let editedRow = null;
+    if (index !== -1) {
+      const row = { ...updatedRow[index], [field]: value };
+      const updatedValues = [...updatedRow];
+      updatedValues[index] = row;
+      const newValues = updatedValues.find((row) => row.id === id);
+      editedRow = newValues;
+    }
     axios
-      .put(
-        `http://127.0.0.1:8000/api/v1/course-enquiry-update`,updatedRow)
+      .put(`http://127.0.0.1:8000/api/v1/course-enquiry-update`, editedRow)
       .then((res) => {
         console.log(res.data);
         console.log("Empdata Successfully updated");
@@ -81,25 +88,23 @@ const UseForm = (params) => {
       });
   };
 
-  const handleDelete = async (params) => {
-    // console.log(parameter);
+  const handleDelete = async () => {
     const { id } = parameter.row;
-    console.log(params);
     if (window.confirm("Are you sure to delete this record?")) {
       await axios
-        .delete(`http://127.0.0.1:8000/api/v1/course-enquiry-delete/${id}`,parameter.row)
+        .delete(`http://127.0.0.1:8000/api/v1/course-enquiry-delete/${id}`)
         .then((res) => console.log("Employee Data Successfully deleted"))
 
         .catch((error) => {
           console.log(error);
         });
       dispatch({ type: "ENQDELETE_REQUESTS", payload: id });
+      enqgetRequests(dispatch);
     }
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // console.log(event)
     console.log(values);
     console.log("I am Working");
 
@@ -122,7 +127,7 @@ const UseForm = (params) => {
     });
   };
 
-  const clearFields = ()=>{
+  const clearFields = () => {
     setValues({
       name: "",
       followup_call_date: "",
@@ -138,7 +143,7 @@ const UseForm = (params) => {
       mode: "",
       comments: "",
     });
-  }
+  };
 
   return {
     handleChange,
@@ -148,7 +153,7 @@ const UseForm = (params) => {
     handleEdit,
     handleDelete,
     enqrequests,
-    clearFields
+    clearFields,
   };
 };
 export default UseForm;

@@ -15,6 +15,11 @@ const reducer = ( state, action) => {
           ...state,
           requests: action.payload,
         };
+      case "UPDATE_USERS":
+        return {
+          ...state,
+          users: action.payload,
+        };
       case "OPEN_SIDEBAR":
         return {
           ...state,
@@ -60,20 +65,20 @@ const reducer = ( state, action) => {
           ...state,
           enqrequests: action.payload,
         };
-        case "FSDELETE_REQUESTS":
-          return {
-            ...state,
-            requests: state.enqrequests.filter(
-              (requests) => requests.id !== action.payload
-            ),
-          };
-        case "ENQDELETE_REQUESTS":
-          return {
-            ...state,
-            requests: state.enqrequests.filter(
-              (requests) => requests.id !== action.payload
-            ),
-          };
+      case "FSDELETE_REQUESTS":
+        return {
+          ...state,
+          requests: state.enqrequests.filter(
+            (requests) => requests.id !== action.payload
+          ),
+        };
+      case "ENQDELETE_REQUESTS":
+        return {
+          ...state,
+          requests: state.enqrequests.filter(
+            (requests) => requests.id !== action.payload
+          ),
+        };
       default:
         throw new Error("No action matched");
     }

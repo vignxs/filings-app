@@ -31,7 +31,8 @@ import {
   VerifiedRounded,
 } from "@mui/icons-material";
 import { useValue } from "../../Context/ContextProvider";
-import { getRequests } from "../../Context/actions";
+import { getRequests, getUsers } from "../../Context/actions";
+import { UsersActions } from "./UserActions";
 
 
 
@@ -111,7 +112,6 @@ export const AdminList = () => {
     padding: "30px",
   };
 
-  const date = new Date();
   const getMuiTheme = () =>
     createTheme({
       palette: {
@@ -134,117 +134,102 @@ export const AdminList = () => {
     });
 
   const {
-    state: { requests },
+    state: { users },
     dispatch,
   } = useValue();
 
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    return date.toLocaleString();
-  };
   const [pageSize, setPageSize] = useState(10);
   const [rowId, setRowId] = useState(null);
   const enqColumns = useMemo(
     () => [
-    //   {
-    //     field: "actions",
-    //     headerName: "",
-    //     type: "actions",
-    //     width: 130,
-    //     filterable: true,
-    //     // renderCell: (params) => (
-    //     // //   <UsersActions {...{ params, rowId, setRowId }} />
-    //     // ),
-    //   },
+        {
+          field: "actions",
+          headerName: "",
+          type: "actions",
+          width: 100,
+          filterable: true,
+          renderCell: (params) => (
+            <UsersActions {...{ params, rowId, setRowId }} />
+          ),
+        },
       {
-        field: "req_id",
-        headerName: "ReqId",
-        width: 100,
+        field: "user_name",
+        headerName: "Name",
+        editable: true,
+        width: 150,
         sortable: false,
         headerAlign: "center",
         align: "center",
         filterable: true,
       },
       {
-        field: "first_name",
+        field: "email",
         headerAlign: "center",
         align: "center",
         filterable: true,
-        headerName: "Name",
-        width: 120,
+        headerName: "E-Mail",
+        width: 200,
       },
       // "last_name",
       // "mobile",
       {
-        field: "mobile",
+        field: "active_flag",
         headerAlign: "center",
         align: "center",
-        headerName: "Mobile",
+        headerName: "IsActive",
         width: 100,
         filterable: false,
       },
       {
-        field: "email",
+        field: "is_admin",
         headerAlign: "center",
         align: "center",
-        headerName: "Email",
-        width: 160,
+        headerName: "IsAdmin",
+        width: 100,
         filterable: true,
       },
       // "address",
       // "city",
       // "pincode",
       {
-        field: "enquired_for",
-        headerName: "Enquired For",
+        field: "apps",
+        headerName: "Apps",
         headerAlign: "center",
         align: "center",
-        width: 160,
+        width: 360,
         sortable: true,
         filterable: true,
       },
-      {
-        field: "status",
-        headerName: "Status",
-        width: 100,
-        type: "singleSelect",
-        headerAlign: "center",
-        align: "center",
-        valueOptions: ["In-Progress", "Created", "Closed"],
-        editable: true,
-        filterable: false,
-        // currentUser?.role === "admin",
-      },
-      {
-        field: "created_at",
-        headerName: "CreatedAt",
-        width: 180,
-        headerAlign: "center",
-        filterable: false,
-        align: "center",
-        // valueFormatter: (params) => formatDate(params.value),
-        renderCell: (params) =>
-          moment(params.row.createdAt).format("YYYY-MM-DD HH:MM:SS"),
-        // currentUser?.role === "admin",
-      },
-      {
-        field: "updated_at",
-        headerName: "UpdatedAt",
-        width: 180,
-        headerAlign: "center",
-        align: "center",
-        filterable: false,
-        // valueFormatter: (params) => formatDate(params.value),
-        renderCell: (params) =>
-          moment(params.row.createdAt).format("YYYY-MM-DD HH:MM:SS"),
-        // currentUser?.role === "admin",
-      },
+      // {
+      //   field: "created_at",
+      //   headerName: "CreatedAt",
+      //   width: 180,
+      //   headerAlign: "center",
+      //   filterable: false,
+      //   align: "center",
+      //   // valueFormatter: (params) => formatDate(params.value),
+      //   renderCell: (params) =>
+      //     moment(params.row.createdAt).format("YYYY-MM-DD HH:MM:SS"),
+      //   // currentUser?.role === "admin",
+      // },
+      // {
+      //   field: "updated_at",
+      //   headerName: "UpdatedAt",
+      //   width: 180,
+      //   headerAlign: "center",
+      //   align: "center",
+      //   filterable: false,
+      //   // valueFormatter: (params) => formatDate(params.value),
+      //   renderCell: (params) =>
+      //     moment(params.row.createdAt).format("YYYY-MM-DD HH:MM:SS"),
+      //   // currentUser?.role === "admin",
+      // },
     ],
     [rowId]
   );
 
   useEffect(() => {
-    if (requests.length === 0) getRequests(dispatch);
+    if (users.length === 0) getUsers(dispatch);
   }, []);
 
   // .MuiDataGrid-cell:focus {
@@ -339,8 +324,8 @@ export const AdminList = () => {
           <DataGrid
             sx={{ border: 0 }}
             columns={enqColumns}
-            rows={requests}
-            getRowId={(row) => row.req_id}
+            rows={users}
+            getRowId={(row) => row.user_id}
             rowsPerPageOptions={[10, 20, 30]}
             pageSize={pageSize}
             onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
@@ -363,7 +348,7 @@ export const AdminList = () => {
                 },
               },
             }}
-            // experimentalFeatures={{ newEditingApi: true }}
+            // experimentalFeatures={{ newEditingApi: true }} 
             // getRowSpacing={(params) => ({
             //   top: params.isFirstVisible ? 0 : 5,
             //   bottom: params.isLastVisible ? 0 : 5,

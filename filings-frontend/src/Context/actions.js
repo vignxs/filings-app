@@ -7,6 +7,14 @@ export const getRequests = async (dispatch) => {
   }
 };
 
+export const getUsers = async (dispatch) => {
+  const result = await fetch("http://localhost:8000/api/users-data-all");
+  const content = await result.json();
+  if (content) {
+    dispatch({ type: "UPDATE_USERS", payload: content });
+  }
+};
+
 export const fsgetRequests = async (dispatch) => {
   const jsdata= await axios.get("http://127.0.0.1:8000/api/v1/job-support-data-all");
   const content = await jsdata.data;

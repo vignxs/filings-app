@@ -23,10 +23,11 @@ import {
 } from "@mui/material";
 import { v4 as uuid } from "uuid";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-
+import { getRequests } from "../../Context/actions";
+import { useValue } from "../../Context/ContextProvider";
 
 export const EnqForm = (props) => {
-
+  const { dispatch } = useValue();
   const [uid, setUid] = React.useState(uuid().slice(0, 7));
   const [open, setOpen] = React.useState(false);
   const [userinfo, setInfo] = React.useState({
@@ -171,6 +172,7 @@ export const EnqForm = (props) => {
        pincode: "609307",
      });
      setOpen(true);
+     getRequests(dispatch)
      // Clear user info and service info objects
      // Object.keys(userinfo).forEach((key) => delete userinfo[key]);
      // Object.keys(userinfo.serviceInfo).forEach(

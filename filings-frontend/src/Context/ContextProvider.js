@@ -3,7 +3,8 @@ import reducer from "./reducer";
 
 const initialState = {
   requests: [],
-  isAdmin:0,
+  users: [],
+  isAdmin: 0,
   currentUser : "",
   apps : [],
   isLogged: false,

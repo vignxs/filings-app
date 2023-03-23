@@ -12,7 +12,6 @@ const initialState = {
   enqrequests: [],
   home:false,
   sidebarState:false,
-  enqrequests: [],
   };
 
 export const Context = createContext();

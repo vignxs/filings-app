@@ -10,8 +10,8 @@ const UseForm = (params) => {
     state: { fsrequests },
     dispatch,
   } = useValue();
-
-  const [updatedRow, setUpdatedRow] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
   const [values, setValues] = useState({
     candidate_name: "",
     mobile: "",
@@ -93,19 +93,10 @@ const UseForm = (params) => {
   useEffect(() => {
     fsgetRequests(dispatch);
   }, []);
-
+  
   const handleEdit = (params) => {
-    const { id, field, value } = params;
-    setUpdatedRow(fsrequests);
-    const index = updatedRow.findIndex((row) => row.id === id);
-    let editedRow = null;
-    if (index !== -1) {
-      const row = { ...updatedRow[index], [field]: value };
-      const updatedValues = [...updatedRow];
-      updatedValues[index] = row;
-      const newValues = updatedValues.find((row) => row.id === id);
-      editedRow = newValues;
-    }
+    const editedRow = params.row;
+    setLoading(true);
     axios
       .put(`http://127.0.0.1:8000/api/v1/job-support-data-update`, editedRow)
       .then((res) => {
@@ -115,7 +106,15 @@ const UseForm = (params) => {
       .catch((error) => {
         console.log(error);
       });
+    setLoading(false);
+    setSuccess(true);
   };
+
+  const handleSuccess=()=>{
+    if(loading===false){
+      setSuccess(false)
+    }
+  }
 
   const handleDelete = async () => {
     const { id } = parameter.row;
@@ -141,7 +140,9 @@ const UseForm = (params) => {
     handleDelete,
     fsrequests,
     clearFields,
-    updatedRow,
+    loading,
+    success,
+    handleSuccess
   };
 };
 export default UseForm;

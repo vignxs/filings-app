@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { CircularProgress, Stack, IconButton } from "@mui/material";
@@ -11,11 +11,22 @@ import { green } from "@mui/material/colors";
 import axios from "axios";
 import UseForm from "./UseForm";
 
-const JSformActions = ({ params, update, setUpdate, editId,success,setSuccess }) => {
-  const [loading,setLoading]=useState(false)
+const JSformActions = ({ params,setEditId, editId}) => {
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+
+    useEffect(() => {
+      if (editId === params.id && success) {
+        setSuccess(false);
+      }
+      if (editId !== null && editId !== params.id && !success) {
+        window.alert("Please save your changes before proceeding.");
+      }
+    }, [editId, success, params.id]);
+
   const { handleDelete } =
     UseForm(params);
-
+  
     const handleEdit = (params) => {
       const editedRow = params.row;
       setLoading(true);
@@ -29,8 +40,10 @@ const JSformActions = ({ params, update, setUpdate, editId,success,setSuccess })
           console.log(error);
         });
       setLoading(false);
+      setEditId(null)
       setSuccess(true);
     };
+
   const getMuiTheme = () =>
     createTheme({
       palette: {
@@ -67,9 +80,9 @@ const JSformActions = ({ params, update, setUpdate, editId,success,setSuccess })
                   bgcolor: green[500],
                   "&:hover": { bgcolor: green[700] },
                 }}
-                onClick={() => {
-                  setUpdate(false);
-                }}
+                // onClick={() => {
+                //   setUpdate(false);
+                // }}
               >
                 <CheckOutlined />
               </IconButton>
@@ -82,7 +95,7 @@ const JSformActions = ({ params, update, setUpdate, editId,success,setSuccess })
                   width: 40,
                   height: 40,
                 }}
-                disabled={params.id !== editId || update === false}
+                disabled={params.id !== editId || loading}
                 onClick={() => {
                   handleEdit(params);
                 }}

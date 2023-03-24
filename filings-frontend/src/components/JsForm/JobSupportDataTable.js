@@ -102,7 +102,7 @@ const JobSupportDataTable = () => {
     });
   const [update, setUpdate] = useState(false);
   const [editId, setEditId] = useState(null);
-  const [success, setSuccess] = useState(false);
+  // const [success, setSuccess] = useState(false);
   const { fsrequests } = UseForm();
   const enqColumns = useMemo(() => [
     {
@@ -113,7 +113,7 @@ const JobSupportDataTable = () => {
       filterable: true,
       renderCell: (params) => (
         <JSformActions
-          {...{ params, update, setUpdate, editId, setEditId, success, setSuccess }}
+          {...{ params, editId, setEditId }} //success, setSuccess
         />
       ),
     },
@@ -325,8 +325,8 @@ const JobSupportDataTable = () => {
               }}
               onCellEditCommit={(params) => {
                 setEditId(params.id);
-                setUpdate(true);
-                setSuccess(false);
+                // setUpdate(true);
+                // setSuccess(false);
               }}
             />
           </Box>

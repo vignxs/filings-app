@@ -10,7 +10,7 @@ import {
 import { green } from "@mui/material/colors";
 import UseForm from "./UseForm";
 
-const JSformActions = ({ params, update, setUpdate, editId }) => {
+const JSformActions = ({ params, update, setUpdate, editId,check,setCheck }) => {
   const { handleDelete, success, loading, handleEdit, handleSuccess } =
     UseForm(params);
 
@@ -41,7 +41,7 @@ const JSformActions = ({ params, update, setUpdate, editId }) => {
           }}
         >
           <Stack spacing={0} direction="row">
-            {success && (
+            { check && success && (
               <IconButton
                 size="small"
                 color="primary"
@@ -53,23 +53,26 @@ const JSformActions = ({ params, update, setUpdate, editId }) => {
                 onClick={() => {
                   handleSuccess();
                   setUpdate(false);
+                  setCheck(false)
                 }}
               >
                 <CheckOutlined />
               </IconButton>
             )}
-            {loading || success === false ? (
+            {loading || check === false ? (
               <IconButton
                 size="small"
                 color="primary"
                 sx={{
                   width: 40,
-                  // boxShadow: 0,
                   height: 40,
                 }}
                 disabled={params.id !== editId || update === false}
                 onClick={() => {
                   handleEdit(params);
+                  if (params.id === editId){
+                    setCheck(true)
+                  }
                 }}
               >
                 <SaveOutlined />

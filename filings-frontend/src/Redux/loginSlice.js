@@ -10,11 +10,11 @@ export const LoginSlice = createSlice({
     },
   },
   reducers: {
-    coursedata: (state, action) => {
+    loginData: (state, action) => {
       state.value = action.payload;
     },
   },
 });
 
-export const { logindata } = LoginSlice.actions;
+export const { loginData } = LoginSlice.actions;
 export default LoginSlice.reducer;

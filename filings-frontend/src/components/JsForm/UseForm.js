@@ -3,8 +3,11 @@ import { useState } from "react";
 import axios from "axios";
 import { useValue } from "../../Context/ContextProvider";
 import { fsgetRequests } from "../../Context/actions";
+import {useSelector} from "react-redux";
 
 const UseForm = (params) => {
+  const loginStatus = useSelector((state)=>state.login.value)
+  // console.log(loginStatus)
   const parameter = params;
   const {
     state: { fsrequests },
@@ -111,10 +114,9 @@ const UseForm = (params) => {
   };
 
   const handleSuccess=()=>{
-    if(loading===false){
-      setSuccess(false)
-    }
+    setSuccess(false)
   }
+
 
   const handleDelete = async () => {
     const { id } = parameter.row;

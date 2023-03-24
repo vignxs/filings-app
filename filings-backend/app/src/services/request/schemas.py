@@ -12,7 +12,7 @@ class IGS_REQ_DATA(BaseModel):
     city : str
     pincode : int
     enquired_for : str
-    status : str = "created"
+    status : str = "Created"
     created_by : str = "admin"
     updated_by : str = "admin"
     created_at : datetime = datetime.now()

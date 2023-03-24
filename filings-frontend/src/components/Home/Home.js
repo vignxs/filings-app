@@ -12,11 +12,13 @@ import { fontSize } from "@mui/system";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
+
     background:"#90b4ce",
     width:"101vw",
     height:"100vh",
     marginLeft:"-3vw",
     marginTop:"-3.5vh"
+
 
   },
   title: {
@@ -65,6 +67,7 @@ const useStyles = makeStyles((theme) => ({
 function HomePage() {
   const classes = useStyles();
   const { state, dispatch } = useValue();
+
   const changePath=()=>{
     window.location='https://intellecto.co.in/about-us/'
   }
@@ -75,6 +78,7 @@ function HomePage() {
   React.useEffect(() => {
     dispatch({ type: "HOME", payload: true });
   }, []);
+
 
   return (
     <div className={classes.root}>
@@ -168,11 +172,13 @@ function HomePage() {
             src={courseEnq}
           />
         </div>
+
         <Grid style={{marginTop:"-6vw", color:"#094067"}}>
           <h4 style={{marginLeft:"-1.2vw"}}>Three Apps, One Tap</h4>
         <motion.Button
         onClick={login}
         
+
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{
@@ -185,8 +191,10 @@ function HomePage() {
           className={classes.heroButton}
         >
           Sign In
+
         </motion.Button>
         </Grid>
+
       </div>
     </div>
   );

@@ -1,49 +1,36 @@
 import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { Stack, IconButton } from "@mui/material";
-import { DeleteOutlined } from "@mui/icons-material";
+import { CircularProgress, Stack, IconButton } from "@mui/material";
+import {
+  DeleteOutlined,
+  CheckOutlined,
+  SaveOutlined,
+} from "@mui/icons-material";
+import { green } from "@mui/material/colors";
+import axios from "axios";
 import UseForm from "./UseForm";
 
-const JSformActions = ({ params }) => {
-  const { handleDelete } = UseForm(params);
-  const inputBox = {
-    // margin: "0 auto",
-    "& .MuiTextField-root": {
-      m: 2,
-      // borderRadius:'15px',
-      backgroundColor: "#fffffe",
-      borderRadius: "2px",
-      width: "23ch",
-    },
-    "& .MuiInputBase-input": {
-      borderRadius: "6px",
-      backgroundColor: "#fffffe",
-    },
-    "& .MuiAutocomplete-popupIndicator": {
-      display: "none !important",
-    },
-    "&  .MuiFormHelperText-root.Mui-error": {
-      background: "#fffffe",
-      margin: 0,
-      paddingLeft: 10,
-    },
-    "& .MuiOutlinedInput-root": {
-      borderRadius: "6px",
-    },
-    // marginLeft: "70px",
-    justifyContent: "center",
-    // boxShadow: `rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px`,
-    // bgcolor: "#094067",
-    // left: "-170px",
-    // top: ".8rem",
-    width: "800px",
-    // height: {heightBox},
-    flexGrow: 1,
-    position: "relative",
-    borderRadius: "10px",
-    // ml:"180px"
-  };
+const JSformActions = ({ params, update, setUpdate, editId,success,setSuccess }) => {
+  const [loading,setLoading]=useState(false)
+  const { handleDelete } =
+    UseForm(params);
+
+    const handleEdit = (params) => {
+      const editedRow = params.row;
+      setLoading(true);
+      axios
+        .put(`http://127.0.0.1:8000/api/v1/job-support-data-update`, editedRow)
+        .then((res) => {
+          console.log(res.data);
+          console.log("Empdata Successfully updated");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      setLoading(false);
+      setSuccess(true);
+    };
   const getMuiTheme = () =>
     createTheme({
       palette: {
@@ -71,6 +58,50 @@ const JSformActions = ({ params }) => {
           }}
         >
           <Stack spacing={0} direction="row">
+            { success ?(
+              <IconButton
+                size="small"
+                color="primary"
+                sx={{
+                  boxShadow: 0,
+                  bgcolor: green[500],
+                  "&:hover": { bgcolor: green[700] },
+                }}
+                onClick={() => {
+                  setUpdate(false);
+                }}
+              >
+                <CheckOutlined />
+              </IconButton>
+            ):
+            (
+              <IconButton
+                size="small"
+                color="primary"
+                sx={{
+                  width: 40,
+                  height: 40,
+                }}
+                disabled={params.id !== editId || update === false}
+                onClick={() => {
+                  handleEdit(params);
+                }}
+              >
+                <SaveOutlined />
+              </IconButton>
+            )}
+            {loading && (
+              <CircularProgress
+                size={40}
+                sx={{
+                  color: green[500],
+                  position: "absolute",
+                  //   top: -6,
+                  left: -1,
+                  zIndex: 1,
+                }}
+              />
+            )}
             <IconButton
               color="teritiary"
               sx={{ boxShadow: 0 }}

@@ -210,7 +210,7 @@ const ButtonGroup = () => {
       <Box sx={{ display: "flex", flexGrow: 1 }}>
         <CssBaseline />
         <AppBar
-          sx={{ display: home||isLogged === true ? "none" : "block" }}
+          sx={{ display: home||isLogged === false ? "none" : "block" }}
           position="fixed"
           color="background"
           open={open}
@@ -275,7 +275,7 @@ const ButtonGroup = () => {
           transitionDuration={500}
           variant="permanent"
           sx={{
-            display: home||isLogged === true ? "none" : "block",
+            display: home||isLogged === false ? "none" : "block",
             "& .MuiDrawer-paper": {
               backgroundColor: "#d8eefe",
             },

@@ -15,15 +15,24 @@ import Select from "@mui/material/Select";
 import { Grid } from "@mui/material";
 import green from "@material-ui/core/colors/green";
 import Button from "@mui/material/Button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import moment from "moment";
 import UseForm from "./UseForm";
+import { useValue } from "../../Context/ContextProvider";
 
 const JobSupportForm = () => {
   const [sdate, setSdate] = React.useState(null);
   const [fdate, setFdate] = React.useState(null);
-  const { values, handleChange, handleSubmit, setValues,clearFields } = UseForm();
+  const { values, handleChange, handleSubmit, setValues, clearFields } =
+    UseForm();
+  const {
+    state: { isLogged },
+  } = useValue();
+  const navigate = useNavigate();
+  const login = () => {
+    navigate("/login");
+  };
   const inputBox = {
     margin: "0 auto",
     width: "100%",
@@ -83,7 +92,7 @@ const JobSupportForm = () => {
     "Resource Not Available",
     "Waiting For Response",
   ];
-  return (
+  return isLogged ? (
     <>
       <Paper elevation={3} sx={inputBox}>
         <div
@@ -311,7 +320,7 @@ const JobSupportForm = () => {
                       color: "#FFFFFE",
                       height: "38px",
                       top: "16px",
-                      right:'10px'
+                      right: "10px",
                     }}
                     variant="contained"
                     color="green"
@@ -342,6 +351,8 @@ const JobSupportForm = () => {
         </div>
       </Paper>
     </>
+  ) : (
+    login()
   );
 };
 

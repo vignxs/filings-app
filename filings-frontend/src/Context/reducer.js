@@ -26,6 +26,11 @@ const reducer = (state, action) => {
         ...state,
         requests: action.payload,
       };
+    case "UPDATE_USERS":
+        return {
+          ...state,
+          users: action.payload,
+        };
     case "OPEN_SIDEBAR":
       return {
         ...state,
@@ -78,4 +83,3 @@ const reducer = (state, action) => {
 
 
 export default reducer;
-

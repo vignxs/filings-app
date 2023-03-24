@@ -9,7 +9,9 @@ const initialState = {
   apps : [],
   isLogged: false,
   fsrequests: [],
-  enqrequests: []
+  enqrequests: [],
+  home:false,
+  sidebarState:false,
   };
 
 export const Context = createContext();

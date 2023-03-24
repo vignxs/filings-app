@@ -42,3 +42,8 @@ async def register(user:schemas.AdminUser,  db: Session = Depends(get_db)):
 @router.get("/users-data-all")
 def user(db: Session = Depends(get_db)):
     return service.get_user(db=db)
+
+
+@router.put("/users-update")  
+async def users_update(request: schemas.User_GU,  db: Session = Depends(get_db)):
+    return service.update_user(db=db, request=request)

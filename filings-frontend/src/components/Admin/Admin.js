@@ -131,7 +131,7 @@ export const EnqAdmin = (props) => {
               ? "#ff000036"
               : status == "In-Progress"
               ? "#fff1d6"
-              : status == "Created"
+              : status == "Created" || status == "created"
               ? "#00800036"
               : "";
           const textColor =
@@ -139,7 +139,7 @@ export const EnqAdmin = (props) => {
               ? "red"
               : status == "In-Progress"
               ? "#be7a14"
-              : status == "Created"
+              : status == "Created" || status == "created"
               ? "green"
               : "";
           return (

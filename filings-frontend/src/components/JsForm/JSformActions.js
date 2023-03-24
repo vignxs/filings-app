@@ -15,14 +15,11 @@ const JSformActions = ({ params, setEditId, editId }) => {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
 
-  useEffect(() => {
-    if (editId === params.id && success) {
-      setSuccess(false);
-    }
-    // if (editId !== null && editId !== params.id && !success) {
-    //   window.confrim("Please save your changes before proceeding.");
-    // }
-  }, [editId]);
+    useEffect(() => {
+      if (editId === params.id && success) {
+        setSuccess(false);
+      }
+    }, [editId]);
 
   const { handleDelete } = UseForm(params);
 
@@ -76,8 +73,10 @@ const JSformActions = ({ params, setEditId, editId }) => {
                 color="primary"
                 sx={{
                   boxShadow: 0,
-                  bgcolor: green[500],
-                  "&:hover": { bgcolor: green[700] },
+                  bgcolor: green[200],
+                  height: "2.2vw",
+                  marginTop: "3px",
+                  "&:hover": { bgcolor: green[300] },
                 }}
                 onClick={() => {
                   setSuccess(false);

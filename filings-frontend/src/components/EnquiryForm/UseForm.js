@@ -4,6 +4,7 @@ import { useValue } from "../../Context/ContextProvider";
 import { enqgetRequests } from "../../Context/actions";
 
 const UseForm = (params) => {
+  const [open, setOpen] = useState(false);
   const parameter = params;
   const {
     state: { enqrequests },
@@ -64,29 +65,13 @@ const UseForm = (params) => {
       console.log("success", Object.values(values));
     }
   };
-
-  const handleDelete = async () => {
-    const { id } = parameter.row;
-    if (window.confirm("Are you sure to delete this record?")) {
-      await axios
-        .delete(`http://127.0.0.1:8000/api/v1/course-enquiry-delete/${id}`)
-        .then((res) => console.log("Employee Data Successfully deleted"))
-
-        .catch((error) => {
-          console.log(error);
-        });
-      dispatch({ type: "ENQDELETE_REQUESTS", payload: id });
-      enqgetRequests(dispatch);
-    }
-  };
-
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log(values);
     console.log("I am Working");
 
     postData();
-
+ 
     setValues({
       name: "",
       followup_call_date: "",
@@ -102,6 +87,22 @@ const UseForm = (params) => {
       mode: "",
       comments: "",
     });
+    setOpen(true);
+  };
+
+const handleDelete = async () => {
+    const { id } = parameter.row;
+    if (window.confirm("Are you sure to delete this record?")) {
+      await axios
+        .delete(`http://127.0.0.1:8000/api/v1/course-enquiry-delete/${id}`)
+        .then((res) => console.log("Employee Data Successfully deleted"))
+
+        .catch((error) => {
+          console.log(error);
+        });
+      dispatch({ type: "ENQDELETE_REQUESTS", payload: id });
+      enqgetRequests(dispatch);
+    }
   };
 
   const clearFields = () => {
@@ -121,8 +122,14 @@ const UseForm = (params) => {
       comments: "",
     });
   };
-
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
+  };
   return {
+    handleClose,
     handleChange,
     values,
     handleSubmit,
@@ -130,6 +137,7 @@ const UseForm = (params) => {
     handleDelete,
     enqrequests,
     clearFields,
+    open,
   };
 };
 

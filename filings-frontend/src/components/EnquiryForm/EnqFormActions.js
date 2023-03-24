@@ -12,10 +12,10 @@ import UseForm from "./UseForm";
 import { useValue } from "../../Context/ContextProvider";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-const EnqFormActions = ({ params, editId, setEditId }) => {
+const EnqFormActions = ({ params,setEditId, editId }) => {
+  const { handleDelete } = UseForm(params);
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
-  const { handleDelete } = UseForm(params);
   const navigate = useNavigate();
   const {
     state: { isLogged },
@@ -44,9 +44,6 @@ const EnqFormActions = ({ params, editId, setEditId }) => {
     if (editId === params.id && success) {
       setSuccess(false);
     }
-    // if (editId !== null && editId !== params.id && !success) {
-    //   window.confrim("Please save your changes before proceeding.");
-    // }
   }, [editId]);
 
   const getMuiTheme = () =>

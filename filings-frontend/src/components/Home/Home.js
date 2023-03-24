@@ -13,7 +13,6 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
 
-    background: "#90b4ce",
     width: "101vw",
     height: "100vh",
     marginLeft: "-3vw",
@@ -82,8 +81,12 @@ function HomePage() {
     <div className={classes.root}>
       <AppBar
         sx={{
+          backgroundColor: "#d8eefe",
+          "& .MuiToolbar-gutters": {
+            padding: "0px",
+          },
           "& .MuiAppBar-colorPrimary": {
-            backgroundColor: "red!important",
+            backgroundColor: "#094067",
           },
         }}
         position="fixed"
@@ -92,6 +95,7 @@ function HomePage() {
         <Toolbar>
           <Grid
             style={{
+              backgroundColor: "#d8eefe",
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
@@ -107,13 +111,19 @@ function HomePage() {
                 }}
                 src="https://naukrirecruiter.naukri.com/profilePic/getpic?pid=1657171204rp4517760_medium4"
               />
-              <h1 style={{ fontSize: "1.5rem", padding: "1vw 0vw" }}>
+              <h1
+                style={{
+                  color: "#094067",
+                  fontSize: "1.5rem",
+                  padding: "1vw 0vw",
+                }}
+              >
                 Intellecto Global Services
               </h1>
             </Grid>
             <Grid style={{ display: "flex", marginRight: "1vw", gap: "1vw" }}>
-              <Button style={{ color: "#ef4565" }}>Contact Us</Button>
-              <Button style={{ color: "#ef4565" }} onClick={changePath}>
+              <Button style={{ color: "#094067" }}>Contact Us</Button>
+              <Button style={{ color: "#094067" }} onClick={changePath}>
                 About Us
               </Button>
             </Grid>
@@ -124,16 +134,16 @@ function HomePage() {
         <Grid
           variant="h3"
           className={classes.heroTitle}
-          style={{ color: "black", fontSize: "3rem", padding: "1vw 5vw" }}
+          style={{ color: "#ef4565", fontSize: "3rem", padding: "1vw 5vw" }}
         >
           Enquiry-Hub
         </Grid>
         <div className={classes.imgContainer}>
           <motion.img
-            initial={{ opacity: 0, transform: "translateY(-25vw)" }}
+            initial={{ opacity: 0, transform: "translateY(-5vw)" }}
             animate={{ opacity: 1, transform: "translateY(0vw)" }}
             transition={{
-              duration: 2,
+              duration: 3,
               type: "spring",
               stiffness: 70,
               dumbing: 5,
@@ -143,10 +153,10 @@ function HomePage() {
             src={fillings}
           />
           <motion.img
-            initial={{ opacity: 0, transform: "translateY(-25vw)" }}
+            initial={{ opacity: 0, transform: "translateY(-5vw)" }}
             animate={{ opacity: 1, transform: "translateY(0vw)" }}
             transition={{
-              duration: 2,
+              duration: 3,
               type: "spring",
               stiffness: 70,
               dumbing: 5,
@@ -157,10 +167,10 @@ function HomePage() {
             src={jobSupport}
           />
           <motion.img
-            initial={{ opacity: 0, transform: "translateY(-25vw)" }}
+            initial={{ opacity: 0, transform: "translateY(-5vw)" }}
             animate={{ opacity: 1, transform: "translateY(0vw)" }}
             transition={{
-              duration: 2,
+              duration: 3,
               type: "spring",
               stiffness: 70,
               dumbing: 5,

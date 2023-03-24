@@ -25,8 +25,16 @@ import { Alert } from "@material-ui/lab";
 const JobSupportForm = () => {
   const [sdate, setSdate] = React.useState(null);
   const [fdate, setFdate] = React.useState(null);
-  const { values, handleChange, handleSubmit, setValues, clearFields } =
-    UseForm();
+
+  const {
+    values,
+    handleChange,
+    handleSubmit,
+    setValues,
+    clearFields,
+    open,
+    handleClose,
+  } = UseForm();
   const {
     state: { isLogged },
   } = useValue();
@@ -93,6 +101,11 @@ const JobSupportForm = () => {
     "Resource Not Available",
     "Waiting For Response",
   ];
+  // const handleClose = (event, reason) => {
+  // if (reason === "clickaway") {
+  //   return;
+  // }
+
   return isLogged ? (
     <>
       <Paper elevation={3} sx={inputBox}>
@@ -348,34 +361,33 @@ const JobSupportForm = () => {
                 </Stack>
               </div>
             </ValidatorForm>
-            {/* <Snackbar
+            <Snackbar
               open={open}
               autoHideDuration={2000}
-              anchorOrigin={{ vertical: "bottom", horizontal: "bottom" }}
+              anchorOrigin={{ vertical: "top", horizontal: "right" }}
               style={{
                 transition: "1s",
-                float: "right",
-                left: "76.2vw",
-                top: "4.5vw",
+                left: "76vw",
+                top: "5vw",
                 zIndex: 20,
               }}
               onClose={handleClose}
             >
               <Fade right>
-                <Alert
+                <div
                   style={{
                     color: "white",
                     backgroundColor: "#4caf50",
-                    float: "right",
-                    zIndex: 20,
+                    width: "20vw",
+                    padding: "18px",
+                    borderRadius: "10px",
                   }}
-                  onClose={handleClose}
                   severity="success"
                 >
-                  Request submitted succesfully!
-                </Alert>
+                  Candidate added succesfully!
+                </div>
               </Fade>
-            </Snackbar> */}
+            </Snackbar>
           </ThemeProvider>
         </div>
       </Paper>

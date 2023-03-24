@@ -6,6 +6,7 @@ import { fsgetRequests } from "../../Context/actions";
 import { useSelector } from "react-redux";
 
 const UseForm = (params) => {
+  const [open, setOpen] = useState(false);
   const loginStatus = useSelector((state) => state.login.value);
   // console.log(loginStatus)
   const parameter = params;
@@ -55,6 +56,7 @@ const UseForm = (params) => {
         .post("http://127.0.0.1:8000/api/v1/job-support-data", enqdata)
         .then((res) => console.log(res.data));
       console.log("success", Object.values(values));
+      setOpen(true);
     }
   };
 
@@ -109,8 +111,14 @@ const UseForm = (params) => {
       fsgetRequests(dispatch);
     }
   };
-
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
+  };
   return {
+    handleClose,
     handleChange,
     values,
     handleSubmit,
@@ -118,6 +126,7 @@ const UseForm = (params) => {
     handleDelete,
     fsrequests,
     clearFields,
+    open,
   };
 };
 export default UseForm;

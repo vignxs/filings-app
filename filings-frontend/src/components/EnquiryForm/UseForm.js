@@ -10,6 +10,7 @@ const UseForm = (params) => {
     dispatch,
   } = useValue();
 
+  const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [values, setValues] = useState({
@@ -64,24 +65,35 @@ const UseForm = (params) => {
         .post("http://127.0.0.1:8000/api/v1/course-enquiry", enqdata)
         .then((res) => console.log(res.data));
       console.log("success", Object.values(values));
+        setOpen(true);
     }
+    //
+  };
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    console.log(values);
+    console.log("I am Working");
+
+    postData();
+ 
+    setValues({
+      name: "",
+      followup_call_date: "",
+      followup_status: "",
+      enquiry_by: "",
+      mobile: "",
+      location: "",
+      course: "",
+      fee_structure: "",
+      experience_by: "",
+      info_source: "",
+      purpose: "",
+      mode: "",
+      comments: "",
+    });
+    // setOpen(true);
   };
 
-  const handleEdit = (params) => {
-    const editedRow = params.row;
-    setLoading(true);
-    axios
-      .put(`http://127.0.0.1:8000/api/v1/course-enquiry-update`, editedRow)
-      .then((res) => {
-        console.log(res.data);
-        console.log("Empdata Successfully updated");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    setLoading(false);
-    // setSuccess(true);
-  };
 
   const handleSuccess = () => {
     if (loading === false) {
@@ -104,30 +116,6 @@ const UseForm = (params) => {
     }
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    console.log(values);
-    console.log("I am Working");
-
-    postData();
-
-    setValues({
-      name: "",
-      followup_call_date: "",
-      followup_status: "",
-      enquiry_by: "",
-      mobile: "",
-      location: "",
-      course: "",
-      fee_structure: "",
-      experience_by: "",
-      info_source: "",
-      purpose: "",
-      mode: "",
-      comments: "",
-    });
-  };
-
   const clearFields = () => {
     setValues({
       name: "",
@@ -145,19 +133,28 @@ const UseForm = (params) => {
       comments: "",
     });
   };
-
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
+  };
   return {
+    handleClose,
     handleChange,
     values,
     handleSubmit,
     setValues,
-    handleEdit,
+
     handleDelete,
     enqrequests,
     clearFields,
     loading,
     success,
     handleSuccess,
+    open,
+    setLoading,
+    setSuccess,
   };
 };
 

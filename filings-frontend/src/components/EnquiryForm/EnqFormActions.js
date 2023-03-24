@@ -11,15 +11,38 @@ import { green } from "@mui/material/colors";
 import UseForm from "./UseForm";
 import { useValue } from "../../Context/ContextProvider";
 import { useNavigate } from "react-router-dom";
-const EnqFormActions = ({ params, update, setUpdate, editId }) => {
-  const { handleDelete, success, loading, handleEdit, handleSuccess } =
-    UseForm(params);
+import axios from "axios";
+const EnqFormActions = ({ params,setEditId, update, setUpdate, editId }) => {
+  const {
+    handleDelete,
+    success,
+    loading,
+    setLoading,
+    handleSuccess,
+    setSuccess,
+  } = UseForm(params);
   const navigate = useNavigate();
   const {
     state: { isLogged },
   } = useValue();
   const login = () => {
     navigate("/login");
+  };
+  const handleEdit = (params) => {
+    const editedRow = params.row;
+    setLoading(true);
+    axios
+      .put(`http://127.0.0.1:8000/api/v1/course-enquiry-update`, editedRow)
+      .then((res) => {
+        console.log(res.data);
+        console.log("Empdata Successfully updated");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    setLoading(false);
+    setEditId(null);
+    setSuccess(true);
   };
   const getMuiTheme = () =>
     createTheme({
@@ -54,13 +77,15 @@ const EnqFormActions = ({ params, update, setUpdate, editId }) => {
                 color="primary"
                 sx={{
                   boxShadow: 0,
-                  bgcolor: green[500],
-                  "&:hover": { bgcolor: green[700] },
+                  bgcolor: green[200],
+                  height: "2.2vw",
+                  marginTop: "3px",
+                  "&:hover": { bgcolor: green[300] },
                 }}
-                onClick={() => {
-                  handleSuccess();
-                  setUpdate(false);
-                }}
+                // onClick={() => {
+                //   handleSuccess();
+                //   setUpdate(false);
+                // }}
               >
                 <CheckOutlined />
               </IconButton>

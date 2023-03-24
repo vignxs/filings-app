@@ -19,9 +19,6 @@ const JSformActions = ({ params,setEditId, editId}) => {
       if (editId === params.id && success) {
         setSuccess(false);
       }
-      // if (editId !== null && editId !== params.id && !success) {
-      //   window.alert("Please save your changes before proceeding.");
-      // }
     }, [editId]);
 
   const { handleDelete } =
@@ -77,8 +74,10 @@ const JSformActions = ({ params,setEditId, editId}) => {
                 color="primary"
                 sx={{
                   boxShadow: 0,
-                  bgcolor: green[500],
-                  "&:hover": { bgcolor: green[700] },
+                  bgcolor: green[200],
+                  height: "2.2vw",
+                  marginTop: "3px",
+                  "&:hover": { bgcolor: green[300] },
                 }}
                 // onClick={() => {
                 //   setUpdate(false);

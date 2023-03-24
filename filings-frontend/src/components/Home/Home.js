@@ -7,6 +7,7 @@ import jobSupport from "../../Assets/jobsupport.png";
 import courseEnq from "../../Assets/courseEnq.png";
 import { motion } from "framer-motion";
 import { Grid } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -59,7 +60,10 @@ function HomePage() {
   //   React.useEffect(() => {
   //     dispatch({ type: "HOME", payload: true });
   //   }, []);
-
+  const navigate = useNavigate();
+  const handleClick = () => {
+    navigate("/login");
+  };
   return (
     <div className={classes.root}>
       <AppBar
@@ -165,6 +169,7 @@ function HomePage() {
           }}
           variant="contained"
           className={classes.heroButton}
+          onClick={handleClick}
         >
           Sign In
         </motion.button>

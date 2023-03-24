@@ -20,7 +20,8 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import moment from "moment";
 import UseForm from "./UseForm";
 import { useValue } from "../../Context/ContextProvider";
-
+import Fade from "react-reveal/Fade";
+import { Alert } from "@material-ui/lab";
 const JobSupportForm = () => {
   const [sdate, setSdate] = React.useState(null);
   const [fdate, setFdate] = React.useState(null);
@@ -347,6 +348,34 @@ const JobSupportForm = () => {
                 </Stack>
               </div>
             </ValidatorForm>
+            {/* <Snackbar
+              open={open}
+              autoHideDuration={2000}
+              anchorOrigin={{ vertical: "bottom", horizontal: "bottom" }}
+              style={{
+                transition: "1s",
+                float: "right",
+                left: "76.2vw",
+                top: "4.5vw",
+                zIndex: 20,
+              }}
+              onClose={handleClose}
+            >
+              <Fade right>
+                <Alert
+                  style={{
+                    color: "white",
+                    backgroundColor: "#4caf50",
+                    float: "right",
+                    zIndex: 20,
+                  }}
+                  onClose={handleClose}
+                  severity="success"
+                >
+                  Request submitted succesfully!
+                </Alert>
+              </Fade>
+            </Snackbar> */}
           </ThemeProvider>
         </div>
       </Paper>

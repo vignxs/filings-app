@@ -8,12 +8,29 @@ import {
   SaveOutlined,
 } from "@mui/icons-material";
 import { green } from "@mui/material/colors";
+import axios from "axios";
 import UseForm from "./UseForm";
 
-const JSformActions = ({ params, update, setUpdate, editId }) => {
-  const { handleDelete, success, loading, handleEdit, handleSuccess } =
+const JSformActions = ({ params, update, setUpdate, editId,success,setSuccess }) => {
+  const [loading,setLoading]=useState(false)
+  const { handleDelete } =
     UseForm(params);
 
+    const handleEdit = (params) => {
+      const editedRow = params.row;
+      setLoading(true);
+      axios
+        .put(`http://127.0.0.1:8000/api/v1/job-support-data-update`, editedRow)
+        .then((res) => {
+          console.log(res.data);
+          console.log("Empdata Successfully updated");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      setLoading(false);
+      setSuccess(true);
+    };
   const getMuiTheme = () =>
     createTheme({
       palette: {
@@ -41,7 +58,7 @@ const JSformActions = ({ params, update, setUpdate, editId }) => {
           }}
         >
           <Stack spacing={0} direction="row">
-            {success && (
+            { success ?(
               <IconButton
                 size="small"
                 color="primary"
@@ -51,20 +68,18 @@ const JSformActions = ({ params, update, setUpdate, editId }) => {
                   "&:hover": { bgcolor: green[700] },
                 }}
                 onClick={() => {
-                  handleSuccess();
                   setUpdate(false);
                 }}
               >
                 <CheckOutlined />
               </IconButton>
-            )}
-            {loading || success === false ? (
+            ):
+            (
               <IconButton
                 size="small"
                 color="primary"
                 sx={{
                   width: 40,
-                  // boxShadow: 0,
                   height: 40,
                 }}
                 disabled={params.id !== editId || update === false}
@@ -74,8 +89,6 @@ const JSformActions = ({ params, update, setUpdate, editId }) => {
               >
                 <SaveOutlined />
               </IconButton>
-            ) : (
-              ""
             )}
             {loading && (
               <CircularProgress

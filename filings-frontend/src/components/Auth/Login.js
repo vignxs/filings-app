@@ -11,7 +11,8 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useValue } from "../../Context/ContextProvider";
 import { useSignIn } from "react-auth-kit";
-
+import {loginData} from "../../Redux/loginSlice";
+import { useDispatch } from "react-redux";
 const theme = createTheme({
   palette: {
     mode: "light",
@@ -19,6 +20,10 @@ const theme = createTheme({
 });
 
 export default function SignInComponent() {
+
+  const dispatches = useDispatch();
+
+ 
   const { dispatch } = useValue();
   const signIn = useSignIn();
   const [values, setValues] = React.useState({
@@ -54,10 +59,17 @@ export default function SignInComponent() {
       dispatch({ type: "APPS_ACCESS", payload: post_resp.apps });
       dispatch({ type: "CURRENT_USER", payload: post_resp.user_name });
 
+      dispatches(
+        loginData({
+        currentUser: post_resp.user_name,
+        apps:post_resp.apps,
+        isLoggedIn:true,
+        }),
+      )
+
       navigate("/enq-admin");
     }
   };
-
   return (
     <ThemeProvider theme={theme}>
       <Paper

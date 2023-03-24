@@ -8,12 +8,29 @@ import {
   SaveOutlined,
 } from "@mui/icons-material";
 import { green } from "@mui/material/colors";
+import axios from "axios";
 import UseForm from "./UseForm";
 
-const JSformActions = ({ params, update, setUpdate, editId,check,setCheck }) => {
-  const { handleDelete, success, loading, handleEdit, handleSuccess } =
+const JSformActions = ({ params, update, setUpdate, editId,success,setSuccess }) => {
+  const [loading,setLoading]=useState(false)
+  const { handleDelete } =
     UseForm(params);
 
+    const handleEdit = (params) => {
+      const editedRow = params.row;
+      setLoading(true);
+      axios
+        .put(`http://127.0.0.1:8000/api/v1/job-support-data-update`, editedRow)
+        .then((res) => {
+          console.log(res.data);
+          console.log("Empdata Successfully updated");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      setLoading(false);
+      setSuccess(true);
+    };
   const getMuiTheme = () =>
     createTheme({
       palette: {
@@ -41,7 +58,7 @@ const JSformActions = ({ params, update, setUpdate, editId,check,setCheck }) => 
           }}
         >
           <Stack spacing={0} direction="row">
-            { check && success && (
+            { success ?(
               <IconButton
                 size="small"
                 color="primary"
@@ -51,15 +68,13 @@ const JSformActions = ({ params, update, setUpdate, editId,check,setCheck }) => 
                   "&:hover": { bgcolor: green[700] },
                 }}
                 onClick={() => {
-                  handleSuccess();
                   setUpdate(false);
-                  setCheck(false)
                 }}
               >
                 <CheckOutlined />
               </IconButton>
-            )}
-            {loading || check === false ? (
+            ):
+            (
               <IconButton
                 size="small"
                 color="primary"
@@ -70,15 +85,10 @@ const JSformActions = ({ params, update, setUpdate, editId,check,setCheck }) => 
                 disabled={params.id !== editId || update === false}
                 onClick={() => {
                   handleEdit(params);
-                  if (params.id === editId){
-                    setCheck(true)
-                  }
                 }}
               >
                 <SaveOutlined />
               </IconButton>
-            ) : (
-              ""
             )}
             {loading && (
               <CircularProgress

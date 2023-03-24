@@ -71,7 +71,7 @@ const JSformActions = ({ params,setEditId, editId}) => {
           }}
         >
           <Stack spacing={0} direction="row">
-            { success ?(
+            {success ? (
               <IconButton
                 size="small"
                 color="primary"
@@ -86,8 +86,7 @@ const JSformActions = ({ params,setEditId, editId}) => {
               >
                 <CheckOutlined />
               </IconButton>
-            ):
-            (
+            ) : (
               <IconButton
                 size="small"
                 color="primary"

@@ -16,7 +16,7 @@ import AddIcon from "@mui/icons-material/Add";
 import { useValue } from "../../Context/ContextProvider";
 import { getUsers } from "../../Context/actions";
 import { UsersActions } from "./UserActions";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export const AdminList = () => {
   const {

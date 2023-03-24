@@ -10,8 +10,6 @@ const UseForm = (params) => {
     dispatch,
   } = useValue();
 
-  const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
   const [values, setValues] = useState({
     name: "",
     followup_call_date: "",
@@ -64,28 +62,6 @@ const UseForm = (params) => {
         .post("http://127.0.0.1:8000/api/v1/course-enquiry", enqdata)
         .then((res) => console.log(res.data));
       console.log("success", Object.values(values));
-    }
-  };
-
-  const handleEdit = (params) => {
-    const editedRow = params.row;
-    setLoading(true);
-    axios
-      .put(`http://127.0.0.1:8000/api/v1/course-enquiry-update`, editedRow)
-      .then((res) => {
-        console.log(res.data);
-        console.log("Empdata Successfully updated");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    setLoading(false);
-    // setSuccess(true);
-  };
-
-  const handleSuccess = () => {
-    if (loading === false) {
-      setSuccess(false);
     }
   };
 
@@ -151,13 +127,9 @@ const UseForm = (params) => {
     values,
     handleSubmit,
     setValues,
-    handleEdit,
     handleDelete,
     enqrequests,
     clearFields,
-    loading,
-    success,
-    handleSuccess,
   };
 };
 

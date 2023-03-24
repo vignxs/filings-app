@@ -73,6 +73,7 @@ function HomePage() {
   const login = () => {
     navigate("/login");
   };
+  
 //   React.useEffect(() => {
 //     dispatch({ type: "HOME", payload: true });
 //   }, []);

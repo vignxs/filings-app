@@ -7,11 +7,19 @@ import jobSupport from "../../Assets/jobsupport.png";
 import courseEnq from "../../Assets/courseEnq.png";
 import { motion } from "framer-motion";
 import { Grid } from "@mui/material";
+
 import { useNavigate } from "react-router-dom";
+import { fontSize } from "@mui/system";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    zIndex: 10,
+
+    background: "#90b4ce",
+    width: "101vw",
+    height: "100vh",
+    marginLeft: "-3vw",
+    marginTop: "-3.5vh",
   },
   title: {
     flexGrow: 1,
@@ -22,6 +30,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     alignItems: "center",
     flexDirection: "column",
+    marginTop: "2vw",
   },
   heroTitle: {
     fontSize: "5rem",
@@ -30,20 +39,23 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: "1rem",
   },
   heroButton: {
-    fontSize: "1.5rem",
+    fontSize: "1rem",
+    // fontSize: "16px",
     fontWeight: "bold",
-    color: "#fff",
-    backgroundColor: "#3E54AC",
-    padding: ".8vw",
-    borderRadius: "13px",
+    color: "#F6F1F1",
+    backgroundColor: "#000000",
+    padding: "1vw 3vw",
+    borderRadius: "5px",
+    marginLeft: "-1vw",
     "&:hover": {
-      backgroundColor: "#2C3333",
+      backgroundColor: "#002B5B",
     },
   },
   imgContainer: {
     display: "flex",
     gap: "10vw",
     marginBottom: "10vw",
+    marginTop: "5vw",
   },
   img: {
     width: "10vw",
@@ -56,14 +68,17 @@ function HomePage() {
   const classes = useStyles();
   const { state, dispatch } = useValue();
 
-  // Set the state for the home page
-  //   React.useEffect(() => {
-  //     dispatch({ type: "HOME", payload: true });
-  //   }, []);
+  const changePath = () => {
+    window.location = "https://intellecto.co.in/about-us/";
+  };
   const navigate = useNavigate();
-  const handleClick = () => {
+  const login = () => {
     navigate("/login");
   };
+  React.useEffect(() => {
+    dispatch({ type: "HOME", payload: true });
+  }, []);
+
   return (
     <div className={classes.root}>
       <AppBar
@@ -97,24 +112,23 @@ function HomePage() {
                 Intellecto Global Services
               </h1>
             </Grid>
-            <Grid>
-              <Button color="inherit">
-                <a
-                  href="https://intellecto.co.in/"
-                  style={{ textDecoration: "none", color: "black" }}
-                >
-                  Contact Us
-                </a>
+            <Grid style={{ display: "flex", marginRight: "1vw", gap: "1vw" }}>
+              <Button style={{ color: "#ef4565" }}>Contact Us</Button>
+              <Button style={{ color: "#ef4565" }} onClick={changePath}>
+                About Us
               </Button>
-              <Button color="inherit">About Us</Button>
             </Grid>
           </Grid>
         </Toolbar>
       </AppBar>
       <div className={classes.hero}>
-        <Typography variant="h1" className={classes.heroTitle}>
+        <Grid
+          variant="h3"
+          className={classes.heroTitle}
+          style={{ color: "black", fontSize: "3rem", padding: "1vw 5vw" }}
+        >
           Enquiry-Hub
-        </Typography>
+        </Grid>
         <div className={classes.imgContainer}>
           <motion.img
             initial={{ opacity: 0, transform: "translateY(-25vw)" }}
@@ -158,21 +172,25 @@ function HomePage() {
             src={courseEnq}
           />
         </div>
-        <motion.button
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{
-            duration: 3,
-            type: "spring",
-            stiffness: 70,
-            dumbing: 5,
-          }}
-          variant="contained"
-          className={classes.heroButton}
-          onClick={handleClick}
-        >
-          Sign In
-        </motion.button>
+
+        <Grid style={{ marginTop: "-6vw", color: "#094067" }}>
+          <h4 style={{ marginLeft: "-1.2vw" }}>Three Apps, One Tap</h4>
+          <motion.Button
+            onClick={login}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{
+              duration: 3,
+              type: "spring",
+              stiffness: 70,
+              dumbing: 5,
+            }}
+            variant="contained"
+            className={classes.heroButton}
+          >
+            Sign In
+          </motion.Button>
+        </Grid>
       </div>
     </div>
   );

@@ -19,10 +19,10 @@ const JSformActions = ({ params,setEditId, editId}) => {
       if (editId === params.id && success) {
         setSuccess(false);
       }
-      if (editId !== null && editId !== params.id && !success) {
-        window.alert("Please save your changes before proceeding.");
-      }
-    }, [editId, success, params.id]);
+      // if (editId !== null && editId !== params.id && !success) {
+      //   window.alert("Please save your changes before proceeding.");
+      // }
+    }, [editId]);
 
   const { handleDelete } =
     UseForm(params);

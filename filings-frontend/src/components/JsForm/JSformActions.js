@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { CircularProgress, Stack, IconButton } from "@mui/material";
@@ -11,37 +11,39 @@ import { green } from "@mui/material/colors";
 import axios from "axios";
 import UseForm from "./UseForm";
 
-const JSformActions = ({
-  params,
-  update,
-  setUpdate,
-  editId,
-  success,
-  setSuccess,
-}) => {
+const JSformActions = ({ params,setEditId, editId}) => {
   const [loading, setLoading] = useState(false);
-  const { handleDelete } = UseForm(params);
+  const [success, setSuccess] = useState(false);
 
-  const handleEdit = (params) => {
-    const editedRow = params.row;
-    console.log("test params", params);
-    console.log("test params", editId);
-    setLoading(true);
-    axios
-      .put(`http://127.0.0.1:8000/api/v1/job-support-data-update`, editedRow)
-      .then((res) => {
-        console.log(res.data);
-        console.log("Empdata Successfully updated");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    setLoading(false);
-    if (params.id === editId) {
+    useEffect(() => {
+      if (editId === params.id && success) {
+        setSuccess(false);
+      }
+      if (editId !== null && editId !== params.id && !success) {
+        window.alert("Please save your changes before proceeding.");
+      }
+    }, [editId, success, params.id]);
+
+  const { handleDelete } =
+    UseForm(params);
+  
+    const handleEdit = (params) => {
+      const editedRow = params.row;
+      setLoading(true);
+      axios
+        .put(`http://127.0.0.1:8000/api/v1/job-support-data-update`, editedRow)
+        .then((res) => {
+          console.log(res.data);
+          console.log("Empdata Successfully updated");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      setLoading(false);
+      setEditId(null)
       setSuccess(true);
-      // setUpdate(false)
-    }
-  };
+    };
+
   const getMuiTheme = () =>
     createTheme({
       palette: {
@@ -92,7 +94,7 @@ const JSformActions = ({
                   width: 40,
                   height: 40,
                 }}
-                disabled={params.id !== editId || update === false}
+                disabled={params.id !== editId || loading}
                 onClick={() => {
                   handleEdit(params);
                 }}

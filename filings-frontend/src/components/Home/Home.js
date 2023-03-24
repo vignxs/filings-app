@@ -7,10 +7,8 @@ import jobSupport from "../../Assets/jobsupport.png";
 import courseEnq from "../../Assets/courseEnq.png";
 import { motion } from "framer-motion";
 import { Grid } from "@mui/material";
-
 import { useNavigate } from "react-router-dom";
 import { fontSize } from "@mui/system";
-
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -75,9 +73,9 @@ function HomePage() {
   const login = () => {
     navigate("/login");
   };
-  React.useEffect(() => {
-    dispatch({ type: "HOME", payload: true });
-  }, []);
+//   React.useEffect(() => {
+//     dispatch({ type: "HOME", payload: true });
+//   }, []);
 
   return (
     <div className={classes.root}>

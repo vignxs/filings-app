@@ -98,16 +98,16 @@ export default function SignUpComponent() {
                     value={values.user_name}
                     onChange={handleChange}
                     sx={{
-                      border: "1px solid #d8eefe",
+                      border: "2px solid #d8eefe",
                       "&:hover": {
-                        border: "1px solid blue",
+                        border: "2px solid #3da9fc",
                         "& .css-2y464i-MuiInputBase-root-MuiFilledInput-root": {
                           "&:before": {
                             borderBottom: "0px",
                           },
                         },
                       },
-                      borderRadius: "20px 20px 0px 0px",
+                      borderRadius: "10px 10px 0px 0px",
                       "& .css-2y464i-MuiInputBase-root-MuiFilledInput-root": {
                         backgroundColor: "#00000000",
                         "&:hover": {
@@ -131,9 +131,9 @@ export default function SignUpComponent() {
                     value={values.email}
                     onChange={handleChange}
                     sx={{
-                      border: "1px solid #d8eefe",
+                      border: "2px solid #d8eefe",
                       "&:hover": {
-                        border: "1px solid blue",
+                        border: "2px solid #3da9fc",
                         "& .css-2y464i-MuiInputBase-root-MuiFilledInput-root": {
                           "&:before": {
                             borderBottom: "0px",
@@ -167,14 +167,14 @@ export default function SignUpComponent() {
                     variant="filled"
                     security="*"
                     sx={{
-                      border: "1px solid #d8eefe",
+                      border: "2px solid #d8eefe",
                       "&:hover::active": {
                         "&:before": {
                           borderBottom: "0px",
                         },
                       },
                       "&:hover": {
-                        border: "1px solid blue",
+                        border: "2px solid #3da9fc",
 
                         "& .css-2y464i-MuiInputBase-root-MuiFilledInput-root": {
                           "&:before": {
@@ -183,7 +183,7 @@ export default function SignUpComponent() {
                         },
                       },
                       "&:hover:before": { borderBottom: "0px" },
-                      borderRadius: "0px 0px 20px 20px",
+                      borderRadius: "0px 0px 10px 10px",
                       "& .css-2y464i-MuiInputBase-root-MuiFilledInput-root": {
                         backgroundColor: "#00000000",
 

@@ -1,48 +1,25 @@
 import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { Stack, IconButton } from "@mui/material";
-import { DeleteOutlined } from "@mui/icons-material";
+import { CircularProgress, Stack, IconButton } from "@mui/material";
+import {
+  DeleteOutlined,
+  CheckOutlined,
+  SaveOutlined,
+} from "@mui/icons-material";
+import { green } from "@mui/material/colors";
 import UseForm from "./UseForm";
-
-const EnqFormActions = ({ params }) => {
-  const { handleDelete } = UseForm(params);
-  const inputBox = {
-    // margin: "0 auto",
-    "& .MuiTextField-root": {
-      m: 2,
-      // borderRadius:'15px',
-      backgroundColor: "#fffffe",
-      borderRadius: "2px",
-      width: "23ch",
-    },
-    "& .MuiInputBase-input": {
-      borderRadius: "6px",
-      backgroundColor: "#fffffe",
-    },
-    "& .MuiAutocomplete-popupIndicator": {
-      display: "none !important",
-    },
-    "&  .MuiFormHelperText-root.Mui-error": {
-      background: "#fffffe",
-      margin: 0,
-      paddingLeft: 10,
-    },
-    "& .MuiOutlinedInput-root": {
-      borderRadius: "6px",
-    },
-    // marginLeft: "70px",
-    justifyContent: "center",
-    // boxShadow: `rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px`,
-    // bgcolor: "#094067",
-    // left: "-170px",
-    // top: ".8rem",
-    width: "800px",
-    // height: {heightBox},
-    flexGrow: 1,
-    position: "relative",
-    borderRadius: "10px",
-    // ml:"180px"
+import { useValue } from "../../Context/ContextProvider";
+import { useNavigate } from "react-router-dom";
+const EnqFormActions = ({ params, update, setUpdate, editId }) => {
+  const { handleDelete, success, loading, handleEdit, handleSuccess } =
+    UseForm(params);
+  const navigate = useNavigate();
+  const {
+    state: { isLogged },
+  } = useValue();
+  const login = () => {
+    navigate("/login");
   };
   const getMuiTheme = () =>
     createTheme({
@@ -61,7 +38,7 @@ const EnqFormActions = ({ params }) => {
         },
       },
     });
-  return (
+  return isLogged ? (
     <>
       <ThemeProvider theme={getMuiTheme()}>
         <Box
@@ -71,6 +48,54 @@ const EnqFormActions = ({ params }) => {
           }}
         >
           <Stack spacing={0} direction="row">
+            {success && (
+              <IconButton
+                size="small"
+                color="primary"
+                sx={{
+                  boxShadow: 0,
+                  bgcolor: green[500],
+                  "&:hover": { bgcolor: green[700] },
+                }}
+                onClick={() => {
+                  handleSuccess();
+                  setUpdate(false);
+                }}
+              >
+                <CheckOutlined />
+              </IconButton>
+            )}
+            {loading || success === false ? (
+              <IconButton
+                size="small"
+                color="primary"
+                sx={{
+                  width: 40,
+                  // boxShadow: 0,
+                  height: 40,
+                }}
+                disabled={params.id !== editId || update === false}
+                onClick={() => {
+                  handleEdit(params);
+                }}
+              >
+                <SaveOutlined />
+              </IconButton>
+            ) : (
+              ""
+            )}
+            {loading && (
+              <CircularProgress
+                size={40}
+                sx={{
+                  color: green[500],
+                  position: "absolute",
+                  //   top: -6,
+                  left: -1,
+                  zIndex: 1,
+                }}
+              />
+            )}
             <IconButton
               color="teritiary"
               sx={{ boxShadow: 0 }}
@@ -84,6 +109,8 @@ const EnqFormActions = ({ params }) => {
         </Box>
       </ThemeProvider>
     </>
+  ) : (
+    login()
   );
 };
 

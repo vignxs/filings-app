@@ -18,9 +18,14 @@ import { getUsers } from "../../Context/actions";
 import { UsersActions } from "./UserActions";
 import { Link } from "react-router-dom";
 
-
-
 export const AdminList = () => {
+  const {
+    state: { isLogged },
+  } = useValue();
+  const navigate = useNavigate();
+  const login = () => {
+    navigate("/login");
+  };
   const inputBox = {
     "& .MuiDataGrid-toolbarQuickFilter": {
       "& .MuiTextField-root": {
@@ -126,16 +131,16 @@ export const AdminList = () => {
   const [rowId, setRowId] = useState(null);
   const enqColumns = useMemo(
     () => [
-        {
-          field: "actions",
-          headerName: "",
-          type: "actions",
-          width: 100,
-          filterable: true,
-          renderCell: (params) => (
-            <UsersActions {...{ params, rowId, setRowId }} />
-          ),
-        },
+      {
+        field: "actions",
+        headerName: "",
+        type: "actions",
+        width: 100,
+        filterable: true,
+        renderCell: (params) => (
+          <UsersActions {...{ params, rowId, setRowId }} />
+        ),
+      },
       {
         field: "user_name",
         headerName: "Name",
@@ -234,7 +239,7 @@ export const AdminList = () => {
       </GridToolbarContainer>
     );
   }
-  return (
+  return isLogged ? (
     <ThemeProvider theme={getMuiTheme()}>
       <Paper
         elevation={3}
@@ -332,7 +337,7 @@ export const AdminList = () => {
                 },
               },
             }}
-            // experimentalFeatures={{ newEditingApi: true }} 
+            // experimentalFeatures={{ newEditingApi: true }}
             // getRowSpacing={(params) => ({
             //   top: params.isFirstVisible ? 0 : 5,
             //   bottom: params.isLastVisible ? 0 : 5,
@@ -342,7 +347,8 @@ export const AdminList = () => {
         </Box>
       </Paper>
     </ThemeProvider>
-
+  ) : (
     // </userContext.Provider>
+    login()
   );
-}
+};

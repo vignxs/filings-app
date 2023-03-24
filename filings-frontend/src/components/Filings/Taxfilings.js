@@ -11,8 +11,7 @@ import Divider from "@mui/material/Divider";
 import { useNavigate } from "react-router-dom";
 import Container from "@mui/material/Container";
 import { Grid, Stack } from "@mui/material";
-
-
+import { useValue } from "../../Context/ContextProvider";
 
 const inputBox = {
   margin: "0 auto",
@@ -50,21 +49,21 @@ const inputBox = {
   flexGrow: 1,
   position: "relative",
   borderRadius: "10px",
-};    
-
+};
 
 export const Filings = (props) => {
-  
+  const [extractedData, setED] = React.useState({});
+  const [loading, setLoading] = React.useState(false);
+  const [fname, setFname] = React.useState("");
+  const navigate = useNavigate();
 
-    const [extractedData, setED] = React.useState({});
-    const [loading, setLoading] = React.useState(false);
-    const [fname, setFname] = React.useState("");
-    const navigate = useNavigate();
+  const {
+    state: { isLogged },
+  } = useValue();
 
-
-
-  
-
+  const login = () => {
+    navigate("/login");
+  };
 
   const submit = async (e) => {
     // e.preventDefault();
@@ -73,7 +72,7 @@ export const Filings = (props) => {
     const resp = await fetch("http://localhost:8000/uploadfile", {
       method: "POST",
       headers: { Accept: "multipart/form-data" },
-      body: data, 
+      body: data,
     });
     const post_resp = await resp.json();
     setED(post_resp);
@@ -89,7 +88,6 @@ export const Filings = (props) => {
     setLoading(true);
   };
 
-
   // React.useEffect(() => {
   //   setFirst(extractedData.First_name);
   //   console.log("rst");
@@ -102,9 +100,7 @@ export const Filings = (props) => {
     }
   };
 
-
   function MyApp() {
-
     const theme = createTheme({
       palette: {
         primary: {
@@ -122,9 +118,7 @@ export const Filings = (props) => {
       enqueueSnackbar("File uploaded successfuly!", { variant });
     };
 
-    
-
-    return (
+    return isLogged ? (
       <React.Fragment>
         <ThemeProvider theme={theme}>
           <Button
@@ -145,23 +139,25 @@ export const Filings = (props) => {
           </Button>
         </ThemeProvider>
       </React.Fragment>
+    ) : (
+      login()
     );
   }
-    const [first, setFirst] = React.useState(
-      {Fname: "" ,
-      Lname:"",
-       Hno : 0,
-       addres: "",
-       pincode:'',
-       favClr :'',
-       drivinglicence : '',
-      country:"",
-    city:'' 
-   });
-const handleChange = (event) => {
-  event.persist();
-  setFirst({ ...first, [event.target.name]: event.target.value });
-};
+  const [first, setFirst] = React.useState({
+    Fname: "",
+    Lname: "",
+    Hno: 0,
+    addres: "",
+    pincode: "",
+    favClr: "",
+    drivinglicence: "",
+    country: "",
+    city: "",
+  });
+  const handleChange = (event) => {
+    event.persist();
+    setFirst({ ...first, [event.target.name]: event.target.value });
+  };
 
   return (
     <Box border={1} borderColor="#094067" sx={inputBox}>

@@ -9,7 +9,9 @@ const UseForm = (params) => {
     state: { enqrequests },
     dispatch,
   } = useValue();
-  const [updatedRow, setUpdatedRow] = useState(null);
+
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
   const [values, setValues] = useState({
     name: "",
     followup_call_date: "",
@@ -66,17 +68,8 @@ const UseForm = (params) => {
   };
 
   const handleEdit = (params) => {
-    const { id, field, value} = params;
-    setUpdatedRow(enqrequests);
-    const index = updatedRow.findIndex((row) => row.id === id);
-    let editedRow = null;
-    if (index !== -1) {
-      const row = { ...updatedRow[index], [field]: value };
-      const updatedValues = [...updatedRow];
-      updatedValues[index] = row;
-      const newValues = updatedValues.find((row) => row.id === id);
-      editedRow = newValues;
-    }
+    const editedRow = params.row;
+    setLoading(true);
     axios
       .put(`http://127.0.0.1:8000/api/v1/course-enquiry-update`, editedRow)
       .then((res) => {
@@ -86,6 +79,14 @@ const UseForm = (params) => {
       .catch((error) => {
         console.log(error);
       });
+    setLoading(false);
+    setSuccess(true);
+  };
+
+  const handleSuccess = () => {
+    if (loading === false) {
+      setSuccess(false);
+    }
   };
 
   const handleDelete = async () => {
@@ -154,6 +155,10 @@ const UseForm = (params) => {
     handleDelete,
     enqrequests,
     clearFields,
+    loading,
+    success,
+    handleSuccess,
   };
 };
+
 export default UseForm;

@@ -23,6 +23,7 @@ const JSformActions = ({
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
 
+
   const handleCancelEdit = () => {
   onRowEditCancel(params);
   setEditId(null);
@@ -50,6 +51,7 @@ const JSformActions = ({
   }, [editId]);
 
   const { handleDelete } = UseForm(params);
+
 
   const handleEdit = (params) => {
     const editedRow = params.row;
@@ -103,8 +105,10 @@ const JSformActions = ({
                 color="primary"
                 sx={{
                   boxShadow: 0,
-                  bgcolor: green[500],
-                  "&:hover": { bgcolor: green[700] },
+                  bgcolor: green[200],
+                  height: "2.2vw",
+                  marginTop: "3px",
+                  "&:hover": { bgcolor: green[300] },
                 }}
                 // onClick={() => {
                 //   setUpdate(false);

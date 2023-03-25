@@ -104,6 +104,31 @@ const JobSupportDataTable = () => {
   const [editId, setEditId] = useState(null);
   // const [success, setSuccess] = useState(false);
   const { fsrequests } = UseForm();
+   const [rowEditStatus, setRowEditStatus] = useState({});
+   const handleRowEditStart = (params) => {
+     setRowEditStatus({
+       ...rowEditStatus,
+       [params.id]: "editing",
+     });
+     setEditId(params.id);
+   };
+
+   const handleRowEditStop = (params) => {
+     setRowEditStatus({
+       ...rowEditStatus,
+       [params.id]: null,
+     });
+     setEditId(null);
+   };
+
+   const handleRowEditCancel = (params) => {
+     setRowEditStatus({
+       ...rowEditStatus,
+       [params.id]: null,
+     });
+     setEditId(null);
+   };
+
   const enqColumns = useMemo(() => [
     {
       field: "actions",
@@ -113,7 +138,13 @@ const JobSupportDataTable = () => {
       filterable: true,
       renderCell: (params) => (
         <JSformActions
-          {...{ params, editId, setEditId }} //success, setSuccess
+          params={params}
+          editId={editId}
+          setEditId={setEditId}
+          rowEditStatus={rowEditStatus}
+          onRowEditStart={handleRowEditStart}
+          onRowEditStop={handleRowEditStop}
+          onRowEditCancel={handleRowEditCancel} //success, setSuccess
         />
       ),
     },
@@ -214,6 +245,7 @@ const JobSupportDataTable = () => {
       renderCell: renderEndDateCell,
     },
   ]);
+ 
 
   function CustomToolbar() {
     return (
@@ -321,6 +353,14 @@ const JobSupportDataTable = () => {
                     },
                     inset: `-125px auto auto 448px !important`,
                   },
+                  // cell: {
+                  //   actions: {
+                  //     rowEditStatus,
+                  //     onRowEditStart,
+                  //     onRowEditStop,
+                  //     onRowEditCancel,
+                  //   },
+                  // },
                 },
               }}
               onCellEditCommit={(params) => {
@@ -328,6 +368,11 @@ const JobSupportDataTable = () => {
                 // setUpdate(true);
                 // setSuccess(false);
               }}
+              onRowEditStart={handleRowEditStart}
+              onRowEditStop={handleRowEditStop}
+              onRowEditCancel={handleRowEditCancel}
+              isRowEditable={(params) => !rowEditStatus[params.id]}
+              editMode="row"
             />
           </Box>
         </Paper>

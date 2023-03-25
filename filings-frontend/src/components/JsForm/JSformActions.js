@@ -11,35 +11,66 @@ import { green } from "@mui/material/colors";
 import axios from "axios";
 import UseForm from "./UseForm";
 
-const JSformActions = ({ params,setEditId, editId}) => {
+const JSformActions = ({
+  params,
+  setEditId,
+  editId,
+  rowEditStatus,
+  onRowEditStart,
+  onRowEditStop,
+  onRowEditCancel,
+}) => {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
 
-    useEffect(() => {
-      if (editId === params.id && success) {
-        setSuccess(false);
-      }
-    }, [editId]);
 
-  const { handleDelete } =
-    UseForm(params);
-  
-    const handleEdit = (params) => {
-      const editedRow = params.row;
-      setLoading(true);
-      axios
-        .put(`http://127.0.0.1:8000/api/v1/job-support-data-update`, editedRow)
-        .then((res) => {
-          console.log(res.data);
-          console.log("Empdata Successfully updated");
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-      setLoading(false);
-      setEditId(null)
-      setSuccess(true);
-    };
+  const handleCancelEdit = () => {
+  onRowEditCancel(params);
+  setEditId(null);
+  setSuccess(false);
+};
+ useEffect(() => {
+   if (rowEditStatus === "save" && success) {
+     setSuccess(false);
+     onRowEditStop(params);
+   }
+   if (rowEditStatus === "cancel" && !success) {
+     onRowEditStop(params);
+   }
+ }, [rowEditStatus]);
+
+
+
+  useEffect(() => {
+    if (editId === params.id && success) {
+      setSuccess(false);
+    }
+    // if (editId !== null && editId !== params.id && !success) {
+    //   window.alert("Please save your changes before proceeding.");
+    // }
+  }, [editId]);
+
+  const { handleDelete } = UseForm(params);
+
+
+  const handleEdit = (params) => {
+    const editedRow = params.row;
+    setLoading(true);
+    // onRowEditSave(params.row);
+    axios
+      .put(`http://127.0.0.1:8000/api/v1/job-support-data-update`, editedRow)
+      .then((res) => {
+        console.log(res.data);
+        console.log("Empdata Successfully updated");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    setLoading(false);
+    setEditId(null);
+    setSuccess(true);
+    onRowEditStop(params);
+  };
 
   const getMuiTheme = () =>
     createTheme({

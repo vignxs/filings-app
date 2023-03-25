@@ -46,7 +46,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "dev": "concurrently \"react-scripts start\" \"cd ..\\filings-backend && uvicorn main:app ",
+    "dev": "concurrently \"react-scripts start\" \"cd ..\\filings-backend\\app && uvicorn main:app ",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

@@ -14,7 +14,7 @@ router = APIRouter(
 async def request_gst(gst: schemas.IGS_REQ_GST, db: Session= Depends(get_db)):
     return service.create_gst(db=db ,  gst=gst )
 
-@router.get("/req-service-gst/{id}", response_model=schemas.IGS_REQ_GST)
+@router.get("/req-service-gst/{id}")
 def request_service_gst(id: str,  db: Session = Depends(get_db)):
     return service.get_gst(db=db, req_id = id)
 

@@ -16,6 +16,7 @@ class IGS_JOB_SUPPORT(BaseModel):
     updated_by: str = "admin"
     created_at: datetime = datetime.now()
     updated_at: datetime = datetime.now()
+    payment_period: str
 
     # class Config:
     #     orm_mode = True
@@ -37,5 +38,3 @@ class IGS_JOB_SUPPORT_GU(BaseModel):
     created_at: datetime = datetime.now()
     updated_at: datetime = datetime.now()
 
-    class Config:
-        orm_mode = True

@@ -19,9 +19,13 @@ import { Alert } from "@material-ui/lab";
 import { FormControlLabel, Radio, RadioGroup } from "@mui/material";
 import { v4 as uuid } from "uuid";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import Fade from "react-reveal/Fade";
 
+import { getRequests } from "../../Context/actions";
+import { useValue } from "../../Context/ContextProvider";
+import Fade from "react-reveal/Fade";
+import { useNavigate } from "react-router-dom";
 export const EnqForm = (props) => {
+  const { dispatch } = useValue();
   const [uid, setUid] = React.useState(uuid().slice(0, 7));
   const [open, setOpen] = React.useState(false);
   const [userinfo, setInfo] = React.useState({
@@ -66,7 +70,13 @@ export const EnqForm = (props) => {
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
   });
-
+  const {
+    state: { isLogged },
+  } = useValue();
+  const navigate = useNavigate();
+  const login = () => {
+    navigate("/login");
+  };
   const quaters = ["Q1", "Q2", "Q3", "Q4"];
 
   const handleChangeInfo = (e, service) => {
@@ -164,6 +174,7 @@ export const EnqForm = (props) => {
         pincode: "609307",
       });
       setOpen(true);
+      getRequests(dispatch);
       // Clear user info and service info objects
       // Object.keys(userinfo).forEach((key) => delete userinfo[key]);
       // Object.keys(userinfo.serviceInfo).forEach(
@@ -184,8 +195,8 @@ export const EnqForm = (props) => {
 
   const inputBox = {
     margin: "0 auto",
-      width: "100%",
-    
+    width: "100%",
+
     "& .MuiAlert-icon": {
       color: "white !important", // replace with your desired color
     },
@@ -245,7 +256,7 @@ export const EnqForm = (props) => {
     },
   });
 
-  return (
+  return isLogged ? (
     <>
       <Paper elevation={3} sx={inputBox}>
         <div
@@ -744,31 +755,34 @@ export const EnqForm = (props) => {
           <Snackbar
             open={open}
             autoHideDuration={2000}
-            anchorOrigin={{ vertical: "bottom", horizontal: "bottom" }}
+            anchorOrigin={{ vertical: "top", horizontal: "right" }}
             style={{
               transition: "1s",
-              float: "right",
-              left: "76.2vw",
-              top: "4.5vw",
+              left: "76vw",
+              top: "5vw",
+              zIndex: 20,
             }}
             onClose={handleClose}
           >
             <Fade right>
-              <Alert
+              <div
                 style={{
                   color: "white",
                   backgroundColor: "#4caf50",
-                  float: "right",
+                  width: "20vw",
+                  padding: "18px",
+                  borderRadius: "10px",
                 }}
-                onClose={handleClose}
                 severity="success"
               >
                 Request submitted succesfully!
-              </Alert>
+              </div>
             </Fade>
           </Snackbar>
         </ThemeProvider>
       </Paper>
     </>
+  ) : (
+    login()
   );
 };

@@ -11,7 +11,8 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useValue } from "../../Context/ContextProvider";
 import { useSignIn } from "react-auth-kit";
-
+import {loginData} from "../../Redux/loginSlice";
+import { useDispatch } from "react-redux";
 const theme = createTheme({
   palette: {
     mode: "light",
@@ -20,45 +21,55 @@ const theme = createTheme({
 
 export default function SignInComponent() {
 
-   const { dispatch } = useValue();
-   const signIn = useSignIn();
-   const [values, setValues] = React.useState({
-     email: "",
-     password: "",
-   });
-   const navigate = useNavigate();
+  const dispatches = useDispatch();
 
-   const handleChange = (event) => {
-     setValues({ ...values, [event.target.name]: event.target.value });
-   };
+ 
+  const { dispatch } = useValue();
+  const signIn = useSignIn();
+  const [values, setValues] = React.useState({
+    email: "",
+    password: "",
+  });
+  const navigate = useNavigate();
 
-   const handleSubmit = async (event) => {
-     event.preventDefault();
-     const res = await fetch("http://127.0.0.1:8000/api/login", {
-       method: "POST",
-       headers: { "Content-Type": "application/json" },
-       body: JSON.stringify(values),
-     });
-     const post_resp = await res.json();
-     if (post_resp) {
-       signIn({
-         token: post_resp.token,
-         expiresIn: 3600,
-         tokenType: "Bearer",
-         authState: { user: values.user_name },
-         // refreshToken: res.data.refreshToken, // Only if you are using refreshToken feature
-         // refreshTokenExpireIn: res.data.refreshTokenExpireIn, // Only if you are using refreshToken feature
-       });
+  const handleChange = (event) => {
+    setValues({ ...values, [event.target.name]: event.target.value });
+  };
 
-       dispatch({ type: "LOGGED_IN", payload: false });
-       dispatch({ type: "IS_ADMIN", payload: post_resp.is_admin });
-       dispatch({ type: "APPS_ACCESS", payload: post_resp.apps });
-       dispatch({ type: "CURRENT_USER", payload: post_resp.user_name });
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const res = await fetch("http://127.0.0.1:8000/api/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(values),
+    });
+    const post_resp = await res.json();
+    if (post_resp) {
+      signIn({
+        token: post_resp.token,
+        expiresIn: 3600,
+        tokenType: "Bearer",
+        authState: { user: values.user_name },
+        // refreshToken: res.data.refreshToken, // Only if you are using refreshToken feature
+        // refreshTokenExpireIn: res.data.refreshTokenExpireIn, // Only if you are using refreshToken feature
+      });
 
-       navigate("/");
-     }
-   };
+      dispatch({ type: "LOGGED_IN", payload: true });
+      dispatch({ type: "IS_ADMIN", payload: post_resp.is_admin });
+      dispatch({ type: "APPS_ACCESS", payload: post_resp.apps });
+      dispatch({ type: "CURRENT_USER", payload: post_resp.user_name });
 
+      dispatches(
+        loginData({
+        currentUser: post_resp.user_name,
+        apps:post_resp.apps,
+        isLoggedIn:true,
+        }),
+      )
+
+      navigate("/enq-admin");
+    }
+  };
   return (
     <ThemeProvider theme={theme}>
       <Paper
@@ -112,18 +123,20 @@ export default function SignInComponent() {
                     value={values.email}
                     onChange={handleChange}
                     sx={{
-                      border: "1px solid #d8eefe",
-
-                      "&:hover": { border: "1px solid blue" },
-
+                      border: "2px solid #d8eefe",
+                      "& .MuiOutlinedInput-root.Mui-focused:before": {
+                        borderBottom: "2px solid blue", // Change the border-bottom property as per your preference
+                      },
                       "&:active": {
+                        backgroundColor: '"#00000000"!important',
                         "&:before": {
                           borderBottom: "0px",
+                          backgroundColor: '"#00000000"!important',
                         },
                       },
                       "&:hover": {
-                        border: "1px solid blue",
-
+                        border: "2px solid #3da9fc",
+                        backgroundColor: '"#00000000"!important',
                         "& .css-2y464i-MuiInputBase-root-MuiFilledInput-root": {
                           "&:before": {
                             borderBottom: "0px",
@@ -132,9 +145,9 @@ export default function SignInComponent() {
                       },
                       "&:hover:before": { borderBottom: "0px" },
 
-                      borderRadius: "20px 20px 0px 0px",
+                      borderRadius: "10px 10px 0px 0px",
                       "& .css-2y464i-MuiInputBase-root-MuiFilledInput-root": {
-                        backgroundColor: "#00000000",
+                        borderRadius: "10px 10px 0px 0px",
 
                         "before:& .css-2y464i-MuiInputBase-root-MuiFilledInput-root":
                           {
@@ -158,9 +171,7 @@ export default function SignInComponent() {
                     name="password"
                     variant="filled"
                     sx={{
-                      border: "1px solid #d8eefe",
-
-                      "&:hover": { border: "1px solid blue" },
+                      border: "2px solid #d8eefe",
 
                       "&:active": {
                         "&:before": {
@@ -168,7 +179,7 @@ export default function SignInComponent() {
                         },
                       },
                       "&:hover": {
-                        border: "1px solid blue",
+                        border: "2px solid #3da9fc",
 
                         "& .css-2y464i-MuiInputBase-root-MuiFilledInput-root": {
                           "&:before": {
@@ -178,9 +189,9 @@ export default function SignInComponent() {
                       },
                       "&:hover:before": { borderBottom: "0px" },
 
-                      borderRadius: "0px 0px 20px 20px",
+                      borderRadius: "0px 0px 10px 10px",
                       "& .css-2y464i-MuiInputBase-root-MuiFilledInput-root": {
-                        backgroundColor: "#00000000",
+                        borderRadius: "0px 0px 10px 10px",
 
                         "before:& .css-2y464i-MuiInputBase-root-MuiFilledInput-root":
                           {

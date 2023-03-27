@@ -3,15 +3,17 @@ import { useState } from "react";
 import axios from "axios";
 import { useValue } from "../../Context/ContextProvider";
 import { fsgetRequests } from "../../Context/actions";
+import { useSelector } from "react-redux";
 
 const UseForm = (params) => {
+  const [open, setOpen] = useState(false);
+  const loginStatus = useSelector((state) => state.login.value);
+  // console.log(loginStatus)
   const parameter = params;
   const {
     state: { fsrequests },
     dispatch,
   } = useValue();
-  
-
   const [values, setValues] = useState({
     candidate_name: "",
     mobile: "",
@@ -44,8 +46,8 @@ const UseForm = (params) => {
     resource: values.resource,
     status: values.status,
     feedback: values.feedback,
-    created_by:values.created_by,
-    updated_by:values.updated_by
+    created_by: values.created_by,
+    updated_by: values.updated_by,
   };
 
   const postData = () => {
@@ -54,12 +56,12 @@ const UseForm = (params) => {
         .post("http://127.0.0.1:8000/api/v1/job-support-data", enqdata)
         .then((res) => console.log(res.data));
       console.log("success", Object.values(values));
+      setOpen(true);
     }
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // console.log(event)
     console.log(values);
     console.log("I am Working");
 
@@ -76,67 +78,54 @@ const UseForm = (params) => {
       feedback: "",
     });
   };
- 
-const clearFields = () =>{
-  setValues({
-    candidate_name: "",
-    mobile: "",
-    technology: "",
-    start_date: "",
-    followup_date: "",
-    resource: "",
-    status: "",
-    feedback: "",
-  });
-}
+
+  const clearFields = () => {
+    setValues({
+      candidate_name: "",
+      mobile: "",
+      technology: "",
+      start_date: "",
+      followup_date: "",
+      resource: "",
+      status: "",
+      feedback: "",
+    });
+  };
 
   useEffect(() => {
     fsgetRequests(dispatch);
   }, []);
- 
-  const handleEdit = (params) => {
-    const { id, field, value } = params;
-    const updatedRow = { ...params.row, [field]: value };
-    axios
-      .put(
-        `http://127.0.0.1:8000/api/v1/job-support-data-update/${id}`,
-        updatedRow
-      )
-      .then((res) => {
-        console.log(res.data);
-        console.log("Empdata Successfully updated");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
 
-  const handleDelete = async (params) => {
-    // console.log(parameter);
+  const handleDelete = async () => {
     const { id } = parameter.row;
-    console.log(params);
     if (window.confirm("Are you sure to delete this record?")) {
-    await axios
-      .delete(`http://127.0.0.1:8000/api/v1/job-support-data-delete/${id}`)
-      .then((res) => console.log("Employee Data Successfully deleted"))
+      await axios
+        .delete(`http://127.0.0.1:8000/api/v1/job-support-data-delete/${id}`)
+        .then((res) => console.log("Employee Data Successfully deleted"))
 
-      .catch((error) => {
-        console.log(error);
-      });
+        .catch((error) => {
+          console.log(error);
+        });
       dispatch({ type: "FSDELETE_REQUESTS", payload: id });
+      fsgetRequests(dispatch);
     }
-  
   };
-
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
+  };
   return {
+    handleClose,
     handleChange,
     values,
     handleSubmit,
     setValues,
-    handleEdit,
     handleDelete,
     fsrequests,
-    clearFields
+    clearFields,
+    open,
   };
 };
 export default UseForm;

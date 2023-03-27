@@ -4,12 +4,13 @@ import { useValue } from "../../Context/ContextProvider";
 import { enqgetRequests } from "../../Context/actions";
 
 const UseForm = (params) => {
+  const [open, setOpen] = useState(false);
   const parameter = params;
   const {
     state: { enqrequests },
     dispatch,
   } = useValue();
-  // console.log(enqrequests)
+
   const [values, setValues] = useState({
     name: "",
     followup_call_date: "",
@@ -64,47 +65,47 @@ const UseForm = (params) => {
       console.log("success", Object.values(values));
     }
   };
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    console.log(values);
+    console.log("I am Working");
 
-  const handleEdit = (params) => {
-    const { id, field, value,row } = params;
-    const updatedRow = { ...params.row, [field]: value };
-    console.log(row);
-    axios
-      .put(
-        `http://127.0.0.1:8000/api/v1/course-enquiry-update`,updatedRow)
-      .then((res) => {
-        console.log(res.data);
-        console.log("Empdata Successfully updated");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    postData();
+ 
+    setValues({
+      name: "",
+      followup_call_date: "",
+      followup_status: "",
+      enquiry_by: "",
+      mobile: "",
+      location: "",
+      course: "",
+      fee_structure: "",
+      experience_by: "",
+      info_source: "",
+      purpose: "",
+      mode: "",
+      comments: "",
+    });
+    setOpen(true);
   };
 
-  const handleDelete = async (params) => {
-    // console.log(parameter);
+const handleDelete = async () => {
     const { id } = parameter.row;
-    console.log(params);
     if (window.confirm("Are you sure to delete this record?")) {
       await axios
-        .delete(`http://127.0.0.1:8000/api/v1/course-enquiry-delete/${id}`,parameter.row)
+        .delete(`http://127.0.0.1:8000/api/v1/course-enquiry-delete/${id}`)
         .then((res) => console.log("Employee Data Successfully deleted"))
 
         .catch((error) => {
           console.log(error);
         });
       dispatch({ type: "ENQDELETE_REQUESTS", payload: id });
+      enqgetRequests(dispatch);
     }
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    // console.log(event)
-    console.log(values);
-    console.log("I am Working");
-
-    postData();
-
+  const clearFields = () => {
     setValues({
       name: "",
       followup_call_date: "",
@@ -121,34 +122,23 @@ const UseForm = (params) => {
       comments: "",
     });
   };
-
-  const clearFields = ()=>{
-    setValues({
-      name: "",
-      followup_call_date: "",
-      followup_status: "",
-      enquiry_by: "",
-      mobile: "",
-      location: "",
-      course: "",
-      fee_structure: "",
-      experience_by: "",
-      info_source: "",
-      purpose: "",
-      mode: "",
-      comments: "",
-    });
-  }
-
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
+  };
   return {
+    handleClose,
     handleChange,
     values,
     handleSubmit,
     setValues,
-    handleEdit,
     handleDelete,
     enqrequests,
-    clearFields
+    clearFields,
+    open,
   };
 };
+
 export default UseForm;

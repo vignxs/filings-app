@@ -1,1 +1,1 @@
-### IGS Automation Platform
+# Enquiry-Hub

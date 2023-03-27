@@ -178,7 +178,11 @@ export const UsersActions = ({ params, rowId, setRowId }) => {
 
   useEffect(() => {
     if (rowId === params.id && success) setSuccess(false);
+    // if (rowId !==  params.id && success ===false) window.alert("Please save you changes");
   }, [rowId]);
+
+
+
   console.log("setoutput", output);
   function getStepContent(stepIndex) {
     switch (stepIndex) {
@@ -376,7 +380,7 @@ export const UsersActions = ({ params, rowId, setRowId }) => {
       </Box>
       
     </ThemeProvider>
-    <Snackbar
+    {/* <Snackbar
             open={open}
             autoHideDuration={2000}
             anchorOrigin={{ vertical: "bottom", horizontal: "bottom" }}
@@ -401,7 +405,7 @@ export const UsersActions = ({ params, rowId, setRowId }) => {
                 Request submitted succesfully!
               </Alert>
             </Fade>
-          </Snackbar>
+          </Snackbar> */}
   </>
   );
 };

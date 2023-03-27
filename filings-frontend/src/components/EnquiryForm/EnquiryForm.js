@@ -1,7 +1,7 @@
 import React from "react";
 import { Paper } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import Snackbar from "@material-ui/core/Snackbar";
+// import Snackbar from "@material-ui/core/Snackbar";
 import FormControl from "@mui/material/FormControl";
 import Divider from "@mui/material/Divider";
 import Typography from "@mui/material/Typography";
@@ -16,13 +16,31 @@ import { Grid } from "@mui/material";
 import green from "@material-ui/core/colors/green";
 import Button from "@mui/material/Button";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import moment from "moment";
 import UseForm from "./UseForm";
+import { useValue } from "../../Context/ContextProvider";
+import Fade from "react-reveal/Fade";
+import Snackbar from "@material-ui/core/Snackbar";
 
 const EnquiryForm = () => {
   const [fdate, setFdate] = React.useState(null);
-  const { values, handleChange, handleSubmit, setValues,clearFields } = UseForm();
+  const {
+    values,
+    handleChange,
+    handleSubmit,
+    setValues,
+    clearFields,
+    open,
+    handleClose,
+  } = UseForm();
+  const {
+    state: { isLogged },
+  } = useValue();
+  const navigate = useNavigate();
+  const login = () => {
+    navigate("/login");
+  };
   const inputBox = {
     margin: "0 auto",
     width: "100%",
@@ -31,7 +49,6 @@ const EnquiryForm = () => {
     },
     "& .MuiTextField-root": {
       m: 1.5,
-      // borderRadius:'15px',
       backgroundColor: "#fffffe",
       borderRadius: "2px",
       width: "23ch",
@@ -51,14 +68,7 @@ const EnquiryForm = () => {
     "& .MuiOutlinedInput-root": {
       borderRadius: "6px",
     },
-    // marginLeft: "70px",
     justifyContent: "center",
-    // boxShadow: `rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px`,
-    // bgcolor: "#094067",
-    // left: "-170px",
-    // top: ".8rem",
-    // width: "1300px",
-    // height: {heightBox},
     flexGrow: 1,
     position: "relative",
     borderRadius: "10px",
@@ -95,7 +105,7 @@ const EnquiryForm = () => {
   const domain = ["Working Professional", "Corporate", "student", "fresher"];
   const mode = ["online", "offline", "both"];
 
-  return (
+  return isLogged ? (
     <>
       <Paper elevation={3} sx={inputBox}>
         <div
@@ -393,7 +403,7 @@ const EnquiryForm = () => {
                       color: "#FFFFFE",
                       height: "38px",
                       top: "16px",
-                      right:'10px'
+                      right: "10px",
                     }}
                     variant="contained"
                     color="green"
@@ -420,10 +430,39 @@ const EnquiryForm = () => {
                 </Stack>
               </div>
             </ValidatorForm>
+            <Snackbar
+              open={open}
+              autoHideDuration={2000}
+              anchorOrigin={{ vertical: "top", horizontal: "right" }}
+              style={{
+                transition: "1s",
+                left: "76vw",
+                top: "5vw",
+                zIndex: 20,
+              }}
+              onClose={handleClose}
+            >
+              <Fade right>
+                <div
+                  style={{
+                    color: "white",
+                    backgroundColor: "#4caf50",
+                    width: "20vw",
+                    padding: "18px",
+                    borderRadius: "10px",
+                  }}
+                  severity="success"
+                >
+                  Candidate added succesfully!
+                </div>
+              </Fade>
+            </Snackbar>
           </ThemeProvider>
         </div>
       </Paper>
     </>
+  ) : (
+    login()
   );
 };
 

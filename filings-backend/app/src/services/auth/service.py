@@ -16,6 +16,14 @@ def get_user_by_user(db: Session, user: str):
 def get_user(db: Session):
     return db.query(models.User).all()
 
+
+def update_user(db: Session, request: schemas.User_GU) -> int:
+    db_req = models.User(**request.dict())
+    db_req.user_id = request.user_id
+    db.merge(db_req)
+    db.commit()
+    return request.user_id
+
 def create_user(db: Session, user: schemas.User):
     hashed_password = auth_handler.get_password_hash(user.password)
     db_user = models.User(user_name = user.user_name , email = user.email, password = hashed_password, is_admin = user.is_admin, apps = user.apps)
@@ -30,7 +38,7 @@ def create_access_token(email: str, expires_delta: Optional[timedelta] = None):
 def verify_password(plain_password:str , hashed_password:str):
     return auth_handler.verify_password(plain_password , hashed_password)
 
-def create_admin_user(db: Session, user: schemas.User):
+def create_admin_user(db: Session, user: schemas.AdminUser):
     password = generate_password(8)
     print(password)
     hashed_password = auth_handler.get_password_hash(password)

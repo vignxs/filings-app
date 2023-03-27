@@ -18,6 +18,7 @@ class IGS_JOB_SUPPORT(Base):
     updated_by = Column(String)
     created_at = Column(DateTime, default=func.now())
     updated_at = Column(DateTime, default=func.now(), onupdate=func.now())
+    payment_period = Column(String)
 
 @event.listens_for(IGS_JOB_SUPPORT, 'before_update')
 def before_update_listener(mapper, connection, target):

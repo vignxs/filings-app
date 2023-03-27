@@ -1,4 +1,4 @@
-from sqlalchemy import  Column, Integer, String, DateTime, BigInteger, func
+from sqlalchemy import  Column, Integer, String, DateTime, BigInteger, func,event
 from ...database import Base
 
 class IGS_JOB_SUPPORT(Base):
@@ -18,4 +18,8 @@ class IGS_JOB_SUPPORT(Base):
     updated_by = Column(String)
     created_at = Column(DateTime, default=func.now())
     updated_at = Column(DateTime, default=func.now(), onupdate=func.now())
+
+@event.listens_for(IGS_JOB_SUPPORT, 'before_update')
+def before_update_listener(mapper, connection, target):
+    target.updated_at = func.now()
  

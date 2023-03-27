@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { CircularProgress, Stack, IconButton } from "@mui/material";
@@ -12,15 +12,10 @@ import UseForm from "./UseForm";
 import { useValue } from "../../Context/ContextProvider";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-const EnqFormActions = ({ params,setEditId, update, setUpdate, editId }) => {
-  const {
-    handleDelete,
-    success,
-    loading,
-    setLoading,
-    handleSuccess,
-    setSuccess,
-  } = UseForm(params);
+const EnqFormActions = ({ params,setEditId, editId }) => {
+  const { handleDelete } = UseForm(params);
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
   const navigate = useNavigate();
   const {
     state: { isLogged },
@@ -44,6 +39,13 @@ const EnqFormActions = ({ params,setEditId, update, setUpdate, editId }) => {
     setEditId(null);
     setSuccess(true);
   };
+
+  useEffect(() => {
+    if (editId === params.id && success) {
+      setSuccess(false);
+    }
+  }, [editId]);
+
   const getMuiTheme = () =>
     createTheme({
       palette: {
@@ -71,43 +73,36 @@ const EnqFormActions = ({ params,setEditId, update, setUpdate, editId }) => {
           }}
         >
           <Stack spacing={0} direction="row">
-            {success && (
+            {success ? (
               <IconButton
                 size="small"
                 color="primary"
                 sx={{
                   boxShadow: 0,
-                  bgcolor: green[200],
-                  height: "2.2vw",
-                  marginTop: "3px",
-                  "&:hover": { bgcolor: green[300] },
+                  bgcolor: green[500],
+                  "&:hover": { bgcolor: green[700] },
                 }}
-                // onClick={() => {
-                //   handleSuccess();
-                //   setUpdate(false);
-                // }}
+                onClick={() => {
+                  setSuccess(false);
+                }}
               >
                 <CheckOutlined />
               </IconButton>
-            )}
-            {loading || success === false ? (
+            ) : (
               <IconButton
                 size="small"
                 color="primary"
                 sx={{
                   width: 40,
-                  // boxShadow: 0,
                   height: 40,
                 }}
-                disabled={params.id !== editId || update === false}
+                disabled={params.id !== editId || loading}
                 onClick={() => {
                   handleEdit(params);
                 }}
               >
                 <SaveOutlined />
               </IconButton>
-            ) : (
-              ""
             )}
             {loading && (
               <CircularProgress

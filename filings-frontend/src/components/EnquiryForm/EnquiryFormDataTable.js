@@ -95,7 +95,6 @@ const EnquiryFormDataTable = () => {
   const {
     state: { isLogged },
   } = useValue();
-  const [update, setUpdate] = useState(false);
   const [editId, setEditId] = useState(null);
   const { enqrequests } = UseForm();
   const navigate = useNavigate();
@@ -110,7 +109,7 @@ const EnquiryFormDataTable = () => {
       width: 80,
       filterable: true,
       renderCell: (params) => (
-        <EnqFormActions {...{ params, update, setUpdate, editId, setEditId }} />
+        <EnqFormActions {...{ params, editId, setEditId }} />
       ),
     },
     {
@@ -368,7 +367,6 @@ const EnquiryFormDataTable = () => {
               }}
               onCellEditCommit={(params) => {
                 setEditId(params.id);
-                setUpdate(true);
               }}
             />
           </Box>

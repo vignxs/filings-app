@@ -11,6 +11,7 @@ import { green } from "@mui/material/colors";
 import axios from "axios";
 import UseForm from "./UseForm";
 
+
 const JSformActions = ({
   params,
   setEditId,
@@ -22,6 +23,7 @@ const JSformActions = ({
 }) => {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
+
 
 
   const handleCancelEdit = () => {
@@ -57,6 +59,7 @@ const JSformActions = ({
     const editedRow = params.row;
     setLoading(true);
     // onRowEditSave(params.row);
+
     axios
       .put(`http://127.0.0.1:8000/api/v1/job-support-data-update`, editedRow)
       .then((res) => {
@@ -69,7 +72,9 @@ const JSformActions = ({
     setLoading(false);
     setEditId(null);
     setSuccess(true);
+
     onRowEditStop(params);
+
   };
 
   const getMuiTheme = () =>
@@ -110,9 +115,9 @@ const JSformActions = ({
                   marginTop: "3px",
                   "&:hover": { bgcolor: green[300] },
                 }}
-                // onClick={() => {
-                //   setUpdate(false);
-                // }}
+                onClick={() => {
+                  setSuccess(false);
+                }}
               >
                 <CheckOutlined />
               </IconButton>

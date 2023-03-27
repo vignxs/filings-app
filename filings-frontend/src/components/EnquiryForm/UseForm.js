@@ -4,15 +4,13 @@ import { useValue } from "../../Context/ContextProvider";
 import { enqgetRequests } from "../../Context/actions";
 
 const UseForm = (params) => {
+  const [open, setOpen] = useState(false);
   const parameter = params;
   const {
     state: { enqrequests },
     dispatch,
   } = useValue();
 
-  const [open, setOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
   const [values, setValues] = useState({
     name: "",
     followup_call_date: "",
@@ -65,9 +63,7 @@ const UseForm = (params) => {
         .post("http://127.0.0.1:8000/api/v1/course-enquiry", enqdata)
         .then((res) => console.log(res.data));
       console.log("success", Object.values(values));
-        setOpen(true);
     }
-    //
   };
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -91,17 +87,10 @@ const UseForm = (params) => {
       mode: "",
       comments: "",
     });
-    // setOpen(true);
+    setOpen(true);
   };
 
-
-  const handleSuccess = () => {
-    if (loading === false) {
-      setSuccess(false);
-    }
-  };
-
-  const handleDelete = async () => {
+const handleDelete = async () => {
     const { id } = parameter.row;
     if (window.confirm("Are you sure to delete this record?")) {
       await axios
@@ -145,16 +134,10 @@ const UseForm = (params) => {
     values,
     handleSubmit,
     setValues,
-
     handleDelete,
     enqrequests,
     clearFields,
-    loading,
-    success,
-    handleSuccess,
     open,
-    setLoading,
-    setSuccess,
   };
 };
 

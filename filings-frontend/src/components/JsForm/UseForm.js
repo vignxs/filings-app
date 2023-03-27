@@ -3,15 +3,16 @@ import { useState } from "react";
 import axios from "axios";
 import { useValue } from "../../Context/ContextProvider";
 import { fsgetRequests } from "../../Context/actions";
+import { useSelector } from "react-redux";
 
 const UseForm = (params) => {
+  const loginStatus = useSelector((state) => state.login.value);
+  // console.log(loginStatus)
   const parameter = params;
   const {
     state: { fsrequests },
     dispatch,
   } = useValue();
-  const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
   const [values, setValues] = useState({
     candidate_name: "",
     mobile: "",
@@ -93,28 +94,6 @@ const UseForm = (params) => {
   useEffect(() => {
     fsgetRequests(dispatch);
   }, []);
-  
-  const handleEdit = (params) => {
-    const editedRow = params.row;
-    setLoading(true);
-    axios
-      .put(`http://127.0.0.1:8000/api/v1/job-support-data-update`, editedRow)
-      .then((res) => {
-        console.log(res.data);
-        console.log("Empdata Successfully updated");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    setLoading(false);
-    setSuccess(true);
-  };
-
-  const handleSuccess=()=>{
-    if(loading===false){
-      setSuccess(false)
-    }
-  }
 
   const handleDelete = async () => {
     const { id } = parameter.row;
@@ -136,13 +115,9 @@ const UseForm = (params) => {
     values,
     handleSubmit,
     setValues,
-    handleEdit,
     handleDelete,
     fsrequests,
     clearFields,
-    loading,
-    success,
-    handleSuccess
   };
 };
 export default UseForm;

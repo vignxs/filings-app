@@ -12,12 +12,20 @@ import {
 } from "@mui/x-data-grid";
 import { Button, Paper } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import UseForm from "./UseForm";
 import JSformActions from "./JSformActions";
 import { renderEndDateCell } from "./JScustomRender";
+import { useValue } from "../../Context/ContextProvider";
 
 const JobSupportDataTable = () => {
+  const {
+    state: { isLogged },
+  } = useValue();
+  const navigate = useNavigate();
+  const login = () => {
+    navigate("/login");
+  };
   const inputBox = {
     "& .MuiDataGrid-toolbarQuickFilter": {
       "& .MuiTextField-root": {
@@ -94,6 +102,7 @@ const JobSupportDataTable = () => {
     });
   const [update, setUpdate] = useState(false);
   const [editId, setEditId] = useState(null);
+  // const [success, setSuccess] = useState(false);
   const { fsrequests } = UseForm();
   const enqColumns = useMemo(() => [
     {
@@ -103,7 +112,9 @@ const JobSupportDataTable = () => {
       width: 80,
       filterable: true,
       renderCell: (params) => (
-        <JSformActions {...{ params, update, setUpdate, editId, setEditId }} />
+        <JSformActions
+          {...{ params, editId, setEditId }} //success, setSuccess
+        />
       ),
     },
     {
@@ -219,7 +230,7 @@ const JobSupportDataTable = () => {
     );
   }
 
-  return (
+  return isLogged ? (
     <>
       <ThemeProvider theme={getMuiTheme()}>
         <Paper elevation={3} sx={inputBox}>
@@ -314,13 +325,16 @@ const JobSupportDataTable = () => {
               }}
               onCellEditCommit={(params) => {
                 setEditId(params.id);
-                setUpdate(true);
+                // setUpdate(true);
+                // setSuccess(false);
               }}
             />
           </Box>
         </Paper>
       </ThemeProvider>
     </>
+  ) : (
+    login()
   );
 };
 

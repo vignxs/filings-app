@@ -178,7 +178,11 @@ export const UsersActions = ({ params, rowId, setRowId }) => {
 
   useEffect(() => {
     if (rowId === params.id && success) setSuccess(false);
+    // if (rowId !==  params.id && success ===false) window.alert("Please save you changes");
   }, [rowId]);
+
+
+
   console.log("setoutput", output);
   function getStepContent(stepIndex) {
     switch (stepIndex) {

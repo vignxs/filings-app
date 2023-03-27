@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { CircularProgress, Stack, IconButton } from "@mui/material";
@@ -8,11 +8,41 @@ import {
   SaveOutlined,
 } from "@mui/icons-material";
 import { green } from "@mui/material/colors";
+import axios from "axios";
 import UseForm from "./UseForm";
 
-const JSformActions = ({ params, update, setUpdate, editId }) => {
-  const { handleDelete, success, loading, handleEdit, handleSuccess } =
+const JSformActions = ({ params,setEditId, editId}) => {
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+
+    useEffect(() => {
+      if (editId === params.id && success) {
+        setSuccess(false);
+      }
+      // if (editId !== null && editId !== params.id && !success) {
+      //   window.alert("Please save your changes before proceeding.");
+      // }
+    }, [editId]);
+
+  const { handleDelete } =
     UseForm(params);
+  
+    const handleEdit = (params) => {
+      const editedRow = params.row;
+      setLoading(true);
+      axios
+        .put(`http://127.0.0.1:8000/api/v1/job-support-data-update`, editedRow)
+        .then((res) => {
+          console.log(res.data);
+          console.log("Empdata Successfully updated");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      setLoading(false);
+      setEditId(null)
+      setSuccess(true);
+    };
 
   const getMuiTheme = () =>
     createTheme({
@@ -41,7 +71,7 @@ const JSformActions = ({ params, update, setUpdate, editId }) => {
           }}
         >
           <Stack spacing={0} direction="row">
-            {success && (
+            {success ? (
               <IconButton
                 size="small"
                 color="primary"
@@ -50,32 +80,27 @@ const JSformActions = ({ params, update, setUpdate, editId }) => {
                   bgcolor: green[500],
                   "&:hover": { bgcolor: green[700] },
                 }}
-                onClick={() => {
-                  handleSuccess();
-                  setUpdate(false);
-                }}
+                // onClick={() => {
+                //   setUpdate(false);
+                // }}
               >
                 <CheckOutlined />
               </IconButton>
-            )}
-            {loading || success === false ? (
+            ) : (
               <IconButton
                 size="small"
                 color="primary"
                 sx={{
                   width: 40,
-                  // boxShadow: 0,
                   height: 40,
                 }}
-                disabled={params.id !== editId || update === false}
+                disabled={params.id !== editId || loading}
                 onClick={() => {
                   handleEdit(params);
                 }}
               >
                 <SaveOutlined />
               </IconButton>
-            ) : (
-              ""
             )}
             {loading && (
               <CircularProgress

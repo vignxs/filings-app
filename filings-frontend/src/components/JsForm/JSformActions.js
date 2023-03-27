@@ -15,11 +15,6 @@ const JSformActions = ({ params, setEditId, editId }) => {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
 
-    useEffect(() => {
-      if (editId === params.id && success) {
-        setSuccess(false);
-      }
-    }, [editId]);
 
   const { handleDelete } = UseForm(params);
 

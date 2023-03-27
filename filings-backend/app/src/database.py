@@ -17,15 +17,15 @@ env = os.getenv("VERCEL")
 # Database Configuration
 ###
 
-SQLALCHEMY_DATABASE_URL = f"postgresql://{DB_USER}:{DB_PASS}@{DB_HOST}/{DB_NAME}"
 
 if env:
-    DB_USER = os.getenv("CLOUD_DB_USER")
-    DB_PASS = os.getenv("CLOUD_DB_PASS")
-    DB_HOST = os.getenv("CLOUD_DB_HOST")
-    DB_NAME = os.getenv("CLOUD_DB_NAME")
-    SQLALCHEMY_DATABASE_URL = f"postgresql://{DB_USER}:{DB_PASS}@{DB_HOST}/{DB_NAME}"
+    DB_USER = os.getenv("PGUSER")
+    DB_PASS = os.getenv("PGPASSWORD")
+    DB_HOST = os.getenv("PGHOST")
+    DB_NAME = os.getenv("PGDATABASE")
     
+SQLALCHEMY_DATABASE_URL = f"postgresql://{DB_USER}:{DB_PASS}@{DB_HOST}/{DB_NAME}"
+
 
 engine = create_engine(
     SQLALCHEMY_DATABASE_URL

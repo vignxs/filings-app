@@ -16,6 +16,7 @@ import { UserCreateForm } from "./components/Forms/UserCreate";
 import EnquiryFormDataTable from "./components/EnquiryForm/EnquiryFormDataTable";
 import HomePage from "./components/Home/Home";
 function App() {
+    // const isLoggedIn = getState().isLoggedIn
   return (
     <BrowserRouter>
       <HeaderBar>

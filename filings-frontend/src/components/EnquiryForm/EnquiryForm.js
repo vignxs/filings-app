@@ -22,9 +22,11 @@ import UseForm from "./UseForm";
 import { useValue } from "../../Context/ContextProvider";
 import Fade from "react-reveal/Fade";
 import Snackbar from "@material-ui/core/Snackbar";
+import SnackBar from "../Utils/SnakeBar";
 
 const EnquiryForm = () => {
   const [fdate, setFdate] = React.useState(null);
+
   const {
     values,
     handleChange,
@@ -32,6 +34,7 @@ const EnquiryForm = () => {
     setValues,
     clearFields,
     open,
+    setOpen,
     handleClose,
   } = UseForm();
   const {
@@ -416,33 +419,7 @@ const EnquiryForm = () => {
               </Stack>
             </div>
             </ValidatorForm>
-            <Snackbar
-              open={open}
-              autoHideDuration={2000}
-              anchorOrigin={{ vertical: "top", horizontal: "right" }}
-              style={{
-                transition: "1s",
-                left: "76vw",
-                top: "5vw",
-                zIndex: 20,
-              }}
-              onClose={handleClose}
-            >
-              <Fade right>
-                <div
-                  style={{
-                    color: "white",
-                    backgroundColor: "#4caf50",
-                    width: "20vw",
-                    padding: "18px",
-                    borderRadius: "10px",
-                  }}
-                  severity="success"
-                >
-                  Candidate added succesfully!
-                </div>
-              </Fade>
-            </Snackbar>
+            <SnackBar open={open} setOpen={setOpen} />
           </ThemeProvider>
         </div>
       </Paper>

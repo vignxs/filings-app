@@ -44,12 +44,12 @@ const reducer = (state, action) => {
     case "LOGGED_IN":
       return {
         ...state,
-        isLogged: action.payload,
+        isLogged: true,
       };
     case "LOGGED_OUT":
       return {
         ...state,
-        isLogged: action.payload,
+        isLogged: false,
       };
     case "IS_ADMIN":
       return {

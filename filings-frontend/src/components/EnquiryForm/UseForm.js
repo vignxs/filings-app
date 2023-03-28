@@ -141,6 +141,7 @@ const handleDelete = async () => {
     enqrequests,
     clearFields,
     open,
+    setOpen,
   };
 };
 

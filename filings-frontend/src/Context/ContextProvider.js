@@ -5,14 +5,14 @@ const initialState = {
   requests: [],
   users: [],
   isAdmin: 0,
-  currentUser : "",
-  apps : [],
-  isLogged: false,
+  currentUser: "",
+  apps: [],
+  //   isLogged: false,
   fsrequests: [],
   enqrequests: [],
-  home:false,
-  sidebarState:false,
-  };
+  home: false,
+  sidebarState: false,
+};
 
 export const Context = createContext();
 export default Context;

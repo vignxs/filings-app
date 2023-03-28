@@ -100,9 +100,8 @@ const JobSupportDataTable = () => {
         },
       },
     });
-  const [update, setUpdate] = useState(false);
+
   const [editId, setEditId] = useState(null);
-  // const [success, setSuccess] = useState(false);
   const { fsrequests } = UseForm();
    const [rowEditStatus, setRowEditStatus] = useState({});
    const handleRowEditStart = (params) => {
@@ -365,8 +364,6 @@ const JobSupportDataTable = () => {
               }}
               onCellEditCommit={(params) => {
                 setEditId(params.id);
-                // setUpdate(true);
-                // setSuccess(false);
               }}
               onRowEditStart={handleRowEditStart}
               onRowEditStop={handleRowEditStop}

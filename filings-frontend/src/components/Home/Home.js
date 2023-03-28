@@ -72,9 +72,10 @@ function HomePage() {
   const login = () => {
     navigate("/login");
   };
-  //   React.useEffect(() => {
-  //     dispatch({ type: "HOME", payload: true });
-  //   }, []);
+  
+//   React.useEffect(() => {
+//     dispatch({ type: "HOME", payload: true });
+//   }, []);
 
   return (
     <div className={classes.root}>

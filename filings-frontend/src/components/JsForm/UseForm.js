@@ -62,7 +62,6 @@ const UseForm = (params) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // console.log(event)
     console.log(values);
     console.log("I am Working");
 
@@ -127,6 +126,7 @@ const UseForm = (params) => {
     fsrequests,
     clearFields,
     open,
+    setOpen,
   };
 };
 export default UseForm;

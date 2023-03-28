@@ -13,7 +13,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import SupervisorAccountRoundedIcon from "@mui/icons-material/SupervisorAccountRounded";
 import ShieldRoundedIcon from "@mui/icons-material/ShieldRounded";
-import { FactCheckRounded } from "@mui/icons-material";
+import { AssignmentIndRounded, CallMissedOutgoingRounded, FactCheckRounded, ListAltRounded, PsychologyAltRounded } from "@mui/icons-material";
 
 const FilingsRoutes = ({open}) => {
      const [Expand, setExpand] = React.useState(false);
@@ -314,9 +314,27 @@ const JobSuppRoutes = ({ open }) => {
     // },
     {
       isSelected: 1,
-      icon: <FactCheckRounded />,
+      icon: <ListAltRounded />,
       path: "/job-supp-table",
       name: "Job-Supp List",
+    },
+    {
+      isSelected: 1,
+      icon: <CallMissedOutgoingRounded />,
+      path: "/job-supp-table",
+      name: "Follow-up List",
+    },
+    {
+      isSelected: 1,
+      icon: <FactCheckRounded />,
+      path: "/job-supp-table",
+      name: "Confirmed List",
+    },
+    {
+      isSelected: 1,
+      icon: <AssignmentIndRounded />,
+      path: "/job-supp-table",
+      name: "Resource List",
     },
   ];
 

@@ -207,7 +207,7 @@ const JobSupportForm = () => {
                         setSdate(date);
                         setValues({
                           ...values,
-                          start_date: `${dates}`,
+                          start_date: `${date}`,
                         });
                       }}
                       renderInput={(params) => (
@@ -235,7 +235,7 @@ const JobSupportForm = () => {
                         setFdate(date);
                         setValues({
                           ...values,
-                          followup_date: `${dates}`,
+                          followup_date: `${date}`,
                         });
                       }}
                       renderInput={(params) => (

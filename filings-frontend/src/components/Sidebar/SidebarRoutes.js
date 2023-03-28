@@ -338,7 +338,6 @@ const JobSuppRoutes = ({ open }) => {
     },
   ];
 
-
   return (
     <>
       <List component="div">

@@ -64,7 +64,6 @@ const UseForm = (params) => {
         .then((res) => console.log(res.data));
       setOpen(true);
     }
-    navigate("/job-supp-form");
   };
 
   const handleSubmit = (event) => {

@@ -200,14 +200,14 @@ const JobSupportForm = () => {
                       orientation="landscape"
                       label="Start Date"
                       format="dd-MM-yyyy"
-                      value={values.start_date ? fdate : Date()}
+                      value={values.start_date ? sdate : Date()}
                       onChange={(e) => {
                         const date = new Date(e);
                         const dates = moment(date).format("DD-MM-YYYY");
                         setSdate(date);
                         setValues({
                           ...values,
-                          start_date: `${date}`,
+                          start_date: `${dates}`,
                         });
                       }}
                       renderInput={(params) => (
@@ -235,7 +235,7 @@ const JobSupportForm = () => {
                         setFdate(date);
                         setValues({
                           ...values,
-                          followup_date: `${date}`,
+                          followup_date: `${dates}`,
                         });
                       }}
                       renderInput={(params) => (

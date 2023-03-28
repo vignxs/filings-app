@@ -1,14 +1,18 @@
 import { useEffect, useMemo } from "react";
 import { useState } from "react";
 import axios from "axios";
+import moment from "moment";
 import { useValue } from "../../Context/ContextProvider";
 import { fsgetRequests } from "../../Context/actions";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const UseForm = (params) => {
   const [open, setOpen] = useState(false);
   const loginStatus = useSelector((state) => state.login.value);
   // console.log(loginStatus)
+  const navigate = useNavigate();
+
   const parameter = params;
   const {
     state: { fsrequests },
@@ -18,8 +22,8 @@ const UseForm = (params) => {
     candidate_name: "",
     mobile: "",
     technology: "",
-    start_date: null,
-    followup_date: null,
+    start_date: new Date(),
+    followup_date: new Date(),
     resource: "",
     status: "",
     feedback: "",
@@ -41,8 +45,8 @@ const UseForm = (params) => {
     candidate_name: values.candidate_name,
     mobile: values.mobile,
     technology: values.technology,
-    start_date: values.start_date,
-    followup_date: values.followup_date,
+    start_date:moment(values.start_date).format("DD-MM-YYYY") ,
+    followup_date: moment(values.followup_date).format("DD-MM-YYYY"),
     resource: values.resource,
     status: values.status,
     feedback: values.feedback,
@@ -58,6 +62,7 @@ const UseForm = (params) => {
       console.log("success", Object.values(values));
       setOpen(true);
     }
+    navigate("/job-supp-form");
   };
 
   const handleSubmit = (event) => {

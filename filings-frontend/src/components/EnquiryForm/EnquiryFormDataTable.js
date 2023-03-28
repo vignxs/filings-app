@@ -9,6 +9,7 @@ import {
   GridToolbarFilterButton,
   GridToolbarExport,
   GridToolbarQuickFilter,
+  GridToolbarColumnsButton,
 } from "@mui/x-data-grid";
 import { Button, Paper } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
@@ -265,6 +266,7 @@ const EnquiryFormDataTable = () => {
     return (
       <GridToolbarContainer sx={{ background: "#000000" }}>
         <GridToolbarQuickFilter sx={{ marginRight: "auto" }} />
+        <GridToolbarColumnsButton />
         <GridToolbarFilterButton
           PopperProps={{ color: "#000000", inset: `-125px auto auto 350px` }}
           sx={{ m: 2, bgcolor: "#FFFFFF", marginLeft: "auto" }}

@@ -385,50 +385,36 @@ const EnquiryForm = () => {
                   </FormControl>
                 </Grid>
               </Grid>
-              <div style={{ positiion: "absolute", bottom: 0, width: "100%" }}>
-                <Divider />
-                <Stack spacing={2} direction="row">
-                  <Button
-                    sx={{ m: 2, width: "100px", color: "#FFFFFE" }}
-                    variant="contained"
-                    color="green"
-                    type="submit"
-                  >
-                    Submit
-                  </Button>
-                  <Button
-                    sx={{
-                      m: 2,
-                      width: "100px",
-                      color: "#FFFFFE",
-                      height: "38px",
-                      top: "16px",
-                      right: "10px",
-                    }}
-                    variant="contained"
-                    color="green"
-                    to="/enquiry-table"
-                    component={Link}
-                  >
-                    Go Back
-                  </Button>
-                  <Button
-                    sx={{
-                      m: 2,
-                      width: "100px",
-                      height: "38px",
-                      top: "17px",
-                      color: "#094067",
-                    }}
-                    variant="outlined"
-                    color="green"
-                    type="reset"
-                    onClick={clearFields}
-                  >
-                    Clear
-                  </Button>
-                </Stack>
-              </div>
+              <Divider/>
+              <div style={{ width: "100%",padding:"20px 0 20px 0" }}>
+              <Stack spacing={1} direction="row">
+                <Button
+                  sx={{color: "#FFFFFE" }}
+                  variant="contained"
+                  color="green"
+                  type="submit"
+                >
+                  Submit
+                </Button>
+                <Button
+                  sx={{color: "#FFFFFE" }}
+                  variant="contained"
+                  color="green"
+                  to="/enquiry-table"
+                  component={Link}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  variant="outlined"
+                  color="green"
+                  type="reset"
+                  onClick={clearFields}
+                >
+                  Clear
+                </Button>
+              </Stack>
+            </div>
             </ValidatorForm>
             <Snackbar
               open={open}

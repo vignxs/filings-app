@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import moment from "moment";
 import { useValue } from "../../Context/ContextProvider";
 import { enqgetRequests } from "../../Context/actions";
 
@@ -10,10 +11,12 @@ const UseForm = (params) => {
     state: { enqrequests },
     dispatch,
   } = useValue();
+  const date = new Date();
+  const fcDate = moment(date).format("DD-MM-YYYY");
 
   const [values, setValues] = useState({
     name: "",
-    followup_call_date: "",
+    followup_call_date:fcDate,
     followup_status: "",
     enquiry_by: "",
     mobile: "",

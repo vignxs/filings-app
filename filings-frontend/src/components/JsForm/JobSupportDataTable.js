@@ -8,6 +8,7 @@ import {
   GridToolbarContainer,
   GridToolbarFilterButton,
   GridToolbarExport,
+  GridToolbarColumnsButton,
   GridToolbarQuickFilter,
 } from "@mui/x-data-grid";
 import { Button, Paper } from "@mui/material";
@@ -250,7 +251,7 @@ const JobSupportDataTable = () => {
     return (
       <GridToolbarContainer sx={{ background: "#000000" }}>
         <GridToolbarQuickFilter sx={{ marginRight: "auto" }} />
-        {/* <GridToolbarColumnsButton /> */}
+        <GridToolbarColumnsButton />
         <GridToolbarFilterButton
           PopperProps={{ color: "#000000", inset: `-125px auto auto 350px` }}
           sx={{ m: 2, bgcolor: "#FFFFFF", marginLeft: "auto" }}

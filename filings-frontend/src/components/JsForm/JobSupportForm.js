@@ -34,6 +34,7 @@ const JobSupportForm = () => {
     clearFields,
     open,
     handleClose,
+    sDate,
   } = UseForm();
   const {
     state: { isLogged },
@@ -196,10 +197,10 @@ const JobSupportForm = () => {
                       orientation="landscape"
                       label="Start Date"
                       format="dd-MM-yyyy"
-                      value={values.start_date ? sdate : Date()}
+                      value={values.start_date ? fdate : Date()}
                       onChange={(e) => {
                         const date = new Date(e);
-                        const dates = moment(date).format("YYYY-MM-DD");
+                        const dates = moment(date).format("DD-MM-YYYY");
                         setSdate(date);
                         setValues({
                           ...values,
@@ -227,7 +228,7 @@ const JobSupportForm = () => {
                       value={values.followup_date ? fdate : Date()}
                       onChange={(e) => {
                         const date = new Date(e);
-                        const dates = moment(date).format("YYYY-MM-DD");
+                        const dates = moment(date).format("DD-MM-YYYY");
                         setFdate(date);
                         setValues({
                           ...values,
@@ -316,11 +317,11 @@ const JobSupportForm = () => {
                   />
                 </Grid>
               </Grid>
-              <div style={{ positiion: "absolute", bottom: 0, width: "100%" }}>
-                <Divider />
-                <Stack spacing={2} direction="row">
+              <Divider />
+              <div style={{ width: "100%", padding: "20px 0 20px 0" }}>
+                <Stack spacing={1} direction="row">
                   <Button
-                    sx={{ m: 2, width: "100px", color: "#FFFFFE" }}
+                    sx={{ color: "#FFFFFE" }}
                     variant="contained"
                     color="green"
                     type="submit"
@@ -328,29 +329,15 @@ const JobSupportForm = () => {
                     Submit
                   </Button>
                   <Button
-                    sx={{
-                      m: 2,
-                      width: "100px",
-                      color: "#FFFFFE",
-                      height: "38px",
-                      top: "16px",
-                      right: "10px",
-                    }}
+                    sx={{ color: "#FFFFFE" }}
                     variant="contained"
                     color="green"
                     to="/job-supp-table"
                     component={Link}
                   >
-                    Go Back
+                    Cancel
                   </Button>
                   <Button
-                    sx={{
-                      m: 2,
-                      width: "100px",
-                      height: "38px",
-                      top: "16px",
-                      color: "#094067",
-                    }}
                     variant="outlined"
                     color="green"
                     type="reset"

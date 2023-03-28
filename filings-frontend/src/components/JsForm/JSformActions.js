@@ -15,7 +15,6 @@ const JSformActions = ({ params, setEditId, editId }) => {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
 
-
   const { handleDelete } = UseForm(params);
 
   const handleEdit = (params) => {

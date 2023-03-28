@@ -11,7 +11,7 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useValue } from "../../Context/ContextProvider";
 import { useSignIn } from "react-auth-kit";
-import {loginData} from "../../Redux/loginSlice";
+import { loginData } from "../../Redux/loginSlice";
 import { useDispatch } from "react-redux";
 const theme = createTheme({
   palette: {
@@ -20,7 +20,6 @@ const theme = createTheme({
 });
 
 export default function SignInComponent() {
-
   const dispatches = useDispatch();
   const { dispatch } = useValue();
   const signIn = useSignIn();
@@ -51,20 +50,20 @@ export default function SignInComponent() {
         // refreshToken: res.data.refreshToken, // Only if you are using refreshToken feature
         // refreshTokenExpireIn: res.data.refreshTokenExpireIn, // Only if you are using refreshToken feature
       });
-
-      dispatch({ type: "LOGGED_IN", payload: true });
+ dispatch({ type: "LOGGED_IN" });
+    //   dispatch({ type: "LOGGED_IN", payload: true });
       dispatch({ type: "IS_ADMIN", payload: post_resp.is_admin });
       dispatch({ type: "APPS_ACCESS", payload: post_resp.apps });
       dispatch({ type: "CURRENT_USER", payload: post_resp.user_name });
 
       dispatches(
         loginData({
-        currentUser: post_resp.user_name,
-        apps:post_resp.apps,
-        isLoggedIn:true,
-        }),
-      )
-
+          currentUser: post_resp.user_name,
+          apps: post_resp.apps,
+          isLoggedIn: true,
+        })
+      );
+     
       navigate("/enq-admin");
     }
   };

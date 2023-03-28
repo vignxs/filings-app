@@ -42,7 +42,7 @@ export const UserCreateForm = (props) => {
   const login = () => {
     navigate("/login");
   };
-  const names = ["Filings", "Admin", "Job-Support", "Course-Enquiry"];
+  const names = ["Filings", "Job-Support", "Course-Enquiry"];
 
   const [open, setOpen] = React.useState(false);
   const [userinfo, setInfo] = React.useState({

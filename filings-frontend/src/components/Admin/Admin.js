@@ -12,6 +12,8 @@ import {
   GridToolbarFilterButton,
   GridToolbarExport,
   GridToolbarQuickFilter,
+  GridToolbarExportContainer,
+  GridToolbarDensitySelector,
 } from "@mui/x-data-grid";
 import { UsersActions } from "./AdminActions";
 import { Button, Paper } from "@mui/material";
@@ -201,7 +203,6 @@ export const EnqAdmin = (props) => {
     if (requests.length === 0) getRequests(dispatch);
   }, []);
 
-  console.log(requests);
   // .MuiDataGrid-cell:focus {
   //     outline: solid #094067 1px;
   //     border-radius: 12px;
@@ -210,12 +211,12 @@ export const EnqAdmin = (props) => {
     return (
       <GridToolbarContainer sx={{ background: "#000000" }}>
         <GridToolbarQuickFilter sx={{ marginRight: "auto" }} />
-        <GridToolbarColumnsButton /> 
         <GridToolbarFilterButton
           PopperProps={{ color: "#000000", inset: `-5px auto auto 350px` }}
-          sx={{ m: 2, bgcolor: "#FFFFFF", marginLeft: "auto" }}
+          sx={{ ml: 2, bgcolor: "#FFFFFF", marginLeft: "auto" }}
         />
-
+        <GridToolbarDensitySelector sx={{ ml: 2, bgcolor: "#FFFFFF" }} />
+        <GridToolbarColumnsButton sx={{ ml: 2, bgcolor: "#FFFFFF" }} />
         <GridToolbarExport sx={{ m: 2, bgcolor: "#FFFFFF" }} />
       </GridToolbarContainer>
     );

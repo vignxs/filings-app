@@ -141,15 +141,6 @@ export const UsersActions = ({ params, rowId, setRowId }) => {
                 }}
               />
             )}
-            <IconButton
-              color="teritiary"
-              sx={{ boxShadow: 0 }}
-              size="small"
-              aria-label="edit"
-              onClick={handleDelete}
-            >
-              <DeleteOutlined />
-            </IconButton>
           </Stack>
         </Box>
       </ThemeProvider>

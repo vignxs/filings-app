@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 from datetime import datetime
-
+from typing import ForwardRef
 
 class IGS_JOB_SUPPORT(BaseModel):
 
@@ -17,6 +17,8 @@ class IGS_JOB_SUPPORT(BaseModel):
     created_at: datetime = datetime.now()
     updated_at: datetime = datetime.now()
     payment_period: str
+    date_of_enquiry : str
+    charges : int
 
     # class Config:
     #     orm_mode = True

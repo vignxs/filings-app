@@ -59,3 +59,4 @@ class IGS_JOB_SUPPORT_GU(BaseModel):
     created_at: datetime = datetime.now()
     updated_at: datetime = datetime.now()
 
+

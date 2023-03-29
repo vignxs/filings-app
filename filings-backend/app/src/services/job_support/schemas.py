@@ -20,8 +20,27 @@ class IGS_JOB_SUPPORT(BaseModel):
     date_of_enquiry : str
     charges : int
 
-    # class Config:
-    #     orm_mode = True
+    class Config:
+        orm_mode = True
+
+
+class JOB_SUPPORT_PAYMENT(BaseModel):
+
+    job_support_id : int
+    candidate_payment_amount: int
+    candidate_payment_status: str
+    candidate_payment_date: datetime
+    resource_payment_amount: int
+    resource_payment_status: str
+    resource_payment_date: datetime
+
+
+class JOB_SUPPORT_COMMENTS(BaseModel):
+
+    job_support_id: int
+    comments: str
+    commented_at: datetime
+
 
 
 class IGS_JOB_SUPPORT_GU(BaseModel):

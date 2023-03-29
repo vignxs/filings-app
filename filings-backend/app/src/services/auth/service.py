@@ -6,6 +6,9 @@ from typing import Optional
 
 auth_handler = AuthHandler()
 
+def check_active_flag(db:Session, email : str):
+    return db.query(models.User).filter(models.User.email==email and models.User.active_flag== True).first()
+
 def get_user_by_email(db: Session, email: str):
     return db.query(models.User).filter(models.User.email == email).first()
 

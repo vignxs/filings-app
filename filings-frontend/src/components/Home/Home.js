@@ -71,11 +71,12 @@ function HomePage() {
   const navigate = useNavigate();
   const login = () => {
     navigate("/login");
+    dispatch({ type: "HOME", payload: false });
   };
-  
-//   React.useEffect(() => {
-//     dispatch({ type: "HOME", payload: true });
-//   }, []);
+
+  React.useEffect(() => {
+    dispatch({ type: "HOME", payload: true });
+  }, []);
 
   return (
     <div className={classes.root}>
@@ -83,7 +84,7 @@ function HomePage() {
         sx={{
           backgroundColor: "#d8eefe",
           "& .MuiToolbar-gutters": {
-            padding: "0px",
+            paddingLeft: "0px",
           },
           "& .MuiAppBar-colorPrimary": {
             backgroundColor: "#094067",

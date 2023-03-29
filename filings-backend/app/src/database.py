@@ -23,7 +23,7 @@ if env:
     DB_PASS = os.getenv("PGPASSWORD")
     DB_HOST = os.getenv("PGHOST")
     DB_NAME = os.getenv("PGDATABASE")
-    
+
 SQLALCHEMY_DATABASE_URL = f"postgresql://{DB_USER}:{DB_PASS}@{DB_HOST}/{DB_NAME}"
 
 

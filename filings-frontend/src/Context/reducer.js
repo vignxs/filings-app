@@ -76,6 +76,11 @@ const reducer = (state, action) => {
         ...state,
         enqrequests: action.payload,
       };
+    case "HOME":
+      return {
+        ...state,
+        home: action.payload,
+      };
     default:
       throw new Error("No action matched");
   }

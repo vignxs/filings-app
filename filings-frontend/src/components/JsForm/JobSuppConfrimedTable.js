@@ -149,15 +149,15 @@ const JobSupportConfrimedTable = () => {
         />
       ),
     },
-    {
-      field: "id",
-      headerName: "ID",
-      width: 100,
-      sortable: false,
-      headerAlign: "center",
-      align: "center",
-      filterable: true,
-    },
+    // {
+    //   field: "id",
+    //   headerName: "ID",
+    //   width: 100,
+    //   sortable: false,
+    //   headerAlign: "center",
+    //   align: "center",
+    //   filterable: true,
+    // },
     {
       field: "start_date",
       headerAlign: "center",
@@ -291,7 +291,7 @@ const JobSupportConfrimedTable = () => {
                 noWrap
                 component="h3"
               >
-                Job Support List
+                Job Support List - Confrimed
               </Typography>
 
               <Typography

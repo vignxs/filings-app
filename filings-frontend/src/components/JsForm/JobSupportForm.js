@@ -24,10 +24,6 @@ import Fade from "react-reveal/Fade";
 import { Alert } from "@material-ui/lab";
 import SnackBar from "../Utils/SnakeBar";
 const JobSupportForm = () => {
-  const [sdate, setSdate] = React.useState(null);
-  const [fdate, setFdate] = React.useState(null);
- 
-
   const {
     values,
     handleChange,
@@ -37,7 +33,6 @@ const JobSupportForm = () => {
       open,
     setOpen,
     handleClose,
-    sDate,
   } = UseForm();
   const {
     state: { isLogged },
@@ -200,14 +195,12 @@ const JobSupportForm = () => {
                       orientation="landscape"
                       label="Start Date"
                       format="dd-MM-yyyy"
-                      value={values.start_date ? sdate : Date()}
+                      value={values.start_date}
                       onChange={(e) => {
                         const date = new Date(e);
-                        const dates = moment(date).format("DD-MM-YYYY");
-                        setSdate(date);
                         setValues({
                           ...values,
-                          start_date: `${dates}`,
+                          start_date: `${date}`,
                         });
                       }}
                       renderInput={(params) => (
@@ -228,14 +221,12 @@ const JobSupportForm = () => {
                       openTo="day"
                       format="dd-MM-yyyy"
                       views={["day"]}
-                      value={values.followup_date ? fdate : Date()}
+                      value={values.followup_date}
                       onChange={(e) => {
                         const date = new Date(e);
-                        const dates = moment(date).format("DD-MM-YYYY");
-                        setFdate(date);
                         setValues({
                           ...values,
-                          followup_date: `${dates}`,
+                          followup_date: `${date}`,
                         });
                       }}
                       renderInput={(params) => (

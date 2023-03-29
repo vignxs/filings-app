@@ -11,12 +11,9 @@ const UseForm = (params) => {
     state: { enqrequests },
     dispatch,
   } = useValue();
-  const date = new Date();
-  const fcDate = moment(date).format("DD-MM-YYYY");
-
   const [values, setValues] = useState({
     name: "",
-    followup_call_date:fcDate,
+    followup_call_date:new Date(),
     followup_status: "",
     enquiry_by: "",
     mobile: "",
@@ -42,7 +39,7 @@ const UseForm = (params) => {
 
   const enqdata = {
     name: values.name,
-    followup_call_date: values.followup_call_date,
+    followup_call_date: moment(values.followup_call_date).format("DD-MM-YYYY"),
     followup_status: values.followup_status,
     enquiry_by: values.enquiry_by,
     mobile: values.mobile,

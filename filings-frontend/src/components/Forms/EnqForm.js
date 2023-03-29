@@ -23,7 +23,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { getRequests } from "../../Context/actions";
 import { useValue } from "../../Context/ContextProvider";
 
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import SnackBar from "../Utils/SnakeBar";
 export const EnqForm = (props) => {
   const { dispatch } = useValue();
@@ -718,15 +718,19 @@ export const EnqForm = (props) => {
                   Submit
                 </Button>
                 <Button
-                  sx={{ color: "#FFFFFE" }}
+                  sx={{ color: "#FFFFFE", backgroundColor: "#90b4ce" }}
                   variant="contained"
-                  color="green"
-                  type="submit"
+                  component={Link}
                   to="/enq-admin"
                 >
                   Cancel
                 </Button>
-                <Button variant="outlined" color="green" type="reset">
+                <Button
+                  to="/enq-admin"
+                  variant="outlined"
+                  color="green"
+                  type="reset"
+                >
                   Clear
                 </Button>
               </Stack>

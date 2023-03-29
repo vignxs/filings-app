@@ -45,6 +45,11 @@ def job_support_payment_data(db: Session = Depends(get_db)):
     return service.get_payment(db=db)
 
 
+@router.put("/job-support-payment-update")
+async def job_support_payment_update(request: schemas.JOB_SUPPORT_PAYMENT,  db: Session = Depends(get_db)):
+    return service.update_payment(db=db, request=request)
+
+
 @router.post('/job-support-comment-data', status_code=200)
 async def job_support_create_comment(request: schemas.JOB_SUPPORT_COMMENTS,  db: Session = Depends(get_db)):
     return service.create_comment(db=db, request=request)
@@ -53,3 +58,9 @@ async def job_support_create_comment(request: schemas.JOB_SUPPORT_COMMENTS,  db:
 @router.get("/job-support-comment-data-all")
 def job_support_comment_data(db: Session = Depends(get_db)):
     return service.get_comment(db=db)
+
+
+@router.put("/job-support-comment-update")
+async def job_support_comment_update(request: schemas.JOB_SUPPORT_COMMENTS,  db: Session = Depends(get_db)):
+    return service.update_comment(db=db, request=request)
+

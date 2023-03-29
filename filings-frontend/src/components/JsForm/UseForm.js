@@ -1,14 +1,20 @@
 import { useEffect, useMemo } from "react";
 import { useState } from "react";
 import axios from "axios";
+import moment from "moment";
 import { useValue } from "../../Context/ContextProvider";
 import { fsgetRequests } from "../../Context/actions";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const UseForm = (params) => {
   const [open, setOpen] = useState(false);
   const loginStatus = useSelector((state) => state.login.value);
   // console.log(loginStatus)
+  const navigate = useNavigate();
+  const date = new Date();
+  const Dates = moment(date).format("DD-MM-YYYY");
+
   const parameter = params;
   const {
     state: { fsrequests },
@@ -18,8 +24,8 @@ const UseForm = (params) => {
     candidate_name: "",
     mobile: "",
     technology: "",
-    start_date: null,
-    followup_date: null,
+    start_date: "",
+    followup_date: "",
     resource: "",
     status: "",
     feedback: "",
@@ -41,11 +47,12 @@ const UseForm = (params) => {
     candidate_name: values.candidate_name,
     mobile: values.mobile,
     technology: values.technology,
-    start_date: values.start_date,
-    followup_date: values.followup_date,
+    start_date: values.start_date === "" ? Dates : values.start_date,
+    followup_date: values.followup_date === "" ? Dates : values.followup_date,
     resource: values.resource,
     status: values.status,
     feedback: values.feedback,
+    payment_period: "Nothing",
     created_by: values.created_by,
     updated_by: values.updated_by,
   };
@@ -55,9 +62,9 @@ const UseForm = (params) => {
       axios
         .post("http://127.0.0.1:8000/api/v1/job-support-data", enqdata)
         .then((res) => console.log(res.data));
-      console.log("success", Object.values(values));
       setOpen(true);
     }
+    navigate("/job-supp-form");
   };
 
   const handleSubmit = (event) => {
@@ -126,6 +133,7 @@ const UseForm = (params) => {
     fsrequests,
     clearFields,
     open,
+    setOpen,
   };
 };
 export default UseForm;

@@ -22,8 +22,9 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 
 import { getRequests } from "../../Context/actions";
 import { useValue } from "../../Context/ContextProvider";
-import Fade from "react-reveal/Fade";
-import { useNavigate } from "react-router-dom";
+
+import { Link, useNavigate } from "react-router-dom";
+import SnackBar from "../Utils/SnakeBar";
 export const EnqForm = (props) => {
   const { dispatch } = useValue();
   const [uid, setUid] = React.useState(uuid().slice(0, 7));
@@ -102,7 +103,18 @@ export const EnqForm = (props) => {
         break;
     }
   };
-
+  const handleClear=()=>{
+    setInfo({
+      req_id: "",
+      first_name: "",
+      last_name: "",
+      mobile: "",
+      email: "",
+      address: "",
+      city: "",
+      pincode: "",
+    });
+  }
   const API_ENDPOINT = "http://localhost:8000/api/v1";
 
   async function userInfoPost(e) {
@@ -157,6 +169,7 @@ export const EnqForm = (props) => {
           // Generating new req_id after submission
           setTaxInfo({ req_id: newUid });
         }
+        setOpen(true);
       } else {
         // Handle non-200 response status
         throw new Error(`Failed to save user info: ${response.status}`);
@@ -175,13 +188,7 @@ export const EnqForm = (props) => {
       });
       setOpen(true);
       getRequests(dispatch);
-      // Clear user info and service info objects
-      // Object.keys(userinfo).forEach((key) => delete userinfo[key]);
-      // Object.keys(userinfo.serviceInfo).forEach(
-      //   (key) => delete userinfo.serviceInfo[key]
-      // );
     } catch (error) {
-      // Handle fetch errors
       console.error(`Error while saving user info: ${error}`);
     }
   }
@@ -196,7 +203,6 @@ export const EnqForm = (props) => {
   const inputBox = {
     margin: "0 auto",
     width: "100%",
-
     "& .MuiAlert-icon": {
       color: "white !important", // replace with your desired color
     },
@@ -222,26 +228,13 @@ export const EnqForm = (props) => {
     "& .MuiOutlinedInput-root": {
       borderRadius: "6px",
     },
-    // marginLeft: "70px",
     justifyContent: "center",
-    // boxShadow: `rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px`,
-    // bgcolor: "#094067",
-    // left: "-170px",
-    // top: ".8rem",
-    // width: "1300px",
-    // height: {heightBox},
     flexGrow: 1,
     position: "relative",
     borderRadius: "10px",
     padding: "30px 20px 0 30px",
   };
-  const handleClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
 
-    setOpen(false);
-  };
   const theme = createTheme({
     palette: {
       primary: {
@@ -724,11 +717,11 @@ export const EnqForm = (props) => {
                 false
               )}
             </Grid>
-            <div style={{ positiion: "absolute", bottom: 0, width: "100%" }}>
-              <Divider />
-              <Stack spacing={2} direction="row">
+            <Divider />
+            <div style={{ width: "100%", padding: "20px 0 20px 0" }}>
+              <Stack spacing={1} direction="row">
                 <Button
-                  sx={{ m: 2, width: "100px", color: "#FFFFFE" }}
+                  sx={{ color: "#FFFFFE" }}
                   variant="contained"
                   color="green"
                   type="submit"
@@ -736,49 +729,22 @@ export const EnqForm = (props) => {
                   Submit
                 </Button>
                 <Button
-                  sx={{
-                    m: 2,
-                    width: "100px",
-                    height: "38px",
-                    top: "17px",
-                    color: "#094067",
-                  }}
-                  variant="outlined"
-                  color="green"
-                  type="reset"
+                  sx={{ color: "#FFFFFE", backgroundColor: "#90b4ce" }}
+                  variant="contained"
+                  component={Link}
+                  to="/enq-admin"
                 >
+                  Cancel
+                </Button>
+
+                <Button variant="outlined" color="green" type="reset" onClick={handleClear}>
+
                   Clear
                 </Button>
               </Stack>
             </div>
+            <SnackBar open={open} setOpen={setOpen} />
           </ValidatorForm>
-          <Snackbar
-            open={open}
-            autoHideDuration={2000}
-            anchorOrigin={{ vertical: "top", horizontal: "right" }}
-            style={{
-              transition: "1s",
-              left: "76vw",
-              top: "5vw",
-              zIndex: 20,
-            }}
-            onClose={handleClose}
-          >
-            <Fade right>
-              <div
-                style={{
-                  color: "white",
-                  backgroundColor: "#4caf50",
-                  width: "20vw",
-                  padding: "18px",
-                  borderRadius: "10px",
-                }}
-                severity="success"
-              >
-                Request submitted succesfully!
-              </div>
-            </Fade>
-          </Snackbar>
         </ThemeProvider>
       </Paper>
     </>

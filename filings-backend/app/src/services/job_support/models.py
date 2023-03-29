@@ -1,6 +1,7 @@
-from sqlalchemy import Column, Integer, String, DateTime, BigInteger, func, event, ForeignKey
-from sqlalchemy.orm import relationship,backref
+
+from sqlalchemy import  Column, Integer, String, DateTime, BigInteger, func, event, ForeignKey
 from ...database import Base
+from sqlalchemy.orm import relationship
 
 
 class JOB_SUPPORT_PAYMENT(Base):
@@ -50,9 +51,33 @@ class IGS_JOB_SUPPORT(Base):
     created_at = Column(DateTime, default=func.now())
     updated_at = Column(DateTime, default=func.now(), onupdate=func.now())
     payment_period = Column(String)
-    payment = relationship("JOB_SUPPORT_PAYMENT", back_populates="payment1")
-    comment = relationship("JOB_SUPPORT_COMMENTS", back_populates="comments1")
+    date_of_enquiry = Column(String)
+    charges = Column(Integer)
+    payment = relationship("JOB_SUPPORT_PAYMENT")
+    comment = relationship("JOB_SUPPORT_COMMENTS")
 
+class JOB_SUPPORT_PAYMENT(Base):
+    __tablename__ = "JOB_SUPPORT_PAYMENT"
+    __table_args__ = {'extend_existing': True}
+
+    id = Column(Integer, primary_key=True, autoincrement=True,  index=True)
+    job_support_id = Column(Integer, ForeignKey("IGS_JOB_SUPPORT.id", ondelete="CASCADE"))
+    candidate_payment_amount = Column(Integer)
+    candidate_payment_status = Column(String)
+    candidate_payment_date = Column(DateTime, default=None)
+    resource_payment_amount = Column(Integer)
+    resource_payment_status = Column(String)
+    resource_payment_date = Column(DateTime, default=None)
+
+class JOB_SUPPORT_COMMENTS(Base):
+
+    __tablename__ = "JOB_SUPPORT_COMMENTS"
+    __table_args__ = {'extend_existing': True}
+
+    id = Column(Integer, primary_key=True, autoincrement=True,  index=True)
+    job_support_id = Column(Integer, ForeignKey("IGS_JOB_SUPPORT.id", ondelete="CASCADE"))
+    comments = Column(String)
+    commented_at = Column(DateTime, default=None)
 
 @event.listens_for(IGS_JOB_SUPPORT, 'before_update')
 def before_update_listener(mapper, connection, target):

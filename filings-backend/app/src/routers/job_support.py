@@ -13,12 +13,16 @@ router = APIRouter(
 
 
 @router.post('/job-support-data', status_code=200)
-async def job_support_data(request: schemas.IGS_JOB_SUPPORT,  db: Session = Depends(get_db)):
+async def job_support_create_data(request: schemas.IGS_JOB_SUPPORT,  db: Session = Depends(get_db)):
     return service.create_request(db=db, request=request)
 
 
-@router.get("/job-support-data-all")
+@router.get("/job-support-data")
 def job_support_data(db: Session = Depends(get_db)):
+    return service.get_all(db=db)
+
+@router.get("/job_support-data-all")
+def job_support_data_all(db: Session = Depends(get_db)):
     return service.get_requests(db=db)
 
 
@@ -33,10 +37,19 @@ async def job_support_data_delete(id: int,  db: Session = Depends(get_db)):
 
 
 @router.post('/job-support-paymnet-data', status_code=200)
-async def job_support_payment_data(request: schemas.JOB_SUPPORT_PAYMENT,  db: Session = Depends(get_db)):
+async def job_support_create_payment(request: schemas.JOB_SUPPORT_PAYMENT,  db: Session = Depends(get_db)):
     return service.create_payment(db=db, request=request)
+
+@router.get("/job-support-payment-data-all")
+def job_support_payment_data(db: Session = Depends(get_db)):
+    return service.get_payment(db=db)
 
 
 @router.post('/job-support-comment-data', status_code=200)
-async def job_support_comment_data(request: schemas.JOB_SUPPORT_COMMENTS,  db: Session = Depends(get_db)):
+async def job_support_create_comment(request: schemas.JOB_SUPPORT_COMMENTS,  db: Session = Depends(get_db)):
     return service.create_comment(db=db, request=request)
+
+
+@router.get("/job-support-comment-data-all")
+def job_support_comment_data(db: Session = Depends(get_db)):
+    return service.get_comment(db=db)

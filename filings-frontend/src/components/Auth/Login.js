@@ -241,13 +241,7 @@ export default function SignInComponent() {
                   Sign in
                 </Button>
               </Box>
-              <Grid container justifyContent="flex-end">
-                <Grid item>
-                  <Link to="/register" style={{ textDecoration: "none" }}>
-                    Don't have an account? Sign Up
-                  </Link>
-                </Grid>
-              </Grid>
+               
             </Box>
           </Box>
         </Container>

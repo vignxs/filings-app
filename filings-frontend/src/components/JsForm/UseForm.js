@@ -20,6 +20,7 @@ const UseForm = (params) => {
     state: { fsrequests },
     dispatch,
   } = useValue();
+  const ConfrimedData=fsrequests.filter((row)=>row.status==="Confrimed")
   const [values, setValues] = useState({
     candidate_name: "",
     mobile: "",
@@ -101,7 +102,7 @@ const UseForm = (params) => {
   useEffect(() => {
     fsgetRequests(dispatch);
   }, []);
-
+  
   const handleDelete = async () => {
     const { id } = parameter.row;
     if (window.confirm("Are you sure to delete this record?")) {
@@ -133,6 +134,7 @@ const UseForm = (params) => {
     clearFields,
     open,
     setOpen,
+    ConfrimedData
   };
 };
 export default UseForm;

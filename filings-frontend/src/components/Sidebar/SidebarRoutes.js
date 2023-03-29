@@ -327,7 +327,7 @@ const JobSuppRoutes = ({ open }) => {
     {
       isSelected: 1,
       icon: <FactCheckRounded />,
-      path: "/job-supp-table",
+      path: "/job-supp-confrimed-table",
       name: "Confirmed List",
     },
     {

@@ -15,7 +15,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { CircularProgress, Stack, IconButton } from "@mui/material";
-import Fade from "react-reveal/Fade"
+import Fade from "react-reveal/Fade";
 import {
   CheckOutlined,
   EditOutlined,
@@ -29,6 +29,8 @@ import { ServiceFileForm, getSteps } from "./Services";
 import UserInfoForm from "./Forms/UserInfoForm";
 import ServiceInfoForm from "./Forms/ServiceInfoForm";
 import { getRequests } from "../../Context/actions";
+import SnackBar from "../Utils/SnakeBar";
+import { useNavigate } from "react-router-dom";
 
 export const UsersActions = ({ params, rowId, setRowId }) => {
   const [loading, setLoading] = useState(false);
@@ -42,7 +44,10 @@ export const UsersActions = ({ params, rowId, setRowId }) => {
 
   console.log("user info details", userinfo);
   let value = userinfo;
-
+  const handleFormClose = () => {
+    alert("");
+    setOpen(false);
+  };
   const handleClickOpen = () => {
     setOpen(true);
     const endpoints = {
@@ -180,9 +185,7 @@ export const UsersActions = ({ params, rowId, setRowId }) => {
     if (rowId === params.id && success) setSuccess(false);
     // if (rowId !==  params.id && success ===false) window.alert("Please save you changes");
   }, [rowId]);
-
-
-
+  const navigate = useNavigate();
   console.log("setoutput", output);
   function getStepContent(stepIndex) {
     switch (stepIndex) {
@@ -200,212 +203,184 @@ export const UsersActions = ({ params, rowId, setRowId }) => {
         );
       case 2:
         return <ServiceFileForm />;
-      default:
-        break;
     }
   }
 
   return (
     <>
-    <ThemeProvider theme={getMuiTheme()}>
-      <Box
-        sx={{
-          m: 0.5,
-          position: "relative",
-        }}
-      >
-        <Stack spacing={0} direction="row">
-          {success ? (
-            <IconButton
-              size="small"
-              color="primary"
-              sx={{
-                boxShadow: 0,
+      <ThemeProvider theme={getMuiTheme()}>
+        <Box
+          sx={{
+            m: 0.5,
+            position: "relative",
+          }}
+        >
+          <Stack spacing={0} direction="row">
+            {success ? (
+              <IconButton
+                size="small"
+                color="primary"
+                sx={{
+                  boxShadow: 0,
                   bgcolor: green[200],
                   height: "2.2vw",
-                 marginTop:"3px",
-                "&:hover": { bgcolor: green[300] },
-              }}
-            >
-              <CheckOutlined />
-            </IconButton>
-          ) : (
+                  marginTop: "3px",
+                  "&:hover": { bgcolor: green[300] },
+                }}
+              >
+                <CheckOutlined />
+              </IconButton>
+            ) : (
+              <IconButton
+                size="small"
+                color="primary"
+                sx={{
+                  width: 40,
+                  height: 40,
+                }}
+                disabled={params.id !== rowId || loading}
+                onClick={handleSubmit}
+              >
+                <SaveOutlined />
+              </IconButton>
+            )}
+            {loading && (
+              <CircularProgress
+                size={40}
+                sx={{
+                  color: green[500],
+                  position: "absolute",
+                  left: -1,
+                  zIndex: 1,
+                }}
+              />
+            )}
             <IconButton
-              size="small"
-              color="primary"
-              sx={{
-                width: 40,
-                height: 40,
-              }}
-              disabled={params.id !== rowId || loading}
-              onClick={handleSubmit}
+              color="secondary"
+              sx={{ boxShadow: 0 }}
+              aria-label="edit"
+              onClick={handleClickOpen}
             >
-              <SaveOutlined />
+              <EditOutlined />
             </IconButton>
-          )}
-          {loading && (
-            <CircularProgress
-              size={40}
-              sx={{
-                color: green[500],
-                position: "absolute",
-                left: -1,
-                zIndex: 1,
-              }}
-            />
-          )}
-          <IconButton
-            color="secondary"
-            sx={{ boxShadow: 0 }}
-            aria-label="edit"
-            onClick={handleClickOpen}
-          >
-            <EditOutlined />
-          </IconButton>
-          <Dialog
-            scroll={"body"}
-            fullWidth
-            maxWidth={"md"}
-            open={open}
-            onClose={handleClose}
-          >
-            <DialogTitle
-              sx={{
-                fontFamily: "PT Sans Caption",
-                fontSize: "18px",
-                margin: "30px",
-                fontWeight: "500",
-                position: "relative",
-                color: "#ef4565",
-              }}
+            <Dialog
+              scroll={"body"}
+              fullWidth
+              maxWidth={"md"}
+              open={open}
+              onClose={handleFormClose}
             >
-              Update Form
-            </DialogTitle>
-            <DialogContent sx={{ width: "900px", height: "450px" }}>
-              <DialogContentText></DialogContentText>
-              <Box>
-                <ThemeProvider theme={theme}>
-                  <Stepper
-                    activeStep={activeStep}
-                    alternativeLabel
-                    connector={<QontoConnector />}
-                  >
-                    {steps.map((label) => (
-                      <Step key={label}>
-                        <StepLabel>{label}</StepLabel>
-                      </Step>
-                    ))}
-                  </Stepper>
+              <DialogTitle
+                sx={{
+                  fontFamily: "PT Sans Caption",
+                  fontSize: "18px",
+                  margin: "30px",
+                  fontWeight: "500",
+                  position: "relative",
+                  color: "#ef4565",
+                }}
+              >
+                Update Form
+              </DialogTitle>
+              <DialogContent sx={{ width: "900px", height: "450px" }}>
+                <DialogContentText></DialogContentText>
+                <Box>
+                  <ThemeProvider theme={theme}>
+                    <Stepper
+                      activeStep={activeStep}
+                      alternativeLabel
+                      connector={<QontoConnector />}
+                    >
+                      {steps.map((label) => (
+                        <Step key={label}>
+                          <StepLabel>{label}</StepLabel>
+                        </Step>
+                      ))}
+                    </Stepper>
 
-                  <Box mt={2}>
-                    {activeStep === steps.length ? (
-                      <Box
-                        sx={{
-                          display: "flex",
-                          flexDirection: "column",
-                          alignItems: "center",
-                          margin: "60px",
-                        }}
-                      >
-                        <Typography>
-                          All steps completed , Do you wanna go back? , else
-                          update below!
-                        </Typography>
-
-                        <Button
-                          sx={{ mt: 2 }}
-                          variant="contained"
-                          color="secondary"
-                          onClick={handleReset}
-                        >
-                          Go Back
-                        </Button>
-                      </Box>
-                    ) : (
-                      <Box sx={inputBoxAdminAction}>
-                        {getStepContent(activeStep)}
-                        <div
-                          style={{
-                            position: "absolute",
-                            left: "20px",
-                            width: "100%",
+                    <Box mt={2}>
+                      {activeStep === steps.length ? (
+                        <Box
+                          sx={{
                             display: "flex",
-                            marginTop: "20px",
-                            justifyContent: "center",
+                            flexDirection: "column",
+                            alignItems: "center",
+                            margin: "60px",
                           }}
                         >
-                          <Stack spacing={40} direction="row">
-                            <Button
-                              variant="contained"
-                              color="secondary"
-                              disabled={activeStep === 0}
-                              onClick={handleClose}
-                            >
-                              Back
-                            </Button>
-                            <Button
-                              variant="contained"
-                              color="primary"
-                              onClick={handleNext}
-                            >
-                              {activeStep === steps.length - 1
-                                ? "Finish"
-                                : "Next"}
-                            </Button>
-                          </Stack>
-                        </div>
-                      </Box>
-                    )}
-                  </Box>
-                </ThemeProvider>
-              </Box>
-            </DialogContent>
-            <DialogActions sx={{ justifyContent: "space-between" }}>
-              <Button onClick={compHandleClose}>Cancel</Button>
-              <Button type="submit" onClick={handleFormSubmit}>
-                Save
-              </Button>
-            </DialogActions>
-          </Dialog>
-          <IconButton
-            color="teritiary"
-            sx={{ boxShadow: 0 }}
-            size="small"
-            aria-label="edit"
-            onClick={handleDelete}
-          >
-            <DeleteOutlined />
-          </IconButton>
-        </Stack>
-      </Box>
-      
-    </ThemeProvider>
-    {/* <Snackbar
-            open={open}
-            autoHideDuration={2000}
-            anchorOrigin={{ vertical: "bottom", horizontal: "bottom" }}
-            style={{
-              transition: "1s",
-              float: "right",
-              left: "76.2vw",
-              top: "4.5vw",
-            }}
-            onClose={handleClose}
-          >
-            <Fade right>
-              <Alert
-                style={{
-                  color: "white",
-                  backgroundColor: "#4caf50",
-                  float: "right",
-                }}
-                onClose={handleClose}
-                severity="success"
-              >
-                Request submitted succesfully!
-              </Alert>
-            </Fade>
-          </Snackbar> */}
-  </>
+                          <Typography>
+                            All steps completed , Do you wanna go back? , else
+                            update below!
+                          </Typography>
+
+                          <Button
+                            sx={{ mt: 2 }}
+                            variant="contained"
+                            color="secondary"
+                            onClick={handleReset}
+                          >
+                            Go Back
+                          </Button>
+                        </Box>
+                      ) : (
+                        <Box sx={inputBoxAdminAction}>
+                          {getStepContent(activeStep)}
+                          <div
+                            style={{
+                              position: "absolute",
+                              left: "20px",
+                              width: "100%",
+                              display: "flex",
+                              marginTop: "20px",
+                              justifyContent: "center",
+                            }}
+                          >
+                            <Stack spacing={40} direction="row">
+                              <Button
+                                variant="contained"
+                                color="secondary"
+                                disabled={activeStep === 0}
+                                onClick={handleClose}
+                              >
+                                Back
+                              </Button>
+                              <Button
+                                variant="contained"
+                                color="primary"
+                                onClick={handleNext}
+                              >
+                                {activeStep === steps.length - 1
+                                  ? "Finish"
+                                  : "Next"}
+                              </Button>
+                            </Stack>
+                          </div>
+                        </Box>
+                      )}
+                    </Box>
+                  </ThemeProvider>
+                </Box>
+              </DialogContent>
+              <DialogActions sx={{ justifyContent: "space-between" }}>
+                <Button onClick={compHandleClose}>Cancel</Button>
+                <Button type="submit" onClick={handleFormSubmit}>
+                  Save
+                </Button>
+              </DialogActions>
+            </Dialog>
+            <IconButton
+              color="teritiary"
+              sx={{ boxShadow: 0 }}
+              size="small"
+              aria-label="edit"
+              onClick={handleDelete}
+            >
+              <DeleteOutlined />
+            </IconButton>
+          </Stack>
+        </Box>
+        {/* <SnackBar open={open} setOpen={setOpen} /> */}
+      </ThemeProvider>
+    </>
   );
 };

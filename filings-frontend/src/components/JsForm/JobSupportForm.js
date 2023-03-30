@@ -30,7 +30,7 @@ const JobSupportForm = () => {
     handleSubmit,
     setValues,
     clearFields,
-      open,
+    open,
     setOpen,
     handleClose,
   } = UseForm();
@@ -100,7 +100,7 @@ const JobSupportForm = () => {
     "Resource Not Available",
     "Waiting For Response",
   ];
-  
+
   return isLogged ? (
     <>
       <Paper elevation={3} sx={inputBox}>
@@ -186,56 +186,6 @@ const JobSupportForm = () => {
                     onChange={handleChange}
                   />
 
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DatePicker
-                      orientation="landscape"
-                      label="Start Date"
-                      format="dd-MM-yyyy"
-                      value={values.start_date}
-                      onChange={(e) => {
-                        const date = new Date(e);
-                        setValues({
-                          ...values,
-                          start_date: `${date}`,
-                        });
-                      }}
-                      renderInput={(params) => (
-                        <TextValidator
-                          color="green"
-                          size="small"
-                          {...params}
-                          helperText={null}
-                          fullWidth
-                        />
-                      )}
-                    />
-                  </LocalizationProvider>
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DatePicker
-                      orientation="landscape"
-                      label="Follow Up Date"
-                      openTo="day"
-                      format="dd-MM-yyyy"
-                      views={["day"]}
-                      value={values.followup_date}
-                      onChange={(e) => {
-                        const date = new Date(e);
-                        setValues({
-                          ...values,
-                          followup_date: `${date}`,
-                        });
-                      }}
-                      renderInput={(params) => (
-                        <TextValidator
-                          color="green"
-                          size="small"
-                          {...params}
-                          helperText={null}
-                          fullWidth
-                        />
-                      )}
-                    />
-                  </LocalizationProvider>
                   <TextValidator
                     label="Technology"
                     size="small"
@@ -246,8 +196,6 @@ const JobSupportForm = () => {
                     value={values.technology}
                     onChange={handleChange}
                   />
-                </Grid>
-                <Grid style={{ display: "flex" }}>
                   <TextValidator
                     label="Resource"
                     size="small"
@@ -273,6 +221,8 @@ const JobSupportForm = () => {
                       "Please enter 10 digit Mobile",
                     ]}
                   />
+                </Grid>
+                <Grid style={{ display: "flex" }}>
                   <FormControl sx={{ m: 1.5, minWidth: "23ch" }} size="small">
                     <InputLabel color="green" id="demo-simple-select-label">
                       Status

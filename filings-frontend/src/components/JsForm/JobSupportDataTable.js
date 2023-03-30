@@ -159,7 +159,7 @@ const JobSupportDataTable = () => {
     //   filterable: true,
     // },
     {
-      field: "start_date",
+      field: "date_of_enquiry",
       headerAlign: "center",
       align: "center",
       editable: true,

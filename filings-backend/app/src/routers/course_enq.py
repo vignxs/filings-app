@@ -1,5 +1,5 @@
 from typing import List
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends,status
 from sqlalchemy.orm import Session
 from ..dependencies import get_db
 from ..services.course_enq import service, schemas
@@ -10,7 +10,7 @@ router = APIRouter(
     responses={404: {"description": "Not found"}},
 )
 
-@router.post('/course-enquiry', status_code=200)
+@router.post('/course-enquiry', status_code=status.HTTP_201_CREATED)
 async def course_enquiry(request:schemas.IGS_COURSE_ENQ,  db: Session = Depends(get_db)):
     return service.create_course_enquiry(db=db , request=request)
 

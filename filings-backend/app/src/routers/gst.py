@@ -1,5 +1,5 @@
 from typing import List
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException,status
 from sqlalchemy.orm import Session
 from ..dependencies import get_db
 from ..services.gst import service, schemas
@@ -10,7 +10,7 @@ router = APIRouter(
     responses={404: {"description": "Not found"}},
 )
 
-@router.post("/req-gst", status_code=200)
+@router.post("/req-gst", status_code=status.HTTP_201_CREATED)
 async def request_gst(gst: schemas.IGS_REQ_GST, db: Session= Depends(get_db)):
     return service.create_gst(db=db ,  gst=gst )
 

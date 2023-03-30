@@ -25,8 +25,7 @@ import Snackbar from "@material-ui/core/Snackbar";
 import SnackBar from "../Utils/SnakeBar";
 
 const EnquiryForm = () => {
-  const [fdate, setFdate] = React.useState(null);
-
+  
   const {
     values,
     handleChange,
@@ -199,14 +198,12 @@ const EnquiryForm = () => {
                       openTo="day"
                       format="dd-MM-yyyy"
                       views={["day"]}
-                      value={values.followup_call_date ? fdate : Date()}
+                      value={values.followup_call_date}
                       onChange={(e) => {
                         const date = new Date(e);
-                        const dates = moment(date).format("DD-MM-YYYY");
-                        setFdate(date);
                         setValues({
                           ...values,
-                          followup_call_date: `${dates}`,
+                          followup_call_date: `${date}`,
                         });
                       }}
                       renderInput={(params) => (

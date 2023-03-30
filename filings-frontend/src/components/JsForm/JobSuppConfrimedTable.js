@@ -21,7 +21,7 @@ import JSformActions from "./JSformActions";
 import { renderEndDateCell } from "./JScustomRender";
 import { useValue } from "../../Context/ContextProvider";
 
-const JobSupportDataTable = () => {
+const JobSupportConfrimedTable = () => {
   const {
     state: { isLogged },
   } = useValue();
@@ -105,7 +105,7 @@ const JobSupportDataTable = () => {
     });
 
   const [editId, setEditId] = useState(null);
-  const { fsrequests } = UseForm();
+  const {  ConfrimedData } = UseForm();
   // const [rowEditStatus, setRowEditStatus] = useState({});
   // const handleRowEditStart = (params) => {
   //   setRowEditStatus({
@@ -164,7 +164,7 @@ const JobSupportDataTable = () => {
       align: "center",
       editable: true,
       filterable: true,
-      headerName: "Date of Enquiry",
+      headerName: "Start Date",
       width: 120,
     },
     {
@@ -176,15 +176,15 @@ const JobSupportDataTable = () => {
       width: 100,
       filterable: false,
     },
-    {
-      field: "mobile",
-      headerAlign: "center",
-      align: "center",
-      editable: true,
-      headerName: "Mobile",
-      width: 100,
-      filterable: true,
-    },
+    // {
+    //   field: "mobile",
+    //   headerAlign: "center",
+    //   align: "center",
+    //   editable: true,
+    //   headerName: "Mobile",
+    //   width: 100,
+    //   filterable: true,
+    // },
     {
       field: "technology",
       headerName: "Technology",
@@ -235,16 +235,16 @@ const JobSupportDataTable = () => {
       filterable: false,
       align: "center",
     },
-    // {
-    //   field: "followup_date",
-    //   editable: true,
-    //   headerName: "Followup Date",
-    //   width: 180,
-    //   headerAlign: "center",
-    //   align: "center",
-    //   filterable: false,
-    //   renderCell: renderEndDateCell,
-    // },
+    {
+      field: "followup_date",
+      editable: true,
+      headerName: "Followup Date",
+      width: 180,
+      headerAlign: "center",
+      align: "center",
+      filterable: false,
+      renderCell: renderEndDateCell,
+    },
   ]);
   function CustomToolbar() {
     return (
@@ -291,7 +291,7 @@ const JobSupportDataTable = () => {
                 noWrap
                 component="h3"
               >
-                Job Support List
+                Job Support List - Confrimed
               </Typography>
 
               <Typography
@@ -330,7 +330,7 @@ const JobSupportDataTable = () => {
             <DataGrid
               sx={{ border: 0 }}
               columns={enqColumns}
-              rows={fsrequests}
+              rows={ ConfrimedData }
               getRowId={(row) => row.id}
               rowsPerPageOptions={[10, 20, 30]}
               components={{ Toolbar: CustomToolbar }}
@@ -372,4 +372,4 @@ const JobSupportDataTable = () => {
   );
 };
 
-export default JobSupportDataTable;
+export default JobSupportConfrimedTable;

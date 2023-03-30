@@ -45,8 +45,9 @@ export const UsersActions = ({ params, rowId, setRowId }) => {
   console.log("user info details", userinfo);
   let value = userinfo;
   const handleFormClose = () => {
-    alert("");
+    if(window.confirm("Discard Changes")){
     setOpen(false);
+    }
   };
   const handleClickOpen = () => {
     setOpen(true);

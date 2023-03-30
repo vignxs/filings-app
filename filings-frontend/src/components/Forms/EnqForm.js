@@ -116,7 +116,18 @@ export const EnqForm = (props) => {
     });
   }
   const API_ENDPOINT = "http://localhost:8000/api/v1";
-
+    const handleClear = () => {
+    setInfo({
+      req_id: "",
+      first_name: "",
+      last_name: "",
+      mobile: "",
+      email: "",
+      address: "",
+      city: "",
+      pincode: "",
+    });
+}
   async function userInfoPost(e) {
     e.preventDefault();
 
@@ -736,6 +747,7 @@ export const EnqForm = (props) => {
                 >
                   Cancel
                 </Button>
+
 
                 <Button variant="outlined" color="green" type="reset" onClick={handleClear}>
 

@@ -35,8 +35,8 @@ const UseForm = (params) => {
     status: "",
     feedback: "",
     date_of_enquiry: new Date(),
-    payment_period: "",
-    charges: 0,
+    payment_period: "Task",
+    charges:10,
     created_by: "admin",
     updated_by: "admin",
   });
@@ -52,39 +52,20 @@ const UseForm = (params) => {
   };
 
   const FollowupDate = () => {
-    if (values.payment_period.toLowerCase() === "task") {
+    if (values.payment_period === "Task") {
       return new Date();
-    } else if (values.payment_period.toLowerCase() === "weekly") {
-      const lastDayOfWeek = new Date();
-      lastDayOfWeek.setDate(
-        lastDayOfWeek.getDate() + (6 - lastDayOfWeek.getDay())
-      );
-      return lastDayOfWeek;
-    } else if (values.payment_period.toLowerCase() === "bi weekly") {
-      const today = new Date();
-      const lastDayOfWeek = new Date(
-        today.getFullYear(),
-        today.getMonth(),
-        today.getDate() + (6 - today.getDay())
-      );
-      const daysToAdd =
-        lastDayOfWeek.getDate() -
-        today.getDate() +
-        (today.getMonth() % 2 === 0 ? 14 : 15);
-      const lastDayOfBiweek = new Date(
-        today.getFullYear(),
-        today.getMonth(),
-        today.getDate() + daysToAdd
-      );
-      return lastDayOfBiweek;
-    } else if (values.payment_period.toLowerCase() === "monthly") {
-      const today = new Date();
-      const lastDayOfMonth = new Date(
-        today.getFullYear(),
-        today.getMonth() + 1,
-        0
-      );
-      return lastDayOfMonth;
+    } else if (values.payment_period === "Weekly") {
+      let currentDate = new Date();
+      let Weekly = new Date(currentDate.getTime() + (6 * 24 * 60 * 60 * 1000));
+      return Weekly;
+    } else if (values.payment_period === "BiWeekly") {
+      let currentDate = new Date();
+      let biWeekly = new Date(currentDate.getTime() + (14 * 24 * 60 * 60 * 1000));
+      return biWeekly;
+    } else if (values.payment_period === "Monthly") {
+      let currentDate = new Date();
+      let Monthly = new Date(currentDate.getTime() + (30 * 24 * 60 * 60 * 1000));
+      return Monthly;
     }
   };
 

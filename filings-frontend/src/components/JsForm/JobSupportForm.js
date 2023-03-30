@@ -100,11 +100,7 @@ const JobSupportForm = () => {
     "Resource Not Available",
     "Waiting For Response",
   ];
-  // const handleClose = (event, reason) => {
-  // if (reason === "clickaway") {
-  //   return;
-  // }
-
+  
   return isLogged ? (
     <>
       <Paper elevation={3} sx={inputBox}>

@@ -135,7 +135,7 @@ const JobSupportConfrimedTable = () => {
       field: "actions",
       headerName: "Actions",
       type: "actions",
-      width: 80,
+      width: 120,
       filterable: true,
       renderCell: (params) => (
         <JSformActions

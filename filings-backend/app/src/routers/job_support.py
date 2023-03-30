@@ -1,6 +1,6 @@
 from ..services.request import service, schemas
 from typing import List
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException,status
 from sqlalchemy.orm import Session
 from ..dependencies import get_db
 from ..services.job_support import service, schemas
@@ -12,7 +12,7 @@ router = APIRouter(
 )
 
 
-@router.post('/job-support-data', status_code=200)
+@router.post('/job-support-data', status_code=status.HTTP_201_CREATED)
 async def job_support_create_data(request: schemas.IGS_JOB_SUPPORT,  db: Session = Depends(get_db)):
     return service.create_request(db=db, request=request)
 
@@ -36,7 +36,7 @@ async def job_support_data_delete(id: int,  db: Session = Depends(get_db)):
     return service.delete_request(db=db, id=id)
 
 
-@router.post('/job-support-paymnet-data', status_code=200)
+@router.post('/job-support-paymnet-data', status_code=status.HTTP_201_CREATED)
 async def job_support_create_payment(request: schemas.JOB_SUPPORT_PAYMENT,  db: Session = Depends(get_db)):
     return service.create_payment(db=db, request=request)
 
@@ -50,7 +50,7 @@ async def job_support_payment_update(request: schemas.JOB_SUPPORT_PAYMENT,  db: 
     return service.update_payment(db=db, request=request)
 
 
-@router.post('/job-support-comment-data', status_code=200)
+@router.post('/job-support-comment-data', status_code=status.HTTP_201_CREATED)
 async def job_support_create_comment(request: schemas.JOB_SUPPORT_COMMENTS,  db: Session = Depends(get_db)):
     return service.create_comment(db=db, request=request)
 

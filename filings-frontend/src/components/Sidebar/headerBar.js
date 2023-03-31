@@ -196,6 +196,7 @@ const ButtonGroup = () => {
             float: "right",
             fontWeight: "600",
             letterSpacing: "1px",
+            ...(option.value === currentApp && { backgroundColor: `rgba(9, 64, 103, 0.08)` }),
           }}
           text={option.text}
           onClick={() => handlesetCurrentApp(option.value)}

@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException,status
 from sqlalchemy.orm import Session
 from ..dependencies import get_db
 from ..services.gst_rgst import service, schemas
@@ -10,7 +10,7 @@ router = APIRouter(
 )
 
 
-@router.post("/req-gst-rgst", status_code=201)
+@router.post("/req-gst-rgst", status_code=status.HTTP_201_CREATED)
 async def request_gst_rgst(gst_rgst: schemas.IGS_REQ_GST_RGST, db: Session = Depends(get_db)):
     return service.create_gst_rgst(db=db,  gst_rgst=gst_rgst)
 

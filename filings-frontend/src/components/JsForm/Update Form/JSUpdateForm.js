@@ -16,8 +16,9 @@ import green from "@material-ui/core/colors/green";
 import UpdateLogics from "./JSUpdateLogics";
 
 const JSUpdateForm = ({ open, setOpen, params }) => {
-  console.log(params.row);
-  const { values, handleChange } = UpdateLogics(params);
+
+  const { values, handleChange, handleSubmit } = UpdateLogics(params);
+
   const theme = createTheme({
     palette: {
       primary: {
@@ -149,7 +150,7 @@ const JSUpdateForm = ({ open, setOpen, params }) => {
                       <Select
                         labelId="demo-simple-select-label"
                         id="demo-simple-label"
-                        label="Enquired for*"
+                        label="Status*"
                         color="green"
                         name="status"
                         required={true}
@@ -174,10 +175,11 @@ const JSUpdateForm = ({ open, setOpen, params }) => {
                       <Select
                         labelId="demo-simple-select-label"
                         id="demo-simple-label"
-                        label="Enquired for*"
+                        label="Payment_Period*"
                         color="green"
                         required={true}
-                        value={values.payment_peroid}
+                        name="payment-period"
+                        value={values.payment_period}
                         onChange={handleChange}
                       >
                         {paymentValues.map((val, index) => (
@@ -215,7 +217,12 @@ const JSUpdateForm = ({ open, setOpen, params }) => {
                     variant="contained"
                     color="secondary"
                     style={{ left: "4rem" }}
-                    // disabled={activeStep === 0}
+                    onClick={() => {
+                      if (window.confirm("Are you sure, You want to Save")) {
+                        handleSubmit();
+                        setOpen(false);
+                      }
+                    }}
                   >
                     Submit
                   </Button>

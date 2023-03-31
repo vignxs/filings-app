@@ -29,7 +29,7 @@ const UseForm = (params) => {
     candidate_name: "",
     mobile: "",
     technology: "",
-    start_date: "",
+    start_date: new Date(),
     followup_date: "",
     resource: "",
     status: "",
@@ -51,33 +51,56 @@ const UseForm = (params) => {
     });
   };
 
-  const FollowupDate =()=>{
-    if(values.payment_period.toLowerCase() === "task"){
+  const FollowupDate = () => {
+    if (values.payment_period.toLowerCase() === "task") {
       return new Date();
-    }else if(values.payment_period.toLowerCase() === "weekly"){
+    } else if (values.payment_period.toLowerCase() === "weekly") {
       const lastDayOfWeek = new Date();
-      lastDayOfWeek.setDate(lastDayOfWeek.getDate() + (6 - lastDayOfWeek.getDay()));
+      lastDayOfWeek.setDate(
+        lastDayOfWeek.getDate() + (6 - lastDayOfWeek.getDay())
+      );
       return lastDayOfWeek;
-    }else if(values.payment_period.toLowerCase() === "bi weekly"){
+    } else if (values.payment_period.toLowerCase() === "bi weekly") {
       const today = new Date();
-      const lastDayOfWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() + (6 - today.getDay()));
-      const daysToAdd = lastDayOfWeek.getDate() - today.getDate() + (today.getMonth() % 2 === 0 ? 14 : 15);
-      const lastDayOfBiweek = new Date(today.getFullYear(), today.getMonth(), today.getDate() + daysToAdd);
+      const lastDayOfWeek = new Date(
+        today.getFullYear(),
+        today.getMonth(),
+        today.getDate() + (6 - today.getDay())
+      );
+      const daysToAdd =
+        lastDayOfWeek.getDate() -
+        today.getDate() +
+        (today.getMonth() % 2 === 0 ? 14 : 15);
+      const lastDayOfBiweek = new Date(
+        today.getFullYear(),
+        today.getMonth(),
+        today.getDate() + daysToAdd
+      );
       return lastDayOfBiweek;
-    }else if(values.payment_period.toLowerCase()==="monthly"){
+    } else if (values.payment_period.toLowerCase() === "monthly") {
       const today = new Date();
-      const lastDayOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+      const lastDayOfMonth = new Date(
+        today.getFullYear(),
+        today.getMonth() + 1,
+        0
+      );
       return lastDayOfMonth;
     }
-  }
+  };
 
   const enqdata = {
     candidate_name: values.candidate_name,
     mobile: values.mobile,
     technology: values.technology,
-    date_of_enquiry: moment(new Date()).format("DD-MM-YYYY"),
-    start_date: moment(values.start_date).format("DD-MM-YYYY"),
-    followup_date: moment(values.followup_date).format("DD-MM-YYYY"),
+    date_of_enquiry: moment(values.date_of_enquiry).format("DD-MM-YYYY"),
+    start_date:
+      values.status === "Confrimed"
+        ? moment(values.start_date).format("DD-MM-YYYY")
+        : "",
+    followup_date:
+      values.status === "Confrimed"
+        ? moment(FollowupDate()).format("DD-MM-YYYY")
+        : "",
     resource: values.resource,
     status: values.status,
     feedback: values.feedback,

@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException,status
 from sqlalchemy.orm import Session
 from ..dependencies import get_db
 from ..services.auth import service, schemas
@@ -6,7 +6,7 @@ from typing import List
 
 router = APIRouter(tags=["auth"])
 
-@router.post('/register', status_code=201)
+@router.post('/register', status_code=status.HTTP_201_CREATED)
 async def register(user:schemas.User,  db: Session = Depends(get_db)):
 	db_user = service.get_user_by_user(db, user=user.user_name) 
 	if db_user:
@@ -31,7 +31,7 @@ def login(user: schemas.UserLogin, db: Session = Depends(get_db)):
 		raise HTTPException(status_code=400, detail="You have entered an invalid password")
 	return {"token": service.create_access_token(user.email), **db_user.__dict__}
 
-@router.post('/admin-register', status_code=201)
+@router.post('/admin-register', status_code=status.HTTP_201_CREATED)
 async def register(user:schemas.AdminUser,  db: Session = Depends(get_db)):
 	db_user = service.get_user_by_user(db, user=user.user_name) 
 	if db_user:

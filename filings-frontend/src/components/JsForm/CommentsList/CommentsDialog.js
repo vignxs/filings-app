@@ -14,6 +14,7 @@ import { green } from "@mui/material/colors";
 import React from "react";
 import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
 import { CommentsDataTable } from "./CommentsDataTable";
+import UseForms from "./UseForms";
 
 const CommentsList = ({ open, setOpen, params }) => {
   const theme = createTheme({
@@ -32,6 +33,9 @@ const CommentsList = ({ open, setOpen, params }) => {
       },
     },
   });
+
+  const { handleChange, handleSubmit, values, setValues } = UseForms(params);
+  console.log("qwertyui", params);
   return (
     <>
       <Dialog scroll={"body"} fullWidth maxWidth={"sm"} open={open}>
@@ -74,21 +78,25 @@ const CommentsList = ({ open, setOpen, params }) => {
                   >
                     <CommentsDataTable />
                     <TextValidator
-                      key={1}
                       label="New Comment"
                       size="small"
                       type="text"
-                      name="new_comment"
-                      //   required={true}
-                      // value={values.candidate_name}
-                      // onChange={handleChange}
+                      name="comment"
+                      value={values.comment}
+                      onChange={(e) =>
+                        setValues((presvalue) => {
+                          return {
+                            ...presvalue,
+                            [e.target.name]: e.target.value,
+                          };
+                        })
+                      }
                     />
                     <Grid style={{ display: "flex" }}>
                       <Button
                         variant="contained"
                         color="secondary"
                         style={{ left: "-10rem", top: ".5rem" }}
-                        // disabled={activeStep === 0}
                         onClick={() => {
                           if (window.confirm("Do You Want Discard Changes")) {
                             setOpen(false);
@@ -100,8 +108,8 @@ const CommentsList = ({ open, setOpen, params }) => {
                       <Button
                         variant="contained"
                         color="secondary"
+                        onClick={handleSubmit}
                         style={{ left: "10rem", top: ".5rem" }}
-                        // disabled={activeStep === 0}
                       >
                         Add
                       </Button>{" "}

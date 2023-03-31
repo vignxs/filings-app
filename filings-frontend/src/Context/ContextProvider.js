@@ -10,6 +10,7 @@ const initialState = {
   isLogged: false,
   fsrequests: [],
   enqrequests: [],
+  cmdRequest: [],
   home: false,
   sidebarState: false,
 };

@@ -27,10 +27,10 @@ const reducer = (state, action) => {
         requests: action.payload,
       };
     case "UPDATE_USERS":
-        return {
-          ...state,
-          users: action.payload,
-        };
+      return {
+        ...state,
+        users: action.payload,
+      };
     case "OPEN_SIDEBAR":
       return {
         ...state,
@@ -81,10 +81,14 @@ const reducer = (state, action) => {
         ...state,
         home: action.payload,
       };
+    case "CMD_GETREQUEST":
+      return {
+        ...state,
+        cmdrequest: action.payload,
+      };
     default:
       throw new Error("No action matched");
   }
 };
-
 
 export default reducer;

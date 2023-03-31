@@ -1,13 +1,14 @@
 import { DataGrid } from "@mui/x-data-grid";
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import Box from "@mui/material/Box";
 import UseForms from "./UseForms";
 import { useValue } from "../../../Context/ContextProvider";
+import { cmdgetRequests } from "../../../Context/actions";
 
 export const CommentsDataTable = ({ params }) => {
   const columns = useMemo(() => [
     {
-      field: "comment_date",
+      field: "commented_at",
       headerAlign: "center",
       align: "center",
       editable: true,
@@ -23,13 +24,14 @@ export const CommentsDataTable = ({ params }) => {
       width: 350,
     },
   ]);
+
   const {
-    state: { cmdRequest },
-    dispatch,
+    state: { cmdrequests },
   } = useValue();
-  const cmdData = cmdRequest.filter(
-    (list) => list.job_support_id === params.row.id
-  );
+
+  let cmdData = params["comments"];
+
+  console.log("cmd", cmdData);
   return (
     <Box sx={{ height: 330, width: "100%" }}>
       <DataGrid

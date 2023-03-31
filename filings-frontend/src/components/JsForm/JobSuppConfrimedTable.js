@@ -108,6 +108,7 @@ const JobSupportConfrimedTable = () => {
   const [editId, setEditId] = useState(null);
   const [open, setOpen] = useState(false);
   const { ConfrimedData } = UseForm();
+  const [rowId, setRowId] = useState(null);
   // const [rowEditStatus, setRowEditStatus] = useState({});
   // const handleRowEditStart = (params) => {
   //   setRowEditStatus({
@@ -258,6 +259,7 @@ const JobSupportConfrimedTable = () => {
           <Button variant="outlined" onClick={() => setOpen(true)}>
             View Comments
           </Button>
+          {console.log("editid", editId)}
           <CommentsDialog open={open} setOpen={setOpen} params={params} />
         </>
       ),

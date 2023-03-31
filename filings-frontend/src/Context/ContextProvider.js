@@ -10,11 +10,11 @@ const initialState = {
   isLogged: false,
   fsrequests: [],
   enqrequests: [],
-  cmdRequest: [],
+  cmdrequests: [],
   home: false,
   sidebarState: false,
 };
-
+ 
 export const Context = createContext();
 export default Context;
 export const useValue = () => {

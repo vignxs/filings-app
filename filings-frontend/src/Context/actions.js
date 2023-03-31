@@ -36,11 +36,12 @@ export const enqgetRequests = async (dispatch) => {
   }
 };
 
-export const cmdRequests = async (dispatch) => {
+export const cmdgetRequests = async (dispatch) => {
   const cmddata = await axios.get(
     "http://localhost:8000/api/v1/job-support-comment-data-all"
   );
   const content = await cmddata.data;
+  console.log("data", content);
   if (content) {
     dispatch({ type: "CMD_GETREQUEST", payload: content });
   }

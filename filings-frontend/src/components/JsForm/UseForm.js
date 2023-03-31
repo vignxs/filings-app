@@ -36,7 +36,7 @@ const UseForm = (params) => {
     feedback: "",
     date_of_enquiry: new Date(),
     payment_period: "Task",
-    charges:10,
+    charges: 10,
     created_by: "admin",
     updated_by: "admin",
   });
@@ -56,15 +56,15 @@ const UseForm = (params) => {
       return new Date();
     } else if (values.payment_period === "Weekly") {
       let currentDate = new Date();
-      let Weekly = new Date(currentDate.getTime() + (6 * 24 * 60 * 60 * 1000));
+      let Weekly = new Date(currentDate.getTime() + 6 * 24 * 60 * 60 * 1000);
       return Weekly;
     } else if (values.payment_period === "BiWeekly") {
       let currentDate = new Date();
-      let biWeekly = new Date(currentDate.getTime() + (14 * 24 * 60 * 60 * 1000));
+      let biWeekly = new Date(currentDate.getTime() + 14 * 24 * 60 * 60 * 1000);
       return biWeekly;
     } else if (values.payment_period === "Monthly") {
       let currentDate = new Date();
-      let Monthly = new Date(currentDate.getTime() + (30 * 24 * 60 * 60 * 1000));
+      let Monthly = new Date(currentDate.getTime() + 30 * 24 * 60 * 60 * 1000);
       return Monthly;
     }
   };

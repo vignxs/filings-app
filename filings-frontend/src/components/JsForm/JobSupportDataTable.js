@@ -162,7 +162,7 @@ const JobSupportDataTable = () => {
       field: "date_of_enquiry",
       headerAlign: "center",
       align: "center",
-      editable: true,
+     // editable: true,
       filterable: true,
       headerName: "Date of Enquiry",
       width: 120,
@@ -208,7 +208,7 @@ const JobSupportDataTable = () => {
     {
       field: "status",
       headerName: "Status",
-      editable: true,
+      //editable: true,
       width: 100,
       type: "singleSelect",
       headerAlign: "center",

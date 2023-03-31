@@ -6,7 +6,7 @@ import {
   DeleteOutlined,
   CheckOutlined,
   SaveOutlined,
-  EditOutlined
+  EditOutlined,
 } from "@mui/icons-material";
 import { green } from "@mui/material/colors";
 import axios from "axios";
@@ -19,9 +19,9 @@ const JSformActions = ({ params, setEditId, editId }) => {
   const [open, setOpen] = useState(false);
   const { handleDelete } = UseForm(params);
 
-  const handleClickOpen =()=>{
+  const handleClickOpen = () => {
     setOpen(true);
-  }
+  };
   const handleEdit = (params) => {
     const editedRow = params.row;
     setLoading(true);
@@ -118,7 +118,7 @@ const JSformActions = ({ params, setEditId, editId }) => {
             >
               <EditOutlined />
             </IconButton>
-            <JSUpdateForm open={open} setOpen={setOpen} params={params}/>
+            <JSUpdateForm open={open} setOpen={setOpen} params={params} />
             <IconButton
               color="teritiary"
               sx={{ boxShadow: 0 }}

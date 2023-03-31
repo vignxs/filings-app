@@ -16,7 +16,7 @@ import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
 import { CommentsDataTable } from "./CommentsDataTable";
 import UseForms from "./UseForms";
 
-const CommentsList = ({ open, setOpen, params }) => {
+const CommentsDialog = ({ open, setOpen, params }) => {
   const theme = createTheme({
     palette: {
       primary: {
@@ -76,7 +76,7 @@ const CommentsList = ({ open, setOpen, params }) => {
                     alignItems="center"
                     // mt="3"
                   >
-                    <CommentsDataTable />
+                    <CommentsDataTable params={params} />
                     <TextValidator
                       label="New Comment"
                       size="small"
@@ -125,4 +125,4 @@ const CommentsList = ({ open, setOpen, params }) => {
   );
 };
 
-export default CommentsList;
+export default CommentsDialog;

@@ -20,7 +20,7 @@ import UseForm from "./UseForm";
 import JSformActions from "./JSformActions";
 import { renderEndDateCell } from "./JScustomRender";
 import { useValue } from "../../Context/ContextProvider";
-import CommentsList from "./CommentsList/CommentsDialog";
+import CommentsDialog from "./CommentsList/CommentsDialog";
 
 const JobSupportConfrimedTable = () => {
   const {
@@ -258,7 +258,7 @@ const JobSupportConfrimedTable = () => {
           <Button variant="outlined" onClick={() => setOpen(true)}>
             View Comments
           </Button>
-          <CommentsList open={open} setOpen={setOpen} params={params} />
+          <CommentsDialog open={open} setOpen={setOpen} params={params} />
         </>
       ),
     },

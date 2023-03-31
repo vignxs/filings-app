@@ -1,12 +1,24 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import moment from "moment";
+import { useValue } from "../../../Context/ContextProvider";
+import { cmdRequests } from "../../../Context/actions";
 
 const UseForms = (params) => {
+  const {
+    state: { cmdRequest },
+    dispatch,
+  } = useValue();
   const [values, setValues] = useState({
     comment: "",
     comment_date: new Date(),
   });
+
+  useEffect(() => {
+    cmdRequests(dispatch);
+  }, []);
+   
+    // console.log("wertyuiknbvcxserty", params.row.id);
 
   const cmd = {
     job_support_id: params.id,
@@ -21,6 +33,6 @@ const UseForms = (params) => {
       .then((res) => console.log(res.data));
   };
 
-  return { handleSubmit, values, setValues };
+  return { handleSubmit, values, setValues  };
 };
 export default UseForms;

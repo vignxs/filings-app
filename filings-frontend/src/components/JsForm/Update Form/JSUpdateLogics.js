@@ -5,9 +5,8 @@ import moment from "moment";
 import { useValue } from "../../../Context/ContextProvider";
 import { fsgetRequests } from "../../../Context/actions";
 
-const UpdateLogics = (params) => {
+const UpdateLogics = ({ params, page }) => {
   const [values, setValues] = useState(params.row);
-  console.log(params.row);
   const { dispatch } = useValue();
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -45,7 +44,7 @@ const UpdateLogics = (params) => {
         ? moment(new Date()).format("DD-MM-YYYY")
         : "",
     followup_date:
-      values.status === "Confrimed" && values.payment_period !== "" 
+      values.status === "Confrimed" && values.payment_period !== ""
         ? moment(FollowupDate()).format("DD-MM-YYYY")
         : "",
     resource: values.resource,

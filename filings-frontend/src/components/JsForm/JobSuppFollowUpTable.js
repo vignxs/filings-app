@@ -129,7 +129,7 @@ const JobSupportFollowUpTable = () => {
   //   });
   //   setEditId(null);
   // };
-
+  const Table = "Resource"
   const enqColumns = useMemo(() => [
     {
       field: "actions",
@@ -142,6 +142,7 @@ const JobSupportFollowUpTable = () => {
           params={params}
           editId={editId}
           setEditId={setEditId}
+          page={Table}
           // rowEditStatus={rowEditStatus}
           // onRowEditStart={handleRowEditStart}
           // onRowEditStop={handleRowEditStop}

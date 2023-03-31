@@ -15,9 +15,9 @@ import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
 import green from "@material-ui/core/colors/green";
 import UpdateLogics from "./JSUpdateLogics";
 
-const JSUpdateForm = ({ open, setOpen, params }) => {
+const JSUpdateForm = ({ open, setOpen, params, page }) => {
 
-  const { values, handleChange, handleSubmit } = UpdateLogics(params);
+  const { values, handleChange, handleSubmit } = UpdateLogics({page,params});
 
   const theme = createTheme({
     palette: {

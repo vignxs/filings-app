@@ -105,6 +105,7 @@ const JobSupportConfrimedTable = () => {
       },
     });
 
+  const Table = "Confrimed"
   const [editId, setEditId] = useState(null);
   const [open, setOpen] = useState(false);
   const { ConfrimedData } = UseForm();
@@ -144,6 +145,7 @@ const JobSupportConfrimedTable = () => {
           params={params}
           editId={editId}
           setEditId={setEditId}
+          page={Table}
           // rowEditStatus={rowEditStatus}
           // onRowEditStart={handleRowEditStart}
           // onRowEditStop={handleRowEditStop}

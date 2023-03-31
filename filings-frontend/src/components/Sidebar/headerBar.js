@@ -186,29 +186,31 @@ export default function HeaderBar(props) {
       setCurrentApp(value);
     };
 
-    return (
-      <>
-        {filteredOptions.map((option) => (
-          <ButtonWithOptions
-            key={option.value}
-            variant="text"
-            color="primary"
-            size="small"
-            linkTo={option.href}
-            sx={{
-              p: 1,
-              m: 1,
-              float: "right",
-              fontWeight: "600",
-              letterSpacing: "1px",
-            }}
-            text={option.text}
-            onClick={() => handlesetCurrentApp(option.value)}
-          />
-        ))}
-      </>
-    );
-  };
+  return (
+    <>
+      {filteredOptions.map((option) => (
+        <ButtonWithOptions
+          key={option.value}
+          variant="text"
+          color="primary"
+          size="small"
+          linkTo={option.href}
+          sx={{
+            p: 1,
+            m: 1,
+            float: "right",
+            fontWeight: "600",
+            letterSpacing: "1px",
+            ...(option.value === currentApp && { backgroundColor: `rgba(9, 64, 103, 0.08)` }),
+          }}
+          text={option.text}
+          onClick={() => handlesetCurrentApp(option.value)}
+        />
+      ))}
+    </>
+  );
+};
+
   return (
     <div>
       <ThemeProvider theme={theme}>

@@ -1,5 +1,5 @@
 from typing import List
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from ..dependencies import get_db
 from ..services.request import service, schemas
@@ -10,7 +10,8 @@ router = APIRouter(
     responses={404: {"description": "Not found"}},
 )
 
-@router.post('/req-data', status_code=200)
+
+@router.post('/req-data', status_code=status.HTTP_201_CREATED)
 async def request_data(request:schemas.IGS_REQ_DATA,  db: Session = Depends(get_db)):
     return service.create_request(db=db , request=request)
 
@@ -27,7 +28,7 @@ async def request_data_delete(request:schemas.IGS_REQ_DATA,  db: Session = Depen
     return service.delete_request(db=db , request=request)
 
 
-@router.post('/req-services', status_code=200)
+@router.post('/req-services', status_code=status.HTTP_201_CREATED)
 async def service_data(request: schemas.IGS_REQ_SERVICES,  db: Session = Depends(get_db)):
     return service.create_service(db=db, request=request)
 

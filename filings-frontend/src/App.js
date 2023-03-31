@@ -11,6 +11,8 @@ import JobSupportForm from "./components/JsForm/JobSupportForm";
 import EnquiryForm from "./components/EnquiryForm/EnquiryForm";
 import { RequireAuth } from "react-auth-kit";
 import JobSupportDataTable from "./components/JsForm/JobSupportDataTable";
+import JobSupportConfrimedTable from "./components/JsForm/JobSuppConfrimedTable";
+import JobSupportFollowUpTable from "./components/JsForm/JobSuppFollowUpTable";
 import { AdminList } from "./components/AppAdmin/AdminList";
 import { UserCreateForm } from "./components/Forms/UserCreate";
 import EnquiryFormDataTable from "./components/EnquiryForm/EnquiryFormDataTable";
@@ -32,6 +34,8 @@ function App() {
           <Route path="/job-supp-form" element={<JobSupportForm />} />
           <Route path="/enquiry-form" element={<EnquiryForm />} />
           <Route path="/job-supp-table" element={<JobSupportDataTable />} />
+          <Route path="/job-supp-confrimed-table" element={<JobSupportConfrimedTable />} />
+          <Route path="/js-followup-table" element={<JobSupportFollowUpTable />} />
           <Route path="/enquiry-table" element={<EnquiryFormDataTable />} />
           <Route path="/admin" element={<AdminList />} />
           <Route path="/user-form" element={<UserCreateForm />} />

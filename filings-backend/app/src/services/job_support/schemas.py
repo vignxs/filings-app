@@ -1,7 +1,6 @@
 from pydantic import BaseModel
 from datetime import datetime
 
-
 class IGS_JOB_SUPPORT(BaseModel):
 
     candidate_name: str
@@ -17,9 +16,29 @@ class IGS_JOB_SUPPORT(BaseModel):
     created_at: datetime = datetime.now()
     updated_at: datetime = datetime.now()
     payment_period: str
+    date_of_enquiry : str
+    charges : int
 
-    # class Config:
-    #     orm_mode = True
+    class Config:
+        orm_mode = True
+
+
+class JOB_SUPPORT_PAYMENT(BaseModel):
+
+    job_support_id : int
+    candidate_payment_amount: int
+    candidate_payment_status: str
+    candidate_payment_date: str
+    resource_payment_amount: int
+    resource_payment_status: str
+    resource_payment_date: str
+
+
+class JOB_SUPPORT_COMMENTS(BaseModel):
+
+    job_support_id: int
+    comments: str
+    commented_at: str
 
 
 class IGS_JOB_SUPPORT_GU(BaseModel):
@@ -37,4 +56,6 @@ class IGS_JOB_SUPPORT_GU(BaseModel):
     updated_by: str = "admin"
     created_at: datetime = datetime.now()
     updated_at: datetime = datetime.now()
-
+    payment_period: str
+    date_of_enquiry: str
+    charges: int

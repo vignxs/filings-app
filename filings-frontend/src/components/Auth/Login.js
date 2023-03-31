@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
@@ -13,13 +13,22 @@ import { useValue } from "../../Context/ContextProvider";
 import { useSignIn } from "react-auth-kit";
 import { loginData } from "../../Redux/loginSlice";
 import { useDispatch } from "react-redux";
+import { height } from "@mui/system";
+import bg from "../../Assets/patterns.png";
+import logo from "../../Assets/logo.png";
+
 const theme = createTheme({
   palette: {
-    mode: "light",
+    backgroundColor: "red",
+  },
+  root: {
+    padding: 0,
+    backgroundColor: "red",
   },
 });
 
 export default function SignInComponent() {
+  const [error, setError] = useState();
   const dispatches = useDispatch();
   const { dispatch } = useValue();
   const signIn = useSignIn();
@@ -41,7 +50,11 @@ export default function SignInComponent() {
       body: JSON.stringify(values),
     });
     const post_resp = await res.json();
-    if (post_resp) {
+    setError(post_resp.errors);
+    console.log("login user", post_resp.errors);
+    console.log("setError:", error);
+
+    if (post_resp.active_flag == true) {
       signIn({
         token: post_resp.token,
         expiresIn: 3600,
@@ -50,8 +63,8 @@ export default function SignInComponent() {
         // refreshToken: res.data.refreshToken, // Only if you are using refreshToken feature
         // refreshTokenExpireIn: res.data.refreshTokenExpireIn, // Only if you are using refreshToken feature
       });
- dispatch({ type: "LOGGED_IN" });
-    //   dispatch({ type: "LOGGED_IN", payload: true });
+      //   dispatch({ type: "LOGGED_IN" });
+      dispatch({ type: "LOGGED_IN", payload: true });
       dispatch({ type: "IS_ADMIN", payload: post_resp.is_admin });
       dispatch({ type: "APPS_ACCESS", payload: post_resp.apps });
       dispatch({ type: "CURRENT_USER", payload: post_resp.user_name });
@@ -63,195 +76,240 @@ export default function SignInComponent() {
           isLoggedIn: true,
         })
       );
-     
       navigate("/enq-admin");
     }
   };
   return (
     <ThemeProvider theme={theme}>
-      <Paper
-        sx={{
-          borderRadius: "12px",
-          width: "40vw",
-          margin: "auto",
-          marginTop: "5vw",
+      {/* <img
+        style={{
+          position: "absolute",
+          width: "100%",
+          height: "100vh",
+          top: 0,
+          margin: 0,
+          padding: 0,
+          left: 0,
         }}
-        elevation={3}
+        src={bg}
+      /> */}
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          marginTop: "-4vw",
+          zIndex: 2,
+        }}
       >
-        <Container component="main" maxWidth="sm">
-          <CssBaseline />
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              padding: "4vw",
-              paddingTop: "2vw",
-              borderRadius: "20px",
-            }}
-          >
-            <Typography
-              component="h1"
-              variant="h5"
+        <img
+          style={{
+            //   position: "absolute",
+            width: "15rem",
+            //   height: "100vh",
+            top: 0,
+            margin: 0,
+            padding: 0,
+            left: 0,
+            zIndex: 2,
+          }}
+          src={logo}
+        />
+        <Paper
+          sx={{
+            borderRadius: "12px",
+            width: "40vw",
+            margin: "auto",
+            marginTop: "-5vw",
+            position: "relative",
+          }}
+          elevation={3}
+        >
+          <Container component="main" maxWidth="sm">
+            <CssBaseline />
+            <Box
               sx={{
-                fontSize: "2.5vw",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                padding: "4vw",
+                paddingTop: "2vw",
+                borderRadius: "20px",
               }}
             >
-              Sign in
-            </Typography>
-            <Box component="form" noValidate autoComplete="off">
-              <Grid
-                container
-                spacing={2}
+              <Typography
+                component="h1"
+                variant="h5"
                 sx={{
-                  marginTop: "5vw",
-
-                  "& .MuiGrid-item": { paddingTop: "0px" },
+                  fontSize: "2.5vw",
+                  marginTop: "1vw",
                 }}
               >
-                <Grid item xs={12}>
-                  <TextField
-                    required
-                    fullWidth
-                    name="email"
-                    label="Email"
-                    type="email"
-                    variant="filled"
-                    value={values.email}
-                    onChange={handleChange}
-                    sx={{
-                      border: "2px solid #d8eefe",
-                      "& .MuiOutlinedInput-root.Mui-focused:before": {
-                        borderBottom: "2px solid blue", // Change the border-bottom property as per your preference
-                      },
-                      "&:active": {
-                        backgroundColor: '"#00000000"!important',
-                        "&:before": {
-                          borderBottom: "0px",
-                          backgroundColor: '"#00000000"!important',
-                        },
-                      },
-                      "&:hover": {
-                        border: "2px solid #3da9fc",
-                        backgroundColor: '"#00000000"!important',
-                        "& .css-2y464i-MuiInputBase-root-MuiFilledInput-root": {
-                          "&:before": {
-                            borderBottom: "0px",
-                          },
-                        },
-                      },
-                      "&:hover:before": { borderBottom: "0px" },
-
-                      borderRadius: "10px 10px 0px 0px",
-                      "& .css-2y464i-MuiInputBase-root-MuiFilledInput-root": {
-                        borderRadius: "10px 10px 0px 0px",
-
-                        "before:& .css-2y464i-MuiInputBase-root-MuiFilledInput-root":
-                          {
-                            borderBottom: "none",
-                          },
-                        "&:before": {
-                          borderBottom: "0px",
-                        },
-                      },
-                    }}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    required
-                    fullWidth
-                    value={values.password}
-                    onChange={handleChange}
-                    label="Password"
-                    type="password"
-                    name="password"
-                    variant="filled"
-                    sx={{
-                      border: "2px solid #d8eefe",
-
-                      "&:active": {
-                        "&:before": {
-                          borderBottom: "0px",
-                        },
-                      },
-                      "&:hover": {
-                        border: "2px solid #3da9fc",
-
-                        "& .css-2y464i-MuiInputBase-root-MuiFilledInput-root": {
-                          "&:before": {
-                            borderBottom: "0px",
-                          },
-                        },
-                      },
-                      "&:hover:before": { borderBottom: "0px" },
-
-                      borderRadius: "0px 0px 10px 10px",
-                      "& .css-2y464i-MuiInputBase-root-MuiFilledInput-root": {
-                        borderRadius: "0px 0px 10px 10px",
-
-                        "before:& .css-2y464i-MuiInputBase-root-MuiFilledInput-root":
-                          {
-                            borderBottom: "none",
-                          },
-                        "&:before": {
-                          borderBottom: "0px",
-                        },
-                      },
-                    }}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <Link
-                    style={{
-                      color: "blue",
-                      fontSize: "1rem",
-                      position: "absolute",
-                      textDecoration: "none",
-                      marginTop: "1.5rem",
-                    }}
-                    to="#"
-                  >
-                    Forgot password?
-                  </Link>
-                </Grid>
-              </Grid>
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                }}
-              >
-                <Button
-                  type="submit"
-                  onClick={handleSubmit}
-                  fullWidth
-                  variant="contained"
+                Sign in
+              </Typography>
+              <Box component="form" noValidate autoComplete="off">
+                <Grid
+                  container
+                  spacing={2}
                   sx={{
-                    mt: 10,
-                    mb: 2,
-                    border: "1px",
-                    borderRadius: "2vw",
-                    width: "10vw",
-                    height: "3vw",
-                    fontSize: "6rm",
-                    backgroundColor: "#3da9fc",
+                    marginTop: "3vw",
+
+                    "& .MuiGrid-item": { paddingTop: "0px" },
                   }}
                 >
-                  Sign in
-                </Button>
-              </Box>
-              <Grid container justifyContent="flex-end">
-                <Grid item>
-                  <Link to="/register" style={{ textDecoration: "none" }}>
-                    Don't have an account? Sign Up
-                  </Link>
+                  <Grid item xs={12}>
+                    <TextField
+                      required
+                      fullWidth
+                      name="email"
+                      label="Email"
+                      type="email"
+                      variant="filled"
+                      value={values.email}
+                      onChange={handleChange}
+                      sx={{
+                        border: "2px solid ",
+                        borderBottom: 0,
+                        borderColor: error ? "red" : "#d8eefe",
+                        "& .MuiOutlinedInput-root.Mui-focused:before": {
+                          borderBottom: "2px solid blue", // Change the border-bottom property as per your preference
+                        },
+                        "&:active": {
+                          backgroundColor: '"#00000000"!important',
+                          "&:before": {
+                            borderBottom: "0px",
+                            backgroundColor: '"#00000000"!important',
+                          },
+                        },
+                        "&:hover": {
+                          border: "2px solid ",
+                          borderBottom: 0,
+                          borderColor: error ? "red" : "#d8eefe",
+                          backgroundColor: '"#00000000"!important',
+                          "& .css-2y464i-MuiInputBase-root-MuiFilledInput-root":
+                            {
+                              "&:before": {
+                                borderBottom: "0px",
+                              },
+                            },
+                        },
+                        "&:hover:before": { borderBottom: "0px" },
+
+                        borderRadius: "10px 10px 0px 0px",
+                        "& .css-2y464i-MuiInputBase-root-MuiFilledInput-root": {
+                          borderRadius: "10px 10px 0px 0px",
+
+                          "before:& .css-2y464i-MuiInputBase-root-MuiFilledInput-root":
+                            {
+                              borderBottom: "none",
+                            },
+                          "&:before": {
+                            borderBottom: "0px",
+                          },
+                        },
+                      }}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      required
+                      fullWidth
+                      value={values.password}
+                      onChange={handleChange}
+                      label="Password"
+                      type="password"
+                      name="password"
+                      variant="filled"
+                      sx={{
+                        border: "2px solid ",
+                        borderColor: error ? "red" : "#d8eefe",
+                        "&:active": {
+                          "&:before": {
+                            borderBottom: "0px",
+                          },
+                        },
+                        "&:hover": {
+                          border: "2px solid ",
+                          borderColor: error ? "red" : "#d8eefe",
+                          "& .css-2y464i-MuiInputBase-root-MuiFilledInput-root":
+                            {
+                              "&:before": {
+                                borderBottom: "0px",
+                              },
+                            },
+                        },
+                        "&:hover:before": { borderBottom: "0px" },
+                        borderRadius: "0px 0px 10px 10px",
+                        "& .css-2y464i-MuiInputBase-root-MuiFilledInput-root": {
+                          borderRadius: "0px 0px 10px 10px",
+                          "before:& .css-2y464i-MuiInputBase-root-MuiFilledInput-root":
+                            {
+                              borderBottom: "none",
+                            },
+                          "&:before": {
+                            borderBottom: "0px",
+                          },
+                        },
+                      }}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sx={{ marginTop: ".5rem" }}>
+                    <span
+                      style={{
+                        color: "red",
+                        fontSize: "1rem",
+                        position: "relative",
+                        textDecoration: "none",
+                      }}
+                    >
+                      {error}
+                    </span>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Link
+                      style={{
+                        color: "blue",
+                        fontSize: "1rem",
+                        position: "absolute",
+                        textDecoration: "none",
+                        marginTop: "1.5rem",
+                      }}
+                      to="#"
+                    >
+                      Forgot password?
+                    </Link>
+                  </Grid>
                 </Grid>
-              </Grid>
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                  }}
+                >
+                  <Button
+                    type="submit"
+                    onClick={handleSubmit}
+                    fullWidth
+                    variant="contained"
+                    sx={{
+                      mt: 10,
+                      mb: 2,
+                      border: "1px",
+                      borderRadius: "2vw",
+                      width: "10vw",
+                      height: "3vw",
+                      fontSize: "6rm",
+                      backgroundColor: "#3da9fc",
+                    }}
+                  >
+                    Sign in
+                  </Button>
+                </Box>
+              </Box>
             </Box>
-          </Box>
-        </Container>
-      </Paper>
+          </Container>
+        </Paper>
+      </div>
     </ThemeProvider>
   );
 }

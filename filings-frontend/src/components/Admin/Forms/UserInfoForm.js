@@ -25,6 +25,7 @@ const UserInfoForm = ({ params, setInfo, userinfo }) => {
         direction="row"
         justify="center"
         alignItems="center"
+        
       >
         <Grid style={{ display: "flex" }}>
           <TextValidator

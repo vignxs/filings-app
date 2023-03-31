@@ -1,5 +1,5 @@
 from typing import Any, List
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, status
 from pydantic import ValidationError
 from sqlalchemy.orm import Session
 from ..dependencies import get_db
@@ -13,7 +13,7 @@ router = APIRouter(
 # response_model=schemas.IGS_REQ_PAN_RGST,
 
 
-@router.post("/req-pan-rgst", status_code=200)
+@router.post("/req-pan-rgst", status_code=status.HTTP_201_CREATED)
 async def request_pan_rgst(pan_rgst: schemas.IGS_REQ_PAN_RGST, db: Session = Depends(get_db)):
     return service.create_pan_rgst(db=db,  pan_rgst=pan_rgst)
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
@@ -6,9 +6,12 @@ import { useMemo } from "react";
 import {
   DataGrid,
   GridToolbarContainer,
+  GridToolbarColumnsButton,
   GridToolbarFilterButton,
   GridToolbarExport,
   GridToolbarQuickFilter,
+  GridToolbarExportContainer,
+  GridToolbarDensitySelector,
 } from "@mui/x-data-grid";
 import { Button, Paper } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
@@ -103,66 +106,65 @@ const JobSupportDataTable = () => {
 
   const [editId, setEditId] = useState(null);
   const { fsrequests } = UseForm();
-   const [rowEditStatus, setRowEditStatus] = useState({});
-   const handleRowEditStart = (params) => {
-     setRowEditStatus({
-       ...rowEditStatus,
-       [params.id]: "editing",
-     });
-     setEditId(params.id);
-   };
+  // const [rowEditStatus, setRowEditStatus] = useState({});
+  // const handleRowEditStart = (params) => {
+  //   setRowEditStatus({
+  //     ...rowEditStatus,
+  //     [params.id]: "editing",
+  //   });
+  //   setEditId(params.id);
+  // };
+  // const handleRowEditStop = (params) => {
+  //   setRowEditStatus({
+  //     ...rowEditStatus,
+  //     [params.id]: null,
+  //   });
+  //   setEditId(null);
+  // };
 
-   const handleRowEditStop = (params) => {
-     setRowEditStatus({
-       ...rowEditStatus,
-       [params.id]: null,
-     });
-     setEditId(null);
-   };
-
-   const handleRowEditCancel = (params) => {
-     setRowEditStatus({
-       ...rowEditStatus,
-       [params.id]: null,
-     });
-     setEditId(null);
-   };
+  // const handleRowEditCancel = (params) => {
+  //   setRowEditStatus({
+  //     ...rowEditStatus,
+  //     [params.id]: null,
+  //   });
+  //   setEditId(null);
+  // };
 
   const enqColumns = useMemo(() => [
     {
       field: "actions",
       headerName: "Actions",
       type: "actions",
-      width: 80,
+      width: 120,
       filterable: true,
       renderCell: (params) => (
         <JSformActions
           params={params}
           editId={editId}
           setEditId={setEditId}
-          rowEditStatus={rowEditStatus}
-          onRowEditStart={handleRowEditStart}
-          onRowEditStop={handleRowEditStop}
-          onRowEditCancel={handleRowEditCancel} //success, setSuccess
+          // rowEditStatus={rowEditStatus}
+          // onRowEditStart={handleRowEditStart}
+          // onRowEditStop={handleRowEditStop}
+          // onRowEditCancel={handleRowEditCancel} //success, setSuccess
         />
       ),
     },
+    // {
+    //   field: "id",
+    //   headerName: "ID",
+    //   width: 100,
+    //   sortable: false,
+    //   headerAlign: "center",
+    //   align: "center",
+    //   filterable: true,
+    // },
     {
-      field: "id",
-      headerName: "ID",
-      width: 100,
-      sortable: false,
-      headerAlign: "center",
-      align: "center",
-      filterable: true,
-    },
-    {
-      field: "start_date",
+      field: "date_of_enquiry",
       headerAlign: "center",
       align: "center",
       editable: true,
       filterable: true,
-      headerName: "Start Date",
+      headerName: "Date of Enquiry",
       width: 120,
     },
     {
@@ -233,29 +235,27 @@ const JobSupportDataTable = () => {
       filterable: false,
       align: "center",
     },
-    {
-      field: "followup_date",
-      editable: true,
-      headerName: "Followup Date",
-      width: 180,
-      headerAlign: "center",
-      align: "center",
-      filterable: false,
-      renderCell: renderEndDateCell,
-    },
+    // {
+    //   field: "followup_date",
+    //   editable: true,
+    //   headerName: "Followup Date",
+    //   width: 180,
+    //   headerAlign: "center",
+    //   align: "center",
+    //   filterable: false,
+    //   renderCell: renderEndDateCell,
+    // },
   ]);
- 
-
   function CustomToolbar() {
     return (
       <GridToolbarContainer sx={{ background: "#000000" }}>
         <GridToolbarQuickFilter sx={{ marginRight: "auto" }} />
-        {/* <GridToolbarColumnsButton /> */}
         <GridToolbarFilterButton
-          PopperProps={{ color: "#000000", inset: `-125px auto auto 350px` }}
-          sx={{ m: 2, bgcolor: "#FFFFFF", marginLeft: "auto" }}
+          PopperProps={{ color: "#000000", inset: `-5px auto auto 350px` }}
+          sx={{ ml: 2, bgcolor: "#FFFFFF", marginLeft: "auto" }}
         />
-        {/* <GridToolbarDensitySelector /> */}
+        <GridToolbarDensitySelector sx={{ ml: 2, bgcolor: "#FFFFFF" }} />
+        <GridToolbarColumnsButton sx={{ ml: 2, bgcolor: "#FFFFFF" }} />
         <GridToolbarExport sx={{ m: 2, bgcolor: "#FFFFFF" }} />
       </GridToolbarContainer>
     );
@@ -352,24 +352,16 @@ const JobSupportDataTable = () => {
                     },
                     inset: `-125px auto auto 448px !important`,
                   },
-                  // cell: {
-                  //   actions: {
-                  //     rowEditStatus,
-                  //     onRowEditStart,
-                  //     onRowEditStop,
-                  //     onRowEditCancel,
-                  //   },
-                  // },
                 },
               }}
               onCellEditCommit={(params) => {
                 setEditId(params.id);
               }}
-              onRowEditStart={handleRowEditStart}
-              onRowEditStop={handleRowEditStop}
-              onRowEditCancel={handleRowEditCancel}
-              isRowEditable={(params) => !rowEditStatus[params.id]}
-              editMode="row"
+              // onRowEditStart={handleRowEditStart}
+              // onRowEditStop={handleRowEditStop}
+              // onRowEditCancel={handleRowEditCancel}
+              // isRowEditable={(params) => !rowEditStatus[params.id]}
+              // editMode="row"
             />
           </Box>
         </Paper>

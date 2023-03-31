@@ -23,7 +23,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { getRequests } from "../../Context/actions";
 import { useValue } from "../../Context/ContextProvider";
 
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import SnackBar from "../Utils/SnakeBar";
 export const EnqForm = (props) => {
   const { dispatch } = useValue();
@@ -103,7 +103,18 @@ export const EnqForm = (props) => {
         break;
     }
   };
-
+  const handleClear=()=>{
+    setInfo({
+      req_id: "",
+      first_name: "",
+      last_name: "",
+      mobile: "",
+      email: "",
+      address: "",
+      city: "",
+      pincode: "",
+    });
+  }
   const API_ENDPOINT = "http://localhost:8000/api/v1";
 
   async function userInfoPost(e) {
@@ -718,15 +729,17 @@ export const EnqForm = (props) => {
                   Submit
                 </Button>
                 <Button
-                  sx={{ color: "#FFFFFE" }}
+                  sx={{ color: "#FFFFFE", backgroundColor: "#90b4ce" }}
                   variant="contained"
-                  color="green"
-                  type="submit"
+                  component={Link}
                   to="/enq-admin"
                 >
                   Cancel
                 </Button>
-                <Button variant="outlined" color="green" type="reset">
+
+
+                <Button variant="outlined" color="green" type="reset" onClick={handleClear}>
+
                   Clear
                 </Button>
               </Stack>

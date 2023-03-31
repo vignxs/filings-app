@@ -7,9 +7,10 @@ const initialState = {
   isAdmin: 0,
   currentUser: "",
   apps: [],
-  //   isLogged: false,
+  isLogged: false,
   fsrequests: [],
   enqrequests: [],
+  cmdRequest: [],
   home: false,
   sidebarState: false,
 };

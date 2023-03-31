@@ -22,8 +22,12 @@ import ListItemText from "@mui/material/ListItemText";
 import { Link } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useValue } from "../../Context/ContextProvider";
-import { AdminRoutes, CourseEnqRoutes, FilingsRoutes ,JobSuppRoutes } from "./SidebarRoutes";
-
+import {
+  AdminRoutes,
+  CourseEnqRoutes,
+  FilingsRoutes,
+  JobSuppRoutes,
+} from "./SidebarRoutes";
 
 const drawerWidth = 220;
 
@@ -96,16 +100,15 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 export default function HeaderBar(props) {
-
   const {
-    state: { isLogged, apps, currentUser,headerbar,home },
+    state: { isLogged, apps, currentUser, headerbar, home },
     dispatch,
   } = useValue();
-const [currentApp, setCurrentApp] = React.useState(apps[0]);
+  const [currentApp, setCurrentApp] = React.useState(apps[0]);
 
-React.useEffect(() => {
-  setCurrentApp(apps[0]);
-}, [apps]);
+  React.useEffect(() => {
+    setCurrentApp(apps[0]);
+  }, [apps]);
 
   const theme = createTheme({
     palette: {
@@ -126,7 +129,7 @@ React.useEffect(() => {
       },
     },
   });
-  
+
   const [open, setOpen] = React.useState(false);
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -144,42 +147,44 @@ React.useEffect(() => {
   };
 
   // const auth = useAuthUser();
-const ButtonWithOptions = ({
-  text,
-  variant,
-  color,
-  onClick,
-  size,
-  sx,
-  linkTo,
-}) => (
-  <Button
-    variant={variant}
-    color={color}
-    onClick={onClick}
-    size={size}
-    sx={sx}
-    component={Link}
-    to={linkTo}
-  >
-    {text}
-  </Button>
-);
+  const ButtonWithOptions = ({
+    text,
+    variant,
+    color,
+    onClick,
+    size,
+    sx,
+    linkTo,
+  }) => (
+    <Button
+      variant={variant}
+      color={color}
+      onClick={onClick}
+      size={size}
+      sx={sx}
+      component={Link}
+      to={linkTo}
+    >
+      {text}
+    </Button>
+  );
 
-const options = [
-  { text: "StreamLine-Filings", value: "Filings", href: "/enq-admin" },
-  { text: "Admin", value: "Admin", href: "/admin" },
-  { text: "Job-Support", value: "Job-Support", href: "/job-supp-table" },
-  { text: "Course-Enquiry", value: "Course-Enquiry", href: "/enquiry-table" },
-];
+  const options = [
+    { text: "StreamLine-Filings", value: "Filings", href: "/enq-admin" },
+    { text: "Admin", value: "Admin", href: "/admin" },
+    { text: "Job-Support", value: "Job-Support", href: "/job-supp-table" },
+    { text: "Course-Enquiry", value: "Course-Enquiry", href: "/enquiry-table" },
+  ];
 
-const filteredOptions = options.filter(option => apps.includes(option.value));
+  const filteredOptions = options.filter((option) =>
+    apps.includes(option.value)
+  );
 
-const ButtonGroup = () => {
-  const handlesetCurrentApp = (value) => {
-    // code to set the current app
-    setCurrentApp(value)
-  };
+  const ButtonGroup = () => {
+    const handlesetCurrentApp = (value) => {
+      // code to set the current app
+      setCurrentApp(value);
+    };
 
   return (
     <>
@@ -205,159 +210,161 @@ const ButtonGroup = () => {
     </>
   );
 };
+
   return (
     <div>
-    <ThemeProvider theme={theme}>
-      <Box sx={{ display: "flex", flexGrow: 1 }}>
-        <CssBaseline />
-        <AppBar
-          sx={{ display: home||isLogged === false ? "none" : "block" }}
-          position="fixed"
-          color="background"
-          open={open}
-        >
-          <Toolbar>
-            <Box sx={{ display: "flex", flexGrow: 1 }}>
-              <IconButton
-                aria-label="open drawer"
-                onClick={handleDrawerOpen}
-                edge="start"
-                sx={{
-                  marginRight: 5,
-                  ...(open && { display: "none" }),
-                }}
-              >
-                <MenuRoundedIcon color="teritiary" />
-              </IconButton>
+      <ThemeProvider theme={theme}>
+        <Box sx={{ display: "flex", flexGrow: 1 }}>
+          <CssBaseline />
+          <AppBar
+            sx={{ display: home || isLogged === false ? "none" : "block" }}
+            position="fixed"
+            color="background"
+            open={open}
+          >
+            <Toolbar>
+              <Box sx={{ display: "flex", flexGrow: 1 }}>
+                <IconButton
+                  aria-label="open drawer"
+                  onClick={handleDrawerOpen}
+                  edge="start"
+                  sx={{
+                    marginRight: 5,
+                    ...(open && { display: "none" }),
+                  }}
+                >
+                  <MenuRoundedIcon color="teritiary" />
+                </IconButton>
+
+                <Button
+                                  to="/"
+                                //   onClick={}
+                  component={Link}
+                  sx={{ textTransform: "none" }}
+                >
+                  <Typography
+                    variant="h6"
+                    color={"#094067"}
+                    sx={{
+                      fontWeight: "bold",
+                      flexGrow: 1,
+                      float: "right",
+                      fontFamily: "Poppins",
+                    }}
+                    noWrap
+                    component="div"
+                  >
+                    Intellecto Global Services
+                  </Typography>
+                </Button>
+              </Box>
+
+              <ButtonGroup />
 
               <Button
-                to="/enq-admin"
-                component={Link}
-                sx={{ textTransform: "none" }}
-              >
-                <Typography
-                  variant="h6"
-                  color={"#094067"}
-                  sx={{
-                    fontWeight: "bold",
-                    flexGrow: 1,
-                    float: "right",
-                    fontFamily: "Poppins",
-                  }}
-                  noWrap
-                  component="div"
-                >
-                  Intellecto Global Services
-                </Typography>
-              </Button>
-            </Box>
-
-            <ButtonGroup />
-
-            <Button
-              variant="contained"
-              color="primary"
-              size="small"
-              sx={{
-                p: 1,
-                m: 1,
-                float: "right",
-                // left: "1150px",
-                fontWeight: "600",
-                letterSpacing: "1px",
-              }}
-            >
-              {currentUser || "Login"}
-              {/* .replace(/['"]+/g, "") */}
-            </Button>
-          </Toolbar>
-        </AppBar>
-        <Drawer
-          transitionDuration={500}
-          variant="permanent"
-          sx={{
-            display: home||isLogged === false ? "none" : "block",
-            "& .MuiDrawer-paper": {
-              backgroundColor: "#d8eefe",
-            },
-          }}
-          open={open}
-        >
-          <DrawerHeader>
-            <IconButton onClick={handleDrawerClose}>
-              {theme.direction === "rtl" ? (
-                <ChevronRightIcon color="teritiary" />
-              ) : (
-                <ChevronLeftIcon color="teritiary" />
-              )}
-            </IconButton>
-          </DrawerHeader>
-          <Divider />
-          {/* app Switch */}
-
-          {currentApp === "Filings" && <FilingsRoutes {...{ open }} />}
-          {currentApp === "Job-Support" && <JobSuppRoutes open={open} />}
-          {currentApp === "Admin" && <AdminRoutes open={open} />}
-          {currentApp === "Course-Enquiry" && <CourseEnqRoutes open={open} />}
-
-          <List style={{ marginTop: `auto` }}>
-            <Divider />
-            <ListItem key={1} disablePadding sx={{ display: "block" }}>
-              <ListItemButton
-                onClick={handleClick}
-                component={Link}
-                to={"/login"}
+                variant="contained"
+                color="primary"
+                size="small"
                 sx={{
-                  borderRadius: "6px",
-                  "&:hover": {
-                    background: "#90b4ce",
-                    "& .icon-list-1": {
-                      color: "#FFFFFE",
-                    },
-                    "& .text-list-1": {
-                      color: "#FFFFFE",
-                    },
-                  },
-                  minHeight: 48,
-                  justifyContent: open ? "initial" : "center",
-                  px: 2.5,
+                  p: 1,
+                  m: 1,
+                  float: "right",
+                  // left: "1150px",
+                  fontWeight: "600",
+                  letterSpacing: "1px",
                 }}
               >
-                <ListItemIcon
-                  className="icon-list-1"
+                {currentUser || "Login"}
+                {/* .replace(/['"]+/g, "") */}
+              </Button>
+            </Toolbar>
+          </AppBar>
+          <Drawer
+            transitionDuration={500}
+            variant="permanent"
+            sx={{
+              display: home || isLogged === false ? "none" : "block",
+              "& .MuiDrawer-paper": {
+                backgroundColor: "#d8eefe",
+              },
+            }}
+            open={open}
+          >
+            <DrawerHeader>
+              <IconButton onClick={handleDrawerClose}>
+                {theme.direction === "rtl" ? (
+                  <ChevronRightIcon color="teritiary" />
+                ) : (
+                  <ChevronLeftIcon color="teritiary" />
+                )}
+              </IconButton>
+            </DrawerHeader>
+            <Divider />
+            {/* app Switch */}
+
+            {currentApp === "Filings" && <FilingsRoutes {...{ open }} />}
+            {currentApp === "Job-Support" && <JobSuppRoutes open={open} />}
+            {currentApp === "Admin" && <AdminRoutes open={open} />}
+            {currentApp === "Course-Enquiry" && <CourseEnqRoutes open={open} />}
+
+            <List style={{ marginTop: `auto` }}>
+              <Divider />
+              <ListItem key={1} disablePadding sx={{ display: "block" }}>
+                <ListItemButton
+                  onClick={handleClick}
+                  component={Link}
+                  to={"/login"}
                   sx={{
-                    color: "#094067",
-                    minWidth: 0,
-                    mr: open ? 3 : "auto",
-                    justifyContent: "center",
+                    borderRadius: "6px",
+                    "&:hover": {
+                      background: "#90b4ce",
+                      "& .icon-list-1": {
+                        color: "#FFFFFE",
+                      },
+                      "& .text-list-1": {
+                        color: "#FFFFFE",
+                      },
+                    },
+                    minHeight: 48,
+                    justifyContent: open ? "initial" : "center",
+                    px: 2.5,
                   }}
                 >
-                  <LogoutRoundedIcon />
-                </ListItemIcon>
-                <ListItemText
-                  className="text-list-1"
-                  primary={"Logout"}
-                  sx={{ color: "#094067", opacity: open ? 1 : 0 }}
-                />
-              </ListItemButton>
-            </ListItem>
-          </List>
-        </Drawer>
-        <Box
-          sx={{
-            flexGrow: 1,
-            paddingTop: "96px",
-            paddingLeft: "38px",
-            paddingRight: "38px",
-            bgcolor: "#FFFFFE",
-            width: "100vw",
-            minHeight: "100vh",
-          }}
-        >
-          {props.children}
+                  <ListItemIcon
+                    className="icon-list-1"
+                    sx={{
+                      color: "#094067",
+                      minWidth: 0,
+                      mr: open ? 3 : "auto",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <LogoutRoundedIcon />
+                  </ListItemIcon>
+                  <ListItemText
+                    className="text-list-1"
+                    primary={"Logout"}
+                    sx={{ color: "#094067", opacity: open ? 1 : 0 }}
+                  />
+                </ListItemButton>
+              </ListItem>
+            </List>
+          </Drawer>
+          <Box
+            sx={{
+              flexGrow: 1,
+              paddingTop: "96px",
+              paddingLeft: "38px",
+              paddingRight: "38px",
+              bgcolor: "#FFFFFE",
+              width: "100vw",
+              minHeight: "100vh",
+            }}
+          >
+            {props.children}
+          </Box>
         </Box>
-      </Box>
-    </ThemeProvider>
+      </ThemeProvider>
     </div>
   );
 }

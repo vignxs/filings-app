@@ -25,8 +25,7 @@ import Snackbar from "@material-ui/core/Snackbar";
 import SnackBar from "../Utils/SnakeBar";
 
 const EnquiryForm = () => {
-  const [fdate, setFdate] = React.useState(null);
-
+  
   const {
     values,
     handleChange,
@@ -199,14 +198,12 @@ const EnquiryForm = () => {
                       openTo="day"
                       format="dd-MM-yyyy"
                       views={["day"]}
-                      value={values.followup_call_date ? fdate : Date()}
+                      value={values.followup_call_date}
                       onChange={(e) => {
                         const date = new Date(e);
-                        const dates = moment(date).format("DD-MM-YYYY");
-                        setFdate(date);
                         setValues({
                           ...values,
-                          followup_call_date: `${dates}`,
+                          followup_call_date: `${date}`,
                         });
                       }}
                       renderInput={(params) => (
@@ -388,50 +385,36 @@ const EnquiryForm = () => {
                   </FormControl>
                 </Grid>
               </Grid>
-              <div style={{ positiion: "absolute", bottom: 0, width: "100%" }}>
-                <Divider />
-                <Stack spacing={2} direction="row">
-                  <Button
-                    sx={{ m: 2, width: "100px", color: "#FFFFFE" }}
-                    variant="contained"
-                    color="green"
-                    type="submit"
-                  >
-                    Submit
-                  </Button>
-                  <Button
-                    sx={{
-                      m: 2,
-                      width: "100px",
-                      color: "#FFFFFE",
-                      height: "38px",
-                      top: "16px",
-                      right: "10px",
-                    }}
-                    variant="contained"
-                    color="green"
-                    to="/enquiry-table"
-                    component={Link}
-                  >
-                    Go Back
-                  </Button>
-                  <Button
-                    sx={{
-                      m: 2,
-                      width: "100px",
-                      height: "38px",
-                      top: "17px",
-                      color: "#094067",
-                    }}
-                    variant="outlined"
-                    color="green"
-                    type="reset"
-                    onClick={clearFields}
-                  >
-                    Clear
-                  </Button>
-                </Stack>
-              </div>
+              <Divider/>
+              <div style={{ width: "100%",padding:"20px 0 20px 0" }}>
+              <Stack spacing={1} direction="row">
+                <Button
+                  sx={{color: "#FFFFFE" }}
+                  variant="contained"
+                  color="green"
+                  type="submit"
+                >
+                  Submit
+                </Button>
+                <Button
+                  sx={{color: "#FFFFFE" }}
+                  variant="contained"
+                  color="green"
+                  to="/enquiry-table"
+                  component={Link}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  variant="outlined"
+                  color="green"
+                  type="reset"
+                  onClick={clearFields}
+                >
+                  Clear
+                </Button>
+              </Stack>
+            </div>
             </ValidatorForm>
             <SnackBar open={open} setOpen={setOpen} />
           </ThemeProvider>

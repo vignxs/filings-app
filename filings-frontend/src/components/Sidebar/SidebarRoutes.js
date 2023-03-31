@@ -321,13 +321,13 @@ const JobSuppRoutes = ({ open }) => {
     {
       isSelected: 1,
       icon: <CallMissedOutgoingRounded />,
-      path: "/job-supp-table",
+      path: "/js-followup-table",
       name: "Follow-up List",
     },
     {
       isSelected: 1,
       icon: <FactCheckRounded />,
-      path: "/job-supp-table",
+      path: "/job-supp-confrimed-table",
       name: "Confirmed List",
     },
     {

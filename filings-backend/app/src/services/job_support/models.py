@@ -36,10 +36,10 @@ class JOB_SUPPORT_PAYMENT(Base):
         "IGS_JOB_SUPPORT.id", ondelete="CASCADE"))
     candidate_payment_amount = Column(Integer)
     candidate_payment_status = Column(String)
-    candidate_payment_date = Column(DateTime, default=None)
+    candidate_payment_date = Column(String)
     resource_payment_amount = Column(Integer)
     resource_payment_status = Column(String)
-    resource_payment_date = Column(DateTime, default=None)
+    resource_payment_date = Column(String)
 
 
 class JOB_SUPPORT_COMMENTS(Base):
@@ -51,7 +51,7 @@ class JOB_SUPPORT_COMMENTS(Base):
     job_support_id = Column(Integer, ForeignKey(
         "IGS_JOB_SUPPORT.id", ondelete="CASCADE"))
     comments = Column(String)
-    commented_at = Column(DateTime, default=None)
+    commented_at = Column(String)
 
 
 @event.listens_for(IGS_JOB_SUPPORT, 'before_update')

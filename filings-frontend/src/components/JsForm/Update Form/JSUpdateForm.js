@@ -15,10 +15,9 @@ import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
 import green from "@material-ui/core/colors/green";
 import UpdateLogics from "./JSUpdateLogics";
 
-
 const JSUpdateForm = ({ open, setOpen, params }) => {
-  console.log(params.row)
-  const {values,handleChange}=UpdateLogics(params)
+  console.log(params.row);
+  const { values, handleChange } = UpdateLogics(params);
   const theme = createTheme({
     palette: {
       primary: {
@@ -46,12 +45,7 @@ const JSUpdateForm = ({ open, setOpen, params }) => {
     "Resource Not Available",
     "Waiting For Response",
   ];
-  const paymentValues=[
-    "Task",
-    "Weekly",
-    "BiWeekly",
-    "Monthly",
-  ]
+  const paymentValues = ["Task", "Weekly", "BiWeekly", "Monthly"];
   return (
     <>
       <Dialog scroll={"body"} fullWidth maxWidth={"sm"} open={open}>
@@ -231,7 +225,7 @@ const JSUpdateForm = ({ open, setOpen, params }) => {
           </Box>
         </DialogContent>
       </Dialog>
-      ;
+ 
     </>
   );
 };

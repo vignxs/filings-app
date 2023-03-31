@@ -18,7 +18,7 @@ export const getUsers = async (dispatch) => {
 
 export const fsgetRequests = async (dispatch) => {
   const jsdata= await axios.get("http://127.0.0.1:8000/api/v1/job-support-data-all");
-  const content = await jsdata.data;
+    const content = await jsdata.data;
   if (content){
     dispatch({ type: "JS_GETREQUEST", payload: content });
   }

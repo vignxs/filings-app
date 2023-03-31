@@ -20,6 +20,7 @@ import UseForm from "./UseForm";
 import JSformActions from "./JSformActions";
 import { renderEndDateCell } from "./JScustomRender";
 import { useValue } from "../../Context/ContextProvider";
+import CommentsList from "./CommentsList/CommentsDialog";
 
 const JobSupportConfrimedTable = () => {
   const {
@@ -105,7 +106,8 @@ const JobSupportConfrimedTable = () => {
     });
 
   const [editId, setEditId] = useState(null);
-  const {  ConfrimedData } = UseForm();
+  const [open, setOpen] = useState(false);
+  const { ConfrimedData } = UseForm();
   // const [rowEditStatus, setRowEditStatus] = useState({});
   // const handleRowEditStart = (params) => {
   //   setRowEditStatus({
@@ -245,6 +247,21 @@ const JobSupportConfrimedTable = () => {
       filterable: false,
       renderCell: renderEndDateCell,
     },
+    {
+      field: "comments",
+      headerName: "Comments",
+      width: 180,
+      headerAlign: "center",
+      align: "center",
+      renderCell: (params) => (
+        <>
+          <Button variant="outlined" onClick={() => setOpen(true)}>
+            View Comments
+          </Button>
+          <CommentsList open={open} setOpen={setOpen} params={params} />
+        </>
+      ),
+    },
   ]);
   function CustomToolbar() {
     return (
@@ -330,7 +347,7 @@ const JobSupportConfrimedTable = () => {
             <DataGrid
               sx={{ border: 0 }}
               columns={enqColumns}
-              rows={ ConfrimedData }
+              rows={ConfrimedData}
               getRowId={(row) => row.id}
               rowsPerPageOptions={[10, 20, 30]}
               components={{ Toolbar: CustomToolbar }}

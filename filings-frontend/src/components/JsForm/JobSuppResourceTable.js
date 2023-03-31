@@ -21,7 +21,7 @@ import JSformActions from "./JSformActions";
 import { renderEndDateCell } from "./JScustomRender";
 import { useValue } from "../../Context/ContextProvider";
 
-const JobSupportConfrimedTable = () => {
+const JobSupportResourceTable = () => {
   const {
     state: { isLogged },
   } = useValue();
@@ -105,7 +105,7 @@ const JobSupportConfrimedTable = () => {
     });
 
   const [editId, setEditId] = useState(null);
-  const {  ConfrimedData } = UseForm();
+  const { ConfrimedData } = UseForm();
   // const [rowEditStatus, setRowEditStatus] = useState({});
   // const handleRowEditStart = (params) => {
   //   setRowEditStatus({
@@ -159,13 +159,14 @@ const JobSupportConfrimedTable = () => {
     //   filterable: true,
     // },
     {
-      field: "start_date",
+      field: "resource",
+      headerName: "Resource",
+      editable: true,
       headerAlign: "center",
       align: "center",
-      editable: true,
+      width: 100,
+      sortable: true,
       filterable: true,
-      headerName: "Start Date",
-      width: 120,
     },
     {
       field: "candidate_name",
@@ -176,14 +177,24 @@ const JobSupportConfrimedTable = () => {
       width: 100,
       filterable: false,
     },
+    {
+      field: "start_date",
+      headerAlign: "center",
+      align: "center",
+      editable: true,
+      filterable: true,
+      headerName: "Start Date",
+      width: 120,
+    },
     // {
-    //   field: "mobile",
+    //   field: "followup_date",
+    //   editable: true,
+    //   headerName: "Followup Date",
+    //   width: 180,
     //   headerAlign: "center",
     //   align: "center",
-    //   editable: true,
-    //   headerName: "Mobile",
-    //   width: 100,
-    //   filterable: true,
+    //   filterable: false,
+    //   renderCell: renderEndDateCell,
     // },
     {
       field: "technology",
@@ -192,16 +203,6 @@ const JobSupportConfrimedTable = () => {
       headerAlign: "center",
       align: "center",
       width: 160,
-      sortable: true,
-      filterable: true,
-    },
-    {
-      field: "resource",
-      headerName: "Resource",
-      editable: true,
-      headerAlign: "center",
-      align: "center",
-      width: 100,
       sortable: true,
       filterable: true,
     },
@@ -252,16 +253,6 @@ const JobSupportConfrimedTable = () => {
       headerAlign: "center",
       filterable: false,
       align: "center",
-    },
-    {
-      field: "followup_date",
-      editable: true,
-      headerName: "Followup Date",
-      width: 180,
-      headerAlign: "center",
-      align: "center",
-      filterable: false,
-      renderCell: renderEndDateCell,
     },
   ]);
   function CustomToolbar() {
@@ -348,7 +339,7 @@ const JobSupportConfrimedTable = () => {
             <DataGrid
               sx={{ border: 0 }}
               columns={enqColumns}
-              rows={ ConfrimedData }
+              rows={ConfrimedData}
               getRowId={(row) => row.id}
               rowsPerPageOptions={[10, 20, 30]}
               components={{ Toolbar: CustomToolbar }}
@@ -390,4 +381,4 @@ const JobSupportConfrimedTable = () => {
   );
 };
 
-export default JobSupportConfrimedTable;
+export default JobSupportResourceTable;

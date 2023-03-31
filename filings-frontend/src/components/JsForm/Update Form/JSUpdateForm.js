@@ -16,7 +16,9 @@ import green from "@material-ui/core/colors/green";
 import UpdateLogics from "./JSUpdateLogics";
 
 const JSUpdateForm = ({ open, setOpen, params }) => {
+
   const { values, handleChange, handleSubmit } = UpdateLogics(params);
+
   const theme = createTheme({
     palette: {
       primary: {
@@ -230,7 +232,7 @@ const JSUpdateForm = ({ open, setOpen, params }) => {
           </Box>
         </DialogContent>
       </Dialog>
-      ;
+ 
     </>
   );
 };

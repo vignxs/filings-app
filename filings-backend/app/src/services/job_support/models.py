@@ -34,12 +34,12 @@ class JOB_SUPPORT_PAYMENT(Base):
     id = Column(Integer, primary_key=True, autoincrement=True,  index=True)
     job_support_id = Column(Integer, ForeignKey(
         "IGS_JOB_SUPPORT.id", ondelete="CASCADE"))
-    candidate_payment_amount = Column(Integer)
-    candidate_payment_status = Column(String)
-    candidate_payment_date = Column(String)
-    resource_payment_amount = Column(Integer)
-    resource_payment_status = Column(String)
-    resource_payment_date = Column(String)
+    candidate_payment_amount = Column(Integer,default=None)
+    candidate_payment_status = Column(String,default=None)
+    candidate_payment_date = Column(String,default=None)
+    resource_payment_amount = Column(Integer,default=None)
+    resource_payment_status = Column(String,default=None)
+    resource_payment_date = Column(String,default=None)
 
 
 class JOB_SUPPORT_COMMENTS(Base):

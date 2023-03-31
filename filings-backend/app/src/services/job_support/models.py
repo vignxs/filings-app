@@ -22,7 +22,6 @@ class IGS_JOB_SUPPORT(Base):
     updated_at = Column(DateTime, default=func.now(), onupdate=func.now())
     payment_period = Column(String)
     date_of_enquiry = Column(String)
-    charges = Column(Integer)
     payment = relationship("JOB_SUPPORT_PAYMENT")
     comment = relationship("JOB_SUPPORT_COMMENTS")
 

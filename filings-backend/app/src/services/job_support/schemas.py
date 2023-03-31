@@ -17,7 +17,6 @@ class IGS_JOB_SUPPORT(BaseModel):
     updated_at: datetime = datetime.now()
     payment_period: str
     date_of_enquiry : str
-    charges : int
 
     class Config:
         orm_mode = True
@@ -58,4 +57,3 @@ class IGS_JOB_SUPPORT_GU(BaseModel):
     updated_at: datetime = datetime.now()
     payment_period: str
     date_of_enquiry: str
-    charges: int

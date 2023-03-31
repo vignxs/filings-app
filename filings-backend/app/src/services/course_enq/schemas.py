@@ -11,8 +11,8 @@ class IGS_COURSE_ENQ(BaseModel):
     course : str
     fee_structure : str
     experience_by : str
-    info_source : str
-    purpose : str
+    info_source : str = None
+    purpose: str = None
     mode : str
     comments : str
 
@@ -31,8 +31,8 @@ class IGS_COURSE_ENQ_ID(BaseModel):
     course : str
     fee_structure : str
     experience_by : str
-    info_source : str
-    purpose : str
+    info_source: str = None
+    purpose: str = None
     mode : str
     comments : str
 

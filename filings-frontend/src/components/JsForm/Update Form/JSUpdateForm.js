@@ -178,7 +178,7 @@ const JSUpdateForm = ({ open, setOpen, params }) => {
                         label="Payment_Period*"
                         color="green"
                         required={true}
-                        name="payment-period"
+                        name="payment_period"
                         value={values.payment_period}
                         onChange={handleChange}
                       >

@@ -84,7 +84,7 @@ const reducer = (state, action) => {
     case "CMD_GETREQUEST":
       return {
         ...state,
-        cmdrequest: action.payload,
+        cmdrequests: action.payload,
       };
     default:
       throw new Error("No action matched");

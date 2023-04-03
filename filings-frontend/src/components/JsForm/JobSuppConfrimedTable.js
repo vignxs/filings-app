@@ -20,7 +20,7 @@ import UseForm from "./UseForm";
 import JSformActions from "./JSformActions";
 import { renderEndDateCell } from "./JScustomRender";
 import { useValue } from "../../Context/ContextProvider";
-import CommentsList from "./CommentsList/CommentsDialog";
+import CommentsDialog from "./CommentsList/CommentsDialog";
 
 const JobSupportConfrimedTable = () => {
   const {
@@ -109,6 +109,7 @@ const JobSupportConfrimedTable = () => {
   const [editId, setEditId] = useState(null);
   const [open, setOpen] = useState(false);
   const { ConfrimedData } = UseForm();
+  const [rowId, setRowId] = useState(null);
   // const [rowEditStatus, setRowEditStatus] = useState({});
   // const handleRowEditStart = (params) => {
   //   setRowEditStatus({
@@ -278,7 +279,8 @@ const JobSupportConfrimedTable = () => {
           <Button variant="outlined" onClick={() => setOpen(true)}>
             View Comments
           </Button>
-          <CommentsList open={open} setOpen={setOpen} params={params} />
+          {console.log("editid", editId)}
+          <CommentsDialog open={open} setOpen={setOpen} params={params} />
         </>
       ),
     },

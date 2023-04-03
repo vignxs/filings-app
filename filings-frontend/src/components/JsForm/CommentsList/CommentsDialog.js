@@ -11,12 +11,25 @@ import {
   Grid,
 } from "@mui/material";
 import { green } from "@mui/material/colors";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
 import { CommentsDataTable } from "./CommentsDataTable";
 import UseForms from "./UseForms";
+import { cmdgetRequests } from "../../../Context/actions";
+import axios from "axios";
+import moment from "moment";
+import { useValue } from "../../../Context/ContextProvider";
 
-const CommentsList = ({ open, setOpen, params }) => {
+const CommentsDialog = ({ open, setOpen, params }) => {
+  const [values, setValues] = useState({
+    comment: "",
+    comment_date: new Date(),
+  });
+  console.log("CommentsDialog", open);
+  const {
+    state: { cmdrequests },
+    dispatch,
+  } = useValue();
   const theme = createTheme({
     palette: {
       primary: {
@@ -33,9 +46,25 @@ const CommentsList = ({ open, setOpen, params }) => {
       },
     },
   });
+  const cmd = {
+    job_support_id: params.row.id,
+    comments: values.comment,
+    commented_at: moment(values.comment_date).format("DD-MM-YYYY"),
+  };
 
-  const { handleChange, handleSubmit, values, setValues } = UseForms(params);
-  console.log("qwertyui", params);
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    axios
+      .post("http://localhost:8000/api/v1/job-support-comment-data", cmd)
+      .then((res) => console.log(res.data));
+    cmdgetRequests(dispatch);
+  };
+
+  useEffect(() => {
+    cmdgetRequests(dispatch);
+  }, []);
+  //   const { handleChange, handleSubmit, values, setValues } = UseForms(params);
+  //   console.log("qwertyui", params);
   return (
     <>
       <Dialog scroll={"body"} fullWidth maxWidth={"sm"} open={open}>
@@ -76,7 +105,7 @@ const CommentsList = ({ open, setOpen, params }) => {
                     alignItems="center"
                     // mt="3"
                   >
-                    <CommentsDataTable />
+                    <CommentsDataTable params={params.row} />
                     <TextValidator
                       label="New Comment"
                       size="small"
@@ -125,4 +154,4 @@ const CommentsList = ({ open, setOpen, params }) => {
   );
 };
 
-export default CommentsList;
+export default CommentsDialog;

@@ -14,7 +14,6 @@ import { green } from "@mui/material/colors";
 import React, { useEffect, useState } from "react";
 import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
 import { CommentsDataTable } from "./CommentsDataTable";
-import UseForms from "./UseForms";
 import { cmdgetRequests } from "../../../Context/actions";
 import axios from "axios";
 import moment from "moment";
@@ -23,8 +22,10 @@ import { useValue } from "../../../Context/ContextProvider";
 const CommentsDialog = ({ open, setOpen, params, rowId }) => {
   const [values, setValues] = useState({
     comment: "",
-    comment_date: new Date(),
+    comment_date: "",
   });
+
+  const [visiblity, setVisibility] = useState(true);
   const { dispatch } = useValue();
   const theme = createTheme({
     palette: {
@@ -42,10 +43,12 @@ const CommentsDialog = ({ open, setOpen, params, rowId }) => {
       },
     },
   });
+
+  const today = new Date().toLocaleDateString("en-GB");
   const cmd = {
     job_support_id: rowId,
     comments: values.comment,
-    commented_at: moment(new Date()).format("DD-MM-YYYY"),
+    commented_at: today,
   };
 
   const handleSubmit = (e) => {
@@ -54,15 +57,14 @@ const CommentsDialog = ({ open, setOpen, params, rowId }) => {
       .post("http://localhost:8000/api/v1/job-support-comment-data", cmd)
       .then((res) => console.log(res.data));
     cmdgetRequests(dispatch);
-    setValues({
-      comment: "",
-    });
   };
-
+//  if (today&&handleSubmit) {
+//       setVisibility(false);
+//     }
   useEffect(() => {
     cmdgetRequests(dispatch);
   }, []);
-  //   const { handleChange, handleSubmit, values, setValues } = UseForms(params);
+
   return (
     <>
       <Dialog scroll={"body"} fullWidth maxWidth={"sm"} open={open}>
@@ -110,6 +112,9 @@ const CommentsDialog = ({ open, setOpen, params, rowId }) => {
                       type="text"
                       name="comment"
                       value={values.comment}
+                      sx={{
+                        display: visiblity ? "" : "none",
+                      }}
                       onChange={(e) =>
                         setValues((presvalue) => {
                           return {

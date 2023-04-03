@@ -7,6 +7,9 @@ import { fsgetRequests } from "../../../Context/actions";
 
 const UpdateLogics = ({ params, page }) => {
   const [values, setValues] = useState(params.row);
+
+//   console.log(params.row);
+
   const [payment, setPayment] = useState({
     payment_amount: 0,
     payment_date: moment(new Date()).format("DD-MM-YYYY"),

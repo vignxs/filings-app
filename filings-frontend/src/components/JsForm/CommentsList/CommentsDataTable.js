@@ -1,7 +1,6 @@
 import { DataGrid } from "@mui/x-data-grid";
 import React, { useMemo, useState } from "react";
 import Box from "@mui/material/Box";
-import UseForms from "./UseForms";
 import { useValue } from "../../../Context/ContextProvider";
 import { cmdgetRequests } from "../../../Context/actions";
 
@@ -11,9 +10,36 @@ export const CommentsDataTable = ({ params, rowId }) => {
       field: "commented_at",
       headerAlign: "center",
       align: "center",
-      editable: true,
       headerName: "Comment Date",
       width: 150,
+      editable: false,
+      valueFormatter: (params) => {
+        console.log("value", params);
+        return params.value.toString();
+      },
+
+      renderCell: (params) => {
+        const date = params.row.commented_at;
+        const color = date === today ? "" : "#80808045";
+        return (
+          <div
+            style={{
+              backgroundColor: color,
+              border: "1px",
+              padding: "15px",
+              width: "60rem",
+              position: "absolute",
+              borderRadius: "5px",
+              pointerEvents: "none",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            {date}
+          </div>
+        );
+      },
     },
     {
       field: "comments",
@@ -24,6 +50,8 @@ export const CommentsDataTable = ({ params, rowId }) => {
       width: 350,
     },
   ]);
+
+  const today = new Date().toLocaleDateString("en-GB");
 
   const {
     state: { cmdrequests },
@@ -37,6 +65,8 @@ export const CommentsDataTable = ({ params, rowId }) => {
       <DataGrid
         rows={cmdData}
         columns={columns}
+        disableRowSelectionOnClick
+        isCellEditable={(params) => params.row.commented_at === today}
         sx={{
           "& .css-17jjc08-MuiDataGrid-footerContainer": {
             display: "none",

@@ -167,7 +167,7 @@ const JobSupportConfrimedTable = () => {
       field: "start_date",
       headerAlign: "center",
       align: "center",
-      editable: true,
+      //editable: true,
       filterable: true,
       headerName: "Start Date",
       width: 120,
@@ -199,7 +199,7 @@ const JobSupportConfrimedTable = () => {
       width: 160,
       sortable: true,
       filterable: true,
-    },
+
     {
       field: "resource",
       headerName: "Resource",
@@ -213,7 +213,7 @@ const JobSupportConfrimedTable = () => {
     {
       field: "status",
       headerName: "Status",
-      editable: true,
+      //editable: true,
       width: 100,
       type: "singleSelect",
       headerAlign: "center",
@@ -277,7 +277,7 @@ const JobSupportConfrimedTable = () => {
     },
     {
       field: "followup_date",
-      editable: true,
+      //editable: true,
       headerName: "Followup Date",
       width: 180,
       headerAlign: "center",

@@ -7,12 +7,11 @@ import { fsgetRequests } from "../../../Context/actions";
 
 const UpdateLogics = ({ params, page }) => {
   const [values, setValues] = useState(params.row);
-  const [payment,setPayment]=useState({
-    payment_amount:0,
-    payment_date:moment(new Date()).format("DD-MM-YYYY"),
-    payment_status:""
-  })
-  console.log(values)
+  const [payment, setPayment] = useState({
+    payment_amount: 0,
+    payment_date: moment(new Date()).format("DD-MM-YYYY"),
+    payment_status: "",
+  });
   const { dispatch } = useValue();
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -20,12 +19,12 @@ const UpdateLogics = ({ params, page }) => {
       return { ...preValues, [name]: value };
     });
   };
-  const handlePaymentChange=(e)=>{
+  const handlePaymentChange = (e) => {
     const { name, value } = e.target;
     setPayment((preValues) => {
       return { ...preValues, [name]: value };
     });
-  }
+  };
   const FollowupDate = () => {
     if (values.payment_period === "Task") {
       return new Date();
@@ -44,24 +43,35 @@ const UpdateLogics = ({ params, page }) => {
     }
   };
 
-  const PaymentValues =()=>{
-    if(page ==="Confrimed"){
-      return{
-        job_support_id:params.id,
-        candidate_payment_amount:payment.payment_amount,
-        candidate_payment_status:payment.payment_status,
-        candidate_payment_date:payment.payment_date
-      }
+  const PaymentValues = () => {
+    if (page === "Confrimed") {
+      return {
+        job_support_id: params.id,
+        candidate_payment_amount: payment.payment_amount,
+        candidate_payment_status: payment.payment_status,
+        candidate_payment_date: payment.payment_date,
+      };
+    } else if (page === "Resource") {
+      return {
+        job_support_id: params.id,
+        resource_payment_amount: payment.payment_amount,
+        resource_payment_status: payment.payment_status,
+        resource_payment_date: payment.payment_date,
+      };
+    } else if (page === "Main") {
+      return {
+        job_support_id: params.id,
+        candidate_payment_amount: 0,
+        candidate_payment_status: "",
+        candidate_payment_date: "",
+        resource_payment_amount: 0,
+        resource_payment_status: "",
+        resource_payment_date: "",
+      };
     }
-    if(page ==="Resource"){
-      return{
-        job_support_id:params.id,
-        resource_payment_amount:payment.payment_amount,
-        resource_payment_status:payment.payment_status,
-        resource_payment_date:payment.payment_date
-      }
-    }
-  }
+  };
+
+  const paymentData = PaymentValues();
 
   const editedData = {
     id: params.id,
@@ -86,17 +96,32 @@ const UpdateLogics = ({ params, page }) => {
     updated_by: values.updated_by,
   };
 
-  const handleSubmit = () => {
+  const editData = () => {
     axios
       .put(`http://127.0.0.1:8000/api/v1/job-support-data-update`, editedData)
       .then((res) => {
         console.log(res.data);
-        console.log("Empdata Successfully updated");
+        console.log("Data Successfully updated");
       })
       .catch((error) => {
         console.log(error);
       });
+  };
+  const paymentRequests=()=>{
+    axios
+    .post(`http://127.0.0.1:8000/api/v1/job-support-paymnet-data`, paymentData)
+    .then((res) => {
+      console.log(res.data);
+      console.log("paymentData Successfully Posted");
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  }
 
+  const handleSubmit = () => {
+    editData();
+    paymentRequests();
     fsgetRequests(dispatch);
   };
 

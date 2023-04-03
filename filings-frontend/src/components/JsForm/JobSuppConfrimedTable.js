@@ -105,7 +105,7 @@ const JobSupportConfrimedTable = () => {
       },
     });
 
-  const Table = "Confrimed"
+  const Table = "Confrimed";
   const [editId, setEditId] = useState(null);
   const [open, setOpen] = useState(false);
   const { ConfrimedData } = UseForm();
@@ -250,13 +250,30 @@ const JobSupportConfrimedTable = () => {
       align: "center",
     },
     {
-      field: "charges",
+      field: "candidate_payment_status",
       editable: true,
-      headerName: "Charges",
+      headerName: "Payment Status",
       width: 180,
       headerAlign: "center",
       filterable: false,
       align: "center",
+      valueGetter: (params) =>
+        params.row.payment
+          .map((payment) => payment.candidate_payment_status)
+          .join(", "),
+    },
+    {
+      field: "candidate_payment_amount",
+      editable: true,
+      headerName: "Amount",
+      width: 180,
+      headerAlign: "center",
+      filterable: false,
+      align: "center",
+      valueGetter: (params) =>
+        params.row.payment
+          .map((payment) => payment.candidate_payment_amount)
+          .join(", "),
     },
     {
       field: "followup_date",
@@ -276,11 +293,21 @@ const JobSupportConfrimedTable = () => {
       align: "center",
       renderCell: (params) => (
         <>
-          <Button variant="outlined" onClick={() => setOpen(true)}>
+          <Button
+            variant="outlined"
+            onClick={() => {
+              setRowId(params.id);
+              setOpen(true);
+            }}
+          >
             View Comments
           </Button>
-          {console.log("editid", editId)}
-          <CommentsDialog open={open} setOpen={setOpen} params={params} />
+          <CommentsDialog
+            open={open}
+            setOpen={setOpen}
+            params={params}
+            rowId={rowId}
+          />
         </>
       ),
     },

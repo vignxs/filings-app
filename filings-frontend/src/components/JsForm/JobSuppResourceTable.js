@@ -129,7 +129,7 @@ const JobSupportResourceTable = () => {
   //   });
   //   setEditId(null);
   // };
-
+  const Table = "Resource";
   const enqColumns = useMemo(() => [
     {
       field: "actions",
@@ -142,6 +142,7 @@ const JobSupportResourceTable = () => {
           params={params}
           editId={editId}
           setEditId={setEditId}
+          page={Table}
           // rowEditStatus={rowEditStatus}
           // onRowEditStart={handleRowEditStart}
           // onRowEditStop={handleRowEditStop}
@@ -226,6 +227,32 @@ const JobSupportResourceTable = () => {
         "Waiting For Response",
       ],
       filterable: false,
+    },
+    {
+      field: "resource_payment_status",
+      editable: true,
+      headerName: "Payment Status",
+      width: 180,
+      headerAlign: "center",
+      filterable: false,
+      align: "center",
+      valueGetter: (params) =>
+        params.row.payment
+          .map((payment) => payment.resource_payment_status)
+          .join(", "),
+    },
+    {
+      field: "resource_payment_amount",
+      editable: true,
+      headerName: "Amount",
+      width: 180,
+      headerAlign: "center",
+      filterable: false,
+      align: "center",
+      valueGetter: (params) =>
+        params.row.payment
+          .map((payment) => payment.resource_payment_amount)
+          .join(", "),
     },
     {
       field: "feedback",

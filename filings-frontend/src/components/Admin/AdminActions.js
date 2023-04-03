@@ -42,7 +42,7 @@ export const UsersActions = ({ params, rowId, setRowId }) => {
   const [output, setOutput] = React.useState({});
   const steps = getSteps();
 
-  console.log("user info details", userinfo);
+  // console.log("user info details", userinfo);
   let value = userinfo;
   const handleFormClose = () => {
     if(window.confirm("Discard Changes")){
@@ -187,7 +187,7 @@ export const UsersActions = ({ params, rowId, setRowId }) => {
     // if (rowId !==  params.id && success ===false) window.alert("Please save you changes");
   }, [rowId]);
   const navigate = useNavigate();
-  console.log("setoutput", output);
+  // console.log("setoutput", output);
   function getStepContent(stepIndex) {
     switch (stepIndex) {
       case 0:

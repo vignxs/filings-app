@@ -19,16 +19,13 @@ import axios from "axios";
 import moment from "moment";
 import { useValue } from "../../../Context/ContextProvider";
 
-const CommentsDialog = ({ cmdopen, setcmdOpen,filteredcmd, params }) => {
+const CommentsDialog = ({ open, setOpen, params, rowId }) => {
   const [values, setValues] = useState({
     comment: "",
     comment_date: "",
   });
-    // console.log("CommentsDialog", filteredcmd);
-  const {
-    state: { cmdrequests },
-    dispatch,
-  } = useValue();
+  const [visiblity, setVisibility] = useState(true);
+  const { dispatch } = useValue();
   const theme = createTheme({
     palette: {
       primary: {
@@ -45,33 +42,32 @@ const CommentsDialog = ({ cmdopen, setcmdOpen,filteredcmd, params }) => {
       },
     },
   });
+
   const today = new Date().toLocaleDateString("en-GB");
   const cmd = {
-    job_support_id: params.row.id,
+    job_support_id: rowId,
     comments: values.comment,
     commented_at: today,
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  const handleSubmit = (e) => {
+    e.preventDefault();
     axios
       .post("http://localhost:8000/api/v1/job-support-comment-data", cmd)
-      .then((res) => console.log("data", res));
-      cmdgetRequests(dispatch);
-      setValues({
-        comment: "",
-        comment_date: "",
-      });
+      .then((res) => console.log(res.data));
+    cmdgetRequests(dispatch);
+   
   };
-
+//  if (today&&handleSubmit) {
+//       setVisibility(false);
+//     }
   useEffect(() => {
     cmdgetRequests(dispatch);
   }, []);
-  //   const { handleChange, handleSubmit, values, setValues } = UseForms(params);
-  //   console.log("qwertyui", params);
+
   return (
     <>
-      <Dialog scroll={"body"} fullWidth maxWidth={"sm"} open={cmdopen}>
+      <Dialog scroll={"body"} fullWidth maxWidth={"sm"} open={open}>
         <DialogTitle
           sx={{
             fontFamily: "PT Sans Caption",
@@ -109,16 +105,16 @@ const CommentsDialog = ({ cmdopen, setcmdOpen,filteredcmd, params }) => {
                     alignItems="center"
                     // mt="3"
                   >
-                    <CommentsDataTable
-                      filteredcmd={filteredcmd}
-                      params={params.row}
-                    />
+                    <CommentsDataTable params={params.row} rowId={rowId} />
                     <TextValidator
                       label="New Comment"
                       size="small"
                       type="text"
                       name="comment"
                       value={values.comment}
+                      sx={{
+                        display: visiblity ? "" : "none",
+                      }}
                       onChange={(e) =>
                         setValues((presvalue) => {
                           return {
@@ -134,9 +130,9 @@ const CommentsDialog = ({ cmdopen, setcmdOpen,filteredcmd, params }) => {
                         color="secondary"
                         style={{ left: "-10rem", top: ".5rem" }}
                         onClick={() => {
-                          //   if (window.confirm("Do You Want Discard Changes")) {
-                          setcmdOpen(false);
-                          //   }
+                          if (window.confirm("Do You Want Discard Changes")) {
+                            setOpen(false);
+                          }
                         }}
                       >
                         Back

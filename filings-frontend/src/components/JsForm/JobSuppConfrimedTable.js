@@ -25,7 +25,6 @@ import CommentsDialog from "./CommentsList/CommentsDialog";
 const JobSupportConfrimedTable = () => {
   const {
     state: { isLogged },
-    state: { cmdrequests },
   } = useValue();
   const navigate = useNavigate();
   const login = () => {
@@ -106,20 +105,11 @@ const JobSupportConfrimedTable = () => {
       },
     });
 
+  const Table = "Confrimed";
   const [editId, setEditId] = useState(null);
-
-  const { ConfrimedData, cmdopen, setcmdOpen } = UseForm();
+  const [open, setOpen] = useState(false);
+  const { ConfrimedData } = UseForm();
   const [rowId, setRowId] = useState(null);
-  const [filteredcmd, setFiltredcmd] = useState([]);
-  const handleCMDSubmit = (params) => {
-    console.log("params", params);
-    const cmdData = cmdrequests.filter(
-      (list) => list.job_support_id === params
-    );
-    setFiltredcmd(cmdData);
-    console.log("filteredcmd", filteredcmd);
-    setcmdOpen(true);
-  };
   // const [rowEditStatus, setRowEditStatus] = useState({});
   // const handleRowEditStart = (params) => {
   //   setRowEditStatus({
@@ -156,6 +146,7 @@ const JobSupportConfrimedTable = () => {
           params={params}
           editId={editId}
           setEditId={setEditId}
+          page={Table}
           // rowEditStatus={rowEditStatus}
           // onRowEditStart={handleRowEditStart}
           // onRowEditStop={handleRowEditStop}
@@ -173,7 +164,7 @@ const JobSupportConfrimedTable = () => {
     //   filterable: true,
     // },
     {
-      field: "date_of_enquiry",
+      field: "start_date",
       headerAlign: "center",
       align: "center",
       editable: true,
@@ -250,6 +241,41 @@ const JobSupportConfrimedTable = () => {
       align: "center",
     },
     {
+      field: "payment_period",
+      editable: true,
+      headerName: "Payment Period",
+      width: 180,
+      headerAlign: "center",
+      filterable: false,
+      align: "center",
+    },
+    {
+      field: "candidate_payment_status",
+      editable: true,
+      headerName: "Payment Status",
+      width: 180,
+      headerAlign: "center",
+      filterable: false,
+      align: "center",
+      valueGetter: (params) =>
+        params.row.payment
+          .map((payment) => payment.candidate_payment_status)
+          .join(", "),
+    },
+    {
+      field: "candidate_payment_amount",
+      editable: true,
+      headerName: "Amount",
+      width: 180,
+      headerAlign: "center",
+      filterable: false,
+      align: "center",
+      valueGetter: (params) =>
+        params.row.payment
+          .map((payment) => payment.candidate_payment_amount)
+          .join(", "),
+    },
+    {
       field: "followup_date",
       editable: true,
       headerName: "Followup Date",
@@ -267,21 +293,25 @@ const JobSupportConfrimedTable = () => {
       align: "center",
       renderCell: (params) => (
         <>
-          <Button variant="outlined" onClick={() => handleCMDSubmit(params.id)}>
+          <Button
+            variant="outlined"
+            onClick={() => {
+              setRowId(params.id);
+              setOpen(true);
+            }}
+          >
             View Comments
           </Button>
-          {/* {console.log("editid", params.id)} */}
           <CommentsDialog
-            cmdopen={cmdopen}
-            setcmdOpen={setcmdOpen}
-            filteredcmd={filteredcmd}
+            open={open}
+            setOpen={setOpen}
             params={params}
+            rowId={rowId}
           />
         </>
       ),
     },
   ]);
-
   function CustomToolbar() {
     return (
       <GridToolbarContainer sx={{ background: "#000000" }}>

@@ -229,10 +229,19 @@ const JobSupportResourceTable = () => {
       filterable: false,
     },
     {
+      field: "payment_period",
+      editable: true,
+      headerName: "Payment Period",
+      width: 150,
+      headerAlign: "center",
+      filterable: false,
+      align: "center",
+    },
+    {
       field: "resource_payment_status",
       editable: true,
       headerName: "Payment Status",
-      width: 180,
+      width: 150,
       headerAlign: "center",
       filterable: false,
       align: "center",
@@ -258,24 +267,6 @@ const JobSupportResourceTable = () => {
       field: "feedback",
       editable: true,
       headerName: "Feedback",
-      width: 180,
-      headerAlign: "center",
-      filterable: false,
-      align: "center",
-    },
-    {
-      field: "payment_period",
-      editable: true,
-      headerName: "Payment Period",
-      width: 180,
-      headerAlign: "center",
-      filterable: false,
-      align: "center",
-    },
-    {
-      field: "charges",
-      editable: true,
-      headerName: "Charges",
       width: 180,
       headerAlign: "center",
       filterable: false,
@@ -327,7 +318,7 @@ const JobSupportResourceTable = () => {
                 noWrap
                 component="h3"
               >
-                Job Support List - Confrimed
+                Job Support List - Resource
               </Typography>
 
               <Typography

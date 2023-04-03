@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useState } from "react";
 import axios from "axios";
 import moment from "moment";
@@ -12,7 +11,7 @@ const UpdateLogics = ({ params, page }) => {
 
   const [payment, setPayment] = useState({
     payment_amount: 0,
-    payment_date: moment(new Date()).format("DD-MM-YYYY"),
+    payment_date: new Date(),
     payment_status: "",
   });
   const { dispatch } = useValue();
@@ -47,29 +46,32 @@ const UpdateLogics = ({ params, page }) => {
   };
 
   const PaymentValues = () => {
-    if (page === "Confrimed") {
+    if (page === "Main") {
       return {
         job_support_id: params.id,
         candidate_payment_amount: payment.payment_amount,
         candidate_payment_status: payment.payment_status,
-        candidate_payment_date: payment.payment_date,
+        candidate_payment_date: moment(payment.payment_date).format(
+          "DD-MM-YYYY"
+        ),
+      };
+    }else if (page === "Confrimed") {
+      return {
+        job_support_id: params.id,
+        candidate_payment_amount: payment.payment_amount,
+        candidate_payment_status: payment.payment_status,
+        candidate_payment_date: moment(payment.payment_date).format(
+          "DD-MM-YYYY"
+        ),
       };
     } else if (page === "Resource") {
       return {
         job_support_id: params.id,
         resource_payment_amount: payment.payment_amount,
         resource_payment_status: payment.payment_status,
-        resource_payment_date: payment.payment_date,
-      };
-    } else if (page === "Main") {
-      return {
-        job_support_id: params.id,
-        candidate_payment_amount: 0,
-        candidate_payment_status: "",
-        candidate_payment_date: "",
-        resource_payment_amount: 0,
-        resource_payment_status: "",
-        resource_payment_date: "",
+        resource_payment_date: moment(payment.payment_date).format(
+          "DD-MM-YYYY"
+        ),
       };
     }
   };
@@ -110,17 +112,20 @@ const UpdateLogics = ({ params, page }) => {
         console.log(error);
       });
   };
-  const paymentRequests=()=>{
-    axios
-    .post(`http://127.0.0.1:8000/api/v1/job-support-paymnet-data`, paymentData)
-    .then((res) => {
-      console.log(res.data);
-      console.log("paymentData Successfully Posted");
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-  }
+  const paymentRequests = () => {
+      axios
+        .post(
+          `http://127.0.0.1:8000/api/v1/job-support-paymnet-data`,
+          paymentData
+        )
+        .then((res) => {
+          console.log(res.data);
+          console.log("paymentData Successfully Posted");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+  };
 
   const handleSubmit = () => {
     editData();

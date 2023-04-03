@@ -25,11 +25,11 @@ class IGS_JOB_SUPPORT(BaseModel):
 class JOB_SUPPORT_PAYMENT(BaseModel):
 
     job_support_id : int
-    candidate_payment_amount: int = None 
-    candidate_payment_status: str = None
+    candidate_payment_amount: int = 0 
+    candidate_payment_status: str = "Not Paid"
     candidate_payment_date: str = None
-    resource_payment_amount: int = None
-    resource_payment_status: str = None
+    resource_payment_amount: int = 0
+    resource_payment_status: str = "Not Paid"
     resource_payment_date: str = None
 
 

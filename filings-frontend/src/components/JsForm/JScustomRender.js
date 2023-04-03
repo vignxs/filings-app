@@ -7,7 +7,6 @@ function isEndDateClose(endDate) {
 
 export function renderEndDateCell(params) {
   const endDate = params.value;
-  // console.log(params);
   const isClose = isEndDateClose(endDate);
   const cellStyle = isClose
     ? {
@@ -18,9 +17,6 @@ export function renderEndDateCell(params) {
         fontWeight: "bold",
       }
     : {};
-  // if(isClose){
-  //     window.confrim(`the follow up date is coming near for` )
-  // }
 
   return <div style={cellStyle}>{endDate}</div>;
 }

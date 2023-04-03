@@ -114,15 +114,15 @@ const EnquiryFormDataTable = () => {
         <EnqFormActions {...{ params, editId, setEditId }} />
       ),
     },
-    {
-      field: "id",
-      headerName: "ID",
-      width: 100,
-      sortable: false,
-      headerAlign: "center",
-      align: "center",
-      filterable: true,
-    },
+    // {
+    //   field: "id",
+    //   headerName: "ID",
+    //   width: 100,
+    //   sortable: false,
+    //   headerAlign: "center",
+    //   align: "center",
+    //   filterable: true,
+    // },
     {
       field: "name",
       headerAlign: "center",

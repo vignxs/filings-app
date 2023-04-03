@@ -20,16 +20,12 @@ import axios from "axios";
 import moment from "moment";
 import { useValue } from "../../../Context/ContextProvider";
 
-const CommentsDialog = ({ open, setOpen, params }) => {
+const CommentsDialog = ({ open, setOpen, params, rowId }) => {
   const [values, setValues] = useState({
     comment: "",
     comment_date: new Date(),
   });
-  console.log("CommentsDialog", open);
-  const {
-    state: { cmdrequests },
-    dispatch,
-  } = useValue();
+  const { dispatch } = useValue();
   const theme = createTheme({
     palette: {
       primary: {
@@ -47,24 +43,26 @@ const CommentsDialog = ({ open, setOpen, params }) => {
     },
   });
   const cmd = {
-    job_support_id: params.row.id,
+    job_support_id: rowId,
     comments: values.comment,
-    commented_at: moment(values.comment_date).format("DD-MM-YYYY"),
+    commented_at: moment(new Date()).format("DD-MM-YYYY"),
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  const handleSubmit = (e) => {
+    e.preventDefault();
     axios
       .post("http://localhost:8000/api/v1/job-support-comment-data", cmd)
       .then((res) => console.log(res.data));
     cmdgetRequests(dispatch);
+    setValues({
+      comment: "",
+    });
   };
 
   useEffect(() => {
     cmdgetRequests(dispatch);
   }, []);
   //   const { handleChange, handleSubmit, values, setValues } = UseForms(params);
-  //   console.log("qwertyui", params);
   return (
     <>
       <Dialog scroll={"body"} fullWidth maxWidth={"sm"} open={open}>
@@ -105,7 +103,7 @@ const CommentsDialog = ({ open, setOpen, params }) => {
                     alignItems="center"
                     // mt="3"
                   >
-                    <CommentsDataTable params={params.row} />
+                    <CommentsDataTable params={params.row} rowId={rowId} />
                     <TextValidator
                       label="New Comment"
                       size="small"

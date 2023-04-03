@@ -333,7 +333,7 @@ const JobSuppRoutes = ({ open }) => {
     {
       isSelected: 1,
       icon: <AssignmentIndRounded />,
-      path: "/job-supp-table",
+      path: "/job-supp-resource-table",
       name: "Resource List",
     },
   ];

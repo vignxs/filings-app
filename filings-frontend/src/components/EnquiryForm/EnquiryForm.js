@@ -340,7 +340,7 @@ const EnquiryForm = () => {
                       ))}
                     </Select>
                   </FormControl>
-                  <TextValidator
+                  {/* <TextValidator
                     label="Info Source"
                     size="small"
                     color="green"
@@ -359,7 +359,7 @@ const EnquiryForm = () => {
                     required={true}
                     value={values.purpose}
                     onChange={handleChange}
-                  />
+                  /> */}
                 </Grid>
                 <Grid style={{ dipslay: "flex" }}>
                   <FormControl sx={{ m: 1.5, minWidth: "23ch" }} size="small">

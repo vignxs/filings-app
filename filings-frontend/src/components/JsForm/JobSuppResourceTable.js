@@ -20,9 +20,8 @@ import UseForm from "./UseForm";
 import JSformActions from "./JSformActions";
 import { renderEndDateCell } from "./JScustomRender";
 import { useValue } from "../../Context/ContextProvider";
-import CommentsDialog from "./CommentsList/CommentsDialog";
 
-const JobSupportConfrimedTable = () => {
+const JobSupportResourceTable = () => {
   const {
     state: { isLogged },
   } = useValue();
@@ -105,11 +104,8 @@ const JobSupportConfrimedTable = () => {
       },
     });
 
-  const Table = "Confrimed";
   const [editId, setEditId] = useState(null);
-  const [open, setOpen] = useState(false);
   const { ConfrimedData } = UseForm();
-  const [rowId, setRowId] = useState(null);
   // const [rowEditStatus, setRowEditStatus] = useState({});
   // const handleRowEditStart = (params) => {
   //   setRowEditStatus({
@@ -133,7 +129,7 @@ const JobSupportConfrimedTable = () => {
   //   });
   //   setEditId(null);
   // };
-
+  const Table = "Resource";
   const enqColumns = useMemo(() => [
     {
       field: "actions",
@@ -164,13 +160,14 @@ const JobSupportConfrimedTable = () => {
     //   filterable: true,
     // },
     {
-      field: "start_date",
+      field: "resource",
+      headerName: "Resource",
+      editable: true,
       headerAlign: "center",
       align: "center",
-      editable: true,
+      width: 100,
+      sortable: true,
       filterable: true,
-      headerName: "Start Date",
-      width: 120,
     },
     {
       field: "candidate_name",
@@ -181,14 +178,24 @@ const JobSupportConfrimedTable = () => {
       width: 100,
       filterable: false,
     },
+    {
+      field: "start_date",
+      headerAlign: "center",
+      align: "center",
+      editable: true,
+      filterable: true,
+      headerName: "Start Date",
+      width: 120,
+    },
     // {
-    //   field: "mobile",
+    //   field: "followup_date",
+    //   editable: true,
+    //   headerName: "Followup Date",
+    //   width: 180,
     //   headerAlign: "center",
     //   align: "center",
-    //   editable: true,
-    //   headerName: "Mobile",
-    //   width: 100,
-    //   filterable: true,
+    //   filterable: false,
+    //   renderCell: renderEndDateCell,
     // },
     {
       field: "technology",
@@ -197,16 +204,6 @@ const JobSupportConfrimedTable = () => {
       headerAlign: "center",
       align: "center",
       width: 160,
-      sortable: true,
-      filterable: true,
-    },
-    {
-      field: "resource",
-      headerName: "Resource",
-      editable: true,
-      headerAlign: "center",
-      align: "center",
-      width: 100,
       sortable: true,
       filterable: true,
     },
@@ -232,6 +229,32 @@ const JobSupportConfrimedTable = () => {
       filterable: false,
     },
     {
+      field: "resource_payment_status",
+      editable: true,
+      headerName: "Payment Status",
+      width: 180,
+      headerAlign: "center",
+      filterable: false,
+      align: "center",
+      valueGetter: (params) =>
+        params.row.payment
+          .map((payment) => payment.resource_payment_status)
+          .join(", "),
+    },
+    {
+      field: "resource_payment_amount",
+      editable: true,
+      headerName: "Amount",
+      width: 180,
+      headerAlign: "center",
+      filterable: false,
+      align: "center",
+      valueGetter: (params) =>
+        params.row.payment
+          .map((payment) => payment.resource_payment_amount)
+          .join(", "),
+    },
+    {
       field: "feedback",
       editable: true,
       headerName: "Feedback",
@@ -250,66 +273,13 @@ const JobSupportConfrimedTable = () => {
       align: "center",
     },
     {
-      field: "candidate_payment_status",
+      field: "charges",
       editable: true,
-      headerName: "Payment Status",
+      headerName: "Charges",
       width: 180,
       headerAlign: "center",
       filterable: false,
       align: "center",
-      valueGetter: (params) =>
-        params.row.payment
-          .map((payment) => payment.candidate_payment_status)
-          .join(", "),
-    },
-    {
-      field: "candidate_payment_amount",
-      editable: true,
-      headerName: "Amount",
-      width: 180,
-      headerAlign: "center",
-      filterable: false,
-      align: "center",
-      valueGetter: (params) =>
-        params.row.payment
-          .map((payment) => payment.candidate_payment_amount)
-          .join(", "),
-    },
-    {
-      field: "followup_date",
-      editable: true,
-      headerName: "Followup Date",
-      width: 180,
-      headerAlign: "center",
-      align: "center",
-      filterable: false,
-      renderCell: renderEndDateCell,
-    },
-    {
-      field: "comments",
-      headerName: "Comments",
-      width: 180,
-      headerAlign: "center",
-      align: "center",
-      renderCell: (params) => (
-        <>
-          <Button
-            variant="outlined"
-            onClick={() => {
-              setRowId(params.id);
-              setOpen(true);
-            }}
-          >
-            View Comments
-          </Button>
-          <CommentsDialog
-            open={open}
-            setOpen={setOpen}
-            params={params}
-            rowId={rowId}
-          />
-        </>
-      ),
     },
   ]);
   function CustomToolbar() {
@@ -438,4 +408,4 @@ const JobSupportConfrimedTable = () => {
   );
 };
 
-export default JobSupportConfrimedTable;
+export default JobSupportResourceTable;

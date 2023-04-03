@@ -103,7 +103,7 @@ const JobSupportDataTable = () => {
         },
       },
     });
-
+  const Table = "Main"
   const [editId, setEditId] = useState(null);
   const { fsrequests } = UseForm();
   // const [rowEditStatus, setRowEditStatus] = useState({});
@@ -142,6 +142,7 @@ const JobSupportDataTable = () => {
           params={params}
           editId={editId}
           setEditId={setEditId}
+          page={Table}
           // rowEditStatus={rowEditStatus}
           // onRowEditStart={handleRowEditStart}
           // onRowEditStop={handleRowEditStop}

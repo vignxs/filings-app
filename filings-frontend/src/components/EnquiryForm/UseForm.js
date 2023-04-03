@@ -21,8 +21,8 @@ const UseForm = (params) => {
     course: "",
     fee_structure: "",
     experience_by: "",
-    info_source: "",
-    purpose: "",
+    // info_source: "",
+    // purpose: "",
     mode: "",
     comments: "",
   });
@@ -47,8 +47,8 @@ const UseForm = (params) => {
     course: values.course,
     fee_structure: values.fee_structure,
     experience_by: values.experience_by,
-    info_source: values.info_source,
-    purpose: values.purpose,
+    // info_source: values.info_source,
+    // purpose: values.purpose,
     mode: values.mode,
     comments: values.comments,
   };
@@ -82,8 +82,8 @@ const UseForm = (params) => {
       course: "",
       fee_structure: "",
       experience_by: "",
-      info_source: "",
-      purpose: "",
+      // info_source: "",
+      // purpose: "",
       mode: "",
       comments: "",
     });
@@ -116,8 +116,8 @@ const handleDelete = async () => {
       course: "",
       fee_structure: "",
       experience_by: "",
-      info_source: "",
-      purpose: "",
+      // info_source: "",
+      // purpose: "",
       mode: "",
       comments: "",
     });

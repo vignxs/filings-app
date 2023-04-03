@@ -7,7 +7,7 @@ import { fsgetRequests } from "../../../Context/actions";
 
 const UpdateLogics = (params) => {
   const [values, setValues] = useState(params.row);
-  console.log(params.row);
+//   console.log(params.row);
   const { dispatch } = useValue();
   const handleChange = (e) => {
     const { name, value } = e.target;

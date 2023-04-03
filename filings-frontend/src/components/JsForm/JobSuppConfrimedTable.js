@@ -25,6 +25,7 @@ import CommentsDialog from "./CommentsList/CommentsDialog";
 const JobSupportConfrimedTable = () => {
   const {
     state: { isLogged },
+    state: { cmdrequests },
   } = useValue();
   const navigate = useNavigate();
   const login = () => {
@@ -106,9 +107,19 @@ const JobSupportConfrimedTable = () => {
     });
 
   const [editId, setEditId] = useState(null);
-  const [open, setOpen] = useState(false);
-  const { ConfrimedData } = UseForm();
+
+  const { ConfrimedData, cmdopen, setcmdOpen } = UseForm();
   const [rowId, setRowId] = useState(null);
+  const [filteredcmd, setFiltredcmd] = useState([]);
+  const handleCMDSubmit = (params) => {
+    console.log("params", params);
+    const cmdData = cmdrequests.filter(
+      (list) => list.job_support_id === params
+    );
+    setFiltredcmd(cmdData);
+    console.log("filteredcmd", filteredcmd);
+    setcmdOpen(true);
+  };
   // const [rowEditStatus, setRowEditStatus] = useState({});
   // const handleRowEditStart = (params) => {
   //   setRowEditStatus({
@@ -256,15 +267,21 @@ const JobSupportConfrimedTable = () => {
       align: "center",
       renderCell: (params) => (
         <>
-          <Button variant="outlined" onClick={() => setOpen(true)}>
+          <Button variant="outlined" onClick={() => handleCMDSubmit(params.id)}>
             View Comments
           </Button>
-          {console.log("editid", editId)}
-          <CommentsDialog open={open} setOpen={setOpen} params={params} />
+          {/* {console.log("editid", params.id)} */}
+          <CommentsDialog
+            cmdopen={cmdopen}
+            setcmdOpen={setcmdOpen}
+            filteredcmd={filteredcmd}
+            params={params}
+          />
         </>
       ),
     },
   ]);
+
   function CustomToolbar() {
     return (
       <GridToolbarContainer sx={{ background: "#000000" }}>

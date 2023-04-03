@@ -21,7 +21,7 @@ import JSformActions from "./JSformActions";
 import { renderEndDateCell } from "./JScustomRender";
 import { useValue } from "../../Context/ContextProvider";
 
-const JobSupportDataTable = () => {
+const JobSupportResourceTable = () => {
   const {
     state: { isLogged },
   } = useValue();
@@ -103,9 +103,9 @@ const JobSupportDataTable = () => {
         },
       },
     });
-  const Table = "Main"
+
   const [editId, setEditId] = useState(null);
-  const { fsrequests } = UseForm();
+  const { ConfrimedData } = UseForm();
   // const [rowEditStatus, setRowEditStatus] = useState({});
   // const handleRowEditStart = (params) => {
   //   setRowEditStatus({
@@ -129,7 +129,7 @@ const JobSupportDataTable = () => {
   //   });
   //   setEditId(null);
   // };
-
+  const Table = "Resource";
   const enqColumns = useMemo(() => [
     {
       field: "actions",
@@ -160,13 +160,14 @@ const JobSupportDataTable = () => {
     //   filterable: true,
     // },
     {
-      field: "date_of_enquiry",
+      field: "resource",
+      headerName: "Resource",
+      editable: true,
       headerAlign: "center",
       align: "center",
-     // editable: true,
+      width: 100,
+      sortable: true,
       filterable: true,
-      headerName: "Date of Enquiry",
-      width: 120,
     },
     {
       field: "candidate_name",
@@ -178,14 +179,24 @@ const JobSupportDataTable = () => {
       filterable: false,
     },
     {
-      field: "mobile",
+      field: "start_date",
       headerAlign: "center",
       align: "center",
       editable: true,
-      headerName: "Mobile",
-      width: 100,
       filterable: true,
+      headerName: "Start Date",
+      width: 120,
     },
+    // {
+    //   field: "followup_date",
+    //   editable: true,
+    //   headerName: "Followup Date",
+    //   width: 180,
+    //   headerAlign: "center",
+    //   align: "center",
+    //   filterable: false,
+    //   renderCell: renderEndDateCell,
+    // },
     {
       field: "technology",
       headerName: "Technology",
@@ -197,19 +208,9 @@ const JobSupportDataTable = () => {
       filterable: true,
     },
     {
-      field: "resource",
-      headerName: "Resource",
-      editable: true,
-      headerAlign: "center",
-      align: "center",
-      width: 100,
-      sortable: true,
-      filterable: true,
-    },
-    {
       field: "status",
       headerName: "Status",
-      //editable: true,
+      editable: true,
       width: 100,
       type: "singleSelect",
       headerAlign: "center",
@@ -228,6 +229,32 @@ const JobSupportDataTable = () => {
       filterable: false,
     },
     {
+      field: "resource_payment_status",
+      editable: true,
+      headerName: "Payment Status",
+      width: 180,
+      headerAlign: "center",
+      filterable: false,
+      align: "center",
+      valueGetter: (params) =>
+        params.row.payment
+          .map((payment) => payment.resource_payment_status)
+          .join(", "),
+    },
+    {
+      field: "resource_payment_amount",
+      editable: true,
+      headerName: "Amount",
+      width: 180,
+      headerAlign: "center",
+      filterable: false,
+      align: "center",
+      valueGetter: (params) =>
+        params.row.payment
+          .map((payment) => payment.resource_payment_amount)
+          .join(", "),
+    },
+    {
       field: "feedback",
       editable: true,
       headerName: "Feedback",
@@ -236,16 +263,24 @@ const JobSupportDataTable = () => {
       filterable: false,
       align: "center",
     },
-    // {
-    //   field: "followup_date",
-    //   editable: true,
-    //   headerName: "Followup Date",
-    //   width: 180,
-    //   headerAlign: "center",
-    //   align: "center",
-    //   filterable: false,
-    //   renderCell: renderEndDateCell,
-    // },
+    {
+      field: "payment_period",
+      editable: true,
+      headerName: "Payment Period",
+      width: 180,
+      headerAlign: "center",
+      filterable: false,
+      align: "center",
+    },
+    {
+      field: "charges",
+      editable: true,
+      headerName: "Charges",
+      width: 180,
+      headerAlign: "center",
+      filterable: false,
+      align: "center",
+    },
   ]);
   function CustomToolbar() {
     return (
@@ -292,7 +327,7 @@ const JobSupportDataTable = () => {
                 noWrap
                 component="h3"
               >
-                Job Support List
+                Job Support List - Confrimed
               </Typography>
 
               <Typography
@@ -331,7 +366,7 @@ const JobSupportDataTable = () => {
             <DataGrid
               sx={{ border: 0 }}
               columns={enqColumns}
-              rows={fsrequests}
+              rows={ConfrimedData}
               getRowId={(row) => row.id}
               rowsPerPageOptions={[10, 20, 30]}
               components={{ Toolbar: CustomToolbar }}
@@ -373,4 +408,4 @@ const JobSupportDataTable = () => {
   );
 };
 
-export default JobSupportDataTable;
+export default JobSupportResourceTable;

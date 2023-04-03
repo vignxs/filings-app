@@ -129,7 +129,7 @@ const JobSupportFollowUpTable = () => {
   //   });
   //   setEditId(null);
   // };
-
+  const Table = "Resource"
   const enqColumns = useMemo(() => [
     {
       field: "actions",
@@ -142,6 +142,7 @@ const JobSupportFollowUpTable = () => {
           params={params}
           editId={editId}
           setEditId={setEditId}
+          page={Table}
           // rowEditStatus={rowEditStatus}
           // onRowEditStart={handleRowEditStart}
           // onRowEditStop={handleRowEditStop}
@@ -162,7 +163,7 @@ const JobSupportFollowUpTable = () => {
       field: "date_of_enquiry",
       headerAlign: "center",
       align: "center",
-      editable: true,
+     // editable: true,
       filterable: true,
       headerName: "Start Date",
       width: 120,
@@ -228,7 +229,7 @@ const JobSupportFollowUpTable = () => {
     },
     {
       field: "feedback",
-      editable: true,
+     // editable: true,
       headerName: "Feedback",
       width: 180,
       headerAlign: "center",
@@ -237,7 +238,7 @@ const JobSupportFollowUpTable = () => {
     },
     {
       field: "followup_date",
-      editable: true,
+      //editable: true,
       headerName: "Followup Date",
       width: 180,
       headerAlign: "center",

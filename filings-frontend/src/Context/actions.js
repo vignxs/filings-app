@@ -41,7 +41,6 @@ export const cmdgetRequests = async (dispatch) => {
     "http://localhost:8000/api/v1/job-support-comment-data-all"
   );
   const content = await cmddata.data;
-  console.log("data", content);
   if (content) {
     dispatch({ type: "CMD_GETREQUEST", payload: content });
   }

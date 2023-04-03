@@ -17,7 +17,6 @@ class IGS_JOB_SUPPORT(BaseModel):
     updated_at: datetime = datetime.now()
     payment_period: str
     date_of_enquiry : str
-    charges : int
 
     class Config:
         orm_mode = True
@@ -26,12 +25,12 @@ class IGS_JOB_SUPPORT(BaseModel):
 class JOB_SUPPORT_PAYMENT(BaseModel):
 
     job_support_id : int
-    candidate_payment_amount: int
-    candidate_payment_status: str
-    candidate_payment_date: str
-    resource_payment_amount: int
-    resource_payment_status: str
-    resource_payment_date: str
+    candidate_payment_amount: int = None 
+    candidate_payment_status: str = None
+    candidate_payment_date: str = None
+    resource_payment_amount: int = None
+    resource_payment_status: str = None
+    resource_payment_date: str = None
 
 
 class JOB_SUPPORT_COMMENTS(BaseModel):
@@ -58,4 +57,3 @@ class IGS_JOB_SUPPORT_GU(BaseModel):
     updated_at: datetime = datetime.now()
     payment_period: str
     date_of_enquiry: str
-    charges: int

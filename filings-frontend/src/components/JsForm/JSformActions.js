@@ -13,7 +13,7 @@ import axios from "axios";
 import UseForm from "./UseForm";
 import JSUpdateForm from "./Update Form/JSUpdateForm";
 
-const JSformActions = ({ params, setEditId, editId }) => {
+const JSformActions = ({ params, setEditId, editId, page }) => {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [open, setOpen] = useState(false);
@@ -118,7 +118,7 @@ const JSformActions = ({ params, setEditId, editId }) => {
             >
               <EditOutlined />
             </IconButton>
-            <JSUpdateForm open={open} setOpen={setOpen} params={params} />
+            <JSUpdateForm open={open} setOpen={setOpen} params={params} page={page} />
             <IconButton
               color="teritiary"
               sx={{ boxShadow: 0 }}

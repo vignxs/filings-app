@@ -24,6 +24,7 @@ const CommentsDialog = ({ open, setOpen, params, rowId }) => {
     comment: "",
     comment_date: "",
   });
+
   const [visiblity, setVisibility] = useState(true);
   const { dispatch } = useValue();
   const theme = createTheme({
@@ -56,7 +57,6 @@ const CommentsDialog = ({ open, setOpen, params, rowId }) => {
       .post("http://localhost:8000/api/v1/job-support-comment-data", cmd)
       .then((res) => console.log(res.data));
     cmdgetRequests(dispatch);
-   
   };
 //  if (today&&handleSubmit) {
 //       setVisibility(false);

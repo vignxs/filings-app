@@ -232,24 +232,6 @@ const EnquiryFormDataTable = () => {
       valueOptions: ["Working Professional", "Corporate", "Fresher", "Student"],
       filterable: false,
     },
-    // {
-    //   field: "info_source",
-    //   editable: true,
-    //   headerName: "Info Source",
-    //   width: 180,
-    //   headerAlign: "center",
-    //   filterable: false,
-    //   align: "center",
-    // },
-    // {
-    //   field: "purpose",
-    //   editable: true,
-    //   headerName: "Purpose",
-    //   width: 180,
-    //   headerAlign: "center",
-    //   align: "center",
-    //   filterable: false,
-    // },
     {
       field: "mode",
       headerName: "Mode",
@@ -342,7 +324,6 @@ const EnquiryFormDataTable = () => {
               </Button>
             </div>
           </div>
-          {/* <CacheProvider value={muiCache}> */}
           <Box height={595}>
             <DataGrid
               sx={{ border: 0 }}

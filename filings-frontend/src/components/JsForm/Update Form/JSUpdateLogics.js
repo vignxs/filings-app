@@ -7,6 +7,12 @@ import { fsgetRequests } from "../../../Context/actions";
 
 const UpdateLogics = ({ params, page }) => {
   const [values, setValues] = useState(params.row);
+  const [payment,setPayment]=useState({
+    payment_amount:0,
+    payment_date:moment(new Date()).format("DD-MM-YYYY"),
+    payment_status:""
+  })
+  console.log(values)
   const { dispatch } = useValue();
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -14,7 +20,12 @@ const UpdateLogics = ({ params, page }) => {
       return { ...preValues, [name]: value };
     });
   };
-
+  const handlePaymentChange=(e)=>{
+    const { name, value } = e.target;
+    setPayment((preValues) => {
+      return { ...preValues, [name]: value };
+    });
+  }
   const FollowupDate = () => {
     if (values.payment_period === "Task") {
       return new Date();
@@ -32,6 +43,25 @@ const UpdateLogics = ({ params, page }) => {
       return Monthly;
     }
   };
+
+  const PaymentValues =()=>{
+    if(page ==="Confrimed"){
+      return{
+        job_support_id:params.id,
+        candidate_payment_amount:payment.payment_amount,
+        candidate_payment_status:payment.payment_status,
+        candidate_payment_date:payment.payment_date
+      }
+    }
+    if(page ==="Resource"){
+      return{
+        job_support_id:params.id,
+        resource_payment_amount:payment.payment_amount,
+        resource_payment_status:payment.payment_status,
+        resource_payment_date:payment.payment_date
+      }
+    }
+  }
 
   const editedData = {
     id: params.id,
@@ -71,8 +101,10 @@ const UpdateLogics = ({ params, page }) => {
   };
 
   return {
+    payment,
     values,
     handleChange,
+    handlePaymentChange,
     handleSubmit,
   };
 };

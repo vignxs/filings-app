@@ -17,7 +17,7 @@ import UpdateLogics from "./JSUpdateLogics";
 
 const JSUpdateForm = ({ open, setOpen, params, page }) => {
 
-  const { values, handleChange, handleSubmit } = UpdateLogics({page,params});
+  const { values,payment,handlePaymentChange, handleChange, handleSubmit } = UpdateLogics({page,params});
 
   const theme = createTheme({
     palette: {
@@ -47,6 +47,7 @@ const JSUpdateForm = ({ open, setOpen, params, page }) => {
     "Waiting For Response",
   ];
   const paymentValues = ["Task", "Weekly", "BiWeekly", "Monthly"];
+  const paymentStatus =["Not Paid","Paid","Pending"]
   return (
     <>
       <Dialog scroll={"body"} fullWidth maxWidth={"sm"} open={open}>
@@ -63,7 +64,7 @@ const JSUpdateForm = ({ open, setOpen, params, page }) => {
         >
           Update Form
         </DialogTitle>
-        <DialogContent sx={{ height: "400px" }}>
+        <DialogContent sx={{ height: "450px" }}>
           <DialogContentText></DialogContentText>
           <Box mt={2}>
             <ThemeProvider theme={theme}>
@@ -190,14 +191,39 @@ const JSUpdateForm = ({ open, setOpen, params, page }) => {
                       </Select>
                     </FormControl>
                     <TextValidator
-                      label="Charges"
+                      label="Payable Amount"
                       size="small"
                       type="text"
-                      name="charges"
+                      name="payment_amount"
                       required={true}
-                      value={values.charges}
-                      onChange={handleChange}
+                      value={payment.payment_amount}
+                      onChange={handlePaymentChange}
                     />
+                  </Grid>
+                  <Grid
+                    style={{ display: "flex", gap: "1rem", margin: "1rem" }}
+                  >
+                     <FormControl sx={{ minWidth: "25ch" }} size="small">
+                      <InputLabel color="green" id="demo-simple-select-label">
+                        Payment Status
+                      </InputLabel>
+                      <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-label"
+                        label="Payment_Status*"
+                        color="green"
+                        required={true}
+                        name="payment_status"
+                        value={payment.payment_status}
+                        onChange={handlePaymentChange}
+                      >
+                        {paymentStatus.map((val, index) => (
+                          <MenuItem key={index} value={val}>
+                            {val}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
                   </Grid>
                 </Grid>
                 <Stack spacing={40} direction="row" mt="1rem">

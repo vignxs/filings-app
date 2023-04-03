@@ -3,6 +3,7 @@ from ...dependencies import AuthHandler, generate_password
 from . import models, schemas
 from datetime import datetime, timedelta
 from typing import Optional
+from ...dependencies import send_email
 
 auth_handler = AuthHandler()
 
@@ -49,4 +50,5 @@ def create_admin_user(db: Session, user: schemas.AdminUser):
     db.add(db_user)
     db.commit()
     db.refresh(db_user)
+    send_email(user.user_name,user.email,password)  
     return user.email

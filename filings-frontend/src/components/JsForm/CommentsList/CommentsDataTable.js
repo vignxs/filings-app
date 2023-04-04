@@ -13,10 +13,10 @@ export const CommentsDataTable = ({ params, rowId }) => {
       headerName: "Comment Date",
       width: 150,
       editable: false,
-      valueFormatter: (params) => {
-        // console.log("value", params);
-        return params.value.toString();
-      },
+      // valueFormatter: (params) => {
+      //   // console.log("value", params);
+      //   return params.value.toString();
+      // },
 
       renderCell: (params) => {
         const date = params.row.commented_at;

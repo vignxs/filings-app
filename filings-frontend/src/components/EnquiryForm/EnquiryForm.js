@@ -360,8 +360,6 @@ const EnquiryForm = () => {
                     value={values.purpose}
                     onChange={handleChange}
                   /> */}
-                </Grid>
-                <Grid style={{ dipslay: "flex" }}>
                   <FormControl sx={{ m: 1.5, minWidth: "23ch" }} size="small">
                     <InputLabel color="green" id="demo-simple-select-label">
                       Mode
@@ -383,7 +381,7 @@ const EnquiryForm = () => {
                       ))}
                     </Select>
                   </FormControl>
-                </Grid>
+                  </Grid>
               </Grid>
               <Divider/>
               <div style={{ width: "100%",padding:"20px 0 20px 0" }}>

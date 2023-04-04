@@ -181,10 +181,19 @@ const JobSupportResourceTable = () => {
       filterable: false,
     },
     {
+      field: "payment_period",
+      editable: true,
+      headerName: "Payment Period",
+      width: 150,
+      headerAlign: "center",
+      filterable: false,
+      align: "center",
+    },
+    {
       field: "resource_payment_status",
       editable: false,
       headerName: "Payment Status",
-      width: 180,
+      width: 150,
       headerAlign: "center",
       filterable: false,
       align: "center",
@@ -270,7 +279,7 @@ const JobSupportResourceTable = () => {
                 noWrap
                 component="h3"
               >
-                Job Support List - Confrimed
+                Job Support List - Resource
               </Typography>
 
               <Typography

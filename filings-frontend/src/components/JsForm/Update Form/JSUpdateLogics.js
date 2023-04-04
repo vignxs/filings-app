@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import moment from "moment";
 import { useValue } from "../../../Context/ContextProvider";
@@ -6,13 +6,58 @@ import { fsgetRequests } from "../../../Context/actions";
 
 const UpdateLogics = ({ params, page }) => {
   const [values, setValues] = useState(params.row);
+  const paymentsLength = params.row.payment.length;
+  const [paymentsData, setPaymentsData] = useState(() => {
+    if (paymentsLength !== 0) {
+      return params.row.payment.map((list) => {
+        return {
+          id: list.id,
+          job_support_id: list.job_support_id,
+          candidate_payment_amount: list.candidate_payment_amount,
+          candidate_payment_status: list.candidate_payment_status,
+          candidate_payment_date: list.candidate_payment_date,
+          resource_payment_amount: list.resource_payment_amount,
+          resource_payment_status: list.resource_payment_status,
+          resource_payment_date: list.resource_payment_date,
+        };
+      });
+    } else {
+      return [
+        {
+          id: 0,
+          job_support_id: 0,
+          candidate_payment_amount: 0,
+          candidate_payment_status: "",
+          candidate_payment_date: new Date(),
+          resource_payment_amount: 0,
+          resource_payment_status: "",
+          resource_payment_date: new Date(),
+        },
+      ];
+    }
+  });
+  console.log(paymentsData);
 
-//   console.log(params.row);
-
-  const [payment, setPayment] = useState({
-    payment_amount: 0,
-    payment_date: new Date(),
-    payment_status: "",
+  const [payment, setPayment] = useState(() => {
+    if (paymentsLength !== 0) {
+      return {
+        payment_amount:
+          page === "Resource"
+            ? paymentsData[0].resource_payment_amount
+            : paymentsData[0].candidate_payment_amount,
+        payment_date: new Date(),
+        payment_status:
+          page === "Resource"
+            ? paymentsData[0].resource_payment_status
+            : paymentsData[0].candidate_payment_status,
+      };
+    } else {
+      return {
+        payment_amount: 0,
+        payment_date: new Date(),
+        payment_status: "",
+      };
+    }
   });
   const { dispatch } = useValue();
   const handleChange = (e) => {
@@ -27,6 +72,7 @@ const UpdateLogics = ({ params, page }) => {
       return { ...preValues, [name]: value };
     });
   };
+
   const FollowupDate = () => {
     if (values.payment_period === "Task") {
       return new Date();
@@ -46,16 +92,7 @@ const UpdateLogics = ({ params, page }) => {
   };
 
   const PaymentValues = () => {
-    if (page === "Main") {
-      return {
-        job_support_id: params.id,
-        candidate_payment_amount: payment.payment_amount,
-        candidate_payment_status: payment.payment_status,
-        candidate_payment_date: moment(payment.payment_date).format(
-          "DD-MM-YYYY"
-        ),
-      };
-    }else if (page === "Confrimed") {
+    if (page === "Main" || "Confrimed") {
       return {
         job_support_id: params.id,
         candidate_payment_amount: payment.payment_amount,
@@ -77,6 +114,34 @@ const UpdateLogics = ({ params, page }) => {
   };
 
   const paymentData = PaymentValues();
+  const paymentUpdateData = {
+    id: paymentsData[0].id,
+    job_support_id: paymentsData[0].job_support_id,
+    candidate_payment_amount:
+      page === "Confrimed" || "Main"
+        ? payment.payment_amount
+        : paymentsData[0].candidate_payment_amount,
+    candidate_payment_status:
+      page === "Confrimed" || "Main"
+        ? payment.payment_status
+        : paymentsData[0].candidate_payment_status,
+    candidate_payment_date:
+      page === "Confrimed" || "Main"
+        ? moment(payment.payment_date).format("DD-MM-YYYY")
+        : paymentsData[0].candidate_payment_date,
+    resource_payment_amount:
+      page === "Resource"
+        ? payment.payment_amount
+        : paymentsData[0].resource_payment_amount,
+    resource_payment_status:
+      page === "Resource"
+        ? payment.payment_status
+        : paymentsData[0].resource_payment_status,
+    resource_payment_date:
+      page === "Resource"
+        ? moment(payment.payment_date).format("DD-MM-YYYY")
+        : paymentsData[0].resource_payment_date,
+  };
 
   const editedData = {
     id: params.id,
@@ -113,7 +178,8 @@ const UpdateLogics = ({ params, page }) => {
       });
   };
   const paymentRequests = () => {
-      axios
+    if (paymentsLength === 0) {
+      return axios
         .post(
           `http://127.0.0.1:8000/api/v1/job-support-paymnet-data`,
           paymentData
@@ -125,7 +191,29 @@ const UpdateLogics = ({ params, page }) => {
         .catch((error) => {
           console.log(error);
         });
+    } else {
+      return axios
+        .put(
+          `http://127.0.0.1:8000/api/v1/job-support-payment-update`,
+          paymentUpdateData
+        )
+        .then((res) => {
+          console.log(res.data);
+          console.log("paymentData Successfully Updated");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   };
+
+  // const paymentGetData = () => {
+  //   axios.get("http://127.0.0.1:8000/api/v1/job-support-payment-data-all")
+  //  .then((res)=>setPaymentsData(res.data))
+  // }
+  // useEffect(()=>{
+  //   paymentGetData();
+  // },[])
 
   const handleSubmit = () => {
     editData();

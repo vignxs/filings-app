@@ -16,7 +16,6 @@ import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
 import { CommentsDataTable } from "./CommentsDataTable";
 import { cmdgetRequests } from "../../../Context/actions";
 import axios from "axios";
-import moment from "moment";
 import { useValue } from "../../../Context/ContextProvider";
 
 const CommentsDialog = ({ open, setOpen, params, rowId }) => {
@@ -25,7 +24,7 @@ const CommentsDialog = ({ open, setOpen, params, rowId }) => {
     comment_date: "",
   });
 
-  const [visiblity, setVisibility] = useState(true);
+  const [visiblity, setVisibility] = useState(false);
   const { dispatch } = useValue();
   const theme = createTheme({
     palette: {
@@ -50,21 +49,38 @@ const CommentsDialog = ({ open, setOpen, params, rowId }) => {
     comments: values.comment,
     commented_at: today,
   };
+  const {
+    state: { cmdrequests },
+  } = useValue();
+
+  let cmdData = cmdrequests.filter((list) => list.commented_at === today);
+  let jsID = cmdrequests.filter((list) => list.job_support_id === rowId);
+  let comID;
+  try {
+    comID = true ? jsID[0].job_support_id === rowId : false;
+  } catch (err) {
+    console.log(err);
+  }
+
+  // http://localhost:8000/api/v1/job-support-comment-update
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
     axios
       .post("http://localhost:8000/api/v1/job-support-comment-data", cmd)
-      .then((res) => console.log(res.data));
+      .then((res) => console.log("res", res.data));
+
     cmdgetRequests(dispatch);
   };
-//  if (today&&handleSubmit) {
-//       setVisibility(false);
-//     }
+
   useEffect(() => {
     cmdgetRequests(dispatch);
   }, []);
 
+  console.log("visiblity", cmdrequests);
+  console.log("rowId", comID);
+  //   console.log("visiblity", cmdData.length);
   return (
     <>
       <Dialog scroll={"body"} fullWidth maxWidth={"sm"} open={open}>
@@ -72,7 +88,6 @@ const CommentsDialog = ({ open, setOpen, params, rowId }) => {
           sx={{
             fontFamily: "PT Sans Caption",
             fontSize: "18px",
-            // margin: "30px",
             fontWeight: "500",
             position: "relative",
             color: "#ef4565",
@@ -103,7 +118,6 @@ const CommentsDialog = ({ open, setOpen, params, rowId }) => {
                     direction="row"
                     justify="center"
                     alignItems="center"
-                    // mt="3"
                   >
                     <CommentsDataTable params={params.row} rowId={rowId} />
                     <TextValidator
@@ -113,7 +127,10 @@ const CommentsDialog = ({ open, setOpen, params, rowId }) => {
                       name="comment"
                       value={values.comment}
                       sx={{
-                        display: visiblity ? "" : "none",
+                        display:
+                          ( cmdData.length === 0 && comID === true) || undefined
+                            ? ""
+                            : "none",
                       }}
                       onChange={(e) =>
                         setValues((presvalue) => {
@@ -138,6 +155,7 @@ const CommentsDialog = ({ open, setOpen, params, rowId }) => {
                         Back
                       </Button>
                       <Button
+                        disabled={cmdData.length !== 0 && comID === true}
                         variant="contained"
                         color="secondary"
                         onClick={handleSubmit}

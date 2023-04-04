@@ -317,7 +317,7 @@ export default function HeaderBar(props) {
                   sx={{
                     borderRadius: "6px",
                     "&:hover": {
-                      background: "#90b4ce",
+                      background: "#90b4ce !important",
                       "& .icon-list-1": {
                         color: "#FFFFFE",
                       },

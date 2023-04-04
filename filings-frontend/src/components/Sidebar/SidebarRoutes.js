@@ -73,7 +73,7 @@ const FilingsRoutes = ({open}) => {
             sx={{
               borderRadius: "6px",
               "&:hover": {
-                background: "#90b4ce",
+                background: "#90b4ce !important",
                 "& .icon-list-1": {
                   color: "#FFFFFE",
                 },
@@ -146,7 +146,7 @@ const FilingsRoutes = ({open}) => {
                     borderRadius: "6px",
 
                     "&:hover": {
-                      background: "#90b4ce",
+                      background: "#90b4ce !important",
                       "& .icon-list-1": {
                         color: "#FFFFFE",
                       },
@@ -186,7 +186,7 @@ const FilingsRoutes = ({open}) => {
             sx={{
               borderRadius: "6px",
               "&:hover": {
-                background: "#90b4ce",
+                background: "#90b4ce !important",
                 "& .icon-list-1": {
                   color: "#FFFFFE",
                 },
@@ -254,7 +254,7 @@ const FilingsRoutes = ({open}) => {
                       // pl: 4,
                       borderRadius: "6px",
                       "&:hover": {
-                        background: "#90b4ce",
+                        background: "#90b4ce !important",
                         "& .icon-list-1": {
                           color: "#FFFFFE",
                         },
@@ -319,19 +319,19 @@ const JobSuppRoutes = ({ open }) => {
       name: "Job-Supp List",
     },
     {
-      isSelected: 1,
+      isSelected: 2,
       icon: <CallMissedOutgoingRounded />,
       path: "/js-followup-table",
       name: "Follow-up List",
     },
     {
-      isSelected: 1,
+      isSelected: 3,
       icon: <FactCheckRounded />,
       path: "/job-supp-confrimed-table",
       name: "Confirmed List",
     },
     {
-      isSelected: 1,
+      isSelected: 4,
       icon: <AssignmentIndRounded />,
       path: "/job-supp-resource-table",
       name: "Resource List",
@@ -345,7 +345,7 @@ const JobSuppRoutes = ({ open }) => {
           sx={{
             borderRadius: "6px",
             "&:hover": {
-              background: "#90b4ce",
+              background: "#90b4ce !important",
               "& .icon-list-1": {
                 color: "#FFFFFE",
               },
@@ -416,7 +416,7 @@ const JobSuppRoutes = ({ open }) => {
                   borderRadius: "6px",
 
                   "&:hover": {
-                    background: "#90b4ce",
+                    background: "#90b4ce !important",
                     "& .icon-list-1": {
                       color: "#FFFFFE",
                     },

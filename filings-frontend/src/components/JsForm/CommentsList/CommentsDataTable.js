@@ -14,7 +14,7 @@ export const CommentsDataTable = ({ params, rowId }) => {
       width: 150,
       editable: false,
       valueFormatter: (params) => {
-        console.log("value", params);
+        // console.log("value", params);
         return params.value.toString();
       },
 
@@ -59,7 +59,7 @@ export const CommentsDataTable = ({ params, rowId }) => {
 
   let cmdData = cmdrequests.filter((list) => list.job_support_id === rowId);
 
-  console.log("cmd", rowId);
+  //   console.log("cmd", rowId);
   return (
     <Box sx={{ height: 330, width: "100%" }}>
       <DataGrid

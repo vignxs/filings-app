@@ -10,7 +10,6 @@ import {
   GridToolbarFilterButton,
   GridToolbarExport,
   GridToolbarQuickFilter,
-  GridToolbarExportContainer,
   GridToolbarDensitySelector,
 } from "@mui/x-data-grid";
 import { Button, Paper } from "@mui/material";
@@ -18,7 +17,6 @@ import AddIcon from "@mui/icons-material/Add";
 import { Link, useNavigate } from "react-router-dom";
 import UseForm from "./UseForm";
 import JSformActions from "./JSformActions";
-import { renderEndDateCell } from "./JScustomRender";
 import { useValue } from "../../Context/ContextProvider";
 
 const JobSupportResourceTable = () => {
@@ -106,29 +104,6 @@ const JobSupportResourceTable = () => {
 
   const [editId, setEditId] = useState(null);
   const { ConfrimedData } = UseForm();
-  // const [rowEditStatus, setRowEditStatus] = useState({});
-  // const handleRowEditStart = (params) => {
-  //   setRowEditStatus({
-  //     ...rowEditStatus,
-  //     [params.id]: "editing",
-  //   });
-  //   setEditId(params.id);
-  // };
-  // const handleRowEditStop = (params) => {
-  //   setRowEditStatus({
-  //     ...rowEditStatus,
-  //     [params.id]: null,
-  //   });
-  //   setEditId(null);
-  // };
-
-  // const handleRowEditCancel = (params) => {
-  //   setRowEditStatus({
-  //     ...rowEditStatus,
-  //     [params.id]: null,
-  //   });
-  //   setEditId(null);
-  // };
   const Table = "Resource";
   const enqColumns = useMemo(() => [
     {
@@ -143,22 +118,9 @@ const JobSupportResourceTable = () => {
           editId={editId}
           setEditId={setEditId}
           page={Table}
-          // rowEditStatus={rowEditStatus}
-          // onRowEditStart={handleRowEditStart}
-          // onRowEditStop={handleRowEditStop}
-          // onRowEditCancel={handleRowEditCancel} //success, setSuccess
         />
       ),
     },
-    // {
-    //   field: "id",
-    //   headerName: "ID",
-    //   width: 100,
-    //   sortable: false,
-    //   headerAlign: "center",
-    //   align: "center",
-    //   filterable: true,
-    // },
     {
       field: "resource",
       headerName: "Resource",
@@ -182,21 +144,11 @@ const JobSupportResourceTable = () => {
       field: "start_date",
       headerAlign: "center",
       align: "center",
-      editable: true,
+      editable: false,
       filterable: true,
       headerName: "Start Date",
       width: 120,
     },
-    // {
-    //   field: "followup_date",
-    //   editable: true,
-    //   headerName: "Followup Date",
-    //   width: 180,
-    //   headerAlign: "center",
-    //   align: "center",
-    //   filterable: false,
-    //   renderCell: renderEndDateCell,
-    // },
     {
       field: "technology",
       headerName: "Technology",
@@ -210,7 +162,7 @@ const JobSupportResourceTable = () => {
     {
       field: "status",
       headerName: "Status",
-      editable: true,
+      editable: false,
       width: 100,
       type: "singleSelect",
       headerAlign: "center",
@@ -239,7 +191,7 @@ const JobSupportResourceTable = () => {
     },
     {
       field: "resource_payment_status",
-      editable: true,
+      editable: false,
       headerName: "Payment Status",
       width: 150,
       headerAlign: "center",
@@ -252,7 +204,7 @@ const JobSupportResourceTable = () => {
     },
     {
       field: "resource_payment_amount",
-      editable: true,
+      editable: false,
       headerName: "Amount",
       width: 180,
       headerAlign: "center",
@@ -267,6 +219,15 @@ const JobSupportResourceTable = () => {
       field: "feedback",
       editable: true,
       headerName: "Feedback",
+      width: 180,
+      headerAlign: "center",
+      filterable: false,
+      align: "center",
+    },
+    {
+      field: "payment_period",
+      editable: false,
+      headerName: "Payment Period",
       width: 180,
       headerAlign: "center",
       filterable: false,
@@ -372,7 +333,6 @@ const JobSupportResourceTable = () => {
                 panel: {
                   sx: {
                     "& .MuiDataGrid-filterForm": {
-                      // inset: `-125px auto auto 350px`,
                     },
                     "& .MuiDataGrid-paper": {
                       boxShadow: "none !important",
@@ -384,11 +344,6 @@ const JobSupportResourceTable = () => {
               onCellEditCommit={(params) => {
                 setEditId(params.id);
               }}
-              // onRowEditStart={handleRowEditStart}
-              // onRowEditStop={handleRowEditStop}
-              // onRowEditCancel={handleRowEditCancel}
-              // isRowEditable={(params) => !rowEditStatus[params.id]}
-              // editMode="row"
             />
           </Box>
         </Paper>

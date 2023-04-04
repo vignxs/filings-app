@@ -8,6 +8,10 @@ from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from passlib.context import CryptContext
 import bcrypt
 
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+
 from sqlalchemy import  Column, DateTime, func
 from .database import Base
 
@@ -69,3 +73,42 @@ def generate_password(length):
     password = ''.join(random.choice(characters) for i in range(length))
     
     return password
+
+def send_email(user,recipient,pwd):
+    # Sender email address
+    sender = "intellectoglobal@gmail.com"
+
+    # Create message container
+    msg = MIMEMultipart()
+    msg['From'] = sender
+    msg['To'] = recipient
+    msg['Subject'] = 'Account Created Successfully'
+
+    # Add message body
+    body = f"""<html>
+              <body>
+              <p>Hello {user},</p>
+              <p>Your account has been created sucessfully with email : '{recipient}' .</p>
+              <p>Here's your password : {pwd} </p>
+              <br>
+              <br>
+              <p>Regards,</p>
+              <p>Intellecto Global Services.</p>
+              </body>
+              </html>"""
+    
+    msg.attach(MIMEText(body, 'html'))
+    
+    # SMTP server settings
+    smtp_server = "smtp.gmail.com"
+    smtp_port = 587
+    smtp_username = "intellectoglobal@gmail.com"
+    smtp_password = "kvcclzrgfwnjigzk"
+
+    # Send the message via SMTP
+    with smtplib.SMTP(smtp_server, smtp_port) as server:
+        server.starttls()
+        server.login(smtp_username, smtp_password)
+        server.sendmail(sender, recipient, msg.as_string())
+
+    print("Email sent successfully!")

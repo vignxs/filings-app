@@ -35,11 +35,11 @@ def login(user: schemas.UserLogin, db: Session = Depends(get_db)):
 async def register(user:schemas.AdminUser,  db: Session = Depends(get_db)):
 	db_user = service.get_user_by_user(db, user=user.user_name) 
 	if db_user:
-		raise HTTPException(status_code=401, detail='User name already exists.Try another')
+		raise HTTPException(status_code=400, detail='User name already exists.Try another')
 
 	db_user_email = service.get_user_by_email(db, email=user.email) 
 	if db_user_email:
-		raise HTTPException(status_code=401, detail='Email already exists.Try another')
+		raise HTTPException(status_code=400, detail='Email already exists.Try another')
 	return service.create_admin_user(db=db, user=user)
 
 @router.get("/users-data-all")

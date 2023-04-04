@@ -128,7 +128,7 @@ const CommentsDialog = ({ open, setOpen, params, rowId }) => {
                       value={values.comment}
                       sx={{
                         display:
-                          (cmdData.length === 0 && comID === true) || undefined
+                          ( cmdData.length === 0 && comID === true) || undefined
                             ? ""
                             : "none",
                       }}

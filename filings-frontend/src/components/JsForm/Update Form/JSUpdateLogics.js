@@ -36,7 +36,6 @@ const UpdateLogics = ({ params, page }) => {
       ];
     }
   });
-  console.log(paymentsData);
 
   const [payment, setPayment] = useState(() => {
     if (paymentsLength !== 0) {
@@ -118,15 +117,15 @@ const UpdateLogics = ({ params, page }) => {
     id: paymentsData[0].id,
     job_support_id: paymentsData[0].job_support_id,
     candidate_payment_amount:
-      page === "Confrimed" || "Main"
+      (page === "Confrimed" || "Main") && page !== "Resource"
         ? payment.payment_amount
         : paymentsData[0].candidate_payment_amount,
     candidate_payment_status:
-      page === "Confrimed" || "Main"
+      (page === "Confrimed" || "Main") && page !== "Resource"
         ? payment.payment_status
         : paymentsData[0].candidate_payment_status,
     candidate_payment_date:
-      page === "Confrimed" || "Main"
+      (page === "Confrimed" || "Main") && page !== "Resource"
         ? moment(payment.payment_date).format("DD-MM-YYYY")
         : paymentsData[0].candidate_payment_date,
     resource_payment_amount:
@@ -187,6 +186,7 @@ const UpdateLogics = ({ params, page }) => {
         .then((res) => {
           console.log(res.data);
           console.log("paymentData Successfully Posted");
+          console.log(paymentData);
         })
         .catch((error) => {
           console.log(error);
@@ -200,6 +200,7 @@ const UpdateLogics = ({ params, page }) => {
         .then((res) => {
           console.log(res.data);
           console.log("paymentData Successfully Updated");
+          console.log(paymentUpdateData);
         })
         .catch((error) => {
           console.log(error);

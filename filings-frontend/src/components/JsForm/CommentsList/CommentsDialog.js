@@ -57,20 +57,24 @@ const CommentsDialog = ({ open, setOpen, params, rowId }) => {
   let jsID = cmdrequests.filter((list) => list.job_support_id === rowId);
   let comID;
   try {
-    comID = true ? jsID[0].job_support_id === rowId : false;
+    comID = jsID[0].job_support_id === rowId ? true : false;
   } catch (err) {
-    console.log(err);
+    console.log("error");
   }
-
+console.log(comID)
   // http://localhost:8000/api/v1/job-support-comment-update
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+if(cmdData.length === 0) {
     axios
       .post("http://localhost:8000/api/v1/job-support-comment-data", cmd)
       .then((res) => console.log("res", res.data));
-
+}else{
+  axios
+      .post("http://localhost:8000/api/v1/job-support-comment-update", cmd)
+      .then((res) => console.log("res", res.data));
+}
     cmdgetRequests(dispatch);
   };
 
@@ -128,7 +132,7 @@ const CommentsDialog = ({ open, setOpen, params, rowId }) => {
                       value={values.comment}
                       sx={{
                         display:
-                          ( cmdData.length === 0 && comID === true) || undefined
+                          ( cmdData.length === 0 ) && (comID === undefined)
                             ? ""
                             : "none",
                       }}

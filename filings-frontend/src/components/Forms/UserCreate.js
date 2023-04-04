@@ -7,7 +7,7 @@ import {
   Paper,
 } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import React from "react";
+import React, { useState } from "react";
 import Snackbar from "@material-ui/core/Snackbar";
 import FormControl from "@mui/material/FormControl";
 import Divider from "@mui/material/Divider";
@@ -23,7 +23,9 @@ import Button from "@mui/material/Button";
 import { Alert } from "@material-ui/lab";
 import { FormControlLabel } from "@mui/material";
 import { useValue } from "../../Context/ContextProvider";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { getUsers } from "../../Context/actions";
+import axios from "axios";
 
 function getStyles(name, personName, theme) {
   return {
@@ -43,7 +45,7 @@ export const UserCreateForm = (props) => {
     navigate("/login");
   };
   const names = ["Filings", "Job-Support", "Course-Enquiry"];
-
+  const [error, setError] = useState();
   const [open, setOpen] = React.useState(false);
   const [userinfo, setInfo] = React.useState({
     user_name: "vignesh",
@@ -51,7 +53,14 @@ export const UserCreateForm = (props) => {
     is_admin: false,
     apps: [],
   });
-
+  const clearFields = () => {
+    setInfo({
+      user_name: "",
+      email: "",
+      is_admin: false,
+      apps: [],
+    });
+  };
   const handleChangeInfo = (e, service) => {
     const { name, value } = e.target;
 
@@ -75,18 +84,24 @@ export const UserCreateForm = (props) => {
         break;
     }
   };
+  const { dispatch } = useValue();
 
   async function userInfoPost(e) {
     e.preventDefault();
-    console.log(userinfo);
-
-    await fetch("http://127.0.0.1:8000/api/admin-register", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(userinfo),
-    });
+    await axios
+      .post("http://127.0.0.1:8000/api/admin-register", userinfo)
+      .then((e) => {
+        console.log(e);
+        // getUsers(dispatch);
+        // navigate("/admin");
+      })
+      .catch((err) => {
+        setError(err.response.data.errors[0]);
+      });
+    // const post_resp = await res.json();
+    // setError(post_resp.errors);
+    console.log(error);
   }
-
   const inputBox = {
     margin: "0 auto",
     width: "100%",
@@ -250,6 +265,14 @@ export const UserCreateForm = (props) => {
                   name="user_name"
                   required={true}
                   value={userinfo.user_name}
+                  sx={{
+                    "& .css-1gkbifg-MuiFormLabel-root-MuiInputLabel-root": {
+                      borderColor: error ? "red" : "",
+                    },
+                    "& .css-1d3z3hw-MuiOutlinedInput-notchedOutline": {
+                      borderColor: error ? "red" : "",
+                    },
+                  }}
                   onChange={(e) => handleChangeInfo(e, "user")}
                 />
                 <TextValidator
@@ -258,12 +281,21 @@ export const UserCreateForm = (props) => {
                   name="email"
                   size="small"
                   color="green"
+                  sx={{
+                    "& .css-1gkbifg-MuiFormLabel-root-MuiInputLabel-root": {
+                      borderColor: error ? "red !important" : "",
+                    },
+                    "& .css-1d3z3hw-MuiOutlinedInput-notchedOutline": {
+                      borderColor: error ? "red" : "",
+                    },
+                  }}
                   // required={true}
                   value={userinfo.email}
                   validators={["isEmail"]}
                   errorMessages={["email is not valid"]}
                 />
               </Grid>
+              <div style={{ color: "red", marginLeft: ".8rem" }}>{error}</div>
               <Grid style={{ display: "flex" }}>
                 <FormGroup>
                   <FormControlLabel
@@ -312,28 +344,31 @@ export const UserCreateForm = (props) => {
                 </FormControl>
               </Grid>
             </Grid>
-            <div style={{ positiion: "absolute", bottom: 0, width: "100%" }}>
-              <Divider />
-              <Stack spacing={2} direction="row">
+            <Divider />
+            <div style={{ width: "100%", padding: "20px 0 20px 0" }}>
+              <Stack spacing={1} direction="row">
                 <Button
-                  sx={{ m: 2, width: "100px", color: "#FFFFFE" }}
+                  sx={{ color: "#FFFFFE" }}
                   variant="contained"
                   color="green"
                   type="submit"
                 >
                   Submit
+                </Button>{" "}
+                <Button
+                  sx={{ color: "#FFFFFE" }}
+                  variant="contained"
+                  color="green"
+                  to="/admin"
+                  component={Link}
+                >
+                  Cancel
                 </Button>
                 <Button
-                  sx={{
-                    m: 2,
-                    width: "100px",
-                    height: "38px",
-                    top: "17px",
-                    color: "#094067",
-                  }}
                   variant="outlined"
                   color="green"
                   type="reset"
+                  onClick={clearFields}
                 >
                   Clear
                 </Button>

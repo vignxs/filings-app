@@ -51,7 +51,7 @@ export default function SignInComponent() {
     });
     const post_resp = await res.json();
     setError(post_resp.errors);
-    console.log("login user", post_resp.errors);
+    console.log("login user", post_resp);
     console.log("setError:", error);
 
     if (post_resp.active_flag == true) {

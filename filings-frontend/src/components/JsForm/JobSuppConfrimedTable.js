@@ -251,7 +251,7 @@ const JobSupportConfrimedTable = () => {
     },
     {
       field: "candidate_payment_status",
-      editable: true,
+      editable: false,
       headerName: "Payment Status",
       width: 150,
       headerAlign: "center",
@@ -264,7 +264,7 @@ const JobSupportConfrimedTable = () => {
     },
     {
       field: "candidate_payment_amount",
-      editable: true,
+      editable: false,
       headerName: "Amount",
       width: 100,
       headerAlign: "center",
@@ -275,22 +275,10 @@ const JobSupportConfrimedTable = () => {
           .map((payment) => payment.candidate_payment_amount)
           .join(", "),
     },
+
     {
       field: "followup_date",
-      editable: true,
-      headerName: "Amount",
-      width: 180,
-      headerAlign: "center",
-      filterable: false,
-      align: "center",
-      valueGetter: (params) =>
-        params.row.payment
-          .map((payment) => payment.candidate_payment_amount)
-          .join(", "),
-    },
-    {
-      field: "followup_date",
-      //editable: true,
+      editable: false,
       headerName: "Followup Date",
       width: 180,
       headerAlign: "center",

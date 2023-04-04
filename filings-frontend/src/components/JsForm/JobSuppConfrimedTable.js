@@ -199,7 +199,7 @@ const JobSupportConfrimedTable = () => {
       width: 160,
       sortable: true,
       filterable: true,
-
+    },
     {
       field: "resource",
       headerName: "Resource",
@@ -267,19 +267,6 @@ const JobSupportConfrimedTable = () => {
       editable: true,
       headerName: "Amount",
       width: 100,
-      headerAlign: "center",
-      filterable: false,
-      align: "center",
-      valueGetter: (params) =>
-        params.row.payment
-          .map((payment) => payment.candidate_payment_amount)
-          .join(", "),
-    },
-    {
-      field: "followup_date",
-      editable: true,
-      headerName: "Amount",
-      width: 180,
       headerAlign: "center",
       filterable: false,
       align: "center",

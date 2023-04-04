@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import moment from "moment";
 import { useValue } from "../../../Context/ContextProvider";
@@ -6,8 +6,21 @@ import { fsgetRequests } from "../../../Context/actions";
 
 const UpdateLogics = ({ params, page }) => {
   const [values, setValues] = useState(params.row);
+  const [paymentsData, setPaymentsData] = useState(
+    params.row.payment.map((list) => {
+      return {
 
-//   console.log(params.row);
+        job_support_id: list.job_support_id,
+        candidate_payment_amount: list.candidate_payment_amount,
+        candidate_payment_status: list.candidate_payment_status,
+        candidate_payment_date: list.candidate_payment_date,
+        resource_payment_amount: list.resource_payment_amount,
+        resource_payment_status: list.resource_payment_status,
+        resource_payment_date: list.resource_payment_date,
+      
+      }
+    })
+);
 
   const [payment, setPayment] = useState({
     payment_amount: 0,
@@ -55,7 +68,7 @@ const UpdateLogics = ({ params, page }) => {
           "DD-MM-YYYY"
         ),
       };
-    }else if (page === "Confrimed") {
+    } else if (page === "Confrimed") {
       return {
         job_support_id: params.id,
         candidate_payment_amount: payment.payment_amount,
@@ -113,19 +126,27 @@ const UpdateLogics = ({ params, page }) => {
       });
   };
   const paymentRequests = () => {
-      axios
-        .post(
-          `http://127.0.0.1:8000/api/v1/job-support-paymnet-data`,
-          paymentData
-        )
-        .then((res) => {
-          console.log(res.data);
-          console.log("paymentData Successfully Posted");
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+    axios
+      .post(
+        `http://127.0.0.1:8000/api/v1/job-support-paymnet-data`,
+        paymentData
+      )
+      .then((res) => {
+        console.log(res.data);
+        console.log("paymentData Successfully Posted");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
+
+  // const paymentGetData = () => {
+  //   axios.get("http://127.0.0.1:8000/api/v1/job-support-payment-data-all")
+  //  .then((res)=>setPaymentsData(res.data))
+  // }
+  // useEffect(()=>{
+  //   paymentGetData();
+  // },[])
 
   const handleSubmit = () => {
     editData();

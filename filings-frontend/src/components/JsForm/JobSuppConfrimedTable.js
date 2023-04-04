@@ -200,7 +200,6 @@ const JobSupportConfrimedTable = () => {
       sortable: true,
       filterable: true,
     },
-
     {
       field: "resource",
       headerName: "Resource",

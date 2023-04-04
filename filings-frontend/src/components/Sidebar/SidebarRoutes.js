@@ -73,7 +73,7 @@ const FilingsRoutes = ({open}) => {
             sx={{
               borderRadius: "6px",
               "&:hover": {
-                background: "#90b4ce",
+                background: "#90b4ce !important",
                 "& .icon-list-1": {
                   color: "#FFFFFE",
                 },
@@ -146,7 +146,7 @@ const FilingsRoutes = ({open}) => {
                     borderRadius: "6px",
 
                     "&:hover": {
-                      background: "#90b4ce",
+                      background: "#90b4ce !important",
                       "& .icon-list-1": {
                         color: "#FFFFFE",
                       },
@@ -186,7 +186,7 @@ const FilingsRoutes = ({open}) => {
             sx={{
               borderRadius: "6px",
               "&:hover": {
-                background: "#90b4ce",
+                background: "#90b4ce !important",
                 "& .icon-list-1": {
                   color: "#FFFFFE",
                 },
@@ -254,7 +254,7 @@ const FilingsRoutes = ({open}) => {
                       // pl: 4,
                       borderRadius: "6px",
                       "&:hover": {
-                        background: "#90b4ce",
+                        background: "#90b4ce !important",
                         "& .icon-list-1": {
                           color: "#FFFFFE",
                         },
@@ -345,7 +345,7 @@ const JobSuppRoutes = ({ open }) => {
           sx={{
             borderRadius: "6px",
             "&:hover": {
-              background: "#90b4ce",
+              background: "#90b4ce !important",
               "& .icon-list-1": {
                 color: "#FFFFFE",
               },
@@ -416,7 +416,7 @@ const JobSuppRoutes = ({ open }) => {
                   borderRadius: "6px",
 
                   "&:hover": {
-                    background: "#90b4ce",
+                    background: "#90b4ce !important",
                     "& .icon-list-1": {
                       color: "#FFFFFE",
                     },

@@ -4,7 +4,12 @@ import Box from "@mui/material/Box";
 import { useValue } from "../../../Context/ContextProvider";
 import { cmdgetRequests } from "../../../Context/actions";
 
-export const CommentsDataTable = ({ params, rowId }) => {
+export const CommentsDataTable = ({ params, rowId, today }) => {
+  const { state: { cmdrequests },dispatch } = useValue();
+  React.useEffect(() => {
+    cmdgetRequests(dispatch);
+  }, []);
+  let cmdRowData = cmdrequests.filter((list) => list.job_support_id === rowId);
   const columns = useMemo(() => [
     {
       field: "commented_at",
@@ -51,19 +56,11 @@ export const CommentsDataTable = ({ params, rowId }) => {
     },
   ]);
 
-  const today = new Date().toLocaleDateString("en-GB");
-
-  const {
-    state: { cmdrequests },
-  } = useValue();
-
-  let cmdData = cmdrequests.filter((list) => list.job_support_id === rowId);
-
   //   console.log("cmd", rowId);
   return (
     <Box sx={{ height: 330, width: "100%" }}>
       <DataGrid
-        rows={cmdData}
+        rows={cmdRowData}
         columns={columns}
         disableRowSelectionOnClick
         isCellEditable={(params) => params.row.commented_at === today}

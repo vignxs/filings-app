@@ -18,7 +18,7 @@ import { cmdgetRequests } from "../../../Context/actions";
 import axios from "axios";
 import { useValue } from "../../../Context/ContextProvider";
 
-const CommentsDialog = ({ open, setOpen, params, rowId, CData, setCData }) => {
+const CommentsDialog = ({ open, setOpen, params, rowId, CData }) => {
   const CommentDataLength = CData !== undefined ? CData.comment.length : 0;
   const today = new Date().toLocaleDateString("en-GB");
   const commentData = () => {
@@ -33,7 +33,6 @@ const CommentsDialog = ({ open, setOpen, params, rowId, CData, setCData }) => {
   const {
     state: { cmdrequests },
   } = useValue();
-
   let cmdData = cmdrequests.filter(
     (list) => list.commented_at === today && list.job_support_id === rowId
   );
@@ -66,8 +65,8 @@ const CommentsDialog = ({ open, setOpen, params, rowId, CData, setCData }) => {
     commented_at: today,
   };
   const cmtUpdate = {
-    id: cmdData.length !== 0 ? commentData()[0].id : 0,
-    job_support_id: cmdData.length !== 0 ? commentData()[0].job_support_id : "",
+    id: cmdData.length !== 0 ? cmdData[0].id : 0,
+    job_support_id: cmdData.length !== 0 ? cmdData[0].job_support_id : "",
     comments: values.comment,
     commented_at: today,
   };
@@ -90,6 +89,7 @@ const CommentsDialog = ({ open, setOpen, params, rowId, CData, setCData }) => {
     }
     console.log("params", cmdData);
     cmdgetRequests(dispatch);
+    setOpen(false)
   };
 
   useEffect(() => {
@@ -136,7 +136,7 @@ const CommentsDialog = ({ open, setOpen, params, rowId, CData, setCData }) => {
                     justify="center"
                     alignItems="center"
                   >
-                    <CommentsDataTable params={params.row} rowId={rowId} />
+                    <CommentsDataTable params={params.row} rowId={rowId} cmdRowData={cmdRowData} today={today}  />
                     <TextValidator
                       label="New Comment"
                       size="small"

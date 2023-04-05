@@ -18,13 +18,30 @@ import { cmdgetRequests } from "../../../Context/actions";
 import axios from "axios";
 import { useValue } from "../../../Context/ContextProvider";
 
-const CommentsDialog = ({ open, setOpen, params, rowId }) => {
+const CommentsDialog = ({ open, setOpen, params, rowId, CData, setCData }) => {
+  const CommentDataLength = CData !== undefined ? CData.comment.length : 0;
+  const today = new Date().toLocaleDateString("en-GB");
+  const commentData = () => {
+    if (CData !== undefined) {
+      return CData.comment.filter((list) => list.commented_at === today);
+    } else {
+      return [];
+    }
+  };
+
+  // console.log("date", today);
+  const {
+    state: { cmdrequests },
+  } = useValue();
+
+  let cmdData = cmdrequests.filter(
+    (list) => list.commented_at === today && list.job_support_id === rowId
+  );
   const [values, setValues] = useState({
-    comment: "",
+    comment: cmdData.length !== 0 ? cmdData[0].comments : "",
     comment_date: "",
   });
 
-  const [visiblity, setVisibility] = useState(false);
   const { dispatch } = useValue();
   const theme = createTheme({
     palette: {
@@ -43,38 +60,35 @@ const CommentsDialog = ({ open, setOpen, params, rowId }) => {
     },
   });
 
-  const today = new Date().toLocaleDateString("en-GB");
-  const cmd = {
+  const cmtPost = {
     job_support_id: rowId,
     comments: values.comment,
     commented_at: today,
   };
-  const {
-    state: { cmdrequests },
-  } = useValue();
+  const cmtUpdate = {
+    id: cmdData.length !== 0 ? commentData()[0].id : 0,
+    job_support_id: cmdData.length !== 0 ? commentData()[0].job_support_id : "",
+    comments: values.comment,
+    commented_at: today,
+  };
 
-  let cmdData = cmdrequests.filter((list) => list.commented_at === today);
-  let jsID = cmdrequests.filter((list) => list.job_support_id === rowId);
-  let comID;
-  try {
-    comID = jsID[0].job_support_id === rowId ? true : false;
-  } catch (err) {
-    console.log("error");
-  }
-console.log(comID)
   // http://localhost:8000/api/v1/job-support-comment-update
 
   const handleSubmit = (e) => {
     e.preventDefault();
-if(cmdData.length === 0) {
-    axios
-      .post("http://localhost:8000/api/v1/job-support-comment-data", cmd)
-      .then((res) => console.log("res", res.data));
-}else{
-  axios
-      .post("http://localhost:8000/api/v1/job-support-comment-update", cmd)
-      .then((res) => console.log("res", res.data));
-}
+    if (cmdData.length === 0) {
+      axios
+        .post("http://localhost:8000/api/v1/job-support-comment-data", cmtPost)
+        .then((res) => console.log("Comment Data Posted"));
+    } else {
+      axios
+        .put(
+          "http://localhost:8000/api/v1/job-support-comment-update",
+          cmtUpdate
+        )
+        .then((res) => console.log("Comment Data Updated"));
+    }
+    console.log("params", cmdData);
     cmdgetRequests(dispatch);
   };
 
@@ -82,8 +96,7 @@ if(cmdData.length === 0) {
     cmdgetRequests(dispatch);
   }, []);
 
-  console.log("visiblity", cmdrequests);
-  console.log("rowId", comID);
+  // console.log("visiblity", cmdrequests);
   //   console.log("visiblity", cmdData.length);
   return (
     <>
@@ -130,12 +143,9 @@ if(cmdData.length === 0) {
                       type="text"
                       name="comment"
                       value={values.comment}
-                      sx={{
-                        display:
-                          ( cmdData.length === 0 ) && (comID === undefined)
-                            ? ""
-                            : "none",
-                      }}
+                      // sx={{
+                      //   display: commentData().length === 0 ? "" : "none",
+                      // }}
                       onChange={(e) =>
                         setValues((presvalue) => {
                           return {
@@ -159,7 +169,7 @@ if(cmdData.length === 0) {
                         Back
                       </Button>
                       <Button
-                        disabled={cmdData.length !== 0 && comID === true}
+                        // disabled={cmdData.length !== 0 && comID === true}
                         variant="contained"
                         color="secondary"
                         onClick={handleSubmit}

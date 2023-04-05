@@ -110,7 +110,7 @@ const JobSupportConfrimedTable = () => {
   const [open, setOpen] = useState(false);
   const { ConfrimedData } = UseForm();
   const [rowId, setRowId] = useState(null);
-  const [CData,setCData]=useState();
+  const [CData, setCData] = useState();
   // const [rowEditStatus, setRowEditStatus] = useState({});
   // const handleRowEditStart = (params) => {
   //   setRowEditStatus({
@@ -300,7 +300,7 @@ const JobSupportConfrimedTable = () => {
             onClick={() => {
               setRowId(params.id);
               setOpen(true);
-              setCData(params.row)
+              setCData(params.row);
             }}
           >
             View Comments
@@ -311,7 +311,6 @@ const JobSupportConfrimedTable = () => {
             params={params}
             rowId={rowId}
             CData={CData}
-            setCData={setCData}
           />
         </>
       ),

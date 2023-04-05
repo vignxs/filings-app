@@ -136,7 +136,7 @@ const CommentsDialog = ({ open, setOpen, params, rowId, CData }) => {
                     justify="center"
                     alignItems="center"
                   >
-                    <CommentsDataTable params={params.row} rowId={rowId} cmdRowData={cmdRowData} today={today}  />
+                    <CommentsDataTable params={params.row} rowId={rowId} today={today}  />
                     <TextValidator
                       label="New Comment"
                       size="small"

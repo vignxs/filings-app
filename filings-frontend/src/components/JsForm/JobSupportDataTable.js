@@ -83,7 +83,6 @@ const JobSupportDataTable = () => {
     borderRadius: "12px",
     padding: "30px",
   };
-
   const getMuiTheme = () =>
     createTheme({
       palette: {

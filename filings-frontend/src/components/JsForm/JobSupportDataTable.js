@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
@@ -10,7 +10,6 @@ import {
   GridToolbarFilterButton,
   GridToolbarExport,
   GridToolbarQuickFilter,
-  GridToolbarExportContainer,
   GridToolbarDensitySelector,
 } from "@mui/x-data-grid";
 import { Button, Paper } from "@mui/material";
@@ -18,7 +17,6 @@ import AddIcon from "@mui/icons-material/Add";
 import { Link, useNavigate } from "react-router-dom";
 import UseForm from "./UseForm";
 import JSformActions from "./JSformActions";
-import { renderEndDateCell } from "./JScustomRender";
 import { useValue } from "../../Context/ContextProvider";
 
 const JobSupportDataTable = () => {
@@ -85,7 +83,6 @@ const JobSupportDataTable = () => {
     borderRadius: "12px",
     padding: "30px",
   };
-
   const getMuiTheme = () =>
     createTheme({
       palette: {
@@ -106,29 +103,6 @@ const JobSupportDataTable = () => {
   const Table = "Main"
   const [editId, setEditId] = useState(null);
   const { fsrequests } = UseForm();
-  // const [rowEditStatus, setRowEditStatus] = useState({});
-  // const handleRowEditStart = (params) => {
-  //   setRowEditStatus({
-  //     ...rowEditStatus,
-  //     [params.id]: "editing",
-  //   });
-  //   setEditId(params.id);
-  // };
-  // const handleRowEditStop = (params) => {
-  //   setRowEditStatus({
-  //     ...rowEditStatus,
-  //     [params.id]: null,
-  //   });
-  //   setEditId(null);
-  // };
-
-  // const handleRowEditCancel = (params) => {
-  //   setRowEditStatus({
-  //     ...rowEditStatus,
-  //     [params.id]: null,
-  //   });
-  //   setEditId(null);
-  // };
 
   const enqColumns = useMemo(() => [
     {
@@ -143,27 +117,13 @@ const JobSupportDataTable = () => {
           editId={editId}
           setEditId={setEditId}
           page={Table}
-          // rowEditStatus={rowEditStatus}
-          // onRowEditStart={handleRowEditStart}
-          // onRowEditStop={handleRowEditStop}
-          // onRowEditCancel={handleRowEditCancel} //success, setSuccess
         />
       ),
     },
-    // {
-    //   field: "id",
-    //   headerName: "ID",
-    //   width: 100,
-    //   sortable: false,
-    //   headerAlign: "center",
-    //   align: "center",
-    //   filterable: true,
-    // },
     {
       field: "date_of_enquiry",
       headerAlign: "center",
       align: "center",
-     // editable: true,
       filterable: true,
       headerName: "Date of Enquiry",
       width: 120,
@@ -209,7 +169,7 @@ const JobSupportDataTable = () => {
     {
       field: "status",
       headerName: "Status",
-      //editable: true,
+  
       width: 100,
       type: "singleSelect",
       headerAlign: "center",
@@ -236,16 +196,6 @@ const JobSupportDataTable = () => {
       filterable: false,
       align: "center",
     },
-    // {
-    //   field: "followup_date",
-    //   editable: true,
-    //   headerName: "Followup Date",
-    //   width: 180,
-    //   headerAlign: "center",
-    //   align: "center",
-    //   filterable: false,
-    //   renderCell: renderEndDateCell,
-    // },
   ]);
   function CustomToolbar() {
     return (
@@ -346,7 +296,6 @@ const JobSupportDataTable = () => {
                 panel: {
                   sx: {
                     "& .MuiDataGrid-filterForm": {
-                      // inset: `-125px auto auto 350px`,
                     },
                     "& .MuiDataGrid-paper": {
                       boxShadow: "none !important",
@@ -358,11 +307,6 @@ const JobSupportDataTable = () => {
               onCellEditCommit={(params) => {
                 setEditId(params.id);
               }}
-              // onRowEditStart={handleRowEditStart}
-              // onRowEditStop={handleRowEditStop}
-              // onRowEditCancel={handleRowEditCancel}
-              // isRowEditable={(params) => !rowEditStatus[params.id]}
-              // editMode="row"
             />
           </Box>
         </Paper>

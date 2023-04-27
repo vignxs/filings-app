@@ -167,7 +167,7 @@ const UpdateLogics = ({ params, page }) => {
 
   const editData = () => {
     axios
-      .put(`http://127.0.0.1:8000/api/v1/job-support-data-update`, editedData)
+      .put(`http://3.226.14.5:8000/api/v1/job-support-data-update`, editedData)
       .then((res) => {
         console.log(res.data);
         console.log("Data Successfully updated");
@@ -180,7 +180,7 @@ const UpdateLogics = ({ params, page }) => {
     if (paymentsLength === 0) {
       return axios
         .post(
-          `http://127.0.0.1:8000/api/v1/job-support-paymnet-data`,
+          `http://3.226.14.5:8000/api/v1/job-support-paymnet-data`,
           paymentData
         )
         .then((res) => {
@@ -194,7 +194,7 @@ const UpdateLogics = ({ params, page }) => {
     } else {
       return axios
         .put(
-          `http://127.0.0.1:8000/api/v1/job-support-payment-update`,
+          `http://3.226.14.5:8000/api/v1/job-support-payment-update`,
           paymentUpdateData
         )
         .then((res) => {
@@ -209,7 +209,7 @@ const UpdateLogics = ({ params, page }) => {
   };
 
   // const paymentGetData = () => {
-  //   axios.get("http://127.0.0.1:8000/api/v1/job-support-payment-data-all")
+  //   axios.get("http://3.226.14.5:8000/api/v1/job-support-payment-data-all")
   //  .then((res)=>setPaymentsData(res.data))
   // }
   // useEffect(()=>{

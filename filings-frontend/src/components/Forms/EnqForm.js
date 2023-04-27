@@ -103,7 +103,7 @@ export const EnqForm = (props) => {
         break;
     }
   };
-  const handleClear=()=>{
+  const handleClear = () => {
     setInfo({
       req_id: "",
       first_name: "",
@@ -114,8 +114,8 @@ export const EnqForm = (props) => {
       city: "",
       pincode: "",
     });
-  }
-  const API_ENDPOINT = "http://localhost:8000/api/v1";
+  };
+  const API_ENDPOINT = "http://3.226.14.5:8000/api/v1";
 
   async function userInfoPost(e) {
     e.preventDefault();
@@ -737,9 +737,12 @@ export const EnqForm = (props) => {
                   Cancel
                 </Button>
 
-
-                <Button variant="outlined" color="green" type="reset" onClick={handleClear}>
-
+                <Button
+                  variant="outlined"
+                  color="green"
+                  type="reset"
+                  onClick={handleClear}
+                >
                   Clear
                 </Button>
               </Stack>

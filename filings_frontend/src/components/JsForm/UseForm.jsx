@@ -95,7 +95,7 @@ const UseForm = (params) => {
   const postData = () => {
     // if (Object.values(values).includes("") === false) {
     axios
-      .post("http://3.226.14.5:8000/api/v1/job-support-data", enqdata)
+      .post("https://3.226.14.5:8000/api/v1/job-support-data", enqdata)
       .then((res) => console.log(res.data));
     setOpen(true);
     // }
@@ -141,7 +141,7 @@ const UseForm = (params) => {
     const { id } = parameter.row;
     if (window.confirm("Are you sure to delete this record?")) {
       await axios
-        .delete(`http://3.226.14.5:8000/api/v1/job-support-data-delete/${id}`)
+        .delete(`https://3.226.14.5:8000/api/v1/job-support-data-delete/${id}`)
         .then((res) => console.log("Employee Data Successfully deleted"))
 
         .catch((error) => {

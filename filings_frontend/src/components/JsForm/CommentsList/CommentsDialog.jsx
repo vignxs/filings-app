@@ -71,18 +71,18 @@ const CommentsDialog = ({ open, setOpen, params, rowId, CData }) => {
     commented_at: today,
   };
 
-  // http://3.226.14.5:8000/api/v1/job-support-comment-update
+  // https://3.226.14.5:8000/api/v1/job-support-comment-update
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (cmdData.length === 0) {
       axios
-        .post("http://3.226.14.5:8000/api/v1/job-support-comment-data", cmtPost)
+        .post("https://3.226.14.5:8000/api/v1/job-support-comment-data", cmtPost)
         .then((res) => console.log("Comment Data Posted"));
     } else {
       axios
         .put(
-          "http://3.226.14.5:8000/api/v1/job-support-comment-update",
+          "https://3.226.14.5:8000/api/v1/job-support-comment-update",
           cmtUpdate
         )
         .then((res) => console.log("Comment Data Updated"));

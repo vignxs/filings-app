@@ -1,17 +1,3 @@
-name: Deploy to EC2
-
-on:
-  push:
-    branches:
-      - fastapi-ec2
-
-env:
-  DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_NAME }}
-  DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_PASS }}
-  EC2_HOST: ${{ secrets.HOSTNAME }}
-  EC2_USERNAME: ${{ secrets.USERNAME }}
-  SSH_PRIVATE_KEY: ${{ secrets.AWS_PRIVATE_KEY }}
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -37,7 +23,14 @@ jobs:
           push: true
           tags: ${{ env.DOCKER_HUB_USERNAME }}/ehub-backend:latest
 
-      - name: SSH into EC2 instanehub and deploy app
+      - name: Echo information
+        run: |
+          echo "Deploying to EC2 instance with the following details:"
+          echo "Host: ${{ env.EC2_HOST }}"
+          echo "Username: ${{ env.EC2_USERNAME }}"
+          echo "Key: ${{ env.SSH_PRIVATE_KEY }}"
+
+      - name: SSH into EC2 instance and deploy app
         uses: appleboy/ssh-action@master
         with:
           host: ${{ env.EC2_HOST }}
@@ -47,4 +40,4 @@ jobs:
             docker stop ehub-backend || true
             docker rm ehub-backend || true
             docker pull ${{ env.DOCKER_HUB_USERNAME }}/ehub-backend:latest
-            docker run -d --name ehub-backend -p 5000:5000 ${{ env.DOCKER_HUB_USERNAME }}/ehub-backend:latest 
+            docker run -d --name ehub-backend -p 5000:5000 ${{ env.DOCKER_HUB_USERNAME }}/ehub-backend:latest
